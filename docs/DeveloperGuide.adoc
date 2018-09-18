@@ -13,7 +13,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 :experimental:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103-AY1819S1-W16-3/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -820,13 +820,15 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of patients
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable using CLI applications
+* works in the hospital
+* has a need to retrieve patient information promptly
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+Value proposition: manage contacts faster than a typical mouse/GUI driven application
 
 [appendix]
 == User Stories
@@ -836,20 +838,48 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |be able to create a patient profile |
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add to look up existing patient profiles |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |update existing patient profiles |
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |careless user |delete an existing patient profile|remove a profile that was accidentally created
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |new user |be able to refer to a helplist of commands |quickly learn how to use the software
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |expert user |be able to use shortcuts to access data |speed up my processes
+
+|`* * *` |user |be able to accurately obtain data of a specific patient when the dataset is large (people of the same name) |prevent any accidental misdiagnosis
+
+|`*` |user |be able to look up a patient based on one or more attributes |
+
+|`*` |user |be able to pin command(s) at the top of my screen |easily refer to those that I am interested in
+
+|`* *` |user |be able to hide patient details |protect the personal details of certain patients
+
+|`* * *` |careless user |be able to undo recent changes or deletion |recover patients' profiles in the event of a mistake
+
+|`* *` |user |be able to tag patients with VIP status |keep track of high profile patients and allocate necessary resources
+
+|`* *` |user |be able to check if a drug will cause an allergic reaction |prescribe medication to a patient safely
+
+|`*` |user |check if a drug will cause an allergic reaction |
+
+|`*` |user |add a remark for a patient |record down anything that doesn't fall in given categories
+
+|`*` |user |check the countries a patient has been to in the last few weeks |check for any diseases contracted from overseas
+
+|`* * *` |user |group patients by a particular attribute |
+
+|`*` |expert user |be able to use shortcuts for commands (e.g. "d" instead of "delete") |save time typing long commands
+
+|`* *` |less IT-savvy user |be able to use more user friendly/natural language commands |can understand the data entry and retrieval process intuitively
+
+|`* *` |less IT-savvy user |see the CLI as a chat |typing in commands will feel more intuitive
 |=======================================================================
 
-_{More to be added}_
+
 
 [appendix]
 == Use Cases
@@ -857,32 +887,128 @@ _{More to be added}_
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Display and Schedule data and time of medical appointments
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to view all medical appointments or appointments on a specific day
+2.  AddressBook shows a list of all appointments
+3.  User requests to schedule a patient at a specific date and time
+4.  AddressBook updates appointment details in database
+5.  AddressBook shows the appointments details to the user
 +
-Use case ends.
+Use case ends
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
+* 3a. Patient is not in database
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. AddressBook warns user that patient is not in database
 +
-Use case resumes at step 2.
+Use case resumes at step 1
 
-_{More to be added}_
+* 4a. Appointment clashes with another appointment
+[none]
+** 4a1. AddressBook warns user of appointment clash
++
+Use case resumes at step 1
+
+
+[discrete]
+=== Use case: Intuitive Command Prompting
+
+*MSS*
+
+1.  User enters in command that takes in in arguments without any specified arguments (e.g. add, delete)
+2.  AddressBook shows instructions to guide user
+3.  User responds to instructions with respective answers/inputs
+4.  AddressBook performs command for user and echoes changes made to user
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 1a. User enters unrecognised command
+[none]
+** 1a1. AddressBook shows error message and shows list of available commands
++
+Use case resumes at step 1
+
+* 3a. User accidentally enters wrong data when prompted by instruction
+[none]
+** 3a1. User follows instruction to return to previous instruction/undo (e.g. type /bk)
++
+Use case resumes at step 3
+
+[discrete]
+=== Use case: Viewing and updating medical history
+
+*MSS*
+
+1.  User requests to view medical history of a particular patient at a specific date
+2.  AddressBook displays medical history of the patient
+3.  User requests to update medical history
+4.  AddressBook updates patient medical history in database using current date
+5.  AddressBook displays success message
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 1a. Patient is not in database
+[none]
+** 1a1. AddressBook warns user that patient is not in database
++
+Use case resumes at step 1
+
+* 1b. No specified date
+[none]
+** 1b1. AddressBook displays most recent medical history
++
+Use case resumes at step 3
+
+[discrete]
+=== Use case: Undo and Redo commands (regardless of exiting the program)
+
+*MSS*
+
+1.  User requests to undo/redo the last command/change (to the AB data).
+2.  Addressbook displays / informs user of that last change
+3.  Addressbook undoes / redoes the last change
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 1a. There were no changes (to data) before or after current state.
+[none]
+** 1a1. Addressbook informs user that there are no changes to redo/undo.
++
+Use case resumes at step 1
+
+[discrete]
+=== Use case: Find patients by any keywords
+
+*MSS*
+
+1.  User requests to find patients by tag
+2.  Addressbook lists all users with that tag
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 1a. There are no users with that tag.
+[none]
+** 1a1. Addressbook returns an empty list of patients.
++
+Use case resumes at step 1
+
 
 [appendix]
 == Non Functional Requirements
@@ -891,16 +1017,12 @@ _{More to be added}_
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-_{More to be added}_
 
 [appendix]
 == Glossary
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
-
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
 
 [appendix]
 == Product Survey
