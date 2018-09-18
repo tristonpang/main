@@ -971,24 +971,64 @@ Use case resumes at step 1
 Use case resumes at step 3
 
 [discrete]
-=== Use case: Undo and Redo commands (regardless of exiting the program)
+=== Use case: Add and display doctors' profile
 
 *MSS*
 
-1.  User requests to undo/redo the last command/change (to the AB data).
-2.  Addressbook displays / informs user of that last change
-3.  Addressbook undoes / redoes the last change
+1.  User adds new doctor to the database
+2.  Addressbook shows success message
+3.  User requests to display all doctors
+4.  Addressbook displays all doctors’ information and indicates their current availability.
 +
 Use case ends
 
 *Extensions*
 
 [none]
-* 1a. There were no changes (to data) before or after current state.
+* 1a. User does not specify the doctor’s medical speciality
 [none]
-** 1a1. Addressbook informs user that there are no changes to redo/undo.
+** 1a1. Addressbook prompts user of insufficient information.
 +
 Use case resumes at step 1
+
+* 1b. Similar name already exists in the same medical department
+[none]
+** 1b1. Addressbook prompts user that similar name already exists.
++
+Use case resumes at Step 1.
+
+[discrete]
+=== Use case: Displays a specific doctor’s schedule
+
+*MSS*
+
+1.  User requests to view the schedule of a particular doctor.
+2.  Addressbook displays schedule of the specified doctor (in ascending chronological order)
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 1a. User inputs wrong/invalid doctor’s name or medical department
+[none]
+** 1a1. Addressbook informs user that there is no doctor with the name and/or medical department specified by the user.
++
+Use case ends
+
+* 1b. User does not specify doctor’s name
+[none]
+** 1b1. Addressbook informs use that no doctor was specified.
++
+Use case ends
+
+* 1c. User enters a doctor whose name appears in more than 1 medical department
+[none]
+** 1c1. Addressbook displays to user that there are more than 1 Dr [name] detected.
+[none]
+** 1c2. Addressbook requests user to re-enter input and indicate the doctor’s medical department as well.
++
+Use case resumes from Step 1
 
 [discrete]
 === Use case: Find patients by any keywords
