@@ -111,7 +111,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 
 * `find Goh` +
-Returns `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`
+Returns `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
 * `find Ng Tan` +
 Returns any patient having names `Ng Kang Tze` and `Tan Thong Cai, Nelvin`.
 
@@ -220,15 +220,30 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Display medical appointments : `appts`
+=== Adding a doctor : `adddoc`
+
+Create and add a new doctor into the database. +
+Format: `adddoc n/NAME p/PHONE_NUMBER e/EMAIL md/MEDICAL_DEPARTMENT [t/TAG]`
+
+Examples:
+
+* `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD` +
+Creates a new doctor in the database.
+
+=== Listing doctors : `listdoc`
+
+Lists all doctors in the database and their current availability based on their schedule. +
+Format: `listdoc`
+
+=== Displaying medical appointments : `appts`
 
 Displays a list of medical appointments that are currently scheduled. All appointments will be listed if data is not entered. +
-Format: `appts[d/date]`
+Format: `appts[d/DATE]`
 
-=== Schedule medical appointments : `schedule`
+=== Scheduling medical appointments : `schedule`
 
 Schedules a patient for a medical appointment at a specific date and time.
-Format: `schedule n/name d/date t/start_time t/end_time rn/room_number`
+Format: `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER`
 
 ****
 * Date is DD/MM/YYYY and dot separated e.g.  7.11.1996 is the 7th of November 1996
@@ -243,8 +258,8 @@ Schedules `Jack` for an appointment in room T24 on the 22nd of November 2018 fro
 
 === Viewing medical history of patients : `records`
 
-Displays the most updated medical records of a given patient if no date is specified. Else, displays the last updated medical record before the specified date. +
-Format: `records n/name [d/date]`
+Displays the most updated medical records of a given patient if no date is specified. Else, displays the most recent medical record before the specified date. +
+Format: `records n/name [d/DATE]`
 
 ****
 * Date is DD/MM/YYYY and is dot separated. e.g.  7.11.1996 is the 7th of November 1996
@@ -253,18 +268,18 @@ Format: `records n/name [d/date]`
 Examples:
 
 * `records n/Jack d/22.11.2018` +
-Displays the first medical record of Jack before 22nd November 2018.
+Displays the most recent medical record of Jack before 22nd November 2018.
 * `records n/Jack` +
-Displays the medical records of Jack
+Displays the most recent medical records of Jack.
 
 === Updating medical history of patients : `update`
 
 Adds a new medical record for the patient as the most updated record using the current date as date of record. +
-Format: `update n/name mr/new_updated_medical_records`
+Format: `update n/NAME mr/NEW_MEDICAL_RECORDS`
 
 Examples:
 
-* `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed` +
+* `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.` +
 Updates `Jack` medical records with the given sentences.
 
 === Exiting the program : `exit`
