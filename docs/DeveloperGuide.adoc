@@ -13,7 +13,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 :experimental:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103-AY1819S1-W16-3/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -820,13 +820,15 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of patients
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable using CLI applications
+* works in the hospital
+* has a need to retrieve patient information promptly
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+Value proposition: manage contacts faster than a typical mouse/GUI driven application
 
 [appendix]
 == User Stories
@@ -836,20 +838,48 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |be able to create a patient profile |
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add to look up existing patient profiles |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |update existing patient profiles |
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |careless user |delete an existing patient profile|remove a profile that was accidentally created
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |new user |be able to refer to a helplist of commands |quickly learn how to use the software
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |expert user |be able to use shortcuts to access data |speed up my processes
+
+|`* * *` |user |be able to accurately obtain data of a specific patient when the dataset is large (people of the same name) |prevent any accidental misdiagnosis
+
+|`*` |user |be able to look up a patient based on one or more attributes |
+
+|`*` |user |be able to pin command(s) at the top of my screen |easily refer to those that I am interested in
+
+|`* *` |user |be able to hide patient details |protect the personal details of certain patients
+
+|`* * *` |careless user |be able to undo recent changes or deletion |recover patients' profiles in the event of a mistake
+
+|`* *` |user |be able to tag patients with VIP status |keep track of high profile patients and allocate necessary resources
+
+|`* *` |user |be able to check if a drug will cause an allergic reaction |prescribe medication to a patient safely
+
+|`*` |user |check if a drug will cause an allergic reaction |
+
+|`*` |user |add a remark for a patient |record down anything that doesn't fall in given categories
+
+|`*` |user |check the countries a patient has been to in the last few weeks |check for any diseases contracted from overseas
+
+|`* * *` |user |group patients by a particular attribute |
+
+|`*` |expert user |be able to use shortcuts for commands (e.g. "d" instead of "delete") |save time typing long commands
+
+|`* *` |less IT-savvy user |be able to use more user friendly/natural language commands |can understand the data entry and retrieval process intuitively
+
+|`* *` |less IT-savvy user |see the CLI as a chat |typing in commands will feel more intuitive
 |=======================================================================
 
-_{More to be added}_
+
 
 [appendix]
 == Use Cases
