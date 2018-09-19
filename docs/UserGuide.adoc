@@ -253,7 +253,7 @@ Format: `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER`
 
 Examples:
 
-* `schedule n/Jack d/22.11.2018 t/1300 t/1400 rn/T24`
+* `schedule n/Jack d/22.11.2018 t/1300 t/1400 rn/T24` +
 Schedules `Jack` for an appointment in room T24 on the 22nd of November 2018 from 1pm to 2pm.
 
 === Viewing medical records of patients : `records`
