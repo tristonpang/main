@@ -101,11 +101,11 @@ Finds patients with the keyword specified by the user. Specified keyword can bel
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case-insensitive. e.g. nelvin will match Nelvin.
-* The search is a global search. e.g. Kang will return patients whose name includes Kang and patients with street address Choa Chu Kang.
+* The search is case-insensitive. e.g. `nelvin` will match `Nelvin`.
+* The search is a global search. e.g. `Kang` will return patients whose name includes `Kang` and patients with street address `Choa Chu Kang`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched. e.g. Tris will not return Tristan.
-* Patients with at least one keyword will be returned. e.g. Goh will return Gary Goh Yipeng and Kenneth Goh Jun Teck.
+* Only full words will be matched. e.g. `Tris` will not return `Tristan`.
+* Patients with at least one keyword will be returned. e.g. `Goh` will return `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
 ****
 
 Examples:
@@ -246,15 +246,15 @@ Schedules a patient for a medical appointment at a specific date and time.
 Format: `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER`
 
 ****
-* Date is DD/MM/YYYY and dot separated e.g.  7.11.1996 is the 7th of November 1996
-* Time is 24 hour clock e.g. 1300 is 1pm
-* Room is the location of appointments e.g. T45
+* Date is DD/MM/YYYY and dot separated e.g.  `7.11.1996` is the 7th of November 1996
+* Time is 24 hour clock e.g. `1300` is 1pm
+* Room is the location of appointments e.g. `T45`
 ****
 
 Examples:
 
 * `schedule n/Jack d/22.11.2018 t/1300 t/1400 rn/T24` +
-Schedules `Jack` for an appointment in room T24 on the 22nd of November 2018 from 1pm to 2pm.
+Schedules `Jack` for an appointment in room `T24` on the 22nd of November 2018 from 1pm to 2pm.
 
 === Viewing medical records of patients : `records`
 
@@ -262,15 +262,15 @@ Displays the most updated medical records of a given patient if no date is speci
 Format: `records n/name [d/DATE]`
 
 ****
-* Date is DD/MM/YYYY and is dot separated. e.g.  7.11.1996 is the 7th of November 1996
+* Date is DD/MM/YYYY and is dot separated. e.g.  `7.11.1996` is the 7th of November 1996
 ****
 
 Examples:
 
 * `records n/Jack d/22.11.2018` +
-Displays the most recent medical record of Jack before 22nd November 2018.
+Displays the most recent medical record of `Jack` before 22nd November 2018.
 * `records n/Jack` +
-Displays the most recent medical records of Jack.
+Displays the most recent medical records of `Jack`.
 
 === Updating medical records of patients : `update`
 
