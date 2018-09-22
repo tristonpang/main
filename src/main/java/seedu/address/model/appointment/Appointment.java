@@ -1,13 +1,16 @@
 package seedu.address.model.appointment;
 
-import java.util.ArrayList;
-
 public class Appointment {
 
+    /** Date of appointment */
     private String date;
+    /** Starting time of appointment */
     private String startTime;
+    /** Ending time of appointment */
     private String endTime;
+    /** Name of doctor */
     private String doctor; // change to class
+    /** Name of patient */
     private String patient; // change to class
 
     public Appointment(String date, String startTime, String endTime, String doctor, String patient) {
@@ -18,6 +21,13 @@ public class Appointment {
         this.patient = patient;
     }
 
+    /**
+     * Checks if there are any clashes between another appointment
+     * compared to this appointment.
+     *
+     * @param otherAppointment another appointment
+     * @return Boolean if there is any clash.
+     */
     public boolean isClash(Appointment otherAppointment) {
         if (!date.equals(otherAppointment.date) || !doctor.equals(otherAppointment.doctor)) {
             return false;
@@ -50,11 +60,11 @@ public class Appointment {
         }
         if (obj instanceof Appointment) {
             Appointment appointment = (Appointment) obj;
-            return (appointment.date.equals(date) &&
-                    appointment.startTime.equals(startTime) &&
-                    appointment.endTime.equals(endTime) &&
-                    appointment.doctor.equals(doctor) &&
-                    appointment.patient.equals(patient));
+            return (appointment.date.equals(date)
+                    && appointment.startTime.equals(startTime)
+                    && appointment.endTime.equals(endTime)
+                    && appointment.doctor.equals(doctor)
+                    && appointment.patient.equals(patient));
         } else {
             return false;
         }
