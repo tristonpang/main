@@ -5,7 +5,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 public class MedicalDepartment {
     
-    public static final String MESSAGE_DEPTNAME_CONSTRAINTS = "Medical Departments should be alphabetical";
+    public static final String MESSAGE_DEPTNAME_CONSTRAINTS =
+            "Medical Department should only contain alphabetic characters and spaces, and it should not be blank";
     public static final String DEPTNAME_VALIDATION_REGEX = "\\p{Alpha}";
     
     public final String deptName;
