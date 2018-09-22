@@ -70,5 +70,4 @@ public class Appointment {
         toDisplay += patient;
         return toDisplay;
     }
-
 }
