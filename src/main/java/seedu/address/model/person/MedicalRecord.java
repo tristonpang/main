@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -21,7 +22,12 @@ public class MedicalRecord {
      */
     public MedicalRecord(String medicalRecord) {
         requireNonNull(medicalRecord);
+        checkArgument(isValidMedicalRecord(medicalRecord), MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
         this.value = medicalRecord;
+    }
+
+    public static boolean isValidMedicalRecord(String medicalRecord) {
+        return medicalRecord != null;
     }
 
     @Override
