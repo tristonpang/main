@@ -30,6 +30,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -134,7 +135,7 @@ public class AddressBookParserTest {
         final String medicalRecord = "Some medical record.";
         UpdateCommand command = (UpdateCommand) parser.parseCommand(UpdateCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_MEDICAL_RECORD + " " + medicalRecord);
-        assertEquals(new UpdateCommand(INDEX_FIRST_PERSON, medicalRecord), command);
+        assertEquals(new UpdateCommand(INDEX_FIRST_PERSON, new MedicalRecord(medicalRecord)), command);
     }
 
     @Test

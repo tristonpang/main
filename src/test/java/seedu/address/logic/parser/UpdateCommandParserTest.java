@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.UpdateCommand;
+import seedu.address.model.person.MedicalRecord;
 
 public class UpdateCommandParserTest {
 
@@ -18,14 +19,14 @@ public class UpdateCommandParserTest {
     @Test
     public void parse_indexSpecified_failure() throws Exception {
         final String medicalRecord = "Some medical record.";
-        // have remarks
+        // have medical records
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_MEDICAL_RECORD.toString() + " " + medicalRecord;
-        UpdateCommand expectedCommand = new UpdateCommand(INDEX_FIRST_PERSON, medicalRecord);
+        UpdateCommand expectedCommand = new UpdateCommand(INDEX_FIRST_PERSON, new MedicalRecord(medicalRecord));
         assertParseSuccess(parser, userInput, expectedCommand);
-        // no remarks
+        // no medical records
         userInput = targetIndex.getOneBased() + " " + PREFIX_MEDICAL_RECORD.toString();
-        expectedCommand = new UpdateCommand(INDEX_FIRST_PERSON, "");
+        expectedCommand = new UpdateCommand(INDEX_FIRST_PERSON, new MedicalRecord(""));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
     @Test
