@@ -1,7 +1,11 @@
-package seedu.address.model.appointment;
+package seedu.address.model.person;
+
+import static java.util.Objects.requireNonNull;
 
 public class Appointment {
 
+    /** String value of whole appointment **/
+    public final String value;
     /** Date of appointment */
     private String date;
     /** Starting time of appointment */
@@ -13,7 +17,21 @@ public class Appointment {
     /** Name of patient */
     private String patient; // change to class
 
+    public Appointment(String appointment) {
+        requireNonNull(appointment);
+//        if (!appointment.equals("")) {
+//            String[] parts = appointment.split(",");
+//            date = parts[0];
+//            startTime = parts[1];
+//            endTime = parts[2];
+//            doctor = parts[3];
+//            patient = parts[4];
+//        }
+        value = appointment;
+    }
+
     public Appointment(String date, String startTime, String endTime, String doctor, String patient) {
+        value = date + "," + startTime + "," + endTime + "," + doctor + "," + patient;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -72,12 +90,11 @@ public class Appointment {
 
     @Override
     public String toString() {
-        String toDisplay = "";
-        toDisplay += date + "|";
-        toDisplay += startTime + "|";
-        toDisplay += endTime + "|";
-        toDisplay += doctor + "|";
-        toDisplay += patient;
-        return toDisplay;
+        return value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 }
