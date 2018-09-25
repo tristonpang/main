@@ -56,72 +56,73 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a patient: `add`
 
-Adds a person to the address book +
+Adds a patient to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A patient can have any number of tags (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all patients : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all patients in the address book. +
 Format: `list`
 
-=== Editing a person : `edit`
+=== Editing a patient : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing patient in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
+* You can remove all the patient's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating patient by any attribute: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds patients with the keyword specified by the user. Specified keyword can belong to any part of any attribute of the patient (i.e. name, phone number, address, tags etc).
+ +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g. `nelvin` will match `Nelvin`.
+* The search is a global search. e.g. `Kang` will return patients whose name includes `Kang` and patients with street address `Choa Chu Kang`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched. e.g. `Tris` will not return `Tristan`.
+* Patients with at least one keyword will be returned. e.g. `Goh` will return `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find Goh` +
+Returns `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
+* `find Ng Tan` +
+Returns any patient having names `Ng Kang Tze` and `Tan Thong Cai, Nelvin`.
 
-=== Deleting a person : `delete`
+=== Deleting a patient : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified patient from the address book. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the patient at the specified `INDEX`.
+* The index refers to the index number shown in the displayed patient list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -129,19 +130,19 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd patient in the address book.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st patient in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a patient : `select`
 
-Selects the person identified by the index number used in the displayed person list. +
+Selects the patient identified by the index number used in the displayed patient list. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Selects the patient and loads the Google search page the patient at the specified `INDEX`.
+* The index refers to the index number shown in the displayed patient list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -149,10 +150,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd patient in the address book.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st patient in the results of the `find` command.
 
 === Listing entered commands : `history`
 
@@ -219,6 +220,68 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Adding a doctor : `adddoc`
+
+Create and add a new doctor into the database. +
+Format: `adddoc n/NAME p/PHONE_NUMBER e/EMAIL md/MEDICAL_DEPARTMENT [t/TAG]`
+
+Examples:
+
+* `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD` +
+Creates a new doctor in the database.
+
+=== Listing doctors : `listdoc`
+
+Lists all doctors in the database and their current availability based on their schedule. +
+Format: `listdoc`
+
+=== Displaying medical appointments : `appts`
+
+Displays a list of medical appointments that are currently scheduled. All appointments will be listed if data is not entered. +
+Format: `appts[d/DATE]`
+
+=== Scheduling medical appointments : `schedule`
+
+Schedules a patient for a medical appointment at a specific date and time.
+Format: `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER`
+
+****
+* Date is DD/MM/YYYY and dot separated e.g.  `7.11.1996` is the 7th of November 1996
+* Time is 24 hour clock e.g. `1300` is 1pm
+* Room is the location of appointments e.g. `T45`
+****
+
+Examples:
+
+* `schedule n/Jack d/22.11.2018 t/1300 t/1400 rn/T24` +
+Schedules `Jack` for an appointment in room `T24` on the 22nd of November 2018 from 1pm to 2pm.
+
+=== Viewing medical records of patients : `records`
+
+Displays the most updated medical records of a given patient if no date is specified. Else, displays the most recent medical record before the specified date. +
+Format: `records n/name [d/DATE]`
+
+****
+* Date is DD/MM/YYYY and is dot separated. e.g.  `7.11.1996` is the 7th of November 1996
+****
+
+Examples:
+
+* `records n/Jack d/22.11.2018` +
+Displays the most recent medical record of `Jack` before 22nd November 2018.
+* `records n/Jack` +
+Displays the most recent medical records of `Jack`.
+
+=== Updating medical records of patients : `update`
+
+Adds a new medical record for the patient as the most updated record using the current date as date of record. +
+Format: `update n/NAME mr/NEW_MEDICAL_RECORDS`
+
+Examples:
+
+* `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.` +
+Updates `Jack` medical records with the given sentences.
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -230,6 +293,24 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 // tag::dataencryption[]
+
+=== Intuitive Command Prompting
+
+Intuitive prompting for the user when a command that takes in parameters is entered without any parameters specified. This feature aids new users and makes it easier and more natural for them to use the system. The nature of this feature allows users to enter data without adding prefix tags, and also supports cases where certain data fields are intentionally left blank. The original command input format is still supported to allow quick command entry for seasoned users.
+
+Examples:
+```
+add
+Adding new patient..
+Please enter patient's NAME: John Doe
+
+NAME entered: John Doe
+(Use /bk to re-enter previous field)
+Enter patients email (use // if this field is to be blank): doe@gmail.com
+
+...
+```
+
 === Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
@@ -242,7 +323,7 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add Patient* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
@@ -251,10 +332,19 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *List Patients* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Add Doctor* : `adddoc n/NAME p/PHONE_NUMBER e/EMAIL md/MEDICAL_DEPARTMENT [t/TAG]` +
+e.g. `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD`
+* *List Doctors* : `listdoc`
+* *Display Medical Appointments* : `appts`
+* *Schedule Medical Appointments* : `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER` +
+e.g. `schedule n/Jack d/22.11.2018 t/1300 t/1400 rn/T24`
+* *View Medical Records* : `records n/NAME [d/DATE]`
+* *Update Medical Records* : `update n/NAME mr/NEW_MEDICAL_RECORDS` +
+e.g. `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.`
