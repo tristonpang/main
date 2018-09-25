@@ -13,7 +13,7 @@ import seedu.address.model.tag.Tag;
 public class Doctor extends Person {
     
     private final MedicalDepartment dept;
-    // TODO: Change ArrayList to ArrayList<Appointment>
+    // TODO: Change ArrayList to ArrayList<appointment>
     private ArrayList<String> appointments;
     
     public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags, MedicalDepartment dept) {
@@ -45,7 +45,7 @@ public class Doctor extends Person {
     }
     
     public void scheduleAppointment(String patientName, String date, String timeStart, String timeEnd) {
-        // TODO: AppointmentManager.add(appointments, new Appointment(...));
+        // TODO: AppointmentManager.add(appointments, new appointment(...));
     }
     
     @Override
