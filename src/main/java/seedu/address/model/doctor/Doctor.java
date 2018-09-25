@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -13,11 +14,9 @@ import seedu.address.model.tag.Tag;
 public class Doctor extends Person {
     
     private final MedicalDepartment dept;
-    // TODO: Change ArrayList to ArrayList<Appointment>
-    private ArrayList<String> appointments;
     
     public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags, MedicalDepartment dept) {
-        super(name, phone, email, address, tags);
+        super(name, phone, email, address, new Appointment(""), tags);
         this.dept = dept;
     }
     
@@ -45,7 +44,7 @@ public class Doctor extends Person {
     }
     
     public void scheduleAppointment(String patientName, String date, String timeStart, String timeEnd) {
-        // TODO: AppointmentManager.add(appointments, new Appointment(...));
+        // TODO: AppointmentManager.add(appointments, new appointment(...));
     }
     
     @Override
