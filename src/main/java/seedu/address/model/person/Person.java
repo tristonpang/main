@@ -123,6 +123,8 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Medical Record: ")
+                .append(getMedicalRecord())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
