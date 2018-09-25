@@ -9,20 +9,40 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.XmlAdaptedDoctor;
+import seedu.address.storage.XmlAdaptedPerson;
 
 public class Doctor extends Person {
     
     private final MedicalDepartment dept;
     // TODO: Change ArrayList to ArrayList<Appointment>
-    private ArrayList<String> appointments;
+    private ArrayList<String> appointments = new ArrayList<>();
     
     public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags, MedicalDepartment dept) {
+        
         super(name, phone, email, address, tags);
         this.dept = dept;
+        // this.appointments = new ArrayList<>();
+        
+        // TODO: 25/9/2018 Remove this pseudo variable 
+        ArrayList<String> appt = new ArrayList<>();
+        appt.add("Eat Pray Shit...");
+        appt.add("Tom 1130 1230");
+        this.appointments = appt;
     }
     
-    public MedicalDepartment getMedicalDepartment () {
+    public Doctor(Person person, MedicalDepartment dept, Set<String> appointments) {
+        super(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getTags());
+        this.dept = dept;
+        this.appointments.addAll(appointments);
+    }
+    
+    public MedicalDepartment getMedicalDepartment () {        
         return this.dept;
+    }
+    
+    public ArrayList<String> getAppointments() {
+        return this.appointments;
     }
     
     public boolean isSamePerson(Doctor otherDoctor) {
@@ -46,6 +66,11 @@ public class Doctor extends Person {
     
     public void scheduleAppointment(String patientName, String date, String timeStart, String timeEnd) {
         // TODO: AppointmentManager.add(appointments, new Appointment(...));
+    }
+    
+    @Override
+    public XmlAdaptedPerson toXmlVersion(Person source) {
+        return XmlAdaptedDoctor.adaptToXml((Doctor) source);
     }
     
     @Override
