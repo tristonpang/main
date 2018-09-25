@@ -11,6 +11,9 @@ import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.person.Person;
 
+/**
+ * JAXB-friendly version of the Doctor.
+ */
 public class XmlAdaptedDoctor extends XmlAdaptedPerson {
     
     public XmlAdaptedDoctor(Doctor source){
