@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
@@ -33,6 +34,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String appointment;
 
     @XmlElement(required = true)
     private String medicalRecord;
@@ -74,6 +77,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         medicalRecord = source.getMedicalRecord().value;
+        appointment = source.getAppointment().value;
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -127,8 +131,13 @@ public class XmlAdaptedPerson {
         }
         final MedicalRecord modelMedicalRecord = new MedicalRecord(medicalRecord);
 
+        if (appointment == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Appointment.class.getSimpleName()));
+        }
+        final Appointment modelAppointment = new Appointment(appointment);
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelMedicalRecord, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelMedicalRecord, modelAppointment, modelTags);
     }
 
     @Override
