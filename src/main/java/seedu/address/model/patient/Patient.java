@@ -3,6 +3,7 @@ package seedu.address.model.patient;
 import java.util.Set;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -13,7 +14,7 @@ public class Patient extends Person {
     private final NRIC nric;
     
     public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, NRIC nric) {
-        super(name, phone, email, address, tags);
+        super(name, phone, email, address, new MedicalRecord(""), tags);
         this.nric = nric;
         
     }
