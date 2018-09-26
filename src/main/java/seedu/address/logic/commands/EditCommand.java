@@ -100,7 +100,8 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        MedicalRecord updatedMedicalRecord = personToEdit.getMedicalRecord(); //edit command does not allow editing medical records
+        //edit command does not allow editing medical records
+        MedicalRecord updatedMedicalRecord = personToEdit.getMedicalRecord();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedMedicalRecord, updatedTags);
