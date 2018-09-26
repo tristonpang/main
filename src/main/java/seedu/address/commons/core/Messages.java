@@ -14,4 +14,5 @@ public class Messages {
     public static final String MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT = "Invalid command format for adding doctor! " +
             "\n%1$s";
     public static final String MESSAGE_INVALID_ROLE = "Invalid format for role";
+    public static final String MESSAGE_INVALID_PERSON_CHOSEN = "Invalid person chosen. Person chosen is not a patient";
 }

@@ -1,25 +1,46 @@
 package seedu.address.model.patient;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.Objects;
 import java.util.Set;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.XmlAdaptedPatient;
+import seedu.address.storage.XmlAdaptedPerson;
 
 public class Patient extends Person {
     
     private final NRIC nric;
+    private MedicalRecord medicalRecord;
     
     public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, NRIC nric) {
         super(name, phone, email, address, tags);
         this.nric = nric;
-        
+        this.medicalRecord = new MedicalRecord("");
+    }
+
+    public Patient(Person source, NRIC nric, MedicalRecord medicalRecord) {
+        super(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+        this.nric = nric;
+        this.medicalRecord = medicalRecord;
     }
 
     public NRIC getNric() {
         return nric;
+    }
+
+    public MedicalRecord getMedicalRecord() {
+        return this.medicalRecord;
+    }
+
+    public void setMedicalRecord(MedicalRecord medicalRecord) {
+        this.medicalRecord = requireNonNull(medicalRecord);
     }
     
     public boolean isSamePerson(Patient otherPerson) {
@@ -39,9 +60,34 @@ public class Patient extends Person {
             return false;
         }
     }
-    
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(name, nric, phone, email, address, medicalRecord, tags);
+    }
+
     @Override
     public String toString() {
-        return super.toString() + (" NRIC: " + this.nric);
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" NRIC: ")
+                .append(getNric())
+                .append(" Phone: ")
+                .append(getPhone())
+                .append(" Email: ")
+                .append(getEmail())
+                .append(" Address: ")
+                .append(" Medical Records: " )
+                .append(getMedicalRecord())
+                .append(getAddress())
+                .append(" Tags: ");
+        getTags().forEach(builder::append);
+        return builder.toString();
+    }
+
+    @Override
+    public XmlAdaptedPerson toXmlVersion(Person source) {
+        return XmlAdaptedPatient.adaptToXml((Patient) source);
     }
 }

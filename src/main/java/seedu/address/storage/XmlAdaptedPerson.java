@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -149,7 +150,7 @@ public class XmlAdaptedPerson {
                     modelAddress, modelTags), medicalDepartment, appointments);
         } else if(modelRole.equals(Role.PATIENT)) {
             return XmlAdaptedPatient.convertToPatientModelType(new Person(modelName, modelPhone, modelEmail,
-                    modelAddress, modelTags), nric, appointments, medicalRecords);
+                    modelAddress, modelTags), nric, medicalRecords);
         }
         
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
