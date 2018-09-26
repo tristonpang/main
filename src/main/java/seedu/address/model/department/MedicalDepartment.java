@@ -7,7 +7,7 @@ public class MedicalDepartment {
     
     public static final String MESSAGE_DEPTNAME_CONSTRAINTS =
             "Medical Department should only contain alphabetic characters and spaces, and it should not be blank";
-    public static final String DEPTNAME_VALIDATION_REGEX = "[a-zA-Z]+";
+    public static final String DEPTNAME_VALIDATION_REGEX = "\\p{Alpha}";
     
     public final String deptName;
 
@@ -19,7 +19,7 @@ public class MedicalDepartment {
     public MedicalDepartment(String deptName) {
         requireNonNull(deptName);
         checkArgument(isValidMedDept(deptName), MESSAGE_DEPTNAME_CONSTRAINTS);
-        this.deptName = deptName.substring(0, 1).toUpperCase() + deptName.toLowerCase().substring(1);
+        this.deptName = deptName;
     }
 
     /**
@@ -49,8 +49,6 @@ public class MedicalDepartment {
      * Format state as text for viewing.
      */
     public String toString() {
-        return '['  + deptName + ']';
+        return '[' + "Department: " + deptName + ']';
     }
 }
-
-// add r/doctor n/john e/john@john.com p/31312312 a/john street md/oncology

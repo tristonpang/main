@@ -8,7 +8,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;
-import seedu.address.storage.XmlAdaptedPerson;
 
 /**
  * Represents a Person in the address book.
@@ -73,10 +72,6 @@ public class Person {
         return otherPerson != null
                 && otherPerson.getName().equals(getName())
                 && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
-    }
-    
-    public XmlAdaptedPerson toXmlVersion(Person source) {
-        return XmlAdaptedPerson.adaptToXml(source);
     }
 
     /**

@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,13 +9,10 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.department.MedicalDepartment;
-import seedu.address.model.patient.NRIC;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -112,33 +108,6 @@ public class ParserUtil {
             throw new ParseException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
         return new Tag(trimmedTag);
-    }
-    
-    public static NRIC parseNric(String nric) throws ParseException {
-        requireNonNull(nric);
-        String trimmedNric = nric.trim();
-        if(!NRIC.isValidNric(trimmedNric)) {
-            throw new ParseException(NRIC.MESSAGE_NRIC_CONSTRAINTS);
-        }
-        return new NRIC(trimmedNric);
-    }
-    
-    public static MedicalDepartment parseMedicalDepartment(String dept) throws ParseException {
-        requireNonNull(dept);
-        String trimmedDept = dept.trim();
-        if(!MedicalDepartment.isValidMedDept(trimmedDept)) {
-            throw new ParseException(MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS);
-        }
-        return new MedicalDepartment(trimmedDept);
-    }
-    
-    public static Role parseRole(String role) throws ParseException {
-        requireNonNull(role);
-        String trimmedRole = role.trim().toUpperCase();
-        if(Arrays.stream(Role.values()).noneMatch(r->r.toString().equals(trimmedRole))) {
-            throw new ParseException(Role.MESSAGE_ROLE_CONSTRAINTS);
-        }
-        return Role.valueOf(trimmedRole);
     }
 
     /**
