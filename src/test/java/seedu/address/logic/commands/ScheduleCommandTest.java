@@ -27,9 +27,9 @@ import seedu.address.testutil.PersonBuilder;
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ScheduleCommand.
  */
-public class AppointmentCommandTest {
+public class ScheduleCommandTest {
 
-    private static final String REMARK_STUB = "Some remark";
+    private static final String SCHEDULE_STUB = "Some remark";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
@@ -37,11 +37,11 @@ public class AppointmentCommandTest {
     @Test
     public void execute_addRemarkUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withRemark(REMARK_STUB).build();
+        Person editedPerson = new PersonBuilder(firstPerson).withAppointment(SCHEDULE_STUB).build();
 
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(editedPerson.getAppointment().value));
 
-        String expectedMessage = String.format(ScheduleCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
+        String expectedMessage = String.format(ScheduleCommand.MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, editedPerson);
@@ -52,12 +52,12 @@ public class AppointmentCommandTest {
     @Test
     public void execute_deleteRemarkUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withRemark("").build();
+        Person editedPerson = new PersonBuilder(firstPerson).withAppointment("").build();
 
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
                 new Appointment(editedPerson.getAppointment().toString()));
 
-        String expectedMessage = String.format(ScheduleCommand.MESSAGE_DELETE_REMARK_SUCCESS, editedPerson);
+        String expectedMessage = String.format(ScheduleCommand.MESSAGE_DELETE_APPOINTMENT_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, editedPerson);
@@ -72,11 +72,11 @@ public class AppointmentCommandTest {
 
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withRemark(REMARK_STUB).build();
+                .withAppointment(SCHEDULE_STUB).build();
 
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(editedPerson.getAppointment().value));
 
-        String expectedMessage = String.format(ScheduleCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
+        String expectedMessage = String.format(ScheduleCommand.MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, editedPerson);
@@ -111,8 +111,8 @@ public class AppointmentCommandTest {
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Person personToModify = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person modifiedPerson = new PersonBuilder(personToModify).withRemark(REMARK_STUB).build();
-        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(REMARK_STUB));
+        Person modifiedPerson = new PersonBuilder(personToModify).withAppointment(SCHEDULE_STUB).build();
+        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(SCHEDULE_STUB));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
@@ -151,12 +151,12 @@ public class AppointmentCommandTest {
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
-        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(REMARK_STUB));
+        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(SCHEDULE_STUB));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Person personToModify = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person modifiedPerson = new PersonBuilder(personToModify).withRemark(REMARK_STUB).build();
+        Person modifiedPerson = new PersonBuilder(personToModify).withAppointment(SCHEDULE_STUB).build();
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
 
@@ -174,17 +174,23 @@ public class AppointmentCommandTest {
     @Test
     public void equals() {
         final ScheduleCommand standardCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(VALID_SCHEDULE_AMY));
+
         // same values -> returns true
         ScheduleCommand commandWithSameValues = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(VALID_SCHEDULE_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
+
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
+
         // null -> returns false
         assertFalse(standardCommand.equals(null));
+
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
+
         // different index -> returns false
         assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_SECOND_PERSON, new Appointment(VALID_SCHEDULE_AMY))));
+
         // different remark -> returns false
         assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(VALID_SCHEDULE_BOB))));
     }

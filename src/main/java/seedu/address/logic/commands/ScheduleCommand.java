@@ -22,12 +22,14 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Schedules appointment for the person identified "
             + "by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_SCHEDULE + "[SCHEDULE]\n"
+            + PREFIX_SCHEDULE + "[DATE,START_TIME,END_TIME,DOCTOR_NAME,PATIENT_NAME]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_SCHEDULE + "23.11.2018,1300,1400,Priscilia,Elaine";
 
-    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added appointment to Person: %1$s";
-    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed appointment from Person: %1$s";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS = "Scheduled appointment to Person: %1$s";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE = "Failed to schedule appointment to Person.\n"
+            + "Please check that the format of the appointment is keyed in properly.\n";
+    public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
 
     private final Index index;
     private final Appointment appointment;
@@ -50,6 +52,10 @@ public class ScheduleCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        if (!appointment.isValid()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE);
+        }
+
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), appointment, personToEdit.getTags());
@@ -66,7 +72,7 @@ public class ScheduleCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !appointment.value.isEmpty() ? MESSAGE_ADD_REMARK_SUCCESS : MESSAGE_DELETE_REMARK_SUCCESS;
+        String message = !appointment.value.isEmpty() ? MESSAGE_SCHEDULE_APPOINTMENT_FAILURE : MESSAGE_DELETE_APPOINTMENT_SUCCESS;
         return String.format(message, personToEdit);
     }
 

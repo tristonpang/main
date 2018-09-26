@@ -12,16 +12,16 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.model.person.Appointment;
 
-public class AppointmentCommandParserTest {
+public class ScheduleCommandParserTest {
     private ScheduleCommandParser parser = new ScheduleCommandParser();
-    private final String nonEmptyRemark = "Some remark.";
+    private final String nonEmptyAppointment = "22.11.2018,1300,1400,Jill,Jack";
 
     @Test
     public void parse_indexSpecified_success() {
         // have remark
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + nonEmptyRemark;
-        ScheduleCommand expectedCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(nonEmptyRemark));
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + nonEmptyAppointment;
+        ScheduleCommand expectedCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(nonEmptyAppointment));
         assertParseSuccess(parser, userInput, expectedCommand);
         // no remark
 
@@ -38,6 +38,6 @@ public class AppointmentCommandParserTest {
         assertParseFailure(parser, ScheduleCommand.COMMAND_WORD, expectedMessage);
 
         // no index
-        assertParseFailure(parser, ScheduleCommand.COMMAND_WORD + " " + nonEmptyRemark, expectedMessage);
+        assertParseFailure(parser, ScheduleCommand.COMMAND_WORD + " " + nonEmptyAppointment, expectedMessage);
     }
 }
