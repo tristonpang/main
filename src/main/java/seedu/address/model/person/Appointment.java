@@ -16,6 +16,8 @@ public class Appointment {
     private String doctor; // change to class
     /** Name of patient */
     private String patient; // change to class
+    /** Number of parts of an appointment */
+    public static int numberOfParts = 5;
 
     public Appointment(String appointment) {
         requireNonNull(appointment);
@@ -71,6 +73,14 @@ public class Appointment {
         }
     }
 
+    public boolean isValid() {
+        String[] parts = value.split(",");
+        if (parts.length == Appointment.numberOfParts) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -78,11 +88,12 @@ public class Appointment {
         }
         if (obj instanceof Appointment) {
             Appointment appointment = (Appointment) obj;
-            return (appointment.date.equals(date)
-                    && appointment.startTime.equals(startTime)
-                    && appointment.endTime.equals(endTime)
-                    && appointment.doctor.equals(doctor)
-                    && appointment.patient.equals(patient));
+            return appointment.value.equals(value);
+//            return (appointment.date.equals(date)
+//                    && appointment.startTime.equals(startTime)
+//                    && appointment.endTime.equals(endTime)
+//                    && appointment.doctor.equals(doctor)
+//                    && appointment.patient.equals(patient));
         } else {
             return false;
         }

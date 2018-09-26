@@ -5,8 +5,32 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import org.junit.Test;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentManager;
 
 public class AppointmentTest {
+
+    @Test
+    public void equals() {
+        Appointment appointment = new Appointment("22.11.2018,1300,1400,Jill,Jack");
+
+        // same object -> returns true
+        assertTrue(appointment.equals(appointment));
+
+        // same values -> returns true
+        Appointment remarkCopy = new Appointment(appointment.value);
+        assertTrue(appointment.equals(remarkCopy));
+
+        // different types -> returns false
+        assertFalse(appointment.equals(1));
+
+        // null -> returns false
+        assertFalse(appointment.equals(null));
+
+        // different remark -> returns false
+        Appointment differentRemark = new Appointment("22.11.2018,1300,1400,Alice,Bob");
+        assertFalse(appointment.equals(differentRemark));
+    }
 
     @Test
     public void addAndDeleteTest() {
