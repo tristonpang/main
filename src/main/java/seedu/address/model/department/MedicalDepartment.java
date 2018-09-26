@@ -22,19 +22,17 @@ public class MedicalDepartment {
 
     /**
      * Checks if the string is a valid medical department name.
-     * 
      * @param medDept Medical Department name.
      * @return True if it is a valid name as a medical department.
      */
     public static boolean isValidMedDept(String medDept) {
         return medDept.matches(DEPTNAME_VALIDATION_REGEX);
     }
-    
     @Override
     public boolean equals(Object obj) {
         if(this == obj) {
             return true;
-        } 
+        }
         if (obj instanceof MedicalDepartment){
             MedicalDepartment department = (MedicalDepartment) obj;
             return (department.deptName.equals(this.deptName));
