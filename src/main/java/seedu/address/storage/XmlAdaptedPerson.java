@@ -40,10 +40,14 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     protected List<XmlAdaptedTag> tagged = new ArrayList<>();
+
+    @XmlElement
+    protected String nric;
+    @XmlElement
+    protected String medicalRecords;
     
     @XmlElement
     protected String medicalDepartment;
-    
     @XmlElement(required = true)
     protected List<XmlAdaptedAppointment> appointments;
 
@@ -143,6 +147,9 @@ public class XmlAdaptedPerson {
         if(modelRole.equals(Role.DOCTOR)) {
             return XmlAdaptedDoctor.convertToDoctorModelType(new Person(modelName, modelPhone, modelEmail,
                     modelAddress, modelTags), medicalDepartment, appointments);
+        } else if(modelRole.equals(Role.PATIENT)) {
+            return XmlAdaptedPatient.convertToPatientModelType(new Person(modelName, modelPhone, modelEmail,
+                    modelAddress, modelTags), nric, appointments, medicalRecords);
         }
         
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);

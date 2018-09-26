@@ -45,17 +45,19 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_ROLE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT, PREFIX_NRIC);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_ROLE)
+        // Ensures information for common prefixes are entered.
+        if (!arePrefixesPresent(argMultimap, PREFIX_ROLE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_GENERAL_USAGE));
         } 
-        
+
+        // Ensures Medical Department field is not empty when adding a Doctor.
         if (isRoleOf(Role.DOCTOR, argMultimap)){
             if (!arePrefixesPresent(argMultimap, PREFIX_MEDICAL_DEPARTMENT)) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT,
                         AddCommand.MESSAGE_DOCTOR_USAGE));
             }
-        } else if (isRoleOf(Role.PATIENT, argMultimap)) {
+        } else if (isRoleOf(Role.PATIENT, argMultimap)) { // Ensures NRIC field is not blank when adding new Patient.
             if (!arePrefixesPresent(argMultimap, PREFIX_NRIC)) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_PATIENT_FORMAT,
                         AddCommand.MESSAGE_PATIENT_USAGE));
@@ -91,10 +93,13 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-    
+
+    /**
+     * Returns true if the role in args matches with the Enum role.
+     */
     private static boolean isRoleOf(Enum role, ArgumentMultimap argMultiMap) {
         String person = argMultiMap.getValue(PREFIX_ROLE).get();
-        if(person != null && person.toUpperCase().equals(role.toString())){
+        if(person != null && person.toUpperCase().equals(role.toString())){ // Input is case-insensitive.
             return true;
         }
         return false;

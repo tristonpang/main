@@ -52,5 +52,3 @@ public class MedicalDepartment {
         return '['  + deptName + ']';
     }
 }
-
-// add r/doctor n/john e/john@john.com p/31312312 a/john street md/oncology

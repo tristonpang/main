@@ -2,9 +2,11 @@ package seedu.address.storage;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * JAXB-friendly adapted version of the Appointment.
+ */
 @XmlRootElement(name = "appointments")
 public class XmlAdaptedAppointment {
 

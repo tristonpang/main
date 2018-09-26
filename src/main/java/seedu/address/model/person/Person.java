@@ -74,7 +74,10 @@ public class Person {
                 && otherPerson.getName().equals(getName())
                 && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
     }
-    
+
+    /**
+     * Returns an Xml version of this Person instance.
+     */
     public XmlAdaptedPerson toXmlVersion(Person source) {
         return XmlAdaptedPerson.adaptToXml(source);
     }

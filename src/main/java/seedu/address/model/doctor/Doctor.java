@@ -28,6 +28,7 @@ public class Doctor extends Person {
         ArrayList<String> appt = new ArrayList<>();
         appt.add("Eat Pray Shit...");
         appt.add("Tom 1130 1230");
+        
         this.appointments = appt;
     }
     
