@@ -1,14 +1,10 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_PATIENT_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -18,16 +14,11 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.department.MedicalDepartment;
-import seedu.address.model.doctor.Doctor;
-import seedu.address.model.patient.NRIC;
-import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -43,25 +34,11 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_ROLE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT, PREFIX_NRIC);
+                        PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_ROLE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_GENERAL_USAGE));
-        } 
-        
-        if (isRoleOf(Role.DOCTOR, argMultimap)){
-            if (!arePrefixesPresent(argMultimap, PREFIX_MEDICAL_DEPARTMENT)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT,
-                        AddCommand.MESSAGE_DOCTOR_USAGE));
-            }
-        } else if (isRoleOf(Role.PATIENT, argMultimap)) {
-            if (!arePrefixesPresent(argMultimap, PREFIX_NRIC)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_PATIENT_FORMAT,
-                        AddCommand.MESSAGE_PATIENT_USAGE));
-            }
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_ROLE, AddCommand.MESSAGE_GENERAL_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
         
         
@@ -71,15 +48,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person;
-        if(isRoleOf(Role.PATIENT, argMultimap)){
-            NRIC nric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get());
-            person = new Patient(name, phone, email, address, tagList, nric);
-        }else{
-            MedicalDepartment dept =
-                    ParserUtil.parseMedicalDepartment(argMultimap.getValue(PREFIX_MEDICAL_DEPARTMENT).get());
-            person = new Doctor(name, phone, email, address, tagList, dept);
-        }
+        Person person = new Person(name, phone, email, address, tagList);
 
         return new AddCommand(person);
     }
@@ -90,13 +59,5 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-    
-    private static boolean isRoleOf(Enum role, ArgumentMultimap argMultiMap) {
-        String person = argMultiMap.getValue(PREFIX_ROLE).get();
-        if(person != null && person.toUpperCase().equals(role.toString())){
-            return true;
-        }
-        return false;
     }
 }
