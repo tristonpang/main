@@ -10,19 +10,15 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 public class Patient extends Person {
-    
     private final NRIC nric;
-    
     public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, NRIC nric) {
         super(name, phone, email, address, new MedicalRecord(""), tags);
         this.nric = nric;
-        
     }
 
     public NRIC getNric() {
         return nric;
     }
-    
     public boolean isSamePerson(Patient otherPerson) {
         return super.isSamePerson(otherPerson) && (this.nric.equals(otherPerson));
     }
@@ -40,7 +36,6 @@ public class Patient extends Person {
             return false;
         }
     }
-    
     @Override
     public String toString() {
         return super.toString() + (" NRIC: " + this.nric);

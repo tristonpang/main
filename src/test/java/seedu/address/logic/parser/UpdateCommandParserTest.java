@@ -35,4 +35,4 @@ public class UpdateCommandParserTest {
         // nothing at all
         assertParseFailure(parser, UpdateCommand.COMMAND_WORD, expectedMessage);
     }
-} 
+}
