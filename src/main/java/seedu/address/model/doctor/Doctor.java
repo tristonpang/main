@@ -9,6 +9,8 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.XmlAdaptedDoctor;
+import seedu.address.storage.XmlAdaptedPerson;
 
 public class Doctor extends Person {
     private final MedicalDepartment dept;
@@ -53,5 +55,10 @@ public class Doctor extends Person {
     @Override
     public String toString() {
         return super.toString() + (" Department: " + this.dept);
+    }
+
+    @Override
+    public XmlAdaptedPerson toXmlVersion(Person source) {
+        return XmlAdaptedDoctor.adaptToXml((Doctor) source);
     }
 }
