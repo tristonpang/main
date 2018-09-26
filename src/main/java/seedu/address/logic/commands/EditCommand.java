@@ -20,11 +20,18 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.department.MedicalDepartment;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.NRIC;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -99,9 +106,21 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Appointment updatedAppointment = personToEdit.getAppointment(); // edit command does not allow editing remarks
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        if (personToEdit instanceof Patient) {
+            //edit command does not allow editing medical records
+            MedicalRecord updatedMedicalRecord = ((Patient)personToEdit).getMedicalRecord();
+            NRIC updatedNric = ((Patient)personToEdit).getNric();
+            return new Patient(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                    updatedAppointment, updatedNric, updatedMedicalRecord);
+        } else if (personToEdit instanceof Doctor) {
+            MedicalDepartment updateMedicalDepartment = ((Doctor)personToEdit).getMedicalDepartment();
+            return new Doctor(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                    updatedAppointment, updateMedicalDepartment);
+        }
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedAppointment);
     }
 
     @Override
@@ -132,6 +151,8 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private NRIC nric;
+        private MedicalDepartment medicalDepartment;
 
         public EditPersonDescriptor() {}
 
@@ -186,6 +207,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public void setNric(NRIC nric) {
+            this.nric = nric;
+        }
+
+        public void setMedicalDepartment(MedicalDepartment medicalDepartment) {
+            this.medicalDepartment = medicalDepartment;
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -193,6 +222,7 @@ public class EditCommand extends Command {
         public void setTags(Set<Tag> tags) {
             this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
+
 
         /**
          * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}

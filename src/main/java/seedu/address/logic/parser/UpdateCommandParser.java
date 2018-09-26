@@ -1,4 +1,5 @@
 package seedu.address.logic.parser;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
@@ -9,6 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.MedicalRecord;
 
 public class UpdateCommandParser implements Parser<UpdateCommand> {
+
     /**
      * Parses the given {@code String} of arguments in the context of the UpdateCommand
      * and returns an UpdateCommand object for execution.
@@ -28,3 +30,4 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
         return new UpdateCommand(index, new MedicalRecord(medicalRecord));
     }
 }
+

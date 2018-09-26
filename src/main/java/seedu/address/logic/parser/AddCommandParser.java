@@ -23,7 +23,9 @@ import seedu.address.model.doctor.Doctor;
 import seedu.address.model.patient.NRIC;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -43,7 +45,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_ROLE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT, PREFIX_NRIC);
+                        PREFIX_TAG, PREFIX_NRIC, PREFIX_MEDICAL_DEPARTMENT);
 
         // Ensures information for common prefixes are entered.
         if (!arePrefixesPresent(argMultimap, PREFIX_ROLE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS)
@@ -64,23 +66,22 @@ public class AddCommandParser implements Parser<AddCommand> {
             }
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_ROLE, AddCommand.MESSAGE_GENERAL_USAGE));
+
         }
-        
-        
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person;
-        if(isRoleOf(Role.PATIENT, argMultimap)){
+        Person person = new Person(name, phone, email, address, tagList);
+        if (isRoleOf(Role.PATIENT, argMultimap)) {
             NRIC nric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get());
             person = new Patient(name, phone, email, address, tagList, nric);
-        }else{
-            MedicalDepartment dept =
-                    ParserUtil.parseMedicalDepartment(argMultimap.getValue(PREFIX_MEDICAL_DEPARTMENT).get());
-            person = new Doctor(name, phone, email, address, tagList, dept);
+        } else if (isRoleOf(Role.DOCTOR, argMultimap)) {
+            MedicalDepartment medicalDepartment =
+                    ParserUtil.parseMedicalDepartment(argMultimap.getValue((PREFIX_MEDICAL_DEPARTMENT)).get());
+            person = new Doctor(name, phone, email, address, tagList, medicalDepartment);
         }
 
         return new AddCommand(person);

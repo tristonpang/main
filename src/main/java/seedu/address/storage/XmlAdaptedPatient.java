@@ -13,7 +13,7 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
     public XmlAdaptedPatient(Patient source) {
         super(source);
         nric = source.getNric().code;
-        medicalRecords = source.getMedicalRecord().value;
+        medicalRecord = source.getMedicalRecord().value;
     }
     public static XmlAdaptedPatient adaptToXml(Patient source){
         return new XmlAdaptedPatient(source);
@@ -39,6 +39,7 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
         final MedicalRecord modelMedicalRecords = new MedicalRecord(medicalRecords);
         final NRIC modelNric = new NRIC(nric);
 
-        return new Patient(person, modelNric, modelMedicalRecords);
+        return new Patient(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                person.getTags(), person.getAppointment(), modelNric, modelMedicalRecords);
     }
 }

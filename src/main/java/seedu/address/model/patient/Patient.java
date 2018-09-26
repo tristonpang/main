@@ -1,10 +1,10 @@
 package seedu.address.model.patient;
 
 import static java.util.Objects.requireNonNull;
-
 import java.util.Objects;
 import java.util.Set;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
@@ -15,18 +15,18 @@ import seedu.address.storage.XmlAdaptedPatient;
 import seedu.address.storage.XmlAdaptedPerson;
 
 public class Patient extends Person {
-    
     private final NRIC nric;
     private MedicalRecord medicalRecord;
-    
+
     public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, NRIC nric) {
         super(name, phone, email, address, tags);
         this.nric = nric;
         this.medicalRecord = new MedicalRecord("");
     }
 
-    public Patient(Person source, NRIC nric, MedicalRecord medicalRecord) {
-        super(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+    public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Appointment appointment,
+                   NRIC nric, MedicalRecord medicalRecord) {
+        super(name, phone, email, address, tags, appointment);
         this.nric = nric;
         this.medicalRecord = medicalRecord;
     }
@@ -42,7 +42,7 @@ public class Patient extends Person {
     public void setMedicalRecord(MedicalRecord medicalRecord) {
         this.medicalRecord = requireNonNull(medicalRecord);
     }
-    
+
     public boolean isSamePerson(Patient otherPerson) {
         return super.isSamePerson(otherPerson) && (this.nric.equals(otherPerson));
     }

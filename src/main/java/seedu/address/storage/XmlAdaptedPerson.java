@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -11,8 +10,8 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.doctor.Doctor;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
@@ -29,28 +28,28 @@ public class XmlAdaptedPerson {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     @XmlElement(required = true)
-    protected String role;
+    private String role;
     @XmlElement(required = true)
-    protected String name;
+    private String name;
     @XmlElement(required = true)
-    protected String phone;
+    private String phone;
     @XmlElement(required = true)
-    protected String email;
+    private String email;
     @XmlElement(required = true)
-    protected String address;
-
+    private String address;
     @XmlElement
     protected List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     @XmlElement
     protected String nric;
     @XmlElement
-    protected String medicalRecords;
+    protected String medicalRecord;
     
     @XmlElement
     protected String medicalDepartment;
+
     @XmlElement(required = true)
-    protected List<XmlAdaptedAppointment> appointments;
+    private String appointment;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -61,15 +60,18 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
-        this.role = this.getClass().getSimpleName();
+    public XmlAdaptedPerson(String name, String phone, String email, String address, String medicalRecord,
+                            List<XmlAdaptedTag> tagged) {
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.medicalRecord = medicalRecord;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        this.role = this.getClass().getSimpleName();
     }
 
     /**
@@ -83,11 +85,12 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        appointment = source.getAppointment().value;
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
     }
-    
+
     public static XmlAdaptedPerson adaptToXml(Person source) {
         return new XmlAdaptedPerson(source);
     }
@@ -102,15 +105,15 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
-        
-        if(role == null) {
-            throw new IllegalValueException((String.format(MISSING_FIELD_MESSAGE_FORMAT, Role.class.getSimpleName())));
+
+        if (role == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Role.class.getSimpleName()));
         }
-        if(Arrays.stream(Role.values()).noneMatch(r->r.toString().equals(role.toUpperCase()))){
+        if (!Role.isValidRole(role)){
             throw new IllegalValueException(Role.MESSAGE_ROLE_CONSTRAINTS);
         }
         final Role modelRole = Role.valueOf(role.toUpperCase());
-        
+
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -141,19 +144,22 @@ public class XmlAdaptedPerson {
         if (!Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        final Address modelAddress = new Address(address);
+        if (appointment == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Appointment.class.getSimpleName()));
+        }
+        final Appointment modelAppointment = new Appointment(appointment);
 
+        final Address modelAddress = new Address(address);
         final Set<Tag> modelTags = new HashSet<>(personTags);
         
-        if(modelRole.equals(Role.DOCTOR)) {
+        if (modelRole.equals(Role.DOCTOR)) {
             return XmlAdaptedDoctor.convertToDoctorModelType(new Person(modelName, modelPhone, modelEmail,
-                    modelAddress, modelTags), medicalDepartment, appointments);
-        } else if(modelRole.equals(Role.PATIENT)) {
+                    modelAddress, modelTags, modelAppointment), medicalDepartment);
+        } else if (modelRole.equals(Role.PATIENT)) {
             return XmlAdaptedPatient.convertToPatientModelType(new Person(modelName, modelPhone, modelEmail,
-                    modelAddress, modelTags), nric, medicalRecords);
+                    modelAddress, modelTags, modelAppointment), nric, medicalRecord);
         }
-        
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelAppointment);
     }
 
     @Override

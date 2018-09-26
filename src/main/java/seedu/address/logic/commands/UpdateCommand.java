@@ -1,4 +1,5 @@
 package seedu.address.logic.commands;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -12,10 +13,11 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UpdateCommand extends Command {
+
     public static final String COMMAND_WORD = "update";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": updates the medical record of the person identified by the index number used in the last person listing. "
             + "Existing medical record will be overwritten by the input.\n"
@@ -23,9 +25,11 @@ public class UpdateCommand extends Command {
             + PREFIX_MEDICAL_RECORD + "MEDICAL_RECORD\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_MEDICAL_RECORD + "Diagnosed with flue. Tamiflu prescribed.";
+
     public static final String MESSAGE_UPDATE_MEDICAL_RECORD_SUCCESS = "Updated medical record of Person: %1$s";
     public static final String MESSAGE_DELETE_MEDICAL_RECORD_SUCCESS = "Medical record deleted from Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+
     private final Index index;
     private final MedicalRecord medicalRecord;
 
@@ -49,9 +53,11 @@ public class UpdateCommand extends Command {
         }
 
         Patient personToEdit = (Patient)lastShownList.get(index.getZeroBased());
-        Patient editedPerson = new Patient(new Person(personToEdit.getName(), personToEdit.getPhone(),
-                personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getTags()), personToEdit.getNric(), medicalRecord);
+        Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getPhone(),
+                personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
+                personToEdit.getAppointment(), personToEdit.getNric(),
+                medicalRecord);
+
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {

@@ -29,6 +29,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private Label role;
+    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -39,11 +41,13 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label medicalRecord;
+    @FXML
+    private Label appointment;
+    @FXML
     private FlowPane tags;
     @FXML
     private Label uniqueField;
-    @FXML
-    private Label role;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -60,6 +64,7 @@ public class PersonCard extends UiPart<Region> {
         }
         role.setText(person.getClass().getSimpleName());
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        appointment.setText(person.getAppointment().value);
     }
 
     @Override

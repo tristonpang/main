@@ -99,6 +99,33 @@ public class ParserUtil {
         return new Email(trimmedEmail);
     }
 
+    public static NRIC parseNric(String nric) throws ParseException {
+        requireNonNull(nric);
+        String trimmedNric = nric.trim();
+        if(!NRIC.isValidNric(trimmedNric)) {
+            throw new ParseException(NRIC.MESSAGE_NRIC_CONSTRAINTS);
+        }
+        return new NRIC(trimmedNric);
+    }
+
+    public static MedicalDepartment parseMedicalDepartment(String dept) throws ParseException {
+        requireNonNull(dept);
+        String trimmedDept = dept.trim();
+        if(!MedicalDepartment.isValidMedDept(trimmedDept)) {
+            throw new ParseException(MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS);
+        }
+        return new MedicalDepartment(trimmedDept);
+    }
+
+    public static Role parseRole(String role) throws ParseException {
+        requireNonNull(role);
+        String trimmedRole = role.trim().toUpperCase();
+        if(!Role.isValidRole(trimmedRole)) {
+            throw new ParseException(Role.MESSAGE_ROLE_CONSTRAINTS);
+        }
+        return Role.valueOf(trimmedRole);
+    }
+
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
@@ -112,33 +139,6 @@ public class ParserUtil {
             throw new ParseException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
         return new Tag(trimmedTag);
-    }
-    
-    public static NRIC parseNric(String nric) throws ParseException {
-        requireNonNull(nric);
-        String trimmedNric = nric.trim();
-        if(!NRIC.isValidNric(trimmedNric)) {
-            throw new ParseException(NRIC.MESSAGE_NRIC_CONSTRAINTS);
-        }
-        return new NRIC(trimmedNric);
-    }
-    
-    public static MedicalDepartment parseMedicalDepartment(String dept) throws ParseException {
-        requireNonNull(dept);
-        String trimmedDept = dept.trim();
-        if(!MedicalDepartment.isValidMedDept(trimmedDept)) {
-            throw new ParseException(MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS);
-        }
-        return new MedicalDepartment(trimmedDept);
-    }
-    
-    public static Role parseRole(String role) throws ParseException {
-        requireNonNull(role);
-        String trimmedRole = role.trim().toUpperCase();
-        if(Arrays.stream(Role.values()).noneMatch(r->r.toString().equals(trimmedRole))) {
-            throw new ParseException(Role.MESSAGE_ROLE_CONSTRAINTS);
-        }
-        return Role.valueOf(trimmedRole);
     }
 
     /**

@@ -25,6 +25,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
+        <Label fx:id="role" styleClass="cell_small_label" text="\$role" />
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
       <FlowPane fx:id="tags" />
@@ -32,7 +33,7 @@
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="uniqueField" styleClass="cell_small_label" text="\$uniqueField" />
-      <Label fx:id="role" styleClass="cell_small_label" text="\$role" />
+      <Label fx:id="appointment" styleClass="cell_small_label" text="\$appointment" />
     </VBox>
   </GridPane>
 </HBox>
