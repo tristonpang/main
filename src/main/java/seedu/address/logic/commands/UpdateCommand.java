@@ -53,7 +53,7 @@ public class UpdateCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), medicalRecord, personToEdit.getTags());
+                personToEdit.getAddress(), medicalRecord, personToEdit.getAppointment(), personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
