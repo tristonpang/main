@@ -47,7 +47,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         MedicalRecord medicalRecord = new MedicalRecord(""); //add command does not allow adding medical records straight away
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
+      
         Person person = new Person(name, phone, email, address, medicalRecord, tagList);
 
         return new AddCommand(person);

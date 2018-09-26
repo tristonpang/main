@@ -15,6 +15,7 @@ public class Doctor extends Person {
     private final MedicalDepartment dept;
     // TODO: Change ArrayList to ArrayList<Appointment>
     private ArrayList<String> appointments;
+
     public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags, MedicalDepartment dept) {
         super(name, phone, email, address, new MedicalRecord(""), tags);
         this.dept = dept;
@@ -22,6 +23,7 @@ public class Doctor extends Person {
     public MedicalDepartment getMedicalDepartment () {
         return this.dept;
     }
+
     public boolean isSamePerson(Doctor otherDoctor) {
         return super.isSamePerson(otherDoctor)
                 && (this.dept == otherDoctor.dept);
@@ -41,6 +43,7 @@ public class Doctor extends Person {
     public void scheduleAppointment(String patientName, String date, String timeStart, String timeEnd) {
         // TODO: AppointmentManager.add(appointments, new Appointment(...));
     }
+
     @Override
     public String toString() {
         return super.toString() + (" Department: " + this.dept);
