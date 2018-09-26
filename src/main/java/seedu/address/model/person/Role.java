@@ -1,7 +1,9 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
-
-public class Role {
+public enum Role {
+    DOCTOR, 
+    PATIENT;
+    
+    public static final String MESSAGE_ROLE_CONSTRAINTS = "Roles should only [Patient]/[Doctor]" + 
+            " and it should not be blank";
 }
