@@ -43,14 +43,11 @@ public class AddCommand extends Command {
             + PREFIX_NRIC + "S123XXXXA";
 
     public static final String MESSAGE_DOCTOR_USAGE = COMMON_MESSAGE + PREFIX_MEDICAL_DEPARTMENT + "Oncology";
-
     public static final String MESSAGE_PATIENT_USAGE = COMMON_MESSAGE + PREFIX_NRIC + " S123XXXXA";
-
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     private final Person toAdd;
-    
+
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
