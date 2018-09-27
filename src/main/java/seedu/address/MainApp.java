@@ -48,7 +48,6 @@ public class MainApp extends Application {
     protected Logic logic;
     protected Storage storage;
     protected Model model;
-a
     protected Config config;
     protected UserPrefs userPrefs;
 
