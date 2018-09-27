@@ -1,25 +1,30 @@
 package seedu.address.logic.commands;
 
+import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.patient.Patient;
-import seedu.address.model.person.MedicalRecord;
+import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
-import java.util.List;
 
+/**
+ * Updates medical record of a patient in the addressbook.
+ */
 public class UpdateCommand extends Command {
 
     public static final String COMMAND_WORD = "update";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": updates the medical record of the person identified by the index number used in the last person listing. "
+            + ": updates the medical record of the person identified by "
+            + "the index number used in the last person listing. "
             + "Existing medical record will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + PREFIX_MEDICAL_RECORD + "MEDICAL_RECORD\n"
@@ -52,7 +57,7 @@ public class UpdateCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_CHOSEN);
         }
 
-        Patient personToEdit = (Patient)lastShownList.get(index.getZeroBased());
+        Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
         Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getPhone(),
                 personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
                 personToEdit.getAppointment(), personToEdit.getNric(),
@@ -69,6 +74,11 @@ public class UpdateCommand extends Command {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     * Returns a success message when updated a medical record.
+     * @param personToEdit The person who's medical record is changed.
+     * @return A success message.
+     */
     private String generateSuccessMessage(Person personToEdit) {
         if (!medicalRecord.value.isEmpty()) {
             return String.format(MESSAGE_UPDATE_MEDICAL_RECORD_SUCCESS, personToEdit);

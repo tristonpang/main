@@ -39,13 +39,13 @@ public class XmlAdaptedDoctor extends XmlAdaptedPerson {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
-    public static Doctor convertToDoctorModelType (Person source,String medicalDept) throws IllegalValueException {
+    public static Doctor convertToDoctorModelType (Person source, String medicalDept) throws IllegalValueException {
         Person modelPerson = source;
         if (medicalDept == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     MedicalDepartment.class.getSimpleName()));
         }
-        if(!MedicalDepartment.isValidMedDept(medicalDept)) {
+        if (!MedicalDepartment.isValidMedDept(medicalDept)) {
             throw new IllegalValueException(MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS);
         }
         final MedicalDepartment modelMedicalDept = new MedicalDepartment(medicalDept);

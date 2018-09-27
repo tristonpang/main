@@ -13,7 +13,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -28,15 +27,15 @@ public class XmlAdaptedPerson {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     @XmlElement(required = true)
-    private String role;
+    protected String role;
     @XmlElement(required = true)
-    private String name;
+    protected String name;
     @XmlElement(required = true)
-    private String phone;
+    protected String phone;
     @XmlElement(required = true)
-    private String email;
+    protected String email;
     @XmlElement(required = true)
-    private String address;
+    protected String address;
     @XmlElement
     protected List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -49,7 +48,7 @@ public class XmlAdaptedPerson {
     protected String medicalDepartment;
 
     @XmlElement(required = true)
-    private String appointment;
+    protected String appointment;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -113,7 +112,7 @@ public class XmlAdaptedPerson {
         if (role == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Role.class.getSimpleName()));
         }
-        if (!Role.isValidRole(role)){
+        if (!Role.isValidRole(role)) {
             throw new IllegalValueException(Role.MESSAGE_ROLE_CONSTRAINTS);
         }
         final Role modelRole = Role.valueOf(role.toUpperCase());

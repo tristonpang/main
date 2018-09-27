@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_PATIENT_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
@@ -20,12 +19,10 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
-import seedu.address.model.patient.NRIC;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -54,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         // Ensures Medical Department field is not empty when adding a Doctor.
-        if (isRoleOf(Role.DOCTOR, argMultimap)){
+        if (isRoleOf(Role.DOCTOR, argMultimap)) {
             if (!arePrefixesPresent(argMultimap, PREFIX_MEDICAL_DEPARTMENT)) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT,
                         AddCommand.MESSAGE_DOCTOR_USAGE));
@@ -76,7 +73,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         Person person = new Person(name, phone, email, address, tagList);
         if (isRoleOf(Role.PATIENT, argMultimap)) {
-            NRIC nric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get());
+            Nric nric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get());
             person = new Patient(name, phone, email, address, tagList, nric);
         } else if (isRoleOf(Role.DOCTOR, argMultimap)) {
             MedicalDepartment medicalDepartment =
@@ -100,7 +97,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private static boolean isRoleOf(Enum role, ArgumentMultimap argMultiMap) {
         String person = argMultiMap.getValue(PREFIX_ROLE).get();
-        if(person != null && person.toUpperCase().equals(role.toString())){ // Input is case-insensitive.
+        if (person != null && person.toUpperCase().equals(role.toString())) { // Input is case-insensitive.
             return true;
         }
         return false;

@@ -21,7 +21,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.patient.Patient;
-import seedu.address.model.person.MedicalRecord;
+import seedu.address.model.patient.MedicalRecord;
 import seedu.address.testutil.PatientBuilder;
 
 public class UpdateCommandTest {

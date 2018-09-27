@@ -1,9 +1,7 @@
-package seedu.address.model.person;
+package seedu.address.model.patient;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-
-import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's Medical Record in the address book.

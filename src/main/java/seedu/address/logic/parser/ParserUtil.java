@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.department.MedicalDepartment;
-import seedu.address.model.patient.NRIC;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -99,28 +98,46 @@ public class ParserUtil {
         return new Email(trimmedEmail);
     }
 
-    public static NRIC parseNric(String nric) throws ParseException {
+    /**
+     * Parses a {@code String nric} into an {@code Nric}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code nric} is invalid.
+     */
+    public static Nric parseNric(String nric) throws ParseException {
         requireNonNull(nric);
         String trimmedNric = nric.trim();
-        if(!NRIC.isValidNric(trimmedNric)) {
-            throw new ParseException(NRIC.MESSAGE_NRIC_CONSTRAINTS);
+        if (!Nric.isValidNric(trimmedNric)) {
+            throw new ParseException(Nric.MESSAGE_NRIC_CONSTRAINTS);
         }
-        return new NRIC(trimmedNric);
+        return new Nric(trimmedNric);
     }
 
+    /**
+     * Parses a {@code String dept} into an {@code Medical Department}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code dept} is invalid.
+     */
     public static MedicalDepartment parseMedicalDepartment(String dept) throws ParseException {
         requireNonNull(dept);
         String trimmedDept = dept.trim();
-        if(!MedicalDepartment.isValidMedDept(trimmedDept)) {
+        if (!MedicalDepartment.isValidMedDept(trimmedDept)) {
             throw new ParseException(MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS);
         }
         return new MedicalDepartment(trimmedDept);
     }
 
+    /**
+     * Parses a {@code String role} into an {@code Role}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code role} is invalid.
+     */
     public static Role parseRole(String role) throws ParseException {
         requireNonNull(role);
         String trimmedRole = role.trim().toUpperCase();
-        if(!Role.isValidRole(trimmedRole)) {
+        if (!Role.isValidRole(trimmedRole)) {
             throw new ParseException(Role.MESSAGE_ROLE_CONSTRAINTS);
         }
         return Role.valueOf(trimmedRole);

@@ -16,9 +16,6 @@ import seedu.address.model.person.Role;
  */
 public class ListCommand extends Command {
 
-    private Role role;
-    private Predicate<Person> predicate;
-
     public static final String COMMAND_WORD = "list";
     public static final String MESSAGE_SUCCESS = "Listed all persons";
     public static final String MESSAGE_SUCCESS_FILTERED_LIST = "Listed all ";
@@ -29,7 +26,10 @@ public class ListCommand extends Command {
             + "Example : " + COMMAND_WORD + " "
             + PREFIX_ROLE + "patient \n";
 
-    public ListCommand(){
+    private Role role;
+    private Predicate<Person> predicate;
+
+    public ListCommand() {
         predicate = PREDICATE_SHOW_ALL_PERSONS;
     }
 
@@ -37,7 +37,7 @@ public class ListCommand extends Command {
      * Creates a ListCommand with predicate to filter base on the specified role.
      * @param role Specified role to filter this list by.
      */
-    public ListCommand(Role role){
+    public ListCommand(Role role) {
         this.role = role;
         this.predicate = p -> p.getClass().getSimpleName().toUpperCase().equals(role.toString());
     }

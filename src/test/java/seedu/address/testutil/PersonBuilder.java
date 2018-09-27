@@ -6,7 +6,6 @@ import java.util.Set;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -99,7 +98,6 @@ public class PersonBuilder {
         this.appointment = new Appointment(appointment);
         return this;
     }
-
 
     public Person build() {
         return new Person(name, phone, email, address, tags, appointment);

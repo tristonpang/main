@@ -3,11 +3,12 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.MedicalRecord;
+import seedu.address.model.patient.MedicalRecord;
 
 public class UpdateCommandParser implements Parser<UpdateCommand> {
 

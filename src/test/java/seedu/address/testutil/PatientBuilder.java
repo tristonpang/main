@@ -1,12 +1,12 @@
 package seedu.address.testutil;
 
 import java.util.HashSet;
-import seedu.address.model.patient.NRIC;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.MedicalRecord;
+import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.util.SampleDataUtil;
@@ -20,7 +20,7 @@ public class PatientBuilder extends PersonBuilder {
     public static final String DEFAULT_NRIC = "S1234567A";
 
     private MedicalRecord medicalRecord;
-    private NRIC nric;
+    private Nric nric;
 
     public PatientBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -28,7 +28,7 @@ public class PatientBuilder extends PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         medicalRecord = new MedicalRecord(DEFAULT_MEDICAL_RECORD);
-        nric = new NRIC(DEFAULT_NRIC);
+        nric = new Nric(DEFAULT_NRIC);
         appointment = new Appointment(DEFAULT_APPOINTMENT);
         tags = new HashSet<>();
     }
@@ -96,7 +96,7 @@ public class PatientBuilder extends PersonBuilder {
      * Sets the {@code MedicalRecord} of the {@code Patient} that we are building.
      */
     public PatientBuilder withNric(String nric) {
-        this.nric = new NRIC(nric);
+        this.nric = new Nric(nric);
         return this;
     }
 

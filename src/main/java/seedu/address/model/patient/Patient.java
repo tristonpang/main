@@ -5,10 +5,10 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 import java.util.Set;
+
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -21,7 +21,7 @@ import seedu.address.storage.XmlAdaptedPerson;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Patient extends Person {
-    private final NRIC nric;
+    private final Nric nric;
     private MedicalRecord medicalRecord;
 
     /**
@@ -29,7 +29,7 @@ public class Patient extends Person {
      * An empty {@code MedicalRecord} will be created by default for the patient.
      * All field must be present and non-null.
      */
-    public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, NRIC nric) {
+    public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Nric nric) {
         super(name, phone, email, address, tags);
         requireAllNonNull(nric);
         this.nric = nric;
@@ -41,13 +41,13 @@ public class Patient extends Person {
      * All field must be present and non-null.
      */
     public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Appointment appointment,
-                   NRIC nric, MedicalRecord medicalRecord) {
+                   Nric nric, MedicalRecord medicalRecord) {
         super(name, phone, email, address, tags, appointment);
         this.nric = nric;
         this.medicalRecord = medicalRecord;
     }
 
-    public NRIC getNric() {
+    public Nric getNric() {
         return nric;
     }
 

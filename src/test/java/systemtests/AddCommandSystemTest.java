@@ -44,7 +44,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.department.MedicalDepartment;
-import seedu.address.model.patient.NRIC;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -206,7 +206,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid nric -> rejected */
         command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + INVALID_NRIC_DESC;
-        assertCommandFailure(command, NRIC.MESSAGE_NRIC_CONSTRAINTS);
+        assertCommandFailure(command, Nric.MESSAGE_NRIC_CONSTRAINTS);
 
         /* Case: invalid medical department -> rejected */
         command = AddCommand.COMMAND_WORD + ROLE_DOCTOR_DESC + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY

@@ -3,6 +3,7 @@ package seedu.address.model.doctor;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Set;
+
 import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
@@ -42,13 +43,11 @@ public class Doctor extends Person {
         this.dept = modelMedicalDept;
     }
 
+    /**
+     * Returns Medical Department of this doctor.
+     */
     public MedicalDepartment getMedicalDepartment () {
         return this.dept;
-    }
-
-    public boolean isSamePerson(Doctor otherDoctor) {
-        return super.isSamePerson(otherDoctor)
-                && (this.dept == otherDoctor.dept);
     }
 
     @Override

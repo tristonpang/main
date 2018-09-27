@@ -7,10 +7,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a Patient's NRIC in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class NRIC {
+public class Nric {
 
-    public static final String MESSAGE_NRIC_CONSTRAINTS = "NRIC should contain only alphanumeric " +
-            "characters and should not be left blank.";
+    public static final String MESSAGE_NRIC_CONSTRAINTS = "NRIC should contain only alphanumeric "
+            + "characters and should not be left blank.";
     public static final String NRIC_VALIDATION_REGEX = "(?i)^[STFG]\\d{7}[A-Z]";
     public final String code;
 
@@ -19,7 +19,7 @@ public class NRIC {
      *
      * @param code A NRIC with valid format.
      */
-    public NRIC(String code) {
+    public Nric(String code) {
         requireNonNull(code);
         checkArgument(isValidNric(code), MESSAGE_NRIC_CONSTRAINTS);
         this.code = code;
@@ -40,8 +40,8 @@ public class NRIC {
     @Override
     public boolean equals(Object obj) {
         return obj == this // short circuit if same object
-                || (obj instanceof NRIC // instanceof handles nulls
-                && code.equals(((NRIC) obj).code)); // state check
+                || (obj instanceof Nric // instanceof handles nulls
+                && code.equals(((Nric) obj).code)); // state check
     }
 
     @Override

@@ -2,13 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -38,9 +39,8 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney ";
 
-    public static final String MESSAGE_GENERAL_USAGE = COMMON_MESSAGE.replaceFirst("Example", "Example (ADD NEW " +
-            "PATIENT)")
-            + PREFIX_NRIC + "S123XXXXA";
+    public static final String MESSAGE_GENERAL_USAGE = COMMON_MESSAGE.replaceFirst("Example", "Example (ADD NEW "
+            + "PATIENT)") + PREFIX_NRIC + "S123XXXXA";
 
     public static final String MESSAGE_DOCTOR_USAGE = COMMON_MESSAGE + PREFIX_MEDICAL_DEPARTMENT + "Oncology";
     public static final String MESSAGE_PATIENT_USAGE = COMMON_MESSAGE + PREFIX_NRIC + " S123XXXXA";

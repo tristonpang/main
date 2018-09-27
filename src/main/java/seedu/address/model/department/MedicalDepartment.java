@@ -36,10 +36,10 @@ public class MedicalDepartment {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) {
+        if (this == obj) {
             return true;
         }
-        if (obj instanceof MedicalDepartment){
+        if (obj instanceof MedicalDepartment) {
             MedicalDepartment department = (MedicalDepartment) obj;
             return (department.deptName.equals(this.deptName));
         } else {

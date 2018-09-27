@@ -10,10 +10,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -64,7 +66,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         if (isRoleOf(Role.PATIENT, argMultimap)) {
             editPersonDescriptor.setNric(ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get()));
-        } else if (isRoleOf(Role.DOCTOR, argMultimap)){
+        } else if (isRoleOf(Role.DOCTOR, argMultimap)) {
             editPersonDescriptor.setMedicalDepartment(ParserUtil.parseMedicalDepartment(argMultimap
                     .getValue(PREFIX_MEDICAL_DEPARTMENT).get()));
         }
@@ -96,7 +98,7 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     private static boolean isRoleOf(Enum role, ArgumentMultimap argMultiMap) {
         String person = argMultiMap.getValue(PREFIX_ROLE).get();
-        if(person != null && person.toUpperCase().equals(role.toString())){ // Input is case-insensitive.
+        if (person != null && person.toUpperCase().equals(role.toString())) { // Input is case-insensitive.
             return true;
         }
         return false;

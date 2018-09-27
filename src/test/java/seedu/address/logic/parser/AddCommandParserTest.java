@@ -37,7 +37,7 @@ import static seedu.address.testutil.TypicalPersons.BOB;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.patient.NRIC;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -154,7 +154,7 @@ public class AddCommandParserTest {
 
         // invalid NRIC
         assertParseFailure(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + INVALID_NRIC_DESC, NRIC.MESSAGE_NRIC_CONSTRAINTS);
+                + ADDRESS_DESC_BOB + INVALID_NRIC_DESC, Nric.MESSAGE_NRIC_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, ROLE_PATIENT_DESC + INVALID_NAME_DESC + PHONE_DESC_BOB

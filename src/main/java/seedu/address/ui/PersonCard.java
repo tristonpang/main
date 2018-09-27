@@ -57,10 +57,10 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        if(person instanceof Doctor) {
+        if (person instanceof Doctor) {
             uniqueField.setText(((Doctor) person).getMedicalDepartment().deptName);
-        }else if(person instanceof Patient) {
-            uniqueField.setText(((Patient)person).getMedicalRecord().value);
+        } else if (person instanceof Patient) {
+            uniqueField.setText(((Patient) person).getMedicalRecord().value);
         }
         role.setText(person.getClass().getSimpleName());
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

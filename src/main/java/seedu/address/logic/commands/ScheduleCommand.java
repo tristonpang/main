@@ -17,6 +17,9 @@ import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 
+/**
+ * Updates the schedule of a person in the addressbook.
+ */
 public class ScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "schedule";
@@ -66,13 +69,13 @@ public class ScheduleCommand extends Command {
             editedPerson = new Doctor(personToEdit.getName(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
                     personToEdit.getAddress(), personToEdit.getTags(), appointment,
-                    ((Doctor)personToEdit).getMedicalDepartment());
+                    ((Doctor) personToEdit).getMedicalDepartment());
         } else {
             assert personToEdit instanceof Patient;
             editedPerson = new Patient(personToEdit.getName(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getTags(), appointment,
-                    ((Patient)personToEdit).getNric(), ((Patient)personToEdit).getMedicalRecord());
+                    personToEdit.getAddress(), personToEdit.getTags(), appointment, ((Patient) personToEdit).getNric(),
+                    ((Patient) personToEdit).getMedicalRecord());
         }
 
         model.updatePerson(personToEdit, editedPerson);
@@ -87,7 +90,8 @@ public class ScheduleCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !appointment.value.isEmpty() ? MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS : MESSAGE_DELETE_APPOINTMENT_SUCCESS;
+        String message = !appointment.value.isEmpty() ? MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS :
+                MESSAGE_DELETE_APPOINTMENT_SUCCESS;
         return String.format(message, personToEdit);
     }
 

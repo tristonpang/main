@@ -23,16 +23,15 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
-import seedu.address.model.patient.NRIC;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Appointment;
-import seedu.address.model.person.Role;
+import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -114,13 +113,13 @@ public class EditCommand extends Command {
 
         if (personToEdit instanceof Patient) {
             //edit command does not allow editing medical records
-            MedicalRecord updatedMedicalRecord = ((Patient)personToEdit).getMedicalRecord();
-            NRIC updatedNric = editPersonDescriptor.getNric().orElse(((Patient) personToEdit).getNric());
+            MedicalRecord updatedMedicalRecord = ((Patient) personToEdit).getMedicalRecord();
+            Nric updatedNric = editPersonDescriptor.getNric().orElse(((Patient) personToEdit).getNric());
             return new Patient(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                     updatedAppointment, updatedNric, updatedMedicalRecord);
         } else {
             assert personToEdit instanceof Doctor; // Person must be either Patient or Doctor.
-            MedicalDepartment updateMedicalDepartment = ((Doctor)personToEdit).getMedicalDepartment();
+            MedicalDepartment updateMedicalDepartment = ((Doctor) personToEdit).getMedicalDepartment();
             return new Doctor(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                     updatedAppointment, updateMedicalDepartment);
         }
@@ -154,7 +153,7 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
-        private NRIC nric;
+        private Nric Nric;
         private MedicalDepartment medicalDepartment;
 
         public EditPersonDescriptor() {}
@@ -170,14 +169,14 @@ public class EditCommand extends Command {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setMedicalDepartment(toCopy.medicalDepartment);
-            setNric(toCopy.nric);
+            setNric(toCopy.Nric);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, nric, medicalDepartment);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, Nric, medicalDepartment);
         }
 
         public void setName(Name name) {
@@ -212,12 +211,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setNric(NRIC nric) {
-            this.nric = nric;
+        public void setNric(Nric Nric) {
+            this.Nric = Nric;
         }
 
-        public Optional<NRIC> getNric() {
-            return Optional.ofNullable(nric);
+        public Optional<Nric> getNric() {
+            return Optional.ofNullable(Nric);
         }
 
         public void setMedicalDepartment(MedicalDepartment medicalDepartment) {

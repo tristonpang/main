@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -26,6 +27,11 @@ public class XmlAdaptedAppointment {
         this.appointment = appointment;
     }
 
+    /**
+     * Converts this jaxb-friendly adapted appointment object into the model's Appointment object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted appointment.
+     */
     public String toModelType() throws IllegalValueException {
         // TODO: 25/9/2018 Create Appointment class and isValidAppt method
         /*if (!Tag.isValidTagName(tagName)) {
