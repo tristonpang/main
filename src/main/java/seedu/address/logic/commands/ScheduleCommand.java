@@ -68,14 +68,13 @@ public class ScheduleCommand extends Command {
         if (personToEdit instanceof Doctor) {
             editedPerson = new Doctor(personToEdit.getName(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getTags(), appointment,
-                    ((Doctor) personToEdit).getMedicalDepartment());
+                    personToEdit.getAddress(), personToEdit.getTags(),
+                    appointment, ((Doctor) personToEdit).getMedicalDepartment());
         } else {
             assert personToEdit instanceof Patient;
-            editedPerson = new Patient(personToEdit.getName(),
-                    personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getTags(), appointment, ((Patient) personToEdit).getNric(),
-                    ((Patient) personToEdit).getMedicalRecord());
+            editedPerson = new Patient(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                    personToEdit.getAddress(), personToEdit.getTags(),
+                    appointment, ((Patient) personToEdit).getNric(), ((Patient) personToEdit).getMedicalRecord());
         }
 
         model.updatePerson(personToEdit, editedPerson);
@@ -90,8 +89,8 @@ public class ScheduleCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !appointment.value.isEmpty() ? MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS :
-                MESSAGE_DELETE_APPOINTMENT_SUCCESS;
+        String message = !appointment.value.isEmpty() ? MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS
+                : MESSAGE_DELETE_APPOINTMENT_SUCCESS;
         return String.format(message, personToEdit);
     }
 

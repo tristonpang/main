@@ -95,7 +95,7 @@ public class Patient extends Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Medical Records: " )
+                .append(" Medical Records: ")
                 .append(getMedicalRecord())
                 .append(" Appointments: ")
                 .append(getAppointment())

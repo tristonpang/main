@@ -10,6 +10,10 @@ import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.MedicalRecord;
 
+
+/**
+ * Parses input arguments and creates a new UpdateCommand object
+ */
 public class UpdateCommandParser implements Parser<UpdateCommand> {
 
     /**

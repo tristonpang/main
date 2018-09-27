@@ -153,7 +153,7 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
-        private Nric Nric;
+        private Nric nric;
         private MedicalDepartment medicalDepartment;
 
         public EditPersonDescriptor() {}
@@ -169,14 +169,14 @@ public class EditCommand extends Command {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setMedicalDepartment(toCopy.medicalDepartment);
-            setNric(toCopy.Nric);
+            setNric(toCopy.nric);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, Nric, medicalDepartment);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, nric, medicalDepartment);
         }
 
         public void setName(Name name) {
@@ -211,12 +211,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setNric(Nric Nric) {
-            this.Nric = Nric;
+        public void setNric(Nric nric) {
+            this.nric = nric;
         }
 
         public Optional<Nric> getNric() {
-            return Optional.ofNullable(Nric);
+            return Optional.ofNullable(nric);
         }
 
         public void setMedicalDepartment(MedicalDepartment medicalDepartment) {
