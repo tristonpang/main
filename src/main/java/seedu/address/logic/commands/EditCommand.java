@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -45,12 +46,14 @@ public class EditCommand extends Command {
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_ROLE + "ROLE] "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_ROLE + "Patient "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
@@ -112,15 +115,15 @@ public class EditCommand extends Command {
         if (personToEdit instanceof Patient) {
             //edit command does not allow editing medical records
             MedicalRecord updatedMedicalRecord = ((Patient)personToEdit).getMedicalRecord();
-            NRIC updatedNric = ((Patient)personToEdit).getNric();
+            NRIC updatedNric = editPersonDescriptor.getNric().orElse(((Patient) personToEdit).getNric());
             return new Patient(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                     updatedAppointment, updatedNric, updatedMedicalRecord);
-        } else if (personToEdit instanceof Doctor) {
+        } else {
+            assert personToEdit instanceof Doctor; // Person must be either Patient or Doctor.
             MedicalDepartment updateMedicalDepartment = ((Doctor)personToEdit).getMedicalDepartment();
             return new Doctor(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                     updatedAppointment, updateMedicalDepartment);
         }
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedAppointment);
     }
 
     @Override
@@ -166,13 +169,15 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setMedicalDepartment(toCopy.medicalDepartment);
+            setNric(toCopy.nric);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, nric, medicalDepartment);
         }
 
         public void setName(Name name) {
@@ -211,8 +216,16 @@ public class EditCommand extends Command {
             this.nric = nric;
         }
 
+        public Optional<NRIC> getNric() {
+            return Optional.ofNullable(nric);
+        }
+
         public void setMedicalDepartment(MedicalDepartment medicalDepartment) {
             this.medicalDepartment = medicalDepartment;
+        }
+
+        public Optional<MedicalDepartment> getMedicalDepartment() {
+            return Optional.ofNullable(medicalDepartment);
         }
 
         /**

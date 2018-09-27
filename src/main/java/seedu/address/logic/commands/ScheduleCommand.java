@@ -32,6 +32,7 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE = "Failed to schedule appointment to Person.\n"
             + "Please check that the format of the appointment is keyed in properly.\n";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
+    private static final String MESSAGE_SCHEDULE_APPOINTMENT_MISMATCH = "Please check input name matches person chosen";
 
     private final Index index;
     private final Appointment appointment;
@@ -64,13 +65,13 @@ public class ScheduleCommand extends Command {
         if (personToEdit instanceof Doctor) {
             editedPerson = new Doctor(personToEdit.getName(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getAppointment(),
+                    personToEdit.getAddress(), personToEdit.getTags(), appointment,
                     ((Doctor)personToEdit).getMedicalDepartment());
         } else {
             assert personToEdit instanceof Patient;
             editedPerson = new Patient(personToEdit.getName(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getTags(), personToEdit.getAppointment(),
+                    personToEdit.getAddress(), personToEdit.getTags(), appointment,
                     ((Patient)personToEdit).getNric(), ((Patient)personToEdit).getMedicalRecord());
         }
 

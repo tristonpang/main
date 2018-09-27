@@ -21,6 +21,7 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
     public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS_FILTERED_LIST = "Listed all ";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists people in the addressbook. "
             + "(Optional) Parameters: "
             + PREFIX_ROLE + "ROLE \n"
@@ -32,6 +33,10 @@ public class ListCommand extends Command {
         predicate = PREDICATE_SHOW_ALL_PERSONS;
     }
 
+    /**
+     * Creates a ListCommand with predicate to filter base on the specified role.
+     * @param role Specified role to filter this list by.
+     */
     public ListCommand(Role role){
         this.role = role;
         this.predicate = p -> p.getClass().getSimpleName().toUpperCase().equals(role.toString());
@@ -41,6 +46,10 @@ public class ListCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         model.updateFilteredPersonList(this.predicate);
-        return new CommandResult(MESSAGE_SUCCESS);
+        if (this.role == null) {
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            return new CommandResult(MESSAGE_SUCCESS_FILTERED_LIST + this.role);
+        }
     }
 }

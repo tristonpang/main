@@ -51,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (!arePrefixesPresent(argMultimap, PREFIX_ROLE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_GENERAL_USAGE));
-        } 
+        }
 
         // Ensures Medical Department field is not empty when adding a Doctor.
         if (isRoleOf(Role.DOCTOR, argMultimap)){
@@ -65,7 +65,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                         AddCommand.MESSAGE_PATIENT_USAGE));
             }
         } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_ROLE, AddCommand.MESSAGE_GENERAL_USAGE));
+            throw new ParseException(String.format(Role.MESSAGE_ROLE_CONSTRAINTS, AddCommand.MESSAGE_GENERAL_USAGE));
 
         }
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
@@ -96,7 +96,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 
     /**
-     * Returns true if the role in args matches with the Enum role.
+     * Returns true if the role in args matches with specified the Enum role.
      */
     private static boolean isRoleOf(Enum role, ArgumentMultimap argMultiMap) {
         String person = argMultiMap.getValue(PREFIX_ROLE).get();

@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_MEDICAL_RECORD_
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIFTH_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -19,9 +20,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.MedicalRecord;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PatientBuilder;
 
 public class UpdateCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -29,32 +30,34 @@ public class UpdateCommandTest {
 
     @Test
     public void execute_updateMedicalRecord_success() throws Exception {
-        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
+        Patient editedPatient =
+                new PatientBuilder((Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withMedicalRecord("Some medical record").build();
 
-        UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPerson.getMedicalRecord());
+        UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPatient.getMedicalRecord());
 
-        String expectedMessage = String.format(UpdateCommand.MESSAGE_UPDATE_MEDICAL_RECORD_SUCCESS, editedPerson);
+        String expectedMessage = String.format(UpdateCommand.MESSAGE_UPDATE_MEDICAL_RECORD_SUCCESS, editedPatient);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
 
         assertCommandSuccess(updateCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_deleteMedicalRecord_success() throws Exception {
-        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
+        Patient editedPatient =
+                new PatientBuilder((Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withMedicalRecord("Some medical record").build();
 
-        editedPerson.setMedicalRecord(new MedicalRecord(""));
+        editedPatient.setMedicalRecord(new MedicalRecord(""));
 
-        UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPerson.getMedicalRecord());
+        UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPatient.getMedicalRecord());
 
-        String expectedMessage = String.format(UpdateCommand.MESSAGE_DELETE_MEDICAL_RECORD_SUCCESS, editedPerson);
+        String expectedMessage = String.format(UpdateCommand.MESSAGE_DELETE_MEDICAL_RECORD_SUCCESS, editedPatient);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
 
         assertCommandSuccess(updateCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -62,8 +65,8 @@ public class UpdateCommandTest {
     @Test
     public void execute_filteredList_success() throws Exception {
 
-        Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personInFilteredList)
+        Patient personInFilteredList = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Patient editedPerson = new PatientBuilder(personInFilteredList)
                 .withMedicalRecord("Some medical record").build();
 
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPerson.getMedicalRecord());
@@ -97,6 +100,17 @@ public class UpdateCommandTest {
         UpdateCommand updateCommand = new UpdateCommand(outOfBoundIndex, new MedicalRecord(VALID_MEDICAL_RECORD_BOB));
 
         assertCommandFailure(updateCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Edit filtered list where the user tries to edit medical records of a Doctor,
+     * which is not allowed.
+     */
+    @Test
+    public void execute_invalidDoctorFilterList_failure() throws Exception {
+        UpdateCommand updateCommand = new UpdateCommand(INDEX_FIFTH_PERSON,
+                new MedicalRecord(VALID_MEDICAL_RECORD_BOB));
+        assertCommandFailure(updateCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_CHOSEN);
     }
 
     @Test

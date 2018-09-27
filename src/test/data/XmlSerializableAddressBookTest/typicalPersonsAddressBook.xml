@@ -7,11 +7,10 @@
         <phone>94351253</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
-        <medicalRecord>Diagnosed with flu. Tamiflu prescribed.</medicalRecord>
+        <nric>S7412345C</nric>
+        <medicalRecord></medicalRecord>
         <appointment></appointment>
         <tagged>friends</tagged>
-        <nric>s1234567a</nric>
-        <medicalRecords>Diagnosed with flu. Tamiflu prescribed.</medicalRecords>
     </persons>
     <persons>
         <role>Patient</role>
@@ -19,12 +18,11 @@
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
-        <medicalRecord> </medicalRecord>
+        <nric>S1234567A</nric>
+        <medicalRecord></medicalRecord>
         <appointment></appointment>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
-        <nric>s9234567a</nric>
-        <medicalRecord> </medicalRecord>
     </persons>
     <persons>
         <role>Patient</role>
@@ -32,13 +30,9 @@
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <address>wall street</address>
-<<<<<<< HEAD
-        <nric>s4234567a</nric>
-        <medicalRecord> </medicalRecord>
-=======
-        <medicalRecord> </medicalRecord>
+        <nric>S9898989B</nric>
+        <medicalRecord></medicalRecord>
         <appointment></appointment>
->>>>>>> master
     </persons>
     <persons>
         <role>Patient</role>
@@ -46,14 +40,10 @@
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
-        <medicalRecord> </medicalRecord>
         <tagged>friends</tagged>
-<<<<<<< HEAD
         <nric>s8234567a</nric>
         <medicalRecord> </medicalRecord>
-=======
         <appointment></appointment>
->>>>>>> master
     </persons>
     <persons>
         <role>Doctor</role>
@@ -61,39 +51,25 @@
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <address>michegan ave</address>
-<<<<<<< HEAD
         <medicalDepartment>Oncology</medicalDepartment>
-        <appointments>Eat Pray Shit...</appointments>
-        <appointments>Tom 1130 1230</appointments>
-=======
-        <medicalRecord> </medicalRecord>
         <appointment></appointment>
->>>>>>> master
     </persons>
     <persons>
+        <role>Doctor</role>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
-<<<<<<< HEAD
-        <medicalDepartment>Heart</medicalDepartment>
-        <appointments>Sam 2130 2230</appointments>
-=======
-        <medicalRecord> </medicalRecord>
+        <medicalDepartment>Cardiology</medicalDepartment>
         <appointment></appointment>
->>>>>>> master
     </persons>
     <persons>
+        <role>Doctor</role>
         <name>George Best</name>
         <phone>9482442</phone>
         <email>anna@example.com</email>
         <address>4th street</address>
-<<<<<<< HEAD
-        <medicalDepartment>TCM</medicalDepartment>
-        <appointments></appointments>
-=======
-        <medicalRecord> </medicalRecord>
+        <medicalDepartment>Neurology</medicalDepartment>
         <appointment>23.11.2018,1300,1400,Priscilia,Elaine</appointment>
->>>>>>> master
     </persons>
 </addressbook>

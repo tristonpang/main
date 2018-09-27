@@ -4,8 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -40,6 +43,11 @@ public class CommandTestUtil {
     public static final String VALID_MEDICAL_RECORD_BOB = "Diagnosed with cough. Dextromethorphan prescribed.";
     public static final String VALID_SCHEDULE_AMY = "22.11.2018,1300,1400,Alice,Amy";
     public static final String VALID_SCHEDULE_BOB = "22.11.2018,1300,1400,Jack,Bob";
+    public static final String VALID_ROLE_DOCTOR = "doctor";
+    public static final String VALID_ROLE_PATIENT = "patient";
+    public static final String VALID_MEDICAL_DEPARTMENT = "Cardiology";
+    public static final String VALID_NRIC_AMY = "S1234567A";
+    public static final String VALID_NRIC_BOB = "S9876543B";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -51,12 +59,21 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String NRIC_DESC_AMY = " " + PREFIX_NRIC + VALID_NRIC_AMY;
+    public static final String NRIC_DESC_BOB = " " + PREFIX_NRIC+ VALID_NRIC_BOB;
+    public static final String MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + VALID_MEDICAL_DEPARTMENT;
+    public static final String ROLE_DOCTOR_DESC = " " + PREFIX_ROLE + VALID_ROLE_DOCTOR;
+    public static final String ROLE_PATIENT_DESC = " " + PREFIX_ROLE + VALID_ROLE_PATIENT;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "JB123456A"; // cannot start with 2 letters
+    public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE + "teacher"; // not a valid role
+    public static final String INVALID_MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + "HE12RT";
+    // numbers not allowed
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

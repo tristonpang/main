@@ -12,15 +12,22 @@ public class XmlAdaptedAppointment {
 
     @XmlValue
     private String appointment;
-    
+
+    /**
+     * Constructs an XmlAdaptedAppointment.
+     * This is the no-arg constructor that is required by JAXB.
+     */
     public XmlAdaptedAppointment() {}
-    
+
+    /**
+     * Constructs an {@code XmlAdaptedAppointment} with the given appointment details.
+     */
     public XmlAdaptedAppointment(String appointment) {
         this.appointment = appointment;
     }
-    
+
     public String toModelType() throws IllegalValueException {
-        // TODO: 25/9/2018 Create Appointment class and isValidAppt method 
+        // TODO: 25/9/2018 Create Appointment class and isValidAppt method
         /*if (!Tag.isValidTagName(tagName)) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }*/

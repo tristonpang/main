@@ -75,10 +75,18 @@ public class Appointment {
 
     public boolean isValid() {
         String[] parts = value.split(",");
-        if (parts.length == Appointment.numberOfParts) {
+        if (value == "" || parts.length == Appointment.numberOfParts) {
             return true;
         }
         return false;
+    }
+
+    public String getPatient() {
+        return this.patient;
+    }
+
+    public String getDoctor() {
+        return this.doctor;
     }
 
     @Override

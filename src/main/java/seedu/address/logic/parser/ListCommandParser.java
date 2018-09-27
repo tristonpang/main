@@ -6,9 +6,19 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Role;
 
+/**
+ * Parses input arguments and creates a new ListCommand object.
+ */
 public class ListCommandParser implements Parser<ListCommand> {
 
-    @Override
+    /**
+     * Parses the given {@code String} of arguments in the context of the ListCommand
+     * and returns an ListCommand object for execution.
+     * If there are no arguments, then return a regular ListCommand (unfiltered list).
+     * Else, ensures that arguments conform to format and returns a filtered list of
+     * Doctors or Patients, as per specified.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public ListCommand parse(String args) throws ParseException {
         if(args.length() == 0) {
             return new ListCommand();
@@ -26,6 +36,10 @@ public class ListCommandParser implements Parser<ListCommand> {
         return new ListCommand(role);
     }
 
+    /**
+     * Returns true if the prefix contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
     public static boolean isPrefixPresent(ArgumentMultimap argMultimap, Prefix prefix) {
         return argMultimap.getValue(prefix).isPresent();
     }

@@ -20,8 +20,10 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 /**
@@ -29,17 +31,18 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class ScheduleCommandTest {
 
-    private static final String SCHEDULE_STUB = "Some remark";
+    private static final String SCHEDULE_STUB = "23.11.2018,1300,1400,Priscilia,Elaine";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
     public void execute_addRemarkUnfilteredList_success() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withAppointment(SCHEDULE_STUB).build();
+        Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Patient editedPerson = new PatientBuilder(firstPerson).withAppointment(SCHEDULE_STUB).build();
 
-        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(editedPerson.getAppointment().value));
+        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
+                new Appointment(editedPerson.getAppointment().value));
 
         String expectedMessage = String.format(ScheduleCommand.MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS, editedPerson);
 
@@ -51,8 +54,8 @@ public class ScheduleCommandTest {
     }
     @Test
     public void execute_deleteRemarkUnfilteredList_success() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withAppointment("").build();
+        Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Patient editedPerson = new PatientBuilder(firstPerson).withAppointment("").build();
 
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
                 new Appointment(editedPerson.getAppointment().toString()));
@@ -70,11 +73,13 @@ public class ScheduleCommandTest {
     public void execute_filteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
+        Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Patient editedPerson = new PatientBuilder((Patient) model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withAppointment(SCHEDULE_STUB).build();
 
-        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(editedPerson.getAppointment().value));
+        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
+                new Appointment(editedPerson.getAppointment().value));
 
         String expectedMessage = String.format(ScheduleCommand.MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS, editedPerson);
 
@@ -108,10 +113,11 @@ public class ScheduleCommandTest {
 
         assertCommandFailure(scheduleCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
+
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
-        Person personToModify = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person modifiedPerson = new PersonBuilder(personToModify).withAppointment(SCHEDULE_STUB).build();
+        Patient personToModify = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Patient modifiedPerson = new PatientBuilder(personToModify).withAppointment(SCHEDULE_STUB).build();
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(SCHEDULE_STUB));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updatePerson(personToModify, modifiedPerson);
@@ -155,8 +161,8 @@ public class ScheduleCommandTest {
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
-        Person personToModify = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person modifiedPerson = new PersonBuilder(personToModify).withAppointment(SCHEDULE_STUB).build();
+        Patient personToModify = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Patient modifiedPerson = new PatientBuilder(personToModify).withAppointment(SCHEDULE_STUB).build();
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
 
@@ -173,10 +179,12 @@ public class ScheduleCommandTest {
     }
     @Test
     public void equals() {
-        final ScheduleCommand standardCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(VALID_SCHEDULE_AMY));
+        final ScheduleCommand standardCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
+                new Appointment(VALID_SCHEDULE_AMY));
 
         // same values -> returns true
-        ScheduleCommand commandWithSameValues = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(VALID_SCHEDULE_AMY));
+        ScheduleCommand commandWithSameValues = new ScheduleCommand(INDEX_FIRST_PERSON,
+                new Appointment(VALID_SCHEDULE_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -189,9 +197,11 @@ public class ScheduleCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_SECOND_PERSON, new Appointment(VALID_SCHEDULE_AMY))));
+        assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_SECOND_PERSON,
+                new Appointment(VALID_SCHEDULE_AMY))));
 
         // different remark -> returns false
-        assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(VALID_SCHEDULE_BOB))));
+        assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_FIRST_PERSON,
+                new Appointment(VALID_SCHEDULE_BOB))));
     }
 }

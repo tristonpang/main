@@ -29,6 +29,7 @@ public class Person {
 
     /**
      * Every field must be present and not null.
+     * An empty {@code Appointment} will be created by default.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
@@ -94,6 +95,7 @@ public class Person {
 
     /**
      * Returns an Xml version of this Person instance.
+     * This method is to be overwritten by {@code Patient} and {@code Doctor} class.
      */
     public XmlAdaptedPerson toXmlVersion(Person source) {
         return XmlAdaptedPerson.adaptToXml(source);

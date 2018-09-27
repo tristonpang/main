@@ -44,7 +44,7 @@ public class XmlAdaptedPerson {
     protected String nric;
     @XmlElement
     protected String medicalRecord;
-    
+
     @XmlElement
     protected String medicalDepartment;
 
@@ -91,6 +91,10 @@ public class XmlAdaptedPerson {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Converts given person into this class for JAXB use.
+     * This method is to be overwritten by {@code XmlAdaptedPatient} and {@code XmlAdaptedDoctor} class.
+     */
     public static XmlAdaptedPerson adaptToXml(Person source) {
         return new XmlAdaptedPerson(source);
     }
@@ -151,15 +155,15 @@ public class XmlAdaptedPerson {
 
         final Address modelAddress = new Address(address);
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        
+
         if (modelRole.equals(Role.DOCTOR)) {
             return XmlAdaptedDoctor.convertToDoctorModelType(new Person(modelName, modelPhone, modelEmail,
                     modelAddress, modelTags, modelAppointment), medicalDepartment);
-        } else if (modelRole.equals(Role.PATIENT)) {
+        } else {
+            assert modelRole.equals(Role.PATIENT); // person must be a patient if he/she is not a doctor.
             return XmlAdaptedPatient.convertToPatientModelType(new Person(modelName, modelPhone, modelEmail,
                     modelAddress, modelTags, modelAppointment), nric, medicalRecord);
         }
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelAppointment);
     }
 
     @Override
