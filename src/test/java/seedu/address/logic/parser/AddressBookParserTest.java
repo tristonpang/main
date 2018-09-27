@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -32,13 +33,16 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.MedicalRecord;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.MedicalRecord;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
+import seedu.address.testutil.DoctorBuilder;
+import seedu.address.testutil.DoctorUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.PatientBuilder;
+import seedu.address.testutil.PatientUtil;
 
 public class AddressBookParserTest {
     @Rule
@@ -48,9 +52,13 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(person), command);
+        Patient patient = new PatientBuilder().build();
+        AddCommand command = (AddCommand) parser.parseCommand(PatientUtil.getAddCommand(patient));
+        assertEquals(new AddCommand(patient), command);
+
+        Doctor doctor = new DoctorBuilder().build();
+        command = (AddCommand) parser.parseCommand(DoctorUtil.getAddCommand(doctor));
+        assertEquals(new AddCommand(doctor), command);
     }
 
     @Test
@@ -68,10 +76,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        Patient patient = new PatientBuilder().build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(patient).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PatientUtil.getEditPatientDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
@@ -119,7 +127,10 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD
+                + " " + PREFIX_ROLE + "DOCTOR") instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD
+                + " " + PREFIX_ROLE + "PATIENT") instanceof ListCommand);
     }
 
     @Test

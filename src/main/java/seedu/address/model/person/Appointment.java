@@ -2,7 +2,14 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Represents a Person's Appointment in the address book.
+ * Guarantees: details are present and not null, field values are validated, immutable.
+ */
 public class Appointment {
+
+    /** Number of parts of an appointment */
+    private static int numberOfParts = 5;
 
     /** String value of whole appointment **/
     public final String value;
@@ -16,19 +23,17 @@ public class Appointment {
     private String doctor; // change to class
     /** Name of patient */
     private String patient; // change to class
-    /** Number of parts of an appointment */
-    public static int numberOfParts = 5;
 
     public Appointment(String appointment) {
         requireNonNull(appointment);
-//        if (!appointment.equals("")) {
-//            String[] parts = appointment.split(",");
-//            date = parts[0];
-//            startTime = parts[1];
-//            endTime = parts[2];
-//            doctor = parts[3];
-//            patient = parts[4];
-//        }
+        /* if (!appointment.equals("")) {
+            String[] parts = appointment.split(",");
+            date = parts[0];
+            startTime = parts[1];
+            endTime = parts[2];
+            doctor = parts[3];
+            patient = parts[4];
+        } */
         value = appointment;
     }
 
@@ -73,12 +78,23 @@ public class Appointment {
         }
     }
 
+    /**
+     * Returns true if instance is a valid Appointment object.
+     */
     public boolean isValid() {
         String[] parts = value.split(",");
-        if (parts.length == Appointment.numberOfParts) {
+        if (value == "" || parts.length == Appointment.numberOfParts) {
             return true;
         }
         return false;
+    }
+
+    public String getPatient() {
+        return this.patient;
+    }
+
+    public String getDoctor() {
+        return this.doctor;
     }
 
     @Override
@@ -89,11 +105,11 @@ public class Appointment {
         if (obj instanceof Appointment) {
             Appointment appointment = (Appointment) obj;
             return appointment.value.equals(value);
-//            return (appointment.date.equals(date)
-//                    && appointment.startTime.equals(startTime)
-//                    && appointment.endTime.equals(endTime)
-//                    && appointment.doctor.equals(doctor)
-//                    && appointment.patient.equals(patient));
+            /* return (appointment.date.equals(date)
+                    && appointment.startTime.equals(startTime)
+                    && appointment.endTime.equals(endTime)
+                    && appointment.doctor.equals(doctor)
+                    && appointment.patient.equals(patient)); */
         } else {
             return false;
         }

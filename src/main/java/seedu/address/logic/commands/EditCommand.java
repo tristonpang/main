@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -20,13 +21,17 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.department.MedicalDepartment;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.MedicalRecord;
+import seedu.address.model.patient.Nric;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.MedicalRecord;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Appointment;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -40,12 +45,14 @@ public class EditCommand extends Command {
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_ROLE + "ROLE] "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_ROLE + "Patient "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
@@ -101,11 +108,21 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        MedicalRecord updatedMedicalRecord = personToEdit.getMedicalRecord(); //edit command does not allow editing medical records
         Appointment updatedAppointment = personToEdit.getAppointment(); // edit command does not allow editing remarks
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedMedicalRecord, updatedAppointment, updatedTags);
+        if (personToEdit instanceof Patient) {
+            //edit command does not allow editing medical records
+            MedicalRecord updatedMedicalRecord = ((Patient) personToEdit).getMedicalRecord();
+            Nric updatedNric = editPersonDescriptor.getNric().orElse(((Patient) personToEdit).getNric());
+            return new Patient(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                    updatedAppointment, updatedNric, updatedMedicalRecord);
+        } else {
+            assert personToEdit instanceof Doctor; // Person must be either Patient or Doctor.
+            MedicalDepartment updateMedicalDepartment = ((Doctor) personToEdit).getMedicalDepartment();
+            return new Doctor(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                    updatedAppointment, updateMedicalDepartment);
+        }
     }
 
     @Override
@@ -136,6 +153,8 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Nric nric;
+        private MedicalDepartment medicalDepartment;
 
         public EditPersonDescriptor() {}
 
@@ -149,13 +168,15 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setMedicalDepartment(toCopy.medicalDepartment);
+            setNric(toCopy.nric);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, nric, medicalDepartment);
         }
 
         public void setName(Name name) {
@@ -190,6 +211,22 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public void setNric(Nric nric) {
+            this.nric = nric;
+        }
+
+        public Optional<Nric> getNric() {
+            return Optional.ofNullable(nric);
+        }
+
+        public void setMedicalDepartment(MedicalDepartment medicalDepartment) {
+            this.medicalDepartment = medicalDepartment;
+        }
+
+        public Optional<MedicalDepartment> getMedicalDepartment() {
+            return Optional.ofNullable(medicalDepartment);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -197,6 +234,7 @@ public class EditCommand extends Command {
         public void setTags(Set<Tag> tags) {
             this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
+
 
         /**
          * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}

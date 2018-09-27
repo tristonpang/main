@@ -3,10 +3,14 @@ package seedu.address.model.department;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Doctor's Medical Department in the address book.
+ * Guarantees: details are present and not null, field values are validated, immutable.
+ */
 public class MedicalDepartment {
     public static final String MESSAGE_DEPTNAME_CONSTRAINTS =
             "Medical Department should only contain alphabetic characters and spaces, and it should not be blank";
-    public static final String DEPTNAME_VALIDATION_REGEX = "\\p{Alpha}";
+    public static final String DEPTNAME_VALIDATION_REGEX = "[a-zA-Z]+";
 
     public final String deptName;
 
@@ -29,12 +33,13 @@ public class MedicalDepartment {
     public static boolean isValidMedDept(String medDept) {
         return medDept.matches(DEPTNAME_VALIDATION_REGEX);
     }
+
     @Override
     public boolean equals(Object obj) {
-        if(this == obj) {
+        if (this == obj) {
             return true;
         }
-        if (obj instanceof MedicalDepartment){
+        if (obj instanceof MedicalDepartment) {
             MedicalDepartment department = (MedicalDepartment) obj;
             return (department.deptName.equals(this.deptName));
         } else {

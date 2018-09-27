@@ -14,6 +14,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.patient.Patient;
+import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {
@@ -61,7 +63,7 @@ public class PersonTest {
     @Test
     public void equals() {
         // same values -> returns true
-        Person aliceCopy = new PersonBuilder(ALICE).build();
+        Patient aliceCopy = new PatientBuilder(ALICE).build();
         assertTrue(ALICE.equals(aliceCopy));
 
         // same object -> returns true

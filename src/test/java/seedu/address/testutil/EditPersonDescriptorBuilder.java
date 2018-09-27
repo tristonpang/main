@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -37,6 +39,13 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
+
+        if (person instanceof Patient) {
+            descriptor.setNric(((Patient) person).getNric());
+        } else {
+            assert person instanceof Doctor;
+            descriptor.setMedicalDepartment(((Doctor) person).getMedicalDepartment());
+        }
     }
 
     /**

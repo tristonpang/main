@@ -2,6 +2,9 @@ package seedu.address.model.person;
 
 import java.util.ArrayList;
 
+/**
+ * Manages {@code Appointment} objects to check for clashes.
+ */
 public class AppointmentManager {
 
     /**

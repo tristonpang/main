@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.UpdateCommand;
-import seedu.address.model.person.MedicalRecord;
+import seedu.address.model.patient.MedicalRecord;
 
 public class UpdateCommandParserTest {
 

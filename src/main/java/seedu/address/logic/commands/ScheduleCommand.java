@@ -12,9 +12,14 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 
+/**
+ * Updates the schedule of a person in the addressbook.
+ */
 public class ScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "schedule";
@@ -30,6 +35,7 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE = "Failed to schedule appointment to Person.\n"
             + "Please check that the format of the appointment is keyed in properly.\n";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
+    private static final String MESSAGE_SCHEDULE_APPOINTMENT_MISMATCH = "Please check input name matches person chosen";
 
     private final Index index;
     private final Appointment appointment;
@@ -57,8 +63,19 @@ public class ScheduleCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getMedicalRecord(), appointment, personToEdit.getTags());
+        Person editedPerson;
+
+        if (personToEdit instanceof Doctor) {
+            editedPerson = new Doctor(personToEdit.getName(),
+                    personToEdit.getPhone(), personToEdit.getEmail(),
+                    personToEdit.getAddress(), personToEdit.getTags(),
+                    appointment, ((Doctor) personToEdit).getMedicalDepartment());
+        } else {
+            assert personToEdit instanceof Patient;
+            editedPerson = new Patient(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                    personToEdit.getAddress(), personToEdit.getTags(),
+                    appointment, ((Patient) personToEdit).getNric(), ((Patient) personToEdit).getMedicalRecord());
+        }
 
         model.updatePerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -72,7 +89,8 @@ public class ScheduleCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !appointment.value.isEmpty() ? MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS : MESSAGE_DELETE_APPOINTMENT_SUCCESS;
+        String message = !appointment.value.isEmpty() ? MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS
+                : MESSAGE_DELETE_APPOINTMENT_SUCCESS;
         return String.format(message, personToEdit);
     }
 
