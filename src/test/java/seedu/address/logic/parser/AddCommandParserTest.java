@@ -47,7 +47,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PatientBuilder;
-import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
@@ -67,7 +66,7 @@ public class AddCommandParserTest {
 
         // multiple phones - last phone accepted
         assertParseSuccess(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND+ NRIC_DESC_BOB, new AddCommand(expectedPerson));
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + NRIC_DESC_BOB, new AddCommand(expectedPerson));
 
         // multiple emails - last email accepted
         assertParseSuccess(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
@@ -75,12 +74,13 @@ public class AddCommandParserTest {
 
         // multiple addresses - last address accepted
         assertParseSuccess(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + NRIC_DESC_BOB, new AddCommand(expectedPerson));
+                + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + NRIC_DESC_BOB,
+                new AddCommand(expectedPerson));
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PatientBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
-        assertParseSuccess(parser,ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        assertParseSuccess(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND
                 + NRIC_DESC_BOB, new AddCommand(expectedPersonMultipleTags));
     }
@@ -89,7 +89,7 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Patient expectedPerson = new PatientBuilder(AMY).withTags().build();
-        assertParseSuccess(parser,ROLE_PATIENT_DESC+ NAME_DESC_AMY + PHONE_DESC_AMY
+        assertParseSuccess(parser, ROLE_PATIENT_DESC + NAME_DESC_AMY + PHONE_DESC_AMY
                         + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NRIC_DESC_AMY, new AddCommand(expectedPerson));
     }
 
@@ -143,7 +143,7 @@ public class AddCommandParserTest {
                 + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         // invalid address
-        assertParseFailure(parser,ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_BOB
+        assertParseFailure(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND
                 + NRIC_DESC_BOB, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 

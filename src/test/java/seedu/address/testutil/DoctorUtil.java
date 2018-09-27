@@ -33,9 +33,7 @@ public class DoctorUtil extends PersonUtil {
         sb.append(PREFIX_PHONE + doctor.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + doctor.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + doctor.getAddress().value + " ");
-        doctor.getTags().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
-        );
+        doctor.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.tagName + " "));
         sb.append(PREFIX_MEDICAL_DEPARTMENT + doctor.getMedicalDepartment().deptName + " ");
         return sb.toString();
     }
@@ -58,7 +56,8 @@ public class DoctorUtil extends PersonUtil {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
-        descriptor.getMedicalDepartment().ifPresent(medicalDepartment -> sb.append(PREFIX_MEDICAL_DEPARTMENT).append(medicalDepartment.deptName).append(" "));
+        descriptor.getMedicalDepartment().ifPresent(medicalDepartment ->
+                sb.append(PREFIX_MEDICAL_DEPARTMENT).append(medicalDepartment.deptName).append(" "));
         return sb.toString();
     }
 }

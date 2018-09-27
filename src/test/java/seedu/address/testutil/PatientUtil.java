@@ -33,9 +33,7 @@ public class PatientUtil extends PersonUtil {
         sb.append(PREFIX_PHONE + source.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + source.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + source.getAddress().value + " ");
-        source.getTags().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
-        );
+        source.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.tagName + " "));
         sb.append(PREFIX_NRIC + source.getNric().code + " ");
         return sb.toString();
     }

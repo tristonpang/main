@@ -60,7 +60,7 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String NRIC_DESC_AMY = " " + PREFIX_NRIC + VALID_NRIC_AMY;
-    public static final String NRIC_DESC_BOB = " " + PREFIX_NRIC+ VALID_NRIC_BOB;
+    public static final String NRIC_DESC_BOB = " " + PREFIX_NRIC + VALID_NRIC_BOB;
     public static final String MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + VALID_MEDICAL_DEPARTMENT;
     public static final String ROLE_DOCTOR_DESC = " " + PREFIX_ROLE + VALID_ROLE_DOCTOR;
     public static final String ROLE_PATIENT_DESC = " " + PREFIX_ROLE + VALID_ROLE_PATIENT;

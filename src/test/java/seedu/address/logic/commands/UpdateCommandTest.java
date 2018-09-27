@@ -13,6 +13,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -20,8 +21,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.MedicalRecord;
+import seedu.address.model.patient.Patient;
 import seedu.address.testutil.PatientBuilder;
 
 public class UpdateCommandTest {
@@ -115,10 +116,12 @@ public class UpdateCommandTest {
 
     @Test
     public void equals() {
-        final UpdateCommand standardCommand = new UpdateCommand(INDEX_FIRST_PERSON, new MedicalRecord(VALID_MEDICAL_RECORD_AMY));
+        final UpdateCommand standardCommand = new UpdateCommand(INDEX_FIRST_PERSON,
+                new MedicalRecord(VALID_MEDICAL_RECORD_AMY));
 
         // same values -> returns true
-        UpdateCommand commandWithSameValues = new UpdateCommand(INDEX_FIRST_PERSON, new MedicalRecord(VALID_MEDICAL_RECORD_AMY));
+        UpdateCommand commandWithSameValues = new UpdateCommand(INDEX_FIRST_PERSON,
+                new MedicalRecord(VALID_MEDICAL_RECORD_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -131,10 +134,11 @@ public class UpdateCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new UpdateCommand(INDEX_SECOND_PERSON, new MedicalRecord(VALID_MEDICAL_RECORD_AMY))));
+        assertFalse(standardCommand.equals(new UpdateCommand(INDEX_SECOND_PERSON,
+                new MedicalRecord(VALID_MEDICAL_RECORD_AMY))));
 
         // different medical records -> returns false
-        assertFalse(standardCommand.equals(new UpdateCommand(INDEX_FIRST_PERSON, new MedicalRecord(VALID_MEDICAL_RECORD_BOB))));
+        assertFalse(standardCommand.equals(new UpdateCommand(INDEX_FIRST_PERSON,
+                new MedicalRecord(VALID_MEDICAL_RECORD_BOB))));
     }
-
 }
