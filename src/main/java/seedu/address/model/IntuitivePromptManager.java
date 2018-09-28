@@ -18,6 +18,7 @@ public class IntuitivePromptManager {
     private static final int MIN_ARGUMENT_INDEX = 0;
 
     private static final String SKIP_COMMAND = "//";
+    private static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
 
     private static final String ADD_COMMAND_WORD = "add";
     private static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? " +
@@ -59,7 +60,10 @@ public class IntuitivePromptManager {
     }
 
     public void addArgument(String input) {
-        if (commandWord != null) { //intuitive command already executing
+        if (isSkipCommand(input) && isCurrentFieldSkippable()) {
+            arguments.add("");
+            currentArgIndex++;
+        } else if (commandWord != null) { //intuitive command already executing
             arguments.add(input.trim());
             currentArgIndex++;
         } else { //start intuitive command, record command word
@@ -112,7 +116,7 @@ public class IntuitivePromptManager {
             case ADD_ADDRESS_INDEX:
                 return ADD_ADDRESS_INSTRUCTION;
             case ADD_TAGS_INDEX:
-                return ADD_TAGS_INSTRUCTION;
+                return ADD_TAGS_INSTRUCTION + String.format(SKIP_INSTRUCTION, SKIP_COMMAND);
             case ADD_NRIC_OR_DEPT_INDEX:
                 if (isPatient()) {
                     return ADD_NRIC_INSTRUCTION;
@@ -179,6 +183,9 @@ public class IntuitivePromptManager {
             case ADD_ADDRESS_INDEX:
                 return PREFIX_ADDRESS + argument;
             case ADD_TAGS_INDEX:
+                if (argument.isEmpty()) {
+                    return "";
+                }
                 String resultArg = PREFIX_TAG + argument;
                 return resultArg.replace(",", " " + PREFIX_TAG).trim();
             case ADD_NRIC_OR_DEPT_INDEX:
@@ -201,5 +208,14 @@ public class IntuitivePromptManager {
 
     private boolean isSkipCommand(String input) {
         return input.equals(SKIP_COMMAND);
+    }
+
+    private boolean isCurrentFieldSkippable() {
+        switch (commandWord) {
+            case ADD_COMMAND_WORD:
+                return currentArgIndex == ADD_TAGS_INDEX;
+            default:
+                return false;
+        }
     }
 }
