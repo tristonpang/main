@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.XmlAdaptedPerson;
 
 /**
  * Represents a Person in the address book.
@@ -16,16 +17,18 @@ import seedu.address.model.tag.Tag;
 public class Person {
 
     // Identity fields
-    private final Name name;
-    private final Phone phone;
-    private final Email email;
+    protected final Name name;
+    protected final Phone phone;
+    protected final Email email;
 
-    // Data fields
-    private final Address address;
-    private final Set<Tag> tags = new HashSet<>();
+    // Common Data fields
+    protected final Address address;
+    protected final Set<Tag> tags = new HashSet<>();
+    private Appointment appointment;
 
     /**
      * Every field must be present and not null.
+     * An empty {@code Appointment} will be created by default.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
@@ -33,6 +36,17 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.appointment = new Appointment("");
+        this.tags.addAll(tags);
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Appointment appointment) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.appointment = appointment;
         this.tags.addAll(tags);
     }
 
@@ -50,6 +64,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Appointment getAppointment() {
+        return appointment;
     }
 
     /**
@@ -75,6 +93,14 @@ public class Person {
     }
 
     /**
+     * Returns an Xml version of this Person instance.
+     * This method is to be overwritten by {@code Patient} and {@code Doctor} class.
+     */
+    public XmlAdaptedPerson toXmlVersion(Person source) {
+        return XmlAdaptedPerson.adaptToXml(source);
+    }
+
+    /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
@@ -93,6 +119,7 @@ public class Person {
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
+                && otherPerson.getAppointment().equals(getAppointment())
                 && otherPerson.getTags().equals(getTags());
     }
 
@@ -116,5 +143,4 @@ public class Person {
         getTags().forEach(builder::append);
         return builder.toString();
     }
-
 }
