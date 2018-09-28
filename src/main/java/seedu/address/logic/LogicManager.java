@@ -34,7 +34,20 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
-            return command.execute(model, history);
+            CommandResult result = command.execute(model, history);
+
+            //if after intuitive input, all inputs have been received, parse with full arguments
+            if (!model.isIntuitiveMode() && model.areIntuitiveArgsAvailable()) {
+                //tell AddressBookParser that the intuitive command has completed
+                addressBookParser.exitIntuitiveMode();
+
+                String intuitiveArguments = model.retrieveIntuitiveArguments();
+                logger.info("Retrieved Argument String: " + intuitiveArguments);
+                Command intuitiveCompletedCommand = addressBookParser.parseCommand(intuitiveArguments);
+                return intuitiveCompletedCommand.execute(model, history);
+            }
+
+            return result;
         } finally {
             history.add(commandText);
         }
