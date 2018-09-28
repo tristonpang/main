@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static seedu.address.logic.parser.CliSyntax.*;
+
 public class IntuitivePromptManager {
     private static int currentArgIndex; //change this to enum in future version
     private static List<String> arguments;
@@ -15,26 +17,31 @@ public class IntuitivePromptManager {
 
     private static final int MIN_ARGUMENT_INDEX = 0;
 
+    private static final String SKIP_COMMAND = "//";
+
     private static final String ADD_COMMAND_WORD = "add";
+    private static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? " +
+            "(Please enter patient or doctor)";
     private static final String ADD_NAME_INSTRUCTION = "Please enter patient's name";
-    private static final String ADD_EMAIL_INSTRUCTION = "Please enter patient's email";
-    private static final String ADD_PHONE_INSTRUCTION = "Please enter patient's phone number";
-    private static final String ADD_ADDRESS_INSTRUCTION = "Please enter patient's address";
-    private static final String ADD_TAGS_INSTRUCTION = "Please enter patient's tags, " +
+    private static final String ADD_EMAIL_INSTRUCTION = "Please enter person's email";
+    private static final String ADD_PHONE_INSTRUCTION = "Please enter person's phone number";
+    private static final String ADD_ADDRESS_INSTRUCTION = "Please enter person's address";
+    private static final String ADD_TAGS_INSTRUCTION = "Please enter person's tags, " +
             "separated by commas (with no spaces after a comma)";
+    private static final String ADD_NRIC_INSTRUCTION = "Please enter patient's NRIC";
+    private static final String ADD_DEPT_INSTRUCTION = "Please enter doctor's medical department";
 
-    private static final String NAME_PREFIX = "n/";
-    private static final String EMAIL_PREFIX = "e/";
-    private static final String PHONE_PREFIX = "p/";
-    private static final String ADDRESS_PREFIX = "a/";
-    private static final String TAGS_PREFIX = "t/";
-
-    private static final int ADD_MAX_ARGUMENTS = 5;
-    private static final int ADD_NAME_INDEX = 0;
-    private static final int ADD_EMAIL_INDEX = 1;
+    private static final int ADD_MAX_ARGUMENTS = 7;
+    private static final int ADD_ROLE_INDEX = 0;
+    private static final int ADD_NAME_INDEX = 1;
     private static final int ADD_PHONE_INDEX = 2;
-    private static final int ADD_ADDRESS_INDEX = 3;
-    private static final int ADD_TAGS_INDEX = 4;
+    private static final int ADD_EMAIL_INDEX = 3;
+    private static final int ADD_ADDRESS_INDEX = 4;
+    private static final int ADD_TAGS_INDEX = 5;
+    private static final int ADD_NRIC_OR_DEPT_INDEX = 6;
+
+    private static final String PATIENT_ARG_IDENTIFIER = "patient";
+    private static final String DOCTOR_ARG_IDENTIFIER = "doctor";
 
     //logger
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
@@ -52,10 +59,10 @@ public class IntuitivePromptManager {
     }
 
     public void addArgument(String input) {
-        if (commandWord != null) {
+        if (commandWord != null) { //intuitive command already executing
             arguments.add(input.trim());
             currentArgIndex++;
-        } else {
+        } else { //start intuitive command, record command word
             commandWord = input.trim();
             isIntuitiveMode = true;
         }
@@ -94,6 +101,8 @@ public class IntuitivePromptManager {
 
     private String retrieveAddInstruction() {
         switch (currentArgIndex) {
+            case ADD_ROLE_INDEX:
+                return ADD_ROLE_INSTRUCTION;
             case ADD_NAME_INDEX:
                 return ADD_NAME_INSTRUCTION;
             case ADD_EMAIL_INDEX:
@@ -104,6 +113,12 @@ public class IntuitivePromptManager {
                 return ADD_ADDRESS_INSTRUCTION;
             case ADD_TAGS_INDEX:
                 return ADD_TAGS_INSTRUCTION;
+            case ADD_NRIC_OR_DEPT_INDEX:
+                if (isPatient()) {
+                    return ADD_NRIC_INSTRUCTION;
+                } else if (isDoctor()) {
+                    return ADD_DEPT_INSTRUCTION;
+                }
             default:
                 return "Invalid";
         }
@@ -153,18 +168,38 @@ public class IntuitivePromptManager {
 
     private String prefixAddArgument(int index, String argument) {
         switch (index) {
+            case ADD_ROLE_INDEX:
+                return PREFIX_ROLE + argument;
             case ADD_NAME_INDEX:
-                return NAME_PREFIX + argument;
+                return PREFIX_NAME + argument;
             case ADD_EMAIL_INDEX:
-                return EMAIL_PREFIX + argument;
+                return PREFIX_EMAIL + argument;
             case ADD_PHONE_INDEX:
-                return PHONE_PREFIX + argument;
+                return PREFIX_PHONE + argument;
             case ADD_ADDRESS_INDEX:
-                return ADDRESS_PREFIX + argument;
+                return PREFIX_ADDRESS + argument;
             case ADD_TAGS_INDEX:
-                String resultArg = TAGS_PREFIX + argument;
-                return resultArg.replace(",", " " + TAGS_PREFIX).trim();
+                String resultArg = PREFIX_TAG + argument;
+                return resultArg.replace(",", " " + PREFIX_TAG).trim();
+            case ADD_NRIC_OR_DEPT_INDEX:
+                if (isPatient()) {
+                    return PREFIX_NRIC + argument;
+                } else if (isDoctor()) {
+                    return PREFIX_MEDICAL_DEPARTMENT + argument;
+                }
         }
         return "";
+    }
+
+    private boolean isPatient() {
+        return arguments.get(ADD_ROLE_INDEX).equals(PATIENT_ARG_IDENTIFIER);
+    }
+
+    private boolean isDoctor() {
+        return arguments.get(ADD_ROLE_INDEX).equals(DOCTOR_ARG_IDENTIFIER);
+    }
+
+    private boolean isSkipCommand(String input) {
+        return input.equals(SKIP_COMMAND);
     }
 }
