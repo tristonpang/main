@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Person;
 
 /**
@@ -27,6 +29,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private Label role;
+    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -37,7 +41,13 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label medicalRecord;
+    @FXML
+    private Label appointment;
+    @FXML
     private FlowPane tags;
+    @FXML
+    private Label uniqueField;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -47,7 +57,14 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+        if (person instanceof Doctor) {
+            uniqueField.setText(((Doctor) person).getMedicalDepartment().deptName);
+        } else if (person instanceof Patient) {
+            uniqueField.setText(((Patient) person).getMedicalRecord().value);
+        }
+        role.setText(person.getClass().getSimpleName());
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        appointment.setText(person.getAppointment().value);
     }
 
     @Override

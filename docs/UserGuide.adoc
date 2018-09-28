@@ -232,7 +232,7 @@ Creates a new doctor in the database.
 
 === Listing doctors : `listdoc`
 
-Lists all doctors in the database and their current availability based on their schedule. +
+Lists all doctors in the database and their current availability based on their appointment. +
 Format: `listdoc`
 
 === Displaying medical appointments : `appts`
@@ -240,10 +240,10 @@ Format: `listdoc`
 Displays a list of medical appointments that are currently scheduled. All appointments will be listed if data is not entered. +
 Format: `appts[d/DATE]`
 
-=== Scheduling medical appointments : `schedule`
+=== Scheduling medical appointments : `appointment`
 
 Schedules a patient for a medical appointment at a specific date and time.
-Format: `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER`
+Format: `appointment n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER`
 
 ****
 * Date is DD/MM/YYYY and dot separated e.g.  `7.11.1996` is the 7th of November 1996
@@ -253,7 +253,7 @@ Format: `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER`
 
 Examples:
 
-* `schedule n/Jack d/22.11.2018 t/1300 t/1400 rn/T24` +
+* `appointment n/Jack d/22.11.2018 t/1300 t/1400 rn/T24` +
 Schedules `Jack` for an appointment in room `T24` on the 22nd of November 2018 from 1pm to 2pm.
 
 === Viewing medical records of patients : `records`
@@ -343,8 +343,8 @@ e.g.`select 2`
 e.g. `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD`
 * *List Doctors* : `listdoc`
 * *Display Medical Appointments* : `appts`
-* *Schedule Medical Appointments* : `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER` +
-e.g. `schedule n/Jack d/22.11.2018 t/1300 t/1400 rn/T24`
+* *Schedule Medical Appointments* : `appointment n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER` +
+e.g. `appointment n/Jack d/22.11.2018 t/1300 t/1400 rn/T24`
 * *View Medical Records* : `records n/NAME [d/DATE]`
 * *Update Medical Records* : `update n/NAME mr/NEW_MEDICAL_RECORDS` +
 e.g. `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.`
