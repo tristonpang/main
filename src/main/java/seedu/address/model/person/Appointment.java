@@ -2,7 +2,9 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -23,13 +25,13 @@ public class Appointment {
     /** Ending time of appointment */
     private String endTime;
     /** Name of doctor */
-    private String doctor;
-    /** Medical department of doctor */
-    private String medicalDepartment;
+    private Name doctorName;
+    /** Medical department of doctorName */
+    private MedicalDepartment medicalDepartment;
     /** Name of patient */
-    private String patient;
+    private Name patientName;
     /** nric of patient */
-    private String patientNric;
+    private Nric patientNric;
 
     public Appointment(String appointment) {
         requireNonNull(appointment);
@@ -39,32 +41,24 @@ public class Appointment {
             date = parts[0];
             startTime = parts[1];
             endTime = parts[2];
-            doctor = parts[3];
-            medicalDepartment = parts[4];
-            patient = parts[5];
-            patientNric = parts[6];
+            doctorName = new Name(parts[3]);
+            medicalDepartment = new MedicalDepartment(parts[4]);
+            patientName = new Name(parts[5]);
+            patientNric = new Nric(parts[6]);
         }
     }
 
     public Appointment(String date, String startTime, String endTime,
-                       String doctor, String department, String patient, String nric) {
+                       String doctorName, String department, String patientName, String nric) {
         value = date + "," + startTime + "," + endTime
-                + "," + doctor + "," + department + "," + patient + "," + nric;
+                + "," + doctorName + "," + department + "," + patientName + "," + nric;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.doctor = doctor;
-        this.medicalDepartment = department;
-        this.patient = patient;
-        this.patientNric = nric;
-    }
-
-    public String getPatient() {
-        return this.patient;
-    }
-
-    public String getDoctor() {
-        return this.doctor;
+        this.doctorName = new Name(doctorName);
+        this.medicalDepartment = new MedicalDepartment(department);
+        this.patientName = new Name(patientName);
+        this.patientNric = new Nric(nric);
     }
 
     /**
@@ -75,7 +69,7 @@ public class Appointment {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
-        if (!date.equals(otherAppointment.date) || !doctor.equals(otherAppointment.doctor)) {
+        if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
             return false;
         }
         int currentStartTime = Integer.parseInt(startTime.trim());
@@ -112,9 +106,9 @@ public class Appointment {
 
     public boolean hasValidDoctor(Person person) {
         Doctor doctor = (Doctor) person;
-        String name = doctor.getName().fullName;
-        String medicalDepartment = doctor.getMedicalDepartment().deptName;
-        if (this.doctor.equals(name) && this.medicalDepartment.equals(medicalDepartment)) {
+        Name name = doctor.getName();
+        MedicalDepartment medicalDepartment = doctor.getMedicalDepartment();
+        if (doctorName.equals(name) && this.medicalDepartment.equals(medicalDepartment)) {
             return true;
         }
         return false;
@@ -122,12 +116,16 @@ public class Appointment {
 
     public boolean hasValidPatient(Person person) {
         Patient patient = (Patient) person;
-        String name = patient.getName().fullName;
-        String nric = patient.getNric().code;
-        if (this.patient.equals(name) && patientNric.equals(nric)) {
+        Name name = patient.getName();
+        Nric nric = patient.getNric();
+        if (patientName.equals(name) && patientNric.equals(nric)) {
             return true;
         }
         return false;
+    }
+
+    public boolean hasValidNric() {
+        return patientNric.isValidNric(patientNric.toString());
     }
 
     @Override
@@ -138,11 +136,6 @@ public class Appointment {
         if (obj instanceof Appointment) {
             Appointment appointment = (Appointment) obj;
             return appointment.value.equals(value);
-            /* return (appointment.date.equals(date)
-                    && appointment.startTime.equals(startTime)
-                    && appointment.endTime.equals(endTime)
-                    && appointment.doctor.equals(doctor)
-                    && appointment.patient.equals(patient)); */
         } else {
             return false;
         }

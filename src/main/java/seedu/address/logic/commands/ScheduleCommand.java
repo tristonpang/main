@@ -42,6 +42,10 @@ public class ScheduleCommand extends Command {
             = "Failed to schedule appointment to Person.\n"
             + "Patient entered is wrong.\n";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH = "There is a clash of appointments. "
+            + "Please choose another slot.\n";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_NRIC = "NRIC format is wrong. "
+            + "NRIC should contain only alphanumeric characters and should not be left blank.\n";;
     private static final String MESSAGE_SCHEDULE_APPOINTMENT_MISMATCH = "Please check input name matches person chosen";
 
     private final Index index;
@@ -69,6 +73,10 @@ public class ScheduleCommand extends Command {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER);
         }
 
+        if (!appointment.hasValidNric()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_NRIC);
+        }
+
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson;
 
@@ -78,6 +86,10 @@ public class ScheduleCommand extends Command {
 
         if (personToEdit instanceof Patient && !appointment.hasValidPatient(personToEdit)) {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT);
+        }
+
+        if (personToEdit.hasClash(appointment)) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH);
         }
 
         if (personToEdit instanceof Doctor) {
