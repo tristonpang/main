@@ -14,7 +14,7 @@ import seedu.address.model.person.Appointment;
 
 public class ScheduleCommandParserTest {
     private ScheduleCommandParser parser = new ScheduleCommandParser();
-    private final String nonEmptyAppointment = "22.11.2018,1300,1400,Jill,Jack";
+    private final String nonEmptyAppointment = "22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A";
 
     @Test
     public void parse_indexSpecified_success() {

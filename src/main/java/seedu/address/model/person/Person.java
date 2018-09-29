@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -25,6 +26,7 @@ public class Person {
     protected final Address address;
     protected final Set<Tag> tags = new HashSet<>();
     private Appointment appointment;
+    private ArrayList<Appointment> appointmentList = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
@@ -36,18 +38,19 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.appointment = new Appointment("");
         this.tags.addAll(tags);
     }
 
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Appointment appointment) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, tags, appointment);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.appointment = appointment;
         this.tags.addAll(tags);
+
+        appointmentList.add(appointment);
     }
 
     public Name getName() {
@@ -68,6 +71,10 @@ public class Person {
 
     public Appointment getAppointment() {
         return appointment;
+    }
+
+    public boolean hasClash(Appointment newAppointment) {
+        return AppointmentManager.isClash(appointmentList, newAppointment);
     }
 
     /**

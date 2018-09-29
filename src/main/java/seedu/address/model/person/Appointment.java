@@ -2,6 +2,11 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.model.department.MedicalDepartment;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.Nric;
+import seedu.address.model.patient.Patient;
+
 /**
  * Represents a Person's Appointment in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -9,7 +14,7 @@ import static java.util.Objects.requireNonNull;
 public class Appointment {
 
     /** Number of parts of an appointment */
-    private static int numberOfParts = 5;
+    private static int numberOfParts = 7;
 
     /** String value of whole appointment **/
     public final String value;
@@ -20,30 +25,40 @@ public class Appointment {
     /** Ending time of appointment */
     private String endTime;
     /** Name of doctor */
-    private String doctor; // change to class
+    private Name doctorName;
+    /** Medical department of doctorName */
+    private MedicalDepartment medicalDepartment;
     /** Name of patient */
-    private String patient; // change to class
+    private Name patientName;
+    /** nric of patient */
+    private Nric patientNric;
 
     public Appointment(String appointment) {
         requireNonNull(appointment);
-        /* if (!appointment.equals("")) {
-            String[] parts = appointment.split(",");
+        value = appointment;
+        String[] parts = value.split(",");
+        if (parts.length == numberOfParts) {
             date = parts[0];
             startTime = parts[1];
             endTime = parts[2];
-            doctor = parts[3];
-            patient = parts[4];
-        } */
-        value = appointment;
+            doctorName = new Name(parts[3]);
+            medicalDepartment = new MedicalDepartment(parts[4]);
+            patientName = new Name(parts[5]);
+            patientNric = new Nric(parts[6]);
+        }
     }
 
-    public Appointment(String date, String startTime, String endTime, String doctor, String patient) {
-        value = date + "," + startTime + "," + endTime + "," + doctor + "," + patient;
+    public Appointment(String date, String startTime, String endTime,
+                       String doctorName, String department, String patientName, String nric) {
+        value = date + "," + startTime + "," + endTime
+                + "," + doctorName + "," + department + "," + patientName + "," + nric;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.doctor = doctor;
-        this.patient = patient;
+        this.doctorName = new Name(doctorName);
+        this.medicalDepartment = new MedicalDepartment(department);
+        this.patientName = new Name(patientName);
+        this.patientNric = new Nric(nric);
     }
 
     /**
@@ -54,24 +69,28 @@ public class Appointment {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
-        if (!date.equals(otherAppointment.date) || !doctor.equals(otherAppointment.doctor)) {
+        // different or doctor means definitely no clash
+        if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
             return false;
         }
+
         int currentStartTime = Integer.parseInt(startTime.trim());
         int currentEndTime = Integer.parseInt(endTime.trim());
         int otherStartTime = Integer.parseInt(otherAppointment.startTime.trim());
         int otherEndTime = Integer.parseInt(otherAppointment.endTime.trim());
 
         // 3 Cases where other appointment clashes with current appointment
-        if (otherStartTime < currentStartTime && otherEndTime > currentEndTime) {
+        if (otherStartTime <= currentStartTime && otherEndTime >= currentEndTime) {
             // Case 1: other appointment's start time is before current appointment's start time
             // and other appointment's end time is after current appointment's end time
             return true;
-        } else if (otherStartTime > currentStartTime) {
+        } else if (otherStartTime >= currentStartTime && otherStartTime <= currentEndTime) {
             // Case 2: other appointment's start time is after current appointment's start time
+            // and before current appointment's end time
             return true;
-        } else if (otherEndTime < currentEndTime) {
+        } else if (otherEndTime <= currentEndTime && otherEndTime >= currentStartTime) {
             // Case 3: Other appointment's end time is before current appointment's end time
+            // and after current appointment's start time
             return true;
         } else {
             return false;
@@ -81,7 +100,7 @@ public class Appointment {
     /**
      * Returns true if instance is a valid Appointment object.
      */
-    public boolean isValid() {
+    public boolean isOfCorrectNumberOfParts() {
         String[] parts = value.split(",");
         if (value == "" || parts.length == Appointment.numberOfParts) {
             return true;
@@ -89,12 +108,28 @@ public class Appointment {
         return false;
     }
 
-    public String getPatient() {
-        return this.patient;
+    public boolean hasValidDoctor(Person person) {
+        Doctor doctor = (Doctor) person;
+        Name name = doctor.getName();
+        MedicalDepartment medicalDepartment = doctor.getMedicalDepartment();
+        if (doctorName.equals(name) && this.medicalDepartment.equals(medicalDepartment)) {
+            return true;
+        }
+        return false;
     }
 
-    public String getDoctor() {
-        return this.doctor;
+    public boolean hasValidPatient(Person person) {
+        Patient patient = (Patient) person;
+        Name name = patient.getName();
+        Nric nric = patient.getNric();
+        if (patientName.equals(name) && patientNric.equals(nric)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hasValidNric() {
+        return patientNric.isValidNric(patientNric.toString());
     }
 
     @Override
@@ -105,11 +140,6 @@ public class Appointment {
         if (obj instanceof Appointment) {
             Appointment appointment = (Appointment) obj;
             return appointment.value.equals(value);
-            /* return (appointment.date.equals(date)
-                    && appointment.startTime.equals(startTime)
-                    && appointment.endTime.equals(endTime)
-                    && appointment.doctor.equals(doctor)
-                    && appointment.patient.equals(patient)); */
         } else {
             return false;
         }

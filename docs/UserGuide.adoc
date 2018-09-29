@@ -237,24 +237,27 @@ Format: `listdoc`
 
 === Displaying medical appointments : `appts`
 
-Displays a list of medical appointments that are currently scheduled. All appointments will be listed if data is not entered. +
+Displays a list of medical appointments that are currently scheduled. All appointments will be listed if date is not entered. +
 Format: `appts[d/DATE]`
 
-=== Scheduling medical appointments : `appointment`
+=== Scheduling medical appointments : `schedule`
 
 Schedules a patient for a medical appointment at a specific date and time.
-Format: `appointment n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER`
+Format: `schedule s/DATE,START_TIME,END_TIME,DOCTOR_NAME,DOCTOR_DEPARTMENT,PATIENT_NAME,PATIENT_NRIC`
 
 ****
 * Date is DD/MM/YYYY and dot separated e.g.  `7.11.1996` is the 7th of November 1996
 * Time is 24 hour clock e.g. `1300` is 1pm
-* Room is the location of appointments e.g. `T45`
+* Doctor name is doctor's full name e.g. `John Doe`
+* Doctor department is doctor's medical department e.g. `Heart`
+* Patient name is patient's full name e.g. `Kim Tan`
+* Patient nric is patient's nric e.g. `S1234567A`
 ****
 
 Examples:
 
-* `appointment n/Jack d/22.11.2018 t/1300 t/1400 rn/T24` +
-Schedules `Jack` for an appointment in room `T24` on the 22nd of November 2018 from 1pm to 2pm.
+* `schedule 1 s/22.11.2018,1300,1400,Jack,Heart,Jill,S1234567I` +
+Schedules `Jill` for an appointment with doctor `Jack` of the `Heart` department on the 22nd of November 2018 from 1pm to 2pm.
 
 === Viewing medical records of patients : `records`
 
@@ -343,8 +346,8 @@ e.g.`select 2`
 e.g. `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD`
 * *List Doctors* : `listdoc`
 * *Display Medical Appointments* : `appts`
-* *Schedule Medical Appointments* : `appointment n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER` +
-e.g. `appointment n/Jack d/22.11.2018 t/1300 t/1400 rn/T24`
+* *Schedule Medical Appointments* : `schedule s/DATE,START_TIME,END_TIME,DOCTOR_NAME,DOCTOR_DEPARTMENT,PATIENT_NAME,PATIENT_NRIC` +
+e.g. `schedule 1 s/22.11.2018,1300,1400,Jack,Heart,Jill,S1234567I`
 * *View Medical Records* : `records n/NAME [d/DATE]`
 * *Update Medical Records* : `update n/NAME mr/NEW_MEDICAL_RECORDS` +
 e.g. `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.`

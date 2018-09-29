@@ -30,8 +30,10 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE), ive);
         }
 
-        String remark = argMultimap.getValue(PREFIX_SCHEDULE).orElse("");
+        String appointment = argMultimap
+                .getValue(PREFIX_SCHEDULE)
+                .orElse("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A");
 
-        return new ScheduleCommand(index, new Appointment(remark));
+        return new ScheduleCommand(index, new Appointment(appointment));
     }
 }

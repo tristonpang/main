@@ -60,13 +60,14 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String medicalRecord,
-                            List<XmlAdaptedTag> tagged) {
+                            String appointment, List<XmlAdaptedTag> tagged) {
 
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.medicalRecord = medicalRecord;
+        this.appointment = appointment;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
