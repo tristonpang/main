@@ -69,24 +69,28 @@ public class Appointment {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
+        // different or doctor means definitely no clash
         if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
             return false;
         }
+
         int currentStartTime = Integer.parseInt(startTime.trim());
         int currentEndTime = Integer.parseInt(endTime.trim());
         int otherStartTime = Integer.parseInt(otherAppointment.startTime.trim());
         int otherEndTime = Integer.parseInt(otherAppointment.endTime.trim());
 
         // 3 Cases where other appointment clashes with current appointment
-        if (otherStartTime < currentStartTime && otherEndTime > currentEndTime) {
+        if (otherStartTime <= currentStartTime && otherEndTime >= currentEndTime) {
             // Case 1: other appointment's start time is before current appointment's start time
             // and other appointment's end time is after current appointment's end time
             return true;
-        } else if (otherStartTime > currentStartTime) {
+        } else if (otherStartTime >= currentStartTime && otherStartTime <= currentEndTime) {
             // Case 2: other appointment's start time is after current appointment's start time
+            // and before current appointment's end time
             return true;
-        } else if (otherEndTime < currentEndTime) {
+        } else if (otherEndTime <= currentEndTime && otherEndTime >= currentStartTime) {
             // Case 3: Other appointment's end time is before current appointment's end time
+            // and after current appointment's start time
             return true;
         } else {
             return false;

@@ -61,16 +61,25 @@ public class AppointmentTest {
         Appointment appt5 = new Appointment("22.11.2018", "1300", "1400",
                 "Jill", "Heart","Jack", "S1234567B");
 
-        // appointment 6 and 7 have different
+        // appointment 6 and 7 have different dates
         Appointment appt6 = new Appointment("23.11.2018", "1300", "1400",
                 "Priscilia", "Heart","Elaine", "S1234567A");
         Appointment appt7 = new Appointment("22.11.2018", "1300", "1400",
                 "Priscilia", "Heart","Elaine", "S1234567A");
 
+        // appointment 8 and 9 have different timings that do not clash
+        Appointment appt8 = new Appointment("22.11.2018", "1300", "1400",
+                "Priscilia", "Heart","Elaine", "S1234567A");
+        Appointment appt9 = new Appointment("22.11.2018", "1500", "1600",
+                "Priscilia", "Heart","Elaine", "S1234567A");
+
         appointmentList = AppointmentManager.add(appointmentList, appt4);
         appointmentList = AppointmentManager.add(appointmentList, appt6);
+        appointmentList = AppointmentManager.add(appointmentList, appt8);
+
         assertFalse(AppointmentManager.isClash(appointmentList, appt5));
         assertFalse(AppointmentManager.isClash(appointmentList, appt7));
+        assertFalse(AppointmentManager.isClash(appointmentList, appt9));
     }
 
     @Test
@@ -93,9 +102,19 @@ public class AppointmentTest {
         Appointment appt11 = new Appointment("22.11.2018", "1200", "1330",
                 "Jeff", "Heart", "Seid", "S1234567A");
 
+        // Case 4: new appointment's start time is current appointment's end time
+        Appointment appt12 = new Appointment("22.11.2018", "1359", "1401",
+                "Jeff", "Heart", "Seid", "S1234567A");
+
+        // Case 5: new appointment's start and end time are exactly the same as current
+        Appointment appt13 = new Appointment("22.11.2018", "1300", "1400",
+                "Jeff", "Heart", "Seid", "S1234567A");
+
         appointmentList = AppointmentManager.add(appointmentList, appt8);
         assertTrue(AppointmentManager.isClash(appointmentList, appt9));
         assertTrue(AppointmentManager.isClash(appointmentList, appt10));
         assertTrue(AppointmentManager.isClash(appointmentList, appt11));
+        assertTrue(AppointmentManager.isClash(appointmentList, appt12));
+        assertTrue(AppointmentManager.isClash(appointmentList, appt13));
     }
 }
