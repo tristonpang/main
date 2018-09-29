@@ -237,7 +237,7 @@ Format: `listdoc`
 
 === Displaying medical appointments : `appts`
 
-Displays a list of medical appointments that are currently scheduled. All appointments will be listed if data is not entered. +
+Displays a list of medical appointments that are currently scheduled. All appointments will be listed if date is not entered. +
 Format: `appts[d/DATE]`
 
 === Scheduling medical appointments : `appointment`
