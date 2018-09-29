@@ -23,6 +23,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
 
+    private final IntuitivePromptManager intuitivePromptManager;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -34,6 +36,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+
+        intuitivePromptManager = new IntuitivePromptManager();
     }
 
     public ModelManager() {
@@ -145,6 +149,33 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    @Override
+    public String addIntuitiveEntry(String entry) {
+        intuitivePromptManager.addArgument(entry);
+        return intuitivePromptManager.getInstruction();
+    }
+
+    @Override
+    public String removeIntuitiveEntry() {
+        intuitivePromptManager.removeArgument();
+        return intuitivePromptManager.getInstruction();
+    }
+
+    @Override
+    public boolean isIntuitiveMode() {
+        return intuitivePromptManager.isIntuitiveMode();
+    }
+
+    @Override
+    public String retrieveIntuitiveArguments() {
+        return intuitivePromptManager.retrieveArguments();
+    }
+
+    @Override
+    public boolean areIntuitiveArgsAvailable() {
+        return intuitivePromptManager.areArgsAvailable();
     }
 
 }
