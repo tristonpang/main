@@ -2,6 +2,9 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.Patient;
+
 /**
  * Represents a Person's Appointment in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -9,7 +12,7 @@ import static java.util.Objects.requireNonNull;
 public class Appointment {
 
     /** Number of parts of an appointment */
-    private static int numberOfParts = 5;
+    private static int numberOfParts = 7;
 
     /** String value of whole appointment **/
     public final String value;
@@ -20,30 +23,48 @@ public class Appointment {
     /** Ending time of appointment */
     private String endTime;
     /** Name of doctor */
-    private String doctor; // change to class
+    private String doctor;
+    /** Medical department of doctor */
+    private String medicalDepartment;
     /** Name of patient */
-    private String patient; // change to class
+    private String patient;
+    /** nric of patient */
+    private String patientNric;
 
     public Appointment(String appointment) {
         requireNonNull(appointment);
-        /* if (!appointment.equals("")) {
-            String[] parts = appointment.split(",");
+        value = appointment;
+        String[] parts = value.split(",");
+        if (parts.length == numberOfParts) {
             date = parts[0];
             startTime = parts[1];
             endTime = parts[2];
             doctor = parts[3];
-            patient = parts[4];
-        } */
-        value = appointment;
+            medicalDepartment = parts[4];
+            patient = parts[5];
+            patientNric = parts[6];
+        }
     }
 
-    public Appointment(String date, String startTime, String endTime, String doctor, String patient) {
-        value = date + "," + startTime + "," + endTime + "," + doctor + "," + patient;
+    public Appointment(String date, String startTime, String endTime,
+                       String doctor, String department, String patient, String nric) {
+        value = date + "," + startTime + "," + endTime
+                + "," + doctor + "," + department + "," + patient + "," + nric;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.doctor = doctor;
+        this.medicalDepartment = department;
         this.patient = patient;
+        this.patientNric = nric;
+    }
+
+    public String getPatient() {
+        return this.patient;
+    }
+
+    public String getDoctor() {
+        return this.doctor;
     }
 
     /**
@@ -81,7 +102,7 @@ public class Appointment {
     /**
      * Returns true if instance is a valid Appointment object.
      */
-    public boolean isValid() {
+    public boolean isOfCorrectNumberOfParts() {
         String[] parts = value.split(",");
         if (value == "" || parts.length == Appointment.numberOfParts) {
             return true;
@@ -89,12 +110,24 @@ public class Appointment {
         return false;
     }
 
-    public String getPatient() {
-        return this.patient;
+    public boolean hasValidDoctor(Person person) {
+        Doctor doctor = (Doctor) person;
+        String name = doctor.getName().fullName;
+        String medicalDepartment = doctor.getMedicalDepartment().deptName;
+        if (this.doctor.equals(name) && this.medicalDepartment.equals(medicalDepartment)) {
+            return true;
+        }
+        return false;
     }
 
-    public String getDoctor() {
-        return this.doctor;
+    public boolean hasValidPatient(Person person) {
+        Patient patient = (Patient) person;
+        String name = patient.getName().fullName;
+        String nric = patient.getNric().code;
+        if (this.patient.equals(name) && patientNric.equals(nric)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

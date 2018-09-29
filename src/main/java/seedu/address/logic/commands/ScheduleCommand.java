@@ -27,13 +27,20 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Schedules appointment for the person identified "
             + "by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_SCHEDULE + "[DATE,START_TIME,END_TIME,DOCTOR_NAME,PATIENT_NAME]\n"
+            + PREFIX_SCHEDULE + "[DATE,START_TIME,END_TIME,DOCTOR_NAME,DOCTOR_DEPARTMENT,PATIENT_NAME,PATIENT_NRIC]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_SCHEDULE + "23.11.2018,1300,1400,Priscilia,Elaine";
+            + PREFIX_SCHEDULE + "23.11.2018,1300,1400,Jack,Heart,Jill,S1234567I";
 
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS = "Scheduled appointment to Person: %1$s";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE = "Failed to schedule appointment to Person.\n"
-            + "Please check that the format of the appointment is keyed in properly.\n";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER
+            = "Failed to schedule appointment to Person.\n"
+            + "Number of parts of the appointment is wrong.\n";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR
+            = "Failed to schedule appointment to Person.\n"
+            + "Doctor entered is wrong.\n";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT
+            = "Failed to schedule appointment to Person.\n"
+            + "Patient entered is wrong.\n";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
     private static final String MESSAGE_SCHEDULE_APPOINTMENT_MISMATCH = "Please check input name matches person chosen";
 
@@ -58,12 +65,20 @@ public class ScheduleCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (!appointment.isValid()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE);
+        if (!appointment.isOfCorrectNumberOfParts()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER);
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson;
+
+        if (personToEdit instanceof Doctor && !appointment.hasValidDoctor(personToEdit)) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR);
+        }
+
+        if (personToEdit instanceof Patient && !appointment.hasValidPatient(personToEdit)) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT);
+        }
 
         if (personToEdit instanceof Doctor) {
             editedPerson = new Doctor(personToEdit.getName(),
