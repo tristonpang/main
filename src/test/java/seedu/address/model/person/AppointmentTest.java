@@ -117,4 +117,23 @@ public class AppointmentTest {
         assertTrue(AppointmentManager.isClash(appointmentList, appt12));
         assertTrue(AppointmentManager.isClash(appointmentList, appt13));
     }
+
+    @Test
+    public void clashTestForAppointmentList() {
+        Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
+                "Alice", "Heart","Bob", "S1234567A");
+        Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
+                "Alice", "Heart","Bob", "S1234567A");
+        Appointment appt3 = new Appointment("22.11.2018", "1300", "1330",
+                "Alice", "Heart","Bob", "S1234567A");
+        Appointment appt4 = new Appointment("22.11.2018", "1330", "1400",
+                "Alice", "Heart","Bob", "S1234567A");
+
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        appointments.add(appt1);
+        appointments.add(appt2);
+        appointments.add(appt3);
+
+        assertTrue(AppointmentManager.isClash(appointments, appt4));
+    }
 }
