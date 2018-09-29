@@ -36,7 +36,6 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.appointment = new Appointment("");
         this.tags.addAll(tags);
     }
 

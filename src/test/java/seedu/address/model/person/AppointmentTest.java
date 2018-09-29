@@ -11,7 +11,7 @@ public class AppointmentTest {
 
     @Test
     public void equals() {
-        Appointment appointment = new Appointment("22.11.2018,1300,1400,Jill,Jack");
+        Appointment appointment = new Appointment("22.11.2018,1300,1400,Jill,Heart,Jack,S1234567A");
 
         // same object -> returns true
         assertTrue(appointment.equals(appointment));
@@ -27,7 +27,7 @@ public class AppointmentTest {
         assertFalse(appointment.equals(null));
 
         // different remark -> returns false
-        Appointment differentRemark = new Appointment("22.11.2018,1300,1400,Alice,Bob");
+        Appointment differentRemark = new Appointment("22.11.2018,1300,1400,Alice,Heart,Bob,S1234567B");
         assertFalse(appointment.equals(differentRemark));
     }
 
@@ -36,11 +36,11 @@ public class AppointmentTest {
         ArrayList<Appointment> appointmentList = new ArrayList<>();
 
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
-                "Alice", "Bob");
+                "Alice", "Heart","Bob", "S1234567A");
         Appointment appt2 = new Appointment("22.11.2018", "1300", "1400",
-                "Jill", "Jack");
+                "Jill", "Heart","Jack", "S1234567B");
         Appointment appt3 = new Appointment("22.11.2018", "1300", "1400",
-                "Jill", "Jack");
+                "Jill", "Heart","Jack", "S1234567B");
 
         appointmentList = AppointmentManager.add(appointmentList, appt1);
         appointmentList = AppointmentManager.add(appointmentList, appt2);
@@ -57,15 +57,15 @@ public class AppointmentTest {
 
         // appointment 4 and 5 have different Doctors
         Appointment appt4 = new Appointment("22.11.2018", "1300", "1400",
-                "Alice", "Bob");
+                "Alice", "Heart","Bob", "S1234567A");
         Appointment appt5 = new Appointment("22.11.2018", "1300", "1400",
-                "Jill", "Jack");
+                "Jill", "Heart","Jack", "S1234567B");
 
         // appointment 6 and 7 have different
         Appointment appt6 = new Appointment("23.11.2018", "1300", "1400",
-                "Priscilia", "Elaine");
+                "Priscilia", "Heart","Elaine", "S1234567A");
         Appointment appt7 = new Appointment("22.11.2018", "1300", "1400",
-                "Priscilia", "Elaine");
+                "Priscilia", "Heart","Elaine", "S1234567A");
 
         appointmentList = AppointmentManager.add(appointmentList, appt4);
         appointmentList = AppointmentManager.add(appointmentList, appt6);
@@ -78,20 +78,20 @@ public class AppointmentTest {
         ArrayList<Appointment> appointmentList = new ArrayList<>();
 
         Appointment appt8 = new Appointment("22.11.2018", "1300", "1400",
-                "Jeff", "Seid");
+                "Jeff", "Heart","Seid", "S1234567A");
 
         // Case 1: new appointment's start time is before current appointment's start time
         // and new appointment's end time is after current appointment's end time
         Appointment appt9 = new Appointment("22.11.2018", "1200", "1500",
-                "Jeff", "Seid");
+                "Jeff", "Heart", "Seid", "S1234567A");
 
         // Case 2: new appointment's start time is after current appointment's start time
         Appointment appt10 = new Appointment("22.11.2018", "1330", "1400",
-                "Jeff", "Seid");
+                "Jeff", "Heart", "Seid", "S1234567A");
 
         // Case 3: new appointment's end time is after current appointment's end time
         Appointment appt11 = new Appointment("22.11.2018", "1200", "1330",
-                "Jeff", "Seid");
+                "Jeff", "Heart", "Seid", "S1234567A");
 
         appointmentList = AppointmentManager.add(appointmentList, appt8);
         assertTrue(AppointmentManager.isClash(appointmentList, appt9));
