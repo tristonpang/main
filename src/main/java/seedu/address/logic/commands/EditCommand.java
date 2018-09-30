@@ -167,7 +167,6 @@ public class EditCommand extends Command {
         private Set<Tag> tags;
         private Nric nric;
         private MedicalDepartment medicalDepartment;
-        private MedicalRecord medicalRecord;
 
         public EditPersonDescriptor() {}
 
@@ -183,7 +182,6 @@ public class EditCommand extends Command {
             setTags(toCopy.tags);
             setMedicalDepartment(toCopy.medicalDepartment);
             setNric(toCopy.nric);
-            setMedicalRecord(toCopy.medicalRecord);
         }
 
         /**
@@ -239,14 +237,6 @@ public class EditCommand extends Command {
 
         public Optional<MedicalDepartment> getMedicalDepartment() {
             return Optional.ofNullable(medicalDepartment);
-        }
-
-        public void setMedicalRecord(MedicalRecord medicalRecord) {
-            this.medicalRecord = medicalRecord;
-        }
-
-        public Optional<MedicalRecord> getMedicalRecord() {
-            return Optional.ofNullable(medicalRecord);
         }
 
         /**
