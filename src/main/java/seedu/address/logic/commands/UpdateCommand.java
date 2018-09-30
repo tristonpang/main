@@ -66,6 +66,7 @@ public class UpdateCommand extends Command {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            model.commitAddressBook();
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
