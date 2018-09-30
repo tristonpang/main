@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import java.util.List;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
@@ -22,6 +24,16 @@ public class XmlAdaptedDoctor extends XmlAdaptedPerson {
     public XmlAdaptedDoctor(Doctor source) {
         super(source);
         medicalDepartment = source.getMedicalDepartment().deptName;
+    }
+
+    /**
+     * Constructs an {@code XmlAdaptedPatient} with the given person details.
+     */
+    public XmlAdaptedDoctor(String name, String phone, String email, String address,
+                            List<XmlAdaptedTag> tags, String appointment, String medicalDepartment) {
+        super(name, phone, email, address, tags, appointment);
+        this.medicalDepartment = medicalDepartment;
+        this.role = "Doctor";
     }
 
     /**

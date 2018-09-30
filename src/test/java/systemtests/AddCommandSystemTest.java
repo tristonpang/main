@@ -51,8 +51,8 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.PatientBuilder;
+import seedu.address.testutil.PatientUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
@@ -66,9 +66,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          * -> added
          */
         Person toAdd = AMY;
-        String command = "   " + AddCommand.COMMAND_WORD + "  " + ROLE_PATIENT_DESC + NAME_DESC_AMY + "  "
-                + PHONE_DESC_AMY + " " + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   "
-                + TAG_DESC_FRIEND + " " + NRIC_DESC_AMY;
+        String command = "   " + AddCommand.COMMAND_WORD + "  " + ROLE_PATIENT_DESC + "  " + NAME_DESC_AMY + "  "
+                + PHONE_DESC_AMY + "  " + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   "
+                + TAG_DESC_FRIEND + "  " + NRIC_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -83,7 +83,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a person with all fields same as another person in the address book except name -> added */
-        toAdd = new PersonBuilder(AMY).withName(VALID_NAME_BOB).build();
+        toAdd = new PatientBuilder(AMY).withName(VALID_NAME_BOB).build();
         command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + NRIC_DESC_AMY;
         assertCommandSuccess(command, toAdd);
@@ -91,8 +91,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with all fields same as another person in the address book except phone and email
          * -> added
          */
-        toAdd = new PersonBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
-        command = PersonUtil.getAddCommand(toAdd);
+        toAdd = new PatientBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
+        command = PatientUtil.getAddCommand(toAdd);
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
@@ -123,26 +123,26 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate person -> rejected */
-        command = PersonUtil.getAddCommand(HOON);
+        command = PatientUtil.getAddCommand(HOON);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different phone -> rejected */
-        toAdd = new PersonBuilder(HOON).withPhone(VALID_PHONE_BOB).build();
-        command = PersonUtil.getAddCommand(toAdd);
+        toAdd = new PatientBuilder(HOON).withPhone(VALID_PHONE_BOB).build();
+        command = PatientUtil.getAddCommand(toAdd);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different email -> rejected */
-        toAdd = new PersonBuilder(HOON).withEmail(VALID_EMAIL_BOB).build();
-        command = PersonUtil.getAddCommand(toAdd);
+        toAdd = new PatientBuilder(HOON).withEmail(VALID_EMAIL_BOB).build();
+        command = PatientUtil.getAddCommand(toAdd);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different address -> rejected */
-        toAdd = new PersonBuilder(HOON).withAddress(VALID_ADDRESS_BOB).build();
-        command = PersonUtil.getAddCommand(toAdd);
+        toAdd = new PatientBuilder(HOON).withAddress(VALID_ADDRESS_BOB).build();
+        command = PatientUtil.getAddCommand(toAdd);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different tags -> rejected */
-        command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
+        command = PatientUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: missing role -> rejected */
@@ -171,7 +171,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PATIENT_USAGE));
 
         /* Case: invalid keyword -> rejected */
-        command = "adds " + PersonUtil.getPersonDetails(toAdd);
+        command = "adds " + PatientUtil.getPersonDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid role -> rejected */
@@ -229,7 +229,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(Person toAdd) {
-        assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
+        assertCommandSuccess(PatientUtil.getAddCommand(toAdd), toAdd);
     }
 
     /**
