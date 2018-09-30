@@ -25,7 +25,7 @@ public class Person {
     // Common Data fields
     protected final Address address;
     protected final Set<Tag> tags = new HashSet<>();
-    private Appointment appointment;
+    private Appointment appointment = new Appointment("");
     private ArrayList<Appointment> appointmentList = new ArrayList<>();
 
     /**
