@@ -32,11 +32,11 @@ public class ScheduleCommand extends Command {
             + PREFIX_SCHEDULE + "23.11.2018,1300,1400,Jack,Heart,Jill,S1234567I";
 
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS = "Scheduled appointment to Person: %1$s";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER
-            = "Failed to schedule appointment to Person.\n"
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER =
+            "Failed to schedule appointment to Person.\n"
             + "Number of parts of the appointment is wrong.\n";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR
-            = "Failed to schedule appointment to Person.\n"
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR =
+            "Failed to schedule appointment to Person.\n"
             + "Doctor entered is wrong.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT
             = "Failed to schedule appointment to Person.\n"
