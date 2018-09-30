@@ -39,6 +39,10 @@ public class UpdateCommand extends Command {
     private final Index index;
     private final MedicalRecord medicalRecord;
 
+    /**
+     * @param index of the person in the filtered person list to edit
+     * @param medicalRecord medical record of the person to update
+     */
     public UpdateCommand(Index index, MedicalRecord medicalRecord) {
         requireNonNull(index);
         requireNonNull(medicalRecord);
@@ -66,6 +70,7 @@ public class UpdateCommand extends Command {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            model.commitAddressBook();
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
