@@ -38,8 +38,8 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR =
             "Failed to schedule appointment to Person.\n"
             + "Doctor entered is wrong.\n";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT
-            = "Failed to schedule appointment to Person.\n"
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT =
+            "Failed to schedule appointment to Person.\n"
             + "Patient entered is wrong.\n";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH = "There is a clash of appointments. "
