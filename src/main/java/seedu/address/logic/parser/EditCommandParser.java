@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
@@ -21,7 +20,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,7 +35,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_ROLE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT, PREFIX_NRIC);
 
         Index index;
@@ -49,9 +47,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        if (!argMultimap.getValue(PREFIX_ROLE).isPresent()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-        }
+
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
@@ -65,18 +61,16 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-        if (isRoleOf(Role.PATIENT, argMultimap)) {
-            if (argMultimap.getValue(PREFIX_NRIC).isPresent()) {
-                editPersonDescriptor.setNric(ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get()));
-            }
-        } else if (isRoleOf(Role.DOCTOR, argMultimap)) {
-            if (argMultimap.getValue(PREFIX_MEDICAL_DEPARTMENT).isPresent()) {
-                editPersonDescriptor.setMedicalDepartment(ParserUtil.parseMedicalDepartment(argMultimap
-                        .getValue(PREFIX_MEDICAL_DEPARTMENT).get()));
-            }
-        } else {
-            throw new ParseException(Role.MESSAGE_ROLE_CONSTRAINTS);
+
+        if (argMultimap.getValue(PREFIX_NRIC).isPresent()) {
+            editPersonDescriptor.setNric(ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get()));
         }
+
+        if (argMultimap.getValue(PREFIX_MEDICAL_DEPARTMENT).isPresent()) {
+            editPersonDescriptor.setMedicalDepartment(ParserUtil.parseMedicalDepartment(argMultimap
+                    .getValue(PREFIX_MEDICAL_DEPARTMENT).get()));
+        }
+
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
