@@ -138,6 +138,8 @@ public class IntuitivePromptManager {
                 return ADD_NRIC_INSTRUCTION;
             } else if (isDoctor()) {
                 return ADD_DEPT_INSTRUCTION;
+            } else {
+                return "Invalid";
             }
 
         default:
@@ -222,6 +224,8 @@ public class IntuitivePromptManager {
                 return PREFIX_NRIC + argument;
             } else if (isDoctor()) {
                 return PREFIX_MEDICAL_DEPARTMENT + argument;
+            } else {
+                return "";
             }
 
         default:
