@@ -5,7 +5,7 @@ import seedu.address.model.Model;
 
 public class IntuitiveEntryCommand extends Command {
     private static final String GO_BACK_COMMAND = "/bk";
-    private final String INPUT_ECHO = "You entered: %1$s \n";
+    private static final String INPUT_ECHO = "You entered: %1$s \n";
 
     private String input;
 
