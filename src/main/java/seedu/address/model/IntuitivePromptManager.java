@@ -23,7 +23,7 @@ public class IntuitivePromptManager {
     private static final String ADD_COMMAND_WORD = "add";
     private static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? " +
             "(Please enter patient or doctor)";
-    private static final String ADD_NAME_INSTRUCTION = "Please enter patient's name";
+    private static final String ADD_NAME_INSTRUCTION = "Please enter person's name";
     private static final String ADD_EMAIL_INSTRUCTION = "Please enter person's email";
     private static final String ADD_PHONE_INSTRUCTION = "Please enter person's phone number";
     private static final String ADD_ADDRESS_INSTRUCTION = "Please enter person's address";
