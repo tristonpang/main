@@ -16,6 +16,7 @@ import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -55,6 +56,7 @@ public class XmlAdaptedPersonTest {
         XmlAdaptedPatient patient =
                 new XmlAdaptedPatient(INVALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                         VALID_MEDICAL_RECORD, VALID_TAGS, VALID_NRIC, VALID_APPOINTMENT);
+
         String expectedMessage = Name.MESSAGE_NAME_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
 
@@ -91,6 +93,7 @@ public class XmlAdaptedPersonTest {
     public void toModelType_nullPhone_throwsIllegalValueException() {
         XmlAdaptedPerson patient = new XmlAdaptedPatient(VALID_NAME, null, VALID_EMAIL, VALID_ADDRESS,
                 VALID_MEDICAL_RECORD, VALID_TAGS, VALID_NRIC, VALID_APPOINTMENT);
+
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
 

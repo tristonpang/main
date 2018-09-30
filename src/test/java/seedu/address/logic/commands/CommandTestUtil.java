@@ -42,8 +42,8 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_MEDICAL_RECORD_AMY = "Diagnosed with flu. Tamiflu prescribed.";
     public static final String VALID_MEDICAL_RECORD_BOB = "Diagnosed with cough. Dextromethorphan prescribed.";
-    public static final String VALID_SCHEDULE_AMY = "22.11.2018,1300,1400,Alice,Amy";
-    public static final String VALID_SCHEDULE_BOB = "22.11.2018,1300,1400,Jack,Bob";
+    public static final String VALID_SCHEDULE_AMY = "22.11.2018,1300,1400,Alice,Heart,Amy,S1234567A";
+    public static final String VALID_SCHEDULE_BOB = "22.11.2018,1300,1400,Jack,Heart,Bob,S1234567B";
     public static final String VALID_ROLE_DOCTOR = "doctor";
     public static final String VALID_ROLE_PATIENT = "patient";
     public static final String VALID_MEDICAL_DEPARTMENT = "Cardiology";

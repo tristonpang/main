@@ -84,8 +84,8 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_remark() throws Exception {
-        final Appointment appointment = new Appointment("Some appointment.");
+    public void parseCommand_schedule() throws Exception {
+        final Appointment appointment = new Appointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A");
         ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE + appointment.value);
         assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, appointment), command);
