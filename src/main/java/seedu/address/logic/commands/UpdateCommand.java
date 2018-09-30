@@ -39,6 +39,10 @@ public class UpdateCommand extends Command {
     private final Index index;
     private final MedicalRecord medicalRecord;
 
+    /**
+     * @param index of the person in the filtered person list to edit
+     * @param medicalRecord medical record of the person to update
+     */
     public UpdateCommand(Index index, MedicalRecord medicalRecord) {
         requireNonNull(index);
         requireNonNull(medicalRecord);
