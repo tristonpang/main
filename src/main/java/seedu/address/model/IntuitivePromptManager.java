@@ -308,6 +308,11 @@ public class IntuitivePromptManager {
         return input.equals(SKIP_COMMAND);
     }
 
+    /**
+     * Checks if the current field of the executing intuitive command is skippable/can be left blank.
+     *
+     * @return true if the field is skippable, false otherwise
+     */
     private boolean isCurrentFieldSkippable() {
         switch (commandWord) {
 
