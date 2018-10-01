@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import com.sun.xml.bind.v2.TODO;
+
 import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.patient.Nric;
@@ -69,6 +71,10 @@ public class Appointment {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
+        // TODO: 1/10/2018 : Change this quick fix.
+        if (this.value.equals("") || otherAppointment.value.equals("")) {
+            return false;
+        }
         // different or doctor means definitely no clash
         if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
             return false;
@@ -108,6 +114,11 @@ public class Appointment {
         return false;
     }
 
+    /**
+     *
+     * @param person to be tested
+     * @return boolean on whether the person is a valid doctor.
+     */
     public boolean hasValidDoctor(Person person) {
         Doctor doctor = (Doctor) person;
         Name name = doctor.getName();
@@ -118,6 +129,11 @@ public class Appointment {
         return false;
     }
 
+    /**
+     *
+     * @param person to be tested
+     * @return boolean on whether the person is a valid patient.
+     */
     public boolean hasValidPatient(Person person) {
         Patient patient = (Patient) person;
         Name name = patient.getName();
@@ -139,7 +155,7 @@ public class Appointment {
         }
         if (obj instanceof Appointment) {
             Appointment appointment = (Appointment) obj;
-            return appointment.value.equals(value);
+            return appointment.value.toUpperCase().equals(this.value.toUpperCase());
         } else {
             return false;
         }

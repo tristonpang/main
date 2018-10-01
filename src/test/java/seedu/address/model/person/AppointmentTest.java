@@ -36,11 +36,11 @@ public class AppointmentTest {
         ArrayList<Appointment> appointmentList = new ArrayList<>();
 
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
-                "Alice", "Heart","Bob", "S1234567A");
+                "Alice", "Heart", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("22.11.2018", "1300", "1400",
-                "Jill", "Heart","Jack", "S1234567B");
+                "Jill", "Heart", "Jack", "S1234567B");
         Appointment appt3 = new Appointment("22.11.2018", "1300", "1400",
-                "Jill", "Heart","Jack", "S1234567B");
+                "Jill", "Heart", "Jack", "S1234567B");
 
         appointmentList = AppointmentManager.add(appointmentList, appt1);
         appointmentList = AppointmentManager.add(appointmentList, appt2);
@@ -57,21 +57,21 @@ public class AppointmentTest {
 
         // appointment 4 and 5 have different Doctors
         Appointment appt4 = new Appointment("22.11.2018", "1300", "1400",
-                "Alice", "Heart","Bob", "S1234567A");
+                "Alice", "Heart", "Bob", "S1234567A");
         Appointment appt5 = new Appointment("22.11.2018", "1300", "1400",
-                "Jill", "Heart","Jack", "S1234567B");
+                "Jill", "Heart", "Jack", "S1234567B");
 
         // appointment 6 and 7 have different dates
         Appointment appt6 = new Appointment("23.11.2018", "1300", "1400",
-                "Priscilia", "Heart","Elaine", "S1234567A");
+                "Priscilia", "Heart", "Elaine", "S1234567A");
         Appointment appt7 = new Appointment("22.11.2018", "1300", "1400",
-                "Priscilia", "Heart","Elaine", "S1234567A");
+                "Priscilia", "Heart", "Elaine", "S1234567A");
 
         // appointment 8 and 9 have different timings that do not clash
         Appointment appt8 = new Appointment("22.11.2018", "1300", "1400",
-                "Priscilia", "Heart","Elaine", "S1234567A");
+                "Priscilia", "Heart", "Elaine", "S1234567A");
         Appointment appt9 = new Appointment("22.11.2018", "1500", "1600",
-                "Priscilia", "Heart","Elaine", "S1234567A");
+                "Priscilia", "Heart", "Elaine", "S1234567A");
 
         appointmentList = AppointmentManager.add(appointmentList, appt4);
         appointmentList = AppointmentManager.add(appointmentList, appt6);
@@ -87,7 +87,7 @@ public class AppointmentTest {
         ArrayList<Appointment> appointmentList = new ArrayList<>();
 
         Appointment appt8 = new Appointment("22.11.2018", "1300", "1400",
-                "Jeff", "Heart","Seid", "S1234567A");
+                "Jeff", "Heart", "Seid", "S1234567A");
 
         // Case 1: new appointment's start time is before current appointment's start time
         // and new appointment's end time is after current appointment's end time
@@ -121,13 +121,13 @@ public class AppointmentTest {
     @Test
     public void clashTestForAppointmentList() {
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
-                "Alice", "Heart","Bob", "S1234567A");
+                "Alice", "Heart", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
-                "Alice", "Heart","Bob", "S1234567A");
+                "Alice", "Heart", "Bob", "S1234567A");
         Appointment appt3 = new Appointment("22.11.2018", "1300", "1330",
-                "Alice", "Heart","Bob", "S1234567A");
+                "Alice", "Heart", "Bob", "S1234567A");
         Appointment appt4 = new Appointment("22.11.2018", "1330", "1400",
-                "Alice", "Heart","Bob", "S1234567A");
+                "Alice", "Heart", "Bob", "S1234567A");
 
         ArrayList<Appointment> appointments = new ArrayList<>();
         appointments.add(appt1);
