@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Joanne Ong
-image::Joanne.png[width="150", align="left"]
+image::joanneong.png[width="150", align="left"]
 {empty}[https://github.com/joanneong[github]] [<<johndoe#, portfolio>>]
 
 Role: Supervisor
@@ -20,7 +20,7 @@ Role: Supervisor
 '''
 
 === Tan Thong Cai Nelvin
-image::Nelvin.png[width="150", align="left"]
+image::nelvintan.png[width="150", align="left"]
 {empty}[https://github.com/nelvintan[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
@@ -29,7 +29,7 @@ Responsibilities: Deliverables & deadlines, Scheduling & tracking
 '''
 
 === Triston Pang Erh Syen
-image::Triston.png[width="150", align="left"]
+image::tristonpang.png[width="150", align="left"]
 {empty}[https://github.com/tristonpang[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -38,7 +38,7 @@ Responsibilities: Integration
 '''
 
 === Ng Kang Tze
-image::KangTze.png[width="150", align="left"]
+image::ngkangtze.png[width="150", align="left"]
 {empty}[https://github.com/ngkangtze[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -47,7 +47,7 @@ Responsibilities: Code Quality, JavaFX expert
 '''
 
 === Gary Goh Yi Peng
-image::Gary.png[width="150", align="left"]
+image::GaryGohYP.png[width="150", align="left"]
 {empty}[https://github.com/garygohyp[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -56,7 +56,7 @@ Responsibilities: Testing
 '''
 
 === Kenneth Goh Jun Teck
-image::Kenneth.png[width="150", align="left"]
+image::guestuser0123.png[width="150", align="left"]
 {empty}[https://github.com/guestuser0123[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
