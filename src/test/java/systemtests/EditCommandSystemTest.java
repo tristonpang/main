@@ -64,9 +64,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          * -> edited
          */
         Index index = INDEX_FIRST_PERSON;
-        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " +
-                "  " + NAME_DESC_BOB + "  " + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB +
-                "  " + TAG_DESC_HUSBAND + "  " + NRIC_DESC_BOB + "  ";
+        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  "
+                + "  " + NAME_DESC_BOB + "  " + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB
+                + "  " + TAG_DESC_HUSBAND + "  " + NRIC_DESC_BOB + "  ";
         Patient editedPerson = new PatientBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedPerson);
 
