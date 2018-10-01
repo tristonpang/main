@@ -24,7 +24,7 @@ import seedu.address.model.tag.Tag;
  */
 public class SampleDataUtil {
 
-    public static final Appointment SAMPLE_APPOINTMENT = new Appointment("22.11.2018, 1300, 1400, Alice, Heart, Betty"
+    public static final Appointment SAMPLE_APPOINTMENT = new Appointment("22.11.2018,1300,1400,Alice,Heart,Betty"
             + ",S1234567A");
 
     public static Person[] getSamplePersons() {
