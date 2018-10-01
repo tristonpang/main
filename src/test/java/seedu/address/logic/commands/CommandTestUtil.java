@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -61,6 +62,8 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String NRIC_DESC_AMY = " " + PREFIX_NRIC + VALID_NRIC_AMY;
     public static final String NRIC_DESC_BOB = " " + PREFIX_NRIC + VALID_NRIC_BOB;
+    public static final String MEDICAL_RECORD_DESC_AMY = " " + PREFIX_MEDICAL_RECORD + VALID_MEDICAL_RECORD_AMY;
+    public static final String MEDICAL_RECORD_DESC_BOB = " " + PREFIX_MEDICAL_RECORD + VALID_MEDICAL_RECORD_BOB;
     public static final String MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + VALID_MEDICAL_DEPARTMENT;
     public static final String ROLE_DOCTOR_DESC = " " + PREFIX_ROLE + VALID_ROLE_DOCTOR;
     public static final String ROLE_PATIENT_DESC = " " + PREFIX_ROLE + VALID_ROLE_PATIENT;

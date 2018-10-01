@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import java.util.List;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Nric;
@@ -24,6 +26,17 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
         super(source);
         nric = source.getNric().code;
         medicalRecord = source.getMedicalRecord().value;
+    }
+
+    /**
+     * Constructs an {@code XmlAdaptedPatient} with the given person details.
+     */
+    public XmlAdaptedPatient(String name, String phone, String email, String address,
+                             String medicalRecord, List<XmlAdaptedTag> tags, String nric, String appointment) {
+        super(name, phone, email, address, tags, appointment);
+        this.nric = nric;
+        this.medicalRecord = medicalRecord;
+        this.role = "Patient";
     }
 
     /**

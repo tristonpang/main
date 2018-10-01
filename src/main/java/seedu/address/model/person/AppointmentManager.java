@@ -24,6 +24,20 @@ public class AppointmentManager {
         return false;
     }
 
+    /**
+     * Checks if there are any clashes between another appointment.
+     *
+     * @param appointment current appointment
+     * @param otherAppointment  another appointment
+     * @return Boolean if there is any clash between other appointment and current appointment
+     */
+    public static boolean isClash(Appointment appointment, Appointment otherAppointment) {
+        if (appointment.isClash(otherAppointment)) {
+            return true;
+        }
+        return false;
+    }
+
     public static void displaySchedule(ArrayList<Appointment> appointmentList) {
         return; // connect to UI somehow?!?
     }
