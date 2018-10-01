@@ -3,6 +3,10 @@ package seedu.address.logic.commands;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 
+/**
+ * Signals that the user has entered an input or argument for a specified field during the execution of
+ * an intuitive command.
+ */
 public class IntuitiveEntryCommand extends Command {
     private static final String GO_BACK_COMMAND = "/bk";
     private static final String INPUT_ECHO = "You entered: %1$s \n";

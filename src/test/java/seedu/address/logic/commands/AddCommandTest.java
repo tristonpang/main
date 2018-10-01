@@ -152,6 +152,30 @@ public class AddCommandTest {
         public void commitAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public String addIntuitiveEntry(String entry) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public String removeIntuitiveEntry() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        public boolean isIntuitiveMode() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean areIntuitiveArgsAvailable() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public String retrieveIntuitiveArguments() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**
