@@ -28,10 +28,10 @@ endif::[]
 
 == Site Map
 
-* https://github.com/ngkangtze/main/blob/master/docs/UserGuide.adoc[User Guide]
-* <<DeveloperGuide#, Developer Guide>>
-* <<AboutUs#, About Us>>
-* <<ContactUs#, Contact Us>>
+* https://github.com/CS2103-AY1819S1-W16-3/main/blob/master/docs/UserGuide.adoc[User Guide]
+* https://github.com/CS2103-AY1819S1-W16-3/main/blob/master/docs/DeveloperGuide.adoc[Developer Guide]
+* https://github.com/CS2103-AY1819S1-W16-3/main/blob/master/docs/AboutUs.adoc[About Us]
+* https://github.com/CS2103-AY1819S1-W16-3/main/blob/master/docs/ContactUs.adoc[Contact Us]
 
 
 == Acknowledgements
