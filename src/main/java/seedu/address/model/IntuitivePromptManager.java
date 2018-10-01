@@ -1,13 +1,20 @@
 package seedu.address.model;
 
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.ui.UiManager;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static seedu.address.logic.parser.CliSyntax.*;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.ui.UiManager;
 
 public class IntuitivePromptManager {
     private static int currentArgIndex; //change this to enum in future version
@@ -21,14 +28,14 @@ public class IntuitivePromptManager {
     private static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
 
     private static final String ADD_COMMAND_WORD = "add";
-    private static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? " +
-            "(Please enter patient or doctor)";
+    private static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? "
+            + "(Please enter patient or doctor)";
     private static final String ADD_NAME_INSTRUCTION = "Please enter patient's name";
     private static final String ADD_EMAIL_INSTRUCTION = "Please enter person's email";
     private static final String ADD_PHONE_INSTRUCTION = "Please enter person's phone number";
     private static final String ADD_ADDRESS_INSTRUCTION = "Please enter person's address";
-    private static final String ADD_TAGS_INSTRUCTION = "Please enter person's tags, " +
-            "separated by commas (with no spaces after a comma)";
+    private static final String ADD_TAGS_INSTRUCTION = "Please enter person's tags, "
+            + "separated by commas (with no spaces after a comma)";
     private static final String ADD_NRIC_INSTRUCTION = "Please enter patient's NRIC";
     private static final String ADD_DEPT_INSTRUCTION = "Please enter doctor's medical department";
 
@@ -82,16 +89,18 @@ public class IntuitivePromptManager {
 
     public String getInstruction() {
         switch (commandWord) {
-            case ADD_COMMAND_WORD:
-                return retrieveAddInstruction();
-            default:
-                return "Invalid";
+
+        case ADD_COMMAND_WORD:
+            return retrieveAddInstruction();
+
+        default:
+            return "Invalid";
         }
     }
 
     public void removeArgument() {
         //assert currentArgIndex > 0
-        arguments.remove(currentArgIndex-1);
+        arguments.remove(currentArgIndex - 1);
         currentArgIndex--;
     }
 
@@ -105,35 +114,48 @@ public class IntuitivePromptManager {
 
     private String retrieveAddInstruction() {
         switch (currentArgIndex) {
-            case ADD_ROLE_INDEX:
-                return ADD_ROLE_INSTRUCTION;
-            case ADD_NAME_INDEX:
-                return ADD_NAME_INSTRUCTION;
-            case ADD_EMAIL_INDEX:
-                return ADD_EMAIL_INSTRUCTION;
-            case ADD_PHONE_INDEX:
-                return ADD_PHONE_INSTRUCTION;
-            case ADD_ADDRESS_INDEX:
-                return ADD_ADDRESS_INSTRUCTION;
-            case ADD_TAGS_INDEX:
-                return ADD_TAGS_INSTRUCTION + String.format(SKIP_INSTRUCTION, SKIP_COMMAND);
-            case ADD_NRIC_OR_DEPT_INDEX:
-                if (isPatient()) {
-                    return ADD_NRIC_INSTRUCTION;
-                } else if (isDoctor()) {
-                    return ADD_DEPT_INSTRUCTION;
-                }
-            default:
+
+        case ADD_ROLE_INDEX:
+            return ADD_ROLE_INSTRUCTION;
+
+        case ADD_NAME_INDEX:
+            return ADD_NAME_INSTRUCTION;
+
+        case ADD_EMAIL_INDEX:
+            return ADD_EMAIL_INSTRUCTION;
+
+        case ADD_PHONE_INDEX:
+            return ADD_PHONE_INSTRUCTION;
+
+        case ADD_ADDRESS_INDEX:
+            return ADD_ADDRESS_INSTRUCTION;
+
+        case ADD_TAGS_INDEX:
+            return ADD_TAGS_INSTRUCTION + String.format(SKIP_INSTRUCTION, SKIP_COMMAND);
+
+        case ADD_NRIC_OR_DEPT_INDEX:
+            if (isPatient()) {
+                return ADD_NRIC_INSTRUCTION;
+            } else if (isDoctor()) {
+                return ADD_DEPT_INSTRUCTION;
+            } else {
                 return "Invalid";
+            }
+
+        default:
+            return "Invalid";
         }
     }
 
     private int getMaximumArguments(String commandWord) {
         switch (commandWord) {
-            case ADD_COMMAND_WORD:
-                return ADD_MAX_ARGUMENTS;
+
+        case ADD_COMMAND_WORD:
+            return ADD_MAX_ARGUMENTS;
+
+        default:
+            return 0;
         }
-        return 0;
     }
 
     public boolean areArgsAvailable() {
@@ -142,10 +164,12 @@ public class IntuitivePromptManager {
 
     public String retrieveArguments() {
         switch (commandWord) {
-            case ADD_COMMAND_WORD:
-                return prepareArgumentsForAdd();
-            default:
-                return "Invalid";
+
+        case ADD_COMMAND_WORD:
+            return prepareArgumentsForAdd();
+
+        default:
+            return "Invalid";
         }
     }
 
@@ -172,30 +196,41 @@ public class IntuitivePromptManager {
 
     private String prefixAddArgument(int index, String argument) {
         switch (index) {
-            case ADD_ROLE_INDEX:
-                return PREFIX_ROLE + argument;
-            case ADD_NAME_INDEX:
-                return PREFIX_NAME + argument;
-            case ADD_EMAIL_INDEX:
-                return PREFIX_EMAIL + argument;
-            case ADD_PHONE_INDEX:
-                return PREFIX_PHONE + argument;
-            case ADD_ADDRESS_INDEX:
-                return PREFIX_ADDRESS + argument;
-            case ADD_TAGS_INDEX:
-                if (argument.isEmpty()) {
-                    return "";
-                }
-                String resultArg = PREFIX_TAG + argument;
-                return resultArg.replace(",", " " + PREFIX_TAG).trim();
-            case ADD_NRIC_OR_DEPT_INDEX:
-                if (isPatient()) {
-                    return PREFIX_NRIC + argument;
-                } else if (isDoctor()) {
-                    return PREFIX_MEDICAL_DEPARTMENT + argument;
-                }
+
+        case ADD_ROLE_INDEX:
+            return PREFIX_ROLE + argument;
+
+        case ADD_NAME_INDEX:
+            return PREFIX_NAME + argument;
+
+        case ADD_EMAIL_INDEX:
+            return PREFIX_EMAIL + argument;
+
+        case ADD_PHONE_INDEX:
+            return PREFIX_PHONE + argument;
+
+        case ADD_ADDRESS_INDEX:
+            return PREFIX_ADDRESS + argument;
+
+        case ADD_TAGS_INDEX:
+            if (argument.isEmpty()) {
+                return "";
+            }
+            String resultArg = PREFIX_TAG + argument;
+            return resultArg.replace(",", " " + PREFIX_TAG).trim();
+
+        case ADD_NRIC_OR_DEPT_INDEX:
+            if (isPatient()) {
+                return PREFIX_NRIC + argument;
+            } else if (isDoctor()) {
+                return PREFIX_MEDICAL_DEPARTMENT + argument;
+            } else {
+                return "";
+            }
+
+        default:
+            return "";
         }
-        return "";
     }
 
     private boolean isPatient() {
@@ -212,10 +247,12 @@ public class IntuitivePromptManager {
 
     private boolean isCurrentFieldSkippable() {
         switch (commandWord) {
-            case ADD_COMMAND_WORD:
-                return currentArgIndex == ADD_TAGS_INDEX;
-            default:
-                return false;
+
+        case ADD_COMMAND_WORD:
+            return currentArgIndex == ADD_TAGS_INDEX;
+
+        default:
+            return false;
         }
     }
 }
