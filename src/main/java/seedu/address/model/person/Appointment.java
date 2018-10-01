@@ -108,6 +108,11 @@ public class Appointment {
         return false;
     }
 
+    /**
+     *
+     * @param person to be tested
+     * @return boolean on whether the person is a valid doctor.
+     */
     public boolean hasValidDoctor(Person person) {
         Doctor doctor = (Doctor) person;
         Name name = doctor.getName();
@@ -118,6 +123,11 @@ public class Appointment {
         return false;
     }
 
+    /**
+     *
+     * @param person to be tested
+     * @return boolean on whether the person is a valid patient.
+     */
     public boolean hasValidPatient(Person person) {
         Patient patient = (Patient) person;
         Name name = patient.getName();

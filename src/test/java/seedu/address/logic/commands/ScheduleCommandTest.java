@@ -137,7 +137,8 @@ public class ScheduleCommandTest {
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        ScheduleCommand scheduleCommand = new ScheduleCommand(outOfBoundIndex, new Appointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A"));
+        ScheduleCommand scheduleCommand = new ScheduleCommand(outOfBoundIndex,
+                new Appointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A"));
 
         // execution failed -> address book state not added into model
         assertCommandFailure(scheduleCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
