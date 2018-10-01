@@ -8,8 +8,8 @@
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <nric>S7412345C</nric>
-        <medicalRecord></medicalRecord>
-        <appointment></appointment>
+        <medicalRecord> </medicalRecord>
+        <appointment> </appointment>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -19,8 +19,8 @@
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
         <nric>S1234567A</nric>
-        <medicalRecord></medicalRecord>
-        <appointment></appointment>
+        <medicalRecord> </medicalRecord>
+        <appointment> </appointment>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
@@ -31,8 +31,8 @@
         <email>heinz@example.com</email>
         <address>wall street</address>
         <nric>S9898989B</nric>
-        <medicalRecord></medicalRecord>
-        <appointment></appointment>
+        <medicalRecord> </medicalRecord>
+        <appointment> </appointment>
     </persons>
     <persons>
         <role>Patient</role>
@@ -43,7 +43,7 @@
         <tagged>friends</tagged>
         <nric>s8234567a</nric>
         <medicalRecord> </medicalRecord>
-        <appointment></appointment>
+        <appointment> </appointment>
     </persons>
     <persons>
         <role>Doctor</role>
@@ -52,7 +52,7 @@
         <email>werner@example.com</email>
         <address>michegan ave</address>
         <medicalDepartment>Oncology</medicalDepartment>
-        <appointment></appointment>
+        <appointment> </appointment>
     </persons>
     <persons>
         <role>Doctor</role>
@@ -61,7 +61,7 @@
         <email>lydia@example.com</email>
         <address>little tokyo</address>
         <medicalDepartment>Cardiology</medicalDepartment>
-        <appointment></appointment>
+        <appointment> </appointment>
     </persons>
     <persons>
         <role>Doctor</role>

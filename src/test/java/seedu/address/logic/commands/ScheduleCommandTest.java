@@ -29,7 +29,7 @@ import seedu.address.testutil.PatientBuilder;
  */
 public class ScheduleCommandTest {
 
-    private static final String SCHEDULE_STUB = "23.11.2018,1300,1400,Priscilia,Heart,Elaine,S1234567A";
+    private static final String SCHEDULE_STUB = "23.11.2018,1300,1400,Priscilia,Heart,Alice Pauline,S7412345C";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();

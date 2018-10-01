@@ -73,8 +73,9 @@ public class Person {
         return appointment;
     }
 
+    // Error because there is nothing in appointmentList i.e. it is not used at all hence null so will throw error.
     public boolean hasClash(Appointment newAppointment) {
-        return AppointmentManager.isClash(appointmentList, newAppointment);
+        return AppointmentManager.isClash(appointment, newAppointment);
     }
 
     /**
