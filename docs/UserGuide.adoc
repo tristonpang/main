@@ -74,7 +74,7 @@ md/Neurology`
 When adding a Patient, you are required to specify his/her NRIC,
 whilst adding a Doctor requires you to specify the Medical Department.
 
-=== Listing all relevant personnels : `list`
+=== Listing all relevent personnels : `list`
 
 Shows a list of all patients and doctors in the address book. +
 Format: `list`
@@ -95,14 +95,13 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
 
-=== Locating person by any attribute: `find`
+=== Locating patient by any attribute: `find`
 
-Finds doctors/patients with the keyword specified by the user. Specified keyword can belong to any part of any attribute
- of the doctor/patient (i.e. name, phone number, address, tags etc).
+Finds patients with the keyword specified by the user. Specified keyword can belong to any part of any attribute of the patient (i.e. name, phone number, address, tags etc).
  +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
