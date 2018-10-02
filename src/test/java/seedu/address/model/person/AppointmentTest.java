@@ -64,7 +64,7 @@ public class AppointmentTest {
         // appointment 6 and 7 have different dates
         Appointment appt6 = new Appointment("23.11.2018", "1300", "1400",
                 "Priscilia", "Heart", "Elaine", "S1234567A");
-        Appointment appt7 = new Appointment("22.11.2018", "1300", "1400",
+        Appointment appt7 = new Appointment("24.11.2018", "1300", "1400",
                 "Priscilia", "Heart", "Elaine", "S1234567A");
 
         // appointment 8 and 9 have different timings that do not clash
