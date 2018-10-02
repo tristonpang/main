@@ -8,7 +8,6 @@ import static java.util.Objects.requireNonNull;
  */
 public class Nric {
 
-    // TODO: 2/10/2018 change message for nric reject: more specific 
     public static final String MESSAGE_NRIC_CONSTRAINTS = "NRIC should contain only alphanumeric "
             + "characters and should not be left blank.";
     public static final String NRIC_VALIDATION_REGEX = "(?i)^[STFG]\\d{7}[A-Z]";
