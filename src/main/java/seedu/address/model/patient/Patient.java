@@ -59,15 +59,11 @@ public class Patient extends Person {
         this.medicalRecord = requireNonNull(medicalRecord);
     }
 
-    @Override
-    public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
+    public boolean isSamePerson(Patient otherPatient) {
+        if (otherPatient == this) {
             return true;
-        } else if (otherPerson instanceof Patient) {
-            Patient otherPatient = (Patient) otherPerson;
-            return otherPerson != null && otherPatient.getNric().equals(getNric());
         } else {
-            return false;
+            return otherPatient != null && otherPatient.getNric().equals(getNric());
         }
     }
 
