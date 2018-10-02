@@ -41,6 +41,7 @@ public class UpdateCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
+        expectedModel.commitAddressBook();
 
         assertCommandSuccess(updateCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -59,6 +60,7 @@ public class UpdateCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
+        expectedModel.commitAddressBook();
 
         assertCommandSuccess(updateCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -76,6 +78,7 @@ public class UpdateCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.commitAddressBook();
 
         assertCommandSuccess(updateCommand, model, commandHistory, expectedMessage, expectedModel);
     }

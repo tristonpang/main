@@ -130,6 +130,12 @@ public class EditCommand extends Command {
         }
     }
 
+    /**
+     * Checks if the given person has valid arguments. If the person is a patient, checks if the Medical
+     * Department field is present. Else if the person is a doctor, checks if the NRIC field is present.
+     * @param personToEdit the person to edit.
+     * @param editPersonDescriptor details to edit the person with
+     */
     private static boolean hasRoleConflict(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         if (personToEdit instanceof Patient) {
             return editPersonDescriptor.getMedicalDepartment().isPresent();

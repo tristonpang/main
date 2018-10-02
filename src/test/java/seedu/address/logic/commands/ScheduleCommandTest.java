@@ -54,12 +54,14 @@ public class ScheduleCommandTest {
     public void execute_deleteRemarkUnfilteredList_success() {
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Patient editedPerson = new PatientBuilder(firstPerson)
-                .withAppointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A").build();
+                .withAppointment("22.11.2018,1300,1400,Alice,Heart,"
+                        + firstPerson.getName().toString()
+                        + "," + firstPerson.getNric().toString()).build();
 
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
                 new Appointment(editedPerson.getAppointment().toString()));
 
-        String expectedMessage = String.format(ScheduleCommand.MESSAGE_DELETE_APPOINTMENT_SUCCESS, editedPerson);
+        String expectedMessage = String.format(ScheduleCommand.MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, editedPerson);
@@ -117,7 +119,12 @@ public class ScheduleCommandTest {
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Patient personToModify = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Patient modifiedPerson = new PatientBuilder(personToModify).withAppointment(SCHEDULE_STUB).build();
-        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(SCHEDULE_STUB));
+
+        String[] parts = SCHEDULE_STUB.split(",");
+        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(parts[0],
+                parts[1], parts[2], parts[3], parts[4],
+                personToModify.getName().toString(), personToModify.getNric().toString()));
+        //ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(SCHEDULE_STUB));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
@@ -138,7 +145,7 @@ public class ScheduleCommandTest {
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         ScheduleCommand scheduleCommand = new ScheduleCommand(outOfBoundIndex,
-                new Appointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A"));
+                new Appointment("22.11.2018,1300,1400,Alice,Heart,Benson Meier,S8234567A"));
 
         // execution failed -> address book state not added into model
         assertCommandFailure(scheduleCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -157,12 +164,19 @@ public class ScheduleCommandTest {
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
-        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(SCHEDULE_STUB));
+        ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
+                new Appointment("22.11.2018,1300,1400,Alice,Heart,"
+                        + "Benson Meier"
+                        + "," + "S8234567A"));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Patient personToModify = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient modifiedPerson = new PatientBuilder(personToModify).withAppointment(SCHEDULE_STUB).build();
+        Patient modifiedPerson = new PatientBuilder(personToModify)
+                .withAppointment("22.11.2018,1300,1400,Alice,Heart,"
+                        + personToModify.getName().toString() + ","
+                        + personToModify.getNric().toString())
+                .build();
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
 
