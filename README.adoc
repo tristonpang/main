@@ -3,7 +3,7 @@ ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103-AY1819S1-W16-3/main[image:https://travis-ci.org/CS2103-AY1819S1-W16-3/main.svg?branch=master[Build Status]]
 https://ci.appveyor.com/project/ngkangtze/main[image:https://ci.appveyor.com/api/projects/status/fvwr0x7ve79a7vih/branch/master?svg=true[Build status]]
-https://coveralls.io/github/ngkangtze/main?branch=master[image:https://coveralls.io/repos/github/ngkangtze/main/badge.svg?branch=master[Coverage Status]]
+https://coveralls.io/github/CS2103-AY1819S1-W16-3/main?branch=master[image:https://coveralls.io/repos/github/ngkangtze/main/badge.svg?branch=master[Coverage Status]]
 https://www.codacy.com/app/ngkangtze/main?utm_source=github.com&utm_medium=referral&utm_content=ngkangtze/main&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/ca0ba8031ca64e418529ffb3ee92dbe8[Codacy Badge]]
 https://gitter.im/se-edu/Lobby[image:https://badges.gitter.im/se-edu/Lobby.svg[Gitter chat]]
 
