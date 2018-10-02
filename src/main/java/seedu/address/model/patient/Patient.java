@@ -74,8 +74,7 @@ public class Patient extends Person {
         }
         if (obj instanceof Patient) {
             Patient otherPatient = (Patient) obj;
-            return (super.equals(otherPatient))
-                    && (otherPatient.nric.equals(this.nric));
+            return (otherPatient.nric.code.toUpperCase().equals(this.nric.code.toUpperCase()));
         } else {
             return false;
         }
