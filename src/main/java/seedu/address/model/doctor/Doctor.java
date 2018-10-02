@@ -56,7 +56,6 @@ public class Doctor extends Person {
             return true;
         }
         if (obj instanceof Doctor) {
-
             Doctor otherDoctor = (Doctor) obj;
             return (otherDoctor.name.equals(this.name) && (otherDoctor.dept.equals(this.dept)));
         } else {

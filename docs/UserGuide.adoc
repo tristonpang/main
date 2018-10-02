@@ -72,7 +72,12 @@ Examples:
 * `add r/patient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ic/S1234567A`
 * `add r/doctor n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal md/dentistry`
 
-=== Listing all patients : `list`
+
+[NOTE]
+When adding a Patient, you are required to specify his/her NRIC,
+whilst adding a Doctor requires you to specify the Medical Department.
+
+=== Listing all relevent personnels : `list`
 
 Shows a list of all patients in the database. +
 Format: `list`

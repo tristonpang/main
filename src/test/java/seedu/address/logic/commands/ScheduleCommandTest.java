@@ -181,6 +181,7 @@ public class ScheduleCommandTest {
         expectedModel.commitAddressBook();
 
         // remark -> modifies second person in unfiltered person list / first person in filtered person list
+
         scheduleCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons

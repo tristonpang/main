@@ -18,7 +18,7 @@
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
-        <nric>S1234567A</nric>
+        <nric>S8234567A</nric>
         <medicalRecord></medicalRecord>
         <appointment></appointment>
         <tagged>owesMoney</tagged>
@@ -41,7 +41,8 @@
         <email>cornelia@example.com</email>
         <address>10th street</address>
         <tagged>friends</tagged>
-        <nric>s8234567a</nric>
+
+        <nric>s8234599a</nric>
         <medicalRecord></medicalRecord>
         <appointment></appointment>
     </persons>
