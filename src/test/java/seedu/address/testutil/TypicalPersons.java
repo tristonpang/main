@@ -48,19 +48,18 @@ public class TypicalPersons {
             .withMedicalRecord("")
             .withAppointment("")
             .withEmail("cornelia@example.com").withAddress("10th street")
-            .withNric("s8234567a").withTags("friends").build();
+            .withNric("s8234599a").withTags("friends").build();
     public static final Doctor ELLE = new DoctorBuilder().withName("Elle Meyer").withPhone("9482224")
             .withMedicalDepartment("Oncology").withEmail("werner@example.com").withAddress("michegan ave").build();
     public static final Doctor FIONA = new DoctorBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withMedicalDepartment("Cardiology").withEmail("lydia@example.com").withAddress("little tokyo").build();
     public static final Doctor GEORGE = new DoctorBuilder().withName("George Best").withPhone("9482442")
             .withMedicalDepartment("Neurology").withEmail("anna@example.com").withAddress("4th street")
-            .withAppointment("").build();
+            .withAppointment("23.11.2018,1300,1400,Priscilia,Elaine").build();
 
     // Manually added
     public static final Patient HOON = new PatientBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withMedicalRecord("")
-            .withAppointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A")
+            .withNric("S9873342F")
             .withEmail("stefan@example.com").withAddress("little india").build();
     public static final Doctor IDA = new DoctorBuilder().withName("Ida Mueller").withPhone("8482131")
             .withMedicalDepartment("Physiology").withEmail("hans@example.com").withAddress("chicago ave").build();
