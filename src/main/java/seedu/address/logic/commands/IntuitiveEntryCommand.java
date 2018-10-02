@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 
 /**
@@ -18,7 +20,7 @@ public class IntuitiveEntryCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory commandHistory) {
+    public CommandResult execute(Model model, CommandHistory commandHistory) throws CommandException {
         String nextInstruction = null;
         if (input.equals(GO_BACK_COMMAND)) {
             nextInstruction = model.removeIntuitiveEntry();

@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.patient.Nric;
 import seedu.address.ui.UiManager;
 
 
@@ -28,6 +31,8 @@ public class IntuitivePromptManager {
     private static boolean isIntuitiveMode;
 
     private static final int MIN_ARGUMENT_INDEX = 0;
+
+    private static final String INVALID_ARGUMENT_MESSAGE = "Invalid input! Please try again!\n %1$s";
 
     private static final String SKIP_COMMAND = "//";
     private static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
@@ -76,17 +81,21 @@ public class IntuitivePromptManager {
      *
      * @param input the user's input
      */
-    public void addArgument(String input) {
-        if (isSkipCommand(input) && isCurrentFieldSkippable()) {
+    public void addArgument(String input) throws CommandException {
+        String userInput = input.trim();
+        if (commandWord == null) { //start of intuitive command, record command word
+            commandWord = userInput;
+            startIntuitiveMode();
+        } else if (isSkipCommand(userInput) && isCurrentFieldSkippable()) { //skip command
             arguments.add("");
             currentArgIndex++;
-        } else if (commandWord != null) { //intuitive command already executing
-            arguments.add(input.trim());
+        } else if (isArgumentValid(userInput)) { //any other valid argument
+            arguments.add(userInput);
             currentArgIndex++;
-        } else { //start intuitive command, record command word
-            commandWord = input.trim();
-            isIntuitiveMode = true;
+        } else {
+            throw new CommandException(String.format(INVALID_ARGUMENT_MESSAGE, getInstruction()));
         }
+
 
         logger.info("Intuitive Argument index: " + currentArgIndex);
         logger.info("Current arguments: " + arguments);
@@ -95,6 +104,10 @@ public class IntuitivePromptManager {
         if (currentArgIndex >= getMaximumArguments(commandWord)) {
             exitIntuitiveMode();
         }
+    }
+
+    private void startIntuitiveMode() {
+        isIntuitiveMode = true;
     }
 
     /**
@@ -135,6 +148,7 @@ public class IntuitivePromptManager {
     /**
      * Retrieves corresponding instruction for a field (specified by the current argument index) for the intuitive
      * 'add' command.
+     *
      * @return the corresponding string instruction for the specified field
      */
     private String retrieveAddInstruction() {
@@ -253,7 +267,7 @@ public class IntuitivePromptManager {
      * Given an argument and an index that represents which field this argument belongs to in the 'add' command,
      * prefix and return the edited argument.
      *
-     * @param index the index that represents which field the argument belongs to in the 'add' command
+     * @param index    the index that represents which field the argument belongs to in the 'add' command
      * @param argument the specified argument
      * @return the prefixed argument
      */
@@ -322,5 +336,35 @@ public class IntuitivePromptManager {
         default:
             return false;
         }
+    }
+
+    private boolean isArgumentValid(String input) {
+        switch (commandWord) {
+
+        case ADD_COMMAND_WORD:
+            return isAddArgumentValid(input);
+
+        default:
+            return true;
+
+        }
+    }
+
+    private boolean isAddArgumentValid(String input) {
+        switch (currentArgIndex) {
+
+        case ADD_ROLE_INDEX:
+            return input.equals(DOCTOR_ARG_IDENTIFIER) || input.equals(PATIENT_ARG_IDENTIFIER);
+
+        case ADD_NRIC_OR_DEPT_INDEX:
+            if (isPatient()) {
+                return Nric.isValidNric(input);
+            }
+            // Fallthrough
+        default:
+            return true;
+
+        }
+
     }
 }

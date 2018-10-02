@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 
 /**
@@ -81,7 +83,7 @@ public interface Model {
      * @param entry User's input for the current intuitive prompted field
      * @return The next instruction prompt (for the next field to be recorded)
      */
-    String addIntuitiveEntry(String entry);
+    String addIntuitiveEntry(String entry) throws CommandException;
 
     /**
      * Removes the user's most recent input during an intuitive command.
