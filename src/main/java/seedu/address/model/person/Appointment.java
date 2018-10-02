@@ -38,13 +38,13 @@ public class Appointment {
         value = appointment;
         String[] parts = value.split(",");
         if (parts.length == numberOfParts) {
-            date = parts[0];
-            startTime = parts[1];
-            endTime = parts[2];
-            doctorName = new Name(parts[3]);
-            medicalDepartment = new MedicalDepartment(parts[4]);
-            patientName = new Name(parts[5]);
-            patientNric = new Nric(parts[6]);
+            date = parts[0].trim();
+            startTime = parts[1].trim();
+            endTime = parts[2].trim();
+            doctorName = new Name(parts[3].trim());
+            medicalDepartment = new MedicalDepartment(parts[4].trim());
+            patientName = new Name(parts[5].trim());
+            patientNric = new Nric(parts[6].trim());
         }
     }
 
