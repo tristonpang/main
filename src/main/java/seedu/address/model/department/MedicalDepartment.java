@@ -51,6 +51,6 @@ public class MedicalDepartment {
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + "Department: " + deptName + ']';
+        return deptName;
     }
 }
