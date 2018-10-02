@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import com.sun.xml.bind.v2.TODO;
-
 import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.patient.Nric;

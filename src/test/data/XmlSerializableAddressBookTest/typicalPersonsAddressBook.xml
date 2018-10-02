@@ -37,10 +37,11 @@
     <persons>
         <role>Patient</role>
         <name>Daniel Meier</name>
-        <phone>87652533</phone>
+        <phone>87652599</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
         <tagged>friends</tagged>
+
         <nric>s8234599a</nric>
         <medicalRecord></medicalRecord>
         <appointment></appointment>

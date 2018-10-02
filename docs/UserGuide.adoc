@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= OneLife - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -14,17 +14,17 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W16-3`      Since: `Sep 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+One Life (OL) is for service providers in the healthcare industry who *prefer to use a desktop application for managing patient and doctor information*. More importantly, One Life is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you prefer typing, One Life can get your medical information management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for One Life.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -34,7 +34,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`r/patient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ic/S9601234A` : adds a patient named `John Doe` to the database.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -53,22 +53,25 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 === Viewing help : `help`
-
+Opens user guide. +
 Format: `help`
 
-=== Adding a patient/doctor: `add`
+=== Adding a person: `add`
+Adds a patient or doctor to the database. +
 
-Adds a patient/doctor to the address book +
-Format: `add r/ROLE n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+*Adding a patient* +
+Format: `add r/patient n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... ic/NRIC`
 
+*Adding a doctor* +
+Format: `add r/doctor n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... md/MEDICAL_DEPARTMENT`
 [TIP]
 A patient can have any number of tags (including 0)
 
 Examples:
 
-* `add r/patient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ic/S9123456F`
-* `add r/Doctor n/Betsy Crowe p/81234123 t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/Chief
-md/Neurology`
+* `add r/patient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ic/S1234567A`
+* `add r/doctor n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal md/dentistry`
+
 
 [NOTE]
 When adding a Patient, you are required to specify his/her NRIC,
@@ -76,12 +79,12 @@ whilst adding a Doctor requires you to specify the Medical Department.
 
 === Listing all relevent personnels : `list`
 
-Shows a list of all patients and doctors in the address book. +
+Shows a list of all patients in the database. +
 Format: `list`
 
 === Editing a patient : `edit`
 
-Edits an existing patient/doctor in the address book. +
+Edits an existing patient in the database. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
@@ -122,7 +125,7 @@ Returns any patient having names `Ng Kang Tze` and `Tan Thong Cai, Nelvin`.
 
 === Deleting a patient : `delete`
 
-Deletes the specified patient from the address book. +
+Deletes the specified patient from the database. +
 Format: `delete INDEX`
 
 ****
@@ -135,7 +138,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd patient in the address book.
+Deletes the 2nd patient in the database.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st patient in the results of the `find` command.
@@ -155,7 +158,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd patient in the address book.
+Selects the 2nd patient in the database.
 * `find Betsy` +
 `select 1` +
 Selects the 1st patient in the results of the `find` command.
@@ -173,12 +176,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the database to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the database's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -222,7 +225,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the database. +
 Format: `clear`
 
 === Adding a doctor : `adddoc`
@@ -297,7 +300,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+One Life data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -305,16 +308,22 @@ There is no need to save manually.
 === Intuitive Command Prompting
 
 Intuitive prompting for the user when a command that takes in parameters is entered without any parameters specified. This feature aids new users and makes it easier and more natural for them to use the system. The nature of this feature allows users to enter data without adding prefix tags, and also supports cases where certain data fields are intentionally left blank. The original command input format is still supported to allow quick command entry for seasoned users.
+[TIP]
+Use `/bk` to re-enter previous field. +
+Use `//` if the field is to be blank.
+
 
 Examples:
 ```
 add
-Adding new patient..
-Please enter patient's NAME: John Doe
 
-NAME entered: John Doe
-(Use /bk to re-enter previous field)
-Enter patients email (use // if this field is to be blank): doe@gmail.com
+You entered: add
+Is this a patient or a doctor? (Please enter patient or doctor)
+
+patient
+
+You entered: patient
+Please enter person's name
 
 ...
 ```
@@ -327,12 +336,13 @@ _{explain how the user can enable/disable data encryption}_
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous OneLife folder.
 
 == Command Summary
 
-* *Add Patient* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Patient* : `add r/patient n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... ic/NRIC` +
+e.g. `add r/patient n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague ic/S1234567A`
+* *Add Doctor* : `add r/doctor n/Bobby Tan p/91234567 e/BBTan@example.com a/123, Clementi Rd, 123456 md/Dentistry`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
