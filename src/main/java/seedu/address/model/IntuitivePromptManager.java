@@ -61,7 +61,6 @@ public class IntuitivePromptManager {
     private static final String PATIENT_ARG_IDENTIFIER = "patient";
     private static final String DOCTOR_ARG_IDENTIFIER = "doctor";
 
-    //logger
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
 
@@ -97,8 +96,8 @@ public class IntuitivePromptManager {
         }
 
 
-        logger.info("Intuitive Argument index: " + currentArgIndex);
-        logger.info("Current arguments: " + arguments);
+        logger.fine("Intuitive Argument index: " + currentArgIndex);
+        logger.fine("Current arguments: " + arguments);
 
 
         if (currentArgIndex >= getMaximumArguments(commandWord)) {
