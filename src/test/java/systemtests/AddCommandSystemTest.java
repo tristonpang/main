@@ -16,6 +16,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.ROLE_DOCTOR_DESC;
@@ -44,13 +45,17 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.department.MedicalDepartment;
+import seedu.address.model.doctor.Doctor;
 import seedu.address.model.patient.Nric;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.DoctorUtil;
 import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.PatientUtil;
 
@@ -65,7 +70,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        Person toAdd = AMY;
+        Patient toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + ROLE_PATIENT_DESC + "  " + NAME_DESC_AMY + "  "
                 + PHONE_DESC_AMY + "  " + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   "
                 + TAG_DESC_FRIEND + "  " + NRIC_DESC_AMY;
@@ -101,8 +106,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a person with tags, command with parameters in random order -> added */
         toAdd = BOB;
-        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
-                + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
+        command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + TAG_DESC_FRIEND + PHONE_DESC_BOB
+                + ADDRESS_DESC_BOB + NAME_DESC_BOB + TAG_DESC_HUSBAND + EMAIL_DESC_BOB + NRIC_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person, missing tags -> added */
@@ -153,22 +158,22 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PATIENT_USAGE));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_GENERAL_USAGE));
 
         /* Case: missing phone -> rejected */
         command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + NAME_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PATIENT_USAGE));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_GENERAL_USAGE));
 
         /* Case: missing email -> rejected */
         command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + NAME_DESC_AMY + PHONE_DESC_AMY
                 + ADDRESS_DESC_AMY + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PATIENT_USAGE));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_GENERAL_USAGE));
 
         /* Case: missing address -> rejected */
         command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PATIENT_USAGE));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_GENERAL_USAGE));
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PatientUtil.getPersonDetails(toAdd);
@@ -177,6 +182,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid role -> rejected */
         command = AddCommand.COMMAND_WORD + INVALID_ROLE_DESC + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NRIC_DESC_AMY;
+        assertCommandFailure(command, Role.MESSAGE_ROLE_CONSTRAINTS);
 
         /* Case: invalid name -> rejected */
         command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + INVALID_NAME_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY
@@ -229,7 +235,12 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(Person toAdd) {
-        assertCommandSuccess(PatientUtil.getAddCommand(toAdd), toAdd);
+        if (toAdd instanceof Patient) {
+            assertCommandSuccess(PatientUtil.getAddCommand((Patient) toAdd), toAdd);
+        } else {
+            assert toAdd instanceof Doctor;
+            assertCommandSuccess(DoctorUtil.getAddCommand((Doctor) toAdd), toAdd);
+        }
     }
 
     /**

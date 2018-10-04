@@ -59,13 +59,17 @@ public class Patient extends Person {
         this.medicalRecord = requireNonNull(medicalRecord);
     }
 
-    public boolean isSamePerson(Patient otherPerson) {
-        if (otherPerson == this) {
+    /**
+     * Check if the patient is the same as other patient.
+     * @param otherPatient The other patient to compare to.
+     * @return True if the two patient are the same.
+     */
+    public boolean isSamePerson(Patient otherPatient) {
+        if (otherPatient == this) {
             return true;
+        } else {
+            return otherPatient != null && otherPatient.getNric().equals(getNric());
         }
-
-        return otherPerson != null
-                && otherPerson.getNric().equals(getNric());
     }
 
     @Override
@@ -75,8 +79,7 @@ public class Patient extends Person {
         }
         if (obj instanceof Patient) {
             Patient otherPatient = (Patient) obj;
-            return (super.equals(otherPatient))
-                    && (otherPatient.nric.equals(this.nric));
+            return (otherPatient.nric.code.toUpperCase().equals(this.nric.code.toUpperCase()));
         } else {
             return false;
         }
