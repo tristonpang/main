@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.Nric;
@@ -37,7 +38,6 @@ public class IntuitivePromptManager {
     private static final String SKIP_COMMAND = "//";
     private static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
 
-    private static final String ADD_COMMAND_WORD = "add";
     private static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? "
             + "(Please enter patient or doctor)";
     private static final String ADD_NAME_INSTRUCTION = "Please enter person's name";
@@ -118,7 +118,7 @@ public class IntuitivePromptManager {
     public String getInstruction() {
         switch (commandWord) {
 
-        case ADD_COMMAND_WORD:
+        case AddCommand.COMMAND_WORD:
             return retrieveAddInstruction();
 
         default:
@@ -194,7 +194,7 @@ public class IntuitivePromptManager {
     private int getMaximumArguments(String commandWord) {
         switch (commandWord) {
 
-        case ADD_COMMAND_WORD:
+        case AddCommand.COMMAND_WORD:
             return ADD_MAX_ARGUMENTS;
 
         default:
@@ -223,7 +223,7 @@ public class IntuitivePromptManager {
     public String retrieveArguments() {
         switch (commandWord) {
 
-        case ADD_COMMAND_WORD:
+        case AddCommand.COMMAND_WORD:
             return prepareArgumentsForAdd();
 
         default:
@@ -249,7 +249,7 @@ public class IntuitivePromptManager {
      */
     private String prepareArgumentsForAdd() {
         String preparedString = "";
-        preparedString += ADD_COMMAND_WORD + " ";
+        preparedString += AddCommand.COMMAND_WORD + " ";
 
         int index = 0;
         for (String arg : arguments) {
@@ -329,7 +329,7 @@ public class IntuitivePromptManager {
     private boolean isCurrentFieldSkippable() {
         switch (commandWord) {
 
-        case ADD_COMMAND_WORD:
+        case AddCommand.COMMAND_WORD:
             return currentArgIndex == ADD_TAGS_INDEX;
 
         default:
@@ -340,7 +340,7 @@ public class IntuitivePromptManager {
     private boolean isArgumentValid(String input) {
         switch (commandWord) {
 
-        case ADD_COMMAND_WORD:
+        case AddCommand.COMMAND_WORD:
             return isAddArgumentValid(input);
 
         default:
