@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.patient.Nric;
 import seedu.address.ui.UiManager;
@@ -56,6 +57,11 @@ public class IntuitivePromptManager {
     private static final int ADD_ADDRESS_INDEX = 4;
     private static final int ADD_TAGS_INDEX = 5;
     private static final int ADD_NRIC_OR_DEPT_INDEX = 6;
+
+    private static final int DELETE_MAX_ARGUMENTS = 1;
+    private static final int DELETE_TARGET_INDEX = 0;
+
+    private static final String DELETE_TARGET_INSTRUCTION = "Please enter the index of the person to be deleted";
 
     private static final String PATIENT_ARG_IDENTIFIER = "patient";
     private static final String DOCTOR_ARG_IDENTIFIER = "doctor";
@@ -119,6 +125,9 @@ public class IntuitivePromptManager {
 
         case AddCommand.COMMAND_WORD:
             return retrieveAddInstruction();
+
+        case DeleteCommand.COMMAND_WORD:
+            return retrieveDeleteInstruction();
 
         default:
             return "Invalid";
@@ -184,6 +193,18 @@ public class IntuitivePromptManager {
         }
     }
 
+    private String retrieveDeleteInstruction() {
+        switch (currentArgIndex) {
+
+        case DELETE_TARGET_INDEX:
+            return DELETE_TARGET_INSTRUCTION;
+
+        default:
+            return "Invalid";
+
+        }
+    }
+
     /**
      * Given a command, retrieves the maximum number of arguments that the specified command takes in.
      *
@@ -195,6 +216,9 @@ public class IntuitivePromptManager {
 
         case AddCommand.COMMAND_WORD:
             return ADD_MAX_ARGUMENTS;
+
+        case DeleteCommand.COMMAND_WORD:
+            return DELETE_MAX_ARGUMENTS;
 
         default:
             return 0;
@@ -225,9 +249,22 @@ public class IntuitivePromptManager {
         case AddCommand.COMMAND_WORD:
             return prepareArgumentsForAdd();
 
+        case DeleteCommand.COMMAND_WORD:
+            return prepareArgumentsForDelete();
+
         default:
             return "Invalid";
         }
+    }
+
+    private String prepareArgumentsForDelete() {
+        String preparedString = "";
+        preparedString += DeleteCommand.COMMAND_WORD + " ";
+
+        String targetIndex = arguments.get(DELETE_TARGET_INDEX);
+        preparedString += targetIndex;
+
+        return preparedString;
     }
 
     /**
@@ -336,6 +373,12 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Checks if given input is a valid argument.
+     *
+     * @param input the given input
+     * @return true if the input is a valid argument, false otherwise
+     */
     private boolean isArgumentValid(String input) {
         switch (commandWord) {
 
@@ -348,6 +391,12 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Checks if the given input is a valid argument for the add command.
+     *
+     * @param input the given input
+     * @return true if the input is a valid argument, false otherwise
+     */
     private boolean isAddArgumentValid(String input) {
         switch (currentArgIndex) {
 
