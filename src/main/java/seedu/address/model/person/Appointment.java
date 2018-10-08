@@ -142,6 +142,10 @@ public class Appointment {
         return false;
     }
 
+    /**
+     *
+     * @return boolean on whether the start and end times are valid.
+     */
     public boolean hasValidStartandEndTime() {
         int currentStartTime = Integer.parseInt(startTime.trim());
         int currentEndTime = Integer.parseInt(endTime.trim());
