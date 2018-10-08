@@ -61,10 +61,14 @@ public class Patient extends Person {
 
     /**
      * Check if the patient is the same as other patient.
-     * @param otherPatient The other patient to compare to.
+     * @param otherPerson The other patient to compare to.
      * @return True if the two patient are the same.
      */
-    public boolean isSamePerson(Patient otherPatient) {
+    public boolean isSamePerson(Person otherPerson) {
+        if (!(otherPerson instanceof Patient)) {
+            return false;
+        }
+        Patient otherPatient = (Patient) otherPerson;
         if (otherPatient == this) {
             return true;
         } else {
