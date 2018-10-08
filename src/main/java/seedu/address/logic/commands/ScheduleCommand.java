@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -27,22 +27,35 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Schedules appointment for the person identified "
             + "by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_SCHEDULE + "[DATE,START_TIME,END_TIME,DOCTOR_NAME,DOCTOR_DEPARTMENT,PATIENT_NAME,PATIENT_NRIC]\n"
-            + PREFIX_SCHEDULE + "[DATE, START_TIME, END_TIME, DOCTOR_NAME, DOCTOR_DEPARTMENT, PATIENT_NAME, "
-            + "PATIENT_NRIC]\n"
+            + PREFIX_DATE + "DATE "
+            + PREFIX_START_TIME + "START_TIME "
+            + PREFIX_END_TIME + "END_TIME "
+            + PREFIX_DOCTOR_NAME + "DOCTOR_NAME "
+            + PREFIX_MEDICAL_DEPARTMENT + "DOCTOR_MEDICAL_DEPARTMENT "
+            + PREFIX_PATIENT_NAME + "PATIENT_NAME "
+            + PREFIX_NRIC + "PATIENT_NRIC\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_SCHEDULE + "23.11.2018,1300,1400,Jack,Heart,Jill,S1234567I";
+            + PREFIX_DATE + "23.11.2018 "
+            + PREFIX_START_TIME + "1300 "
+            + PREFIX_END_TIME + "1400 "
+            + PREFIX_DOCTOR_NAME + "Jack "
+            + PREFIX_MEDICAL_DEPARTMENT + "Heart "
+            + PREFIX_PATIENT_NAME + "John Doe "
+            + PREFIX_NRIC + "S1234567A ";
 
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS = "Scheduled appointment to Person: %1$s";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER =
             "Failed to schedule appointment to Person.\n"
             + "Number of parts of the appointment is wrong.\n";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_START_AND_END_TIME =
+            "Failed to schedule appointment to Person.\n"
+            + "Invalid start and end time.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR =
             "Failed to schedule appointment to Person.\n"
-            + "Doctor entered is wrong.\n";
+            + "Doctor details entered is wrong.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT = "Failed to schedule "
             + "appointment to Person.\n"
-            + "Patient entered is wrong.\n";
+            + "Patient details entered is wrong.\n";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH = "There is a clash of appointments. "
             + "Please choose another slot.\n";
@@ -77,6 +90,10 @@ public class ScheduleCommand extends Command {
 
         if (!appointment.hasValidNric()) {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_NRIC);
+        }
+
+        if (!appointment.hasValidStartandEndTime()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_START_AND_END_TIME);
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());

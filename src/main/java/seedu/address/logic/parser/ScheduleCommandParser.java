@@ -2,8 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.*;
 
+import java.util.stream.Stream;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ScheduleCommand;
@@ -21,19 +22,44 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     public ScheduleCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SCHEDULE);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_DATE, PREFIX_START_TIME, PREFIX_END_TIME,
+                        PREFIX_DOCTOR_NAME, PREFIX_MEDICAL_DEPARTMENT, PREFIX_PATIENT_NAME, PREFIX_NRIC);
 
         Index index;
+
+        // Ensures that index provided is correct.
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE), ive);
         }
 
-        String appointment = argMultimap
-                .getValue(PREFIX_SCHEDULE)
-                .orElse("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A");
+        // Ensures information for common prefixes are entered.
+        if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_START_TIME, PREFIX_END_TIME,
+                PREFIX_DOCTOR_NAME, PREFIX_MEDICAL_DEPARTMENT, PREFIX_PATIENT_NAME, PREFIX_NRIC)) {
+                //|| !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
+        }
 
-        return new ScheduleCommand(index, new Appointment(appointment));
+
+        String date = argMultimap.getValue(PREFIX_DATE).get();
+        String startTime = argMultimap.getValue(PREFIX_START_TIME).get();
+        String endTime = argMultimap.getValue(PREFIX_END_TIME).get();
+        String doctorName = argMultimap.getValue(PREFIX_DOCTOR_NAME).get();
+        String department = argMultimap.getValue(PREFIX_MEDICAL_DEPARTMENT).get();
+        String patientName = argMultimap.getValue(PREFIX_PATIENT_NAME).get();
+        String nric = argMultimap.getValue(PREFIX_NRIC).get();
+
+        return new ScheduleCommand(index, new Appointment(date, startTime, endTime, doctorName, department,
+                patientName, nric));
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }
