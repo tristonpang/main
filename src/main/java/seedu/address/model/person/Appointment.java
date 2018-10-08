@@ -142,6 +142,15 @@ public class Appointment {
         return false;
     }
 
+    public boolean hasValidStartandEndTime() {
+        int currentStartTime = Integer.parseInt(startTime.trim());
+        int currentEndTime = Integer.parseInt(endTime.trim());
+        if (currentStartTime < currentEndTime) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean hasValidNric() {
         return patientNric.isValidNric(patientNric.toString());
     }
