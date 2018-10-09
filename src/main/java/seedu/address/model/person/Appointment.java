@@ -151,10 +151,7 @@ public class Appointment {
     public boolean hasValidStartandEndTime() {
         int currentStartTime = Integer.parseInt(startTime.trim());
         int currentEndTime = Integer.parseInt(endTime.trim());
-        if (currentStartTime < currentEndTime) {
-            return true;
-        }
-        return false;
+        return (currentStartTime < currentEndTime);
     }
 
     public boolean hasValidNric() {
