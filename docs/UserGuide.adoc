@@ -250,7 +250,7 @@ Format: `appts[d/DATE]`
 
 === Scheduling medical appointments : `schedule`
 
-Schedules a patient for a medical appointment at a specific date and time.
+Schedules a patient/doctor for a medical appointment at a specific date and time.
 Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME md/DOCTOR_MEDICAL_DEPARTMENT pn/PATIENT_NAME ic/PATIENT_NRIC`
 
 ****
