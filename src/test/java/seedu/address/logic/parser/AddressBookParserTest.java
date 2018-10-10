@@ -4,9 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -86,8 +92,15 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_schedule() throws Exception {
         final Appointment appointment = new Appointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A");
+        final String testAppointment = PREFIX_DATE + "22.11.2018 "
+                + PREFIX_START_TIME + "1300 "
+                + PREFIX_END_TIME + "1400 "
+                + PREFIX_DOCTOR_NAME + "Alice "
+                + PREFIX_MEDICAL_DEPARTMENT + "Heart "
+                + PREFIX_PATIENT_NAME + "Betty "
+                + PREFIX_NRIC + "S1234567A ";
         ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE + appointment.value);
+                + INDEX_FIRST_PERSON.getOneBased() + " " + testAppointment);
         assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, appointment), command);
     }
 
