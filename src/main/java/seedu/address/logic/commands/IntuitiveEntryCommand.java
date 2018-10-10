@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 /**
@@ -9,6 +10,7 @@ import seedu.address.model.Model;
  */
 public class IntuitiveEntryCommand extends Command {
     private static final String GO_BACK_COMMAND = "/bk";
+    private static final String GO_BACK_INSTRUCTION = "\n(Type %1$s to go back)";
     private static final String INPUT_ECHO = "You entered: %1$s \n";
 
     private String input;
@@ -18,7 +20,7 @@ public class IntuitiveEntryCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory commandHistory) {
+    public CommandResult execute(Model model, CommandHistory commandHistory) throws CommandException {
         String nextInstruction = null;
         if (input.equals(GO_BACK_COMMAND)) {
             nextInstruction = model.removeIntuitiveEntry();
@@ -34,6 +36,7 @@ public class IntuitiveEntryCommand extends Command {
 
 
         //return correct instruction to display in CommandResult
-        return new CommandResult(String.format(INPUT_ECHO, this.input) + nextInstruction);
+        return new CommandResult(String.format(INPUT_ECHO, this.input) + nextInstruction
+                + String.format(GO_BACK_INSTRUCTION, GO_BACK_COMMAND));
     }
 }

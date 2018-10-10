@@ -65,8 +65,7 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             //detect if user wants to activate intuitive mode/command
             if (arguments.isEmpty()) {
-                isIntuitiveMode = true;
-                return new IntuitiveEntryCommand(userInput);
+                return triggerIntuitiveMode(userInput);
             }
             return new AddCommandParser().parse(arguments);
 
@@ -77,6 +76,9 @@ public class AddressBookParser {
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+            if (arguments.isEmpty()) {
+                return triggerIntuitiveMode(userInput);
+            }
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
@@ -114,8 +116,15 @@ public class AddressBookParser {
         }
     }
 
+    private Command triggerIntuitiveMode(String userInput) {
+        isIntuitiveMode = true;
+        return new IntuitiveEntryCommand(userInput);
+    }
+
     public void exitIntuitiveMode() {
         isIntuitiveMode = false;
     }
+
+
 
 }

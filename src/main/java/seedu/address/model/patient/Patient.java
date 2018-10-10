@@ -59,7 +59,11 @@ public class Patient extends Person {
         this.medicalRecord = requireNonNull(medicalRecord);
     }
 
-
+    /**
+     * Check if the patient is the same as other patient.
+     * @param otherPatient The other patient to compare to.
+     * @return True if the two patient are the same.
+     */
     public boolean isSamePerson(Patient otherPatient) {
         if (otherPatient == this) {
             return true;
