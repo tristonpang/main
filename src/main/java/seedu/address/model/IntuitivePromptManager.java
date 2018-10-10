@@ -405,7 +405,7 @@ public class IntuitivePromptManager {
     }
 
     /**
-     * Checks if the given input is a valid argument for the add command.
+     * Checks if given input is a valid argument for the add command.
      *
      * @param input the given input
      * @return true if the input is a valid argument, false otherwise
