@@ -59,6 +59,7 @@ public class Patient extends Person {
         this.medicalRecord = requireNonNull(medicalRecord);
     }
 
+
     public boolean isSamePerson(Patient otherPatient) {
         if (otherPatient == this) {
             return true;
