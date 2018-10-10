@@ -193,6 +193,12 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Retrieves corresponding instruction for a field (specified by the current argument index) for the intuitive
+     * 'delete' command.
+     *
+     * @return the corresponding string instruction for the specified field
+     */
     private String retrieveDeleteInstruction() {
         switch (currentArgIndex) {
 
@@ -257,6 +263,13 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Prepares a string that is a single line 'delete' command (i.e. non-intuitive 'add') based on all
+     * the past arguments entered by the user during the execution of an intuitive 'add' command.
+     *
+     * @return a string that is the non-intuitive 'delete' command input, containing entered arguments of the
+     * past executed intuitive 'delete'
+     */
     private String prepareArgumentsForDelete() {
         String preparedString = "";
         preparedString += DeleteCommand.COMMAND_WORD + " ";
