@@ -288,6 +288,7 @@ public class IntuitivePromptManager {
         String targetIndex = arguments.get(DELETE_TARGET_INDEX);
         preparedString += targetIndex;
 
+        resetIntuitiveCache();
         return preparedString;
     }
 
