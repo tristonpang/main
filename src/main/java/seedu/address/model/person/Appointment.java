@@ -33,6 +33,7 @@ public class Appointment {
     /** nric of patient */
     private Nric patientNric;
 
+    // Constructor used during junit testing.
     public Appointment(String appointment) {
         requireNonNull(appointment);
         value = appointment;
@@ -48,6 +49,7 @@ public class Appointment {
         }
     }
 
+    // Constructor used when taking in inputs from parser.
     public Appointment(String date, String startTime, String endTime,
                        String doctorName, String department, String patientName, String nric) {
         value = date + "," + startTime + "," + endTime
@@ -140,6 +142,16 @@ public class Appointment {
             return true;
         }
         return false;
+    }
+
+    /**
+     *
+     * @return boolean on whether the start and end times are valid.
+     */
+    public boolean hasValidStartandEndTime() {
+        int currentStartTime = Integer.parseInt(startTime.trim());
+        int currentEndTime = Integer.parseInt(endTime.trim());
+        return (currentStartTime < currentEndTime);
     }
 
     public boolean hasValidNric() {

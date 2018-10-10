@@ -124,7 +124,6 @@ public class ScheduleCommandTest {
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(parts[0],
                 parts[1], parts[2], parts[3], parts[4],
                 personToModify.getName().toString(), personToModify.getNric().toString()));
-        //ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Appointment(SCHEDULE_STUB));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
