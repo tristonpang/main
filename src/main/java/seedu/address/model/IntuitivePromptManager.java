@@ -17,7 +17,14 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.patient.Nric;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Role;
+import seedu.address.model.tag.Tag;
 import seedu.address.ui.UiManager;
 
 
@@ -68,6 +75,9 @@ public class IntuitivePromptManager {
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
+    private static final String UNEXPECTED_SCENARIO_MESSAGE = "IntuitivePromptManager: "
+            + "Unexpected scenario has occured in switch-case block";
+
 
     public IntuitivePromptManager() {
         currentArgIndex = MIN_ARGUMENT_INDEX;
@@ -97,7 +107,8 @@ public class IntuitivePromptManager {
             arguments.add(userInput);
             currentArgIndex++;
         } else {
-            throw new CommandException(String.format(INVALID_ARGUMENT_MESSAGE, getInstruction()));
+            String exceptionMessage = retrieveInvalidArgumentExceptionMessage();
+            throw new CommandException(exceptionMessage + "\n" + getInstruction());
         }
 
 
@@ -414,11 +425,33 @@ public class IntuitivePromptManager {
         switch (currentArgIndex) {
 
         case ADD_ROLE_INDEX:
-            return input.equals(DOCTOR_ARG_IDENTIFIER) || input.equals(PATIENT_ARG_IDENTIFIER);
+            return Role.isValidRole(input);
+
+        case ADD_NAME_INDEX:
+            return Name.isValidName(input);
+
+        case ADD_PHONE_INDEX:
+            return Phone.isValidPhone(input);
+
+        case ADD_EMAIL_INDEX:
+            return Email.isValidEmail(input);
+
+        case ADD_ADDRESS_INDEX:
+            return Address.isValidAddress(input);
+
+        case ADD_TAGS_INDEX:
+            for (String tag : input.split(",")) {
+                if (!Tag.isValidTagName(tag)) {
+                    return false;
+                }
+            }
+            return true;
 
         case ADD_NRIC_OR_DEPT_INDEX:
             if (isPatient()) {
                 return Nric.isValidNric(input);
+            } else if (isDoctor()) {
+                return MedicalDepartment.isValidMedDept(input);
             }
             // Fallthrough
         default:
@@ -426,5 +459,63 @@ public class IntuitivePromptManager {
 
         }
 
+    }
+
+    /**
+     * Retrieves message to be thrown with exception when an invalid argument is detected.
+     *
+     * @return string message to be thrown with exception
+     */
+    private String retrieveInvalidArgumentExceptionMessage() {
+        switch (commandWord) {
+
+        case (AddCommand.COMMAND_WORD):
+            return retrieveInvalidAddArgumentExceptionMessage();
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
+    }
+
+    /**
+     * Retrieves message to be thrown with exception when an invalid argument is detected
+     * for the specific case of the add command.
+     *
+     * @return string message to be thrown with exception
+     */
+    private String retrieveInvalidAddArgumentExceptionMessage() {
+        switch (currentArgIndex) {
+
+        case (ADD_ROLE_INDEX):
+            return Role.MESSAGE_ROLE_CONSTRAINTS;
+
+        case (ADD_NAME_INDEX):
+            return Name.MESSAGE_NAME_CONSTRAINTS;
+
+        case (ADD_PHONE_INDEX):
+            return Phone.MESSAGE_PHONE_CONSTRAINTS;
+
+        case (ADD_EMAIL_INDEX):
+            return Email.MESSAGE_EMAIL_CONSTRAINTS;
+
+        case (ADD_ADDRESS_INDEX):
+            return Address.MESSAGE_ADDRESS_CONSTRAINTS;
+
+        case (ADD_TAGS_INDEX):
+            return Tag.MESSAGE_TAG_CONSTRAINTS;
+
+        case (ADD_NRIC_OR_DEPT_INDEX):
+            if (isPatient()) {
+                return Nric.MESSAGE_NRIC_CONSTRAINTS;
+            } else if (isDoctor()) {
+                return MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS;
+            }
+            // Fallthrough
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
     }
 }
