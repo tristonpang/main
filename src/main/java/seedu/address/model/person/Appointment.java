@@ -158,6 +158,10 @@ public class Appointment {
         return patientNric.isValidNric(patientNric.toString());
     }
 
+    public boolean isValidAppointment() {
+        return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidNric();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

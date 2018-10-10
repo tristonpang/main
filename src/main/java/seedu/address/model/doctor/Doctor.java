@@ -2,6 +2,7 @@ package seedu.address.model.doctor;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import seedu.address.model.department.MedicalDepartment;
@@ -36,8 +37,19 @@ public class Doctor extends Person {
      * Creates a new Doctor object based on given details.
      * All field must be present and non-null.
      */
-    public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Appointment appointment,
-                  MedicalDepartment modelMedicalDept) {
+    public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                  ArrayList<Appointment> appointmentList, MedicalDepartment modelMedicalDept) {
+        super(name, phone, email, address, tags, appointmentList);
+        requireAllNonNull(modelMedicalDept);
+        this.dept = modelMedicalDept;
+    }
+
+    /**
+     * Creates a new Doctor object based on given details.
+     * All field must be present and non-null.
+     */
+    public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                  Appointment appointment, MedicalDepartment modelMedicalDept) {
         super(name, phone, email, address, tags, appointment);
         requireAllNonNull(modelMedicalDept);
         this.dept = modelMedicalDept;

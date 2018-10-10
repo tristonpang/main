@@ -53,6 +53,19 @@ public class Person {
         appointmentList.add(appointment);
     }
 
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, ArrayList<Appointment> appointmentList) {
+        requireAllNonNull(name, phone, email, address, tags, appointmentList);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.appointmentList = appointmentList;
+        this.tags.addAll(tags);
+
+        // Set appointment to be the last scheduled appointment
+        appointment = this.appointmentList.get(this.appointmentList.size()-1);
+    }
+
     public Name getName() {
         return name;
     }
@@ -73,9 +86,21 @@ public class Person {
         return appointment;
     }
 
+    public ArrayList<Appointment> getAppointmentList() {
+        return appointmentList;
+    }
+
+    /**
+     * Empties out the AppointmentList to assist junit testing.
+     * This prevents appointments collected from different tests to clash.
+     */
+    public void clearAppointmentList() {
+        appointmentList = new ArrayList<>();
+    }
+
     // Error because there is nothing in appointmentList i.e. it is not used at all hence null so will throw error.
     public boolean hasClash(Appointment newAppointment) {
-        return AppointmentManager.isClash(appointment, newAppointment);
+        return AppointmentManager.isClash(appointmentList, newAppointment);
     }
 
     /**
