@@ -140,7 +140,6 @@ public class IntuitivePromptManager {
 
         logger.info("Intuitive Argument index: " + currentArgIndex);
         logger.info("Current arguments: " + arguments);
-        logger.info("Intuitive mode in Prompt Manager:" + isIntuitiveMode());
 
 
         if (currentArgIndex >= getMaximumArguments(commandWord)) {
@@ -157,7 +156,6 @@ public class IntuitivePromptManager {
     private void startIntuitiveMode(String userInput) {
         commandWord = userInput;
         isIntuitiveMode = true;
-        logger.info("Intuitive mode in Prompt Manager after starting:" + isIntuitiveMode);
     }
 
     /**

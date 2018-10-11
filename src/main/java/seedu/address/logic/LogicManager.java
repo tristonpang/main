@@ -36,8 +36,6 @@ public class LogicManager extends ComponentManager implements Logic {
             Command command = addressBookParser.parseCommand(commandText);
             CommandResult result = command.execute(model, history);
 
-            logger.info("Is intuitive mode:" + model.isIntuitiveMode());
-
             //if after intuitive input, all inputs have been received, parse with full arguments
             if (!model.isIntuitiveMode() && model.areIntuitiveArgsAvailable()) {
                 //tell AddressBookParser that the intuitive command has completed
