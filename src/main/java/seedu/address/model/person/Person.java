@@ -53,7 +53,8 @@ public class Person {
         appointmentList.add(appointment);
     }
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, ArrayList<Appointment> appointmentList) {
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, ArrayList<Appointment> appointmentList) {
         requireAllNonNull(name, phone, email, address, tags, appointmentList);
         this.name = name;
         this.phone = phone;
@@ -63,7 +64,9 @@ public class Person {
         this.tags.addAll(tags);
 
         // Set appointment to be the last scheduled appointment
-        appointment = this.appointmentList.get(this.appointmentList.size()-1);
+        if (!this.appointmentList.isEmpty()) {
+            appointment = this.appointmentList.get(this.appointmentList.size() - 1);
+        }
     }
 
     public Name getName() {
