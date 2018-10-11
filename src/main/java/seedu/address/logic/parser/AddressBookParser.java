@@ -70,6 +70,9 @@ public class AddressBookParser {
             return new AddCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
+            if (arguments.isEmpty()) {
+                return triggerIntuitiveMode(userInput);
+            }
             return new EditCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:

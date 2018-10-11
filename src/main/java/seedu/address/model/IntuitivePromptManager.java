@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.patient.Nric;
@@ -40,7 +41,7 @@ public class IntuitivePromptManager {
 
     private static final int MIN_ARGUMENT_INDEX = 0;
 
-    private static final String INVALID_ARGUMENT_MESSAGE = "Invalid input! Please try again!\n %1$s";
+    private static final String COMMAND_COMPLETE_MESSAGE = "All required inputs received, processing...";
 
     private static final String SKIP_COMMAND = "//";
     private static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
@@ -70,6 +71,34 @@ public class IntuitivePromptManager {
 
     private static final String DELETE_TARGET_INSTRUCTION = "Please enter the index of the person to be deleted";
 
+    private static final int EDIT_MAX_ARGUMENTS = 7;
+    private static final int EDIT_TARGET_INDEX = 0;
+    private static final int EDIT_FIELDS_INDEX = 1;
+    private static final int EDIT_NAME_INDEX = 2;
+    private static final int EDIT_PHONE_INDEX = 3;
+    private static final int EDIT_EMAIL_INDEX = 4;
+    private static final int EDIT_ADDRESS_INDEX = 5;
+    private static final int EDIT_TAGS_INDEX = 6;
+
+    private static final int EDIT_INDEX_OFFSET = 1;
+
+    private static final String EDIT_CLEAR_TAGS_COMMAND = "--";
+
+    private static final String EDIT_TARGET_INSTRUCTION = "Please enter the index of the person to be edited";
+    private static final String EDIT_FIELDS_INSTRUCTION = "Please indicate which fields you want to edit, by typing"
+            + "down the corresponding numbers, separated by spaces:\n"
+            + "1. Name\n"
+            + "2. Phone\n"
+            + "3. Email\n"
+            + "4. Address\n"
+            + "5. Tags";
+    private static final String EDIT_NAME_INSTRUCTION = "Please enter person's new name";
+    private static final String EDIT_EMAIL_INSTRUCTION = "Please enter person's new email";
+    private static final String EDIT_PHONE_INSTRUCTION = "Please enter person's new phone number";
+    private static final String EDIT_ADDRESS_INSTRUCTION = "Please enter person's new address";
+    private static final String EDIT_TAGS_INSTRUCTION = "Please enter person's new tags, "
+            + "separated by commas (with no spaces after a comma) (Type %1$s to clear tags)";
+
     private static final String PATIENT_ARG_IDENTIFIER = "patient";
     private static final String DOCTOR_ARG_IDENTIFIER = "doctor";
 
@@ -98,22 +127,20 @@ public class IntuitivePromptManager {
     public void addArgument(String input) throws CommandException {
         String userInput = input.trim();
         if (commandWord == null) { //start of intuitive command, record command word
-            commandWord = userInput;
-            startIntuitiveMode();
+            startIntuitiveMode(userInput);
         } else if (isSkipCommand(userInput) && isCurrentFieldSkippable()) { //skip command
-            arguments.add("");
-            currentArgIndex++;
+            skipArgumentField();
         } else if (isArgumentValid(userInput)) { //any other valid argument
-            arguments.add(userInput);
-            currentArgIndex++;
+            addArgumentForCommand(userInput);
         } else {
             String exceptionMessage = retrieveInvalidArgumentExceptionMessage();
             throw new CommandException(exceptionMessage + "\n" + getInstruction());
         }
 
 
-        logger.fine("Intuitive Argument index: " + currentArgIndex);
-        logger.fine("Current arguments: " + arguments);
+        logger.info("Intuitive Argument index: " + currentArgIndex);
+        logger.info("Current arguments: " + arguments);
+        logger.info("Intuitive mode in Prompt Manager:" + isIntuitiveMode());
 
 
         if (currentArgIndex >= getMaximumArguments(commandWord)) {
@@ -121,8 +148,84 @@ public class IntuitivePromptManager {
         }
     }
 
-    private void startIntuitiveMode() {
+    /**
+     * Signals the start of execution of an intuitive command
+     *
+     * @param userInput the user's input (i.e. the command word which specifies which
+     *                  command is going to be run in intuitive mode)
+     */
+    private void startIntuitiveMode(String userInput) {
+        commandWord = userInput;
         isIntuitiveMode = true;
+        logger.info("Intuitive mode in Prompt Manager after starting:" + isIntuitiveMode);
+    }
+
+    /**
+     * Handles the adding of the user's input as an argument, depending on
+     * the type of command.
+     *
+     * @param userInput the user's input to be added as an argument
+     */
+    private void addArgumentForCommand(String userInput) {
+        switch (commandWord) {
+
+        case EditCommand.COMMAND_WORD:
+            if (currentArgIndex >= EDIT_FIELDS_INDEX) {
+                arguments.add(userInput);
+
+                if (arguments.get(EDIT_FIELDS_INDEX).isEmpty()) { //no more edit indexes
+                    //all remaining unselected fields are empty
+                    for (int index = currentArgIndex + 1; index < EDIT_MAX_ARGUMENTS; index++) {
+                        arguments.add("");
+                    }
+                    currentArgIndex = EDIT_MAX_ARGUMENTS;
+                    break;
+                }
+
+                //first element is the next edit index, second element is the remaining indexes
+                String[] firstIndexAndRemainingIndexes = arguments.get(EDIT_FIELDS_INDEX)
+                        .split(" ", 2);
+                int nextIndex = Integer.valueOf(firstIndexAndRemainingIndexes[0].trim());
+                nextIndex += EDIT_INDEX_OFFSET;
+                //the unselected indexes in between the current index and the next index are empty
+                for (int index = currentArgIndex + 1; index < nextIndex; index++) {
+                    arguments.add("");
+                }
+
+                //assign the argument index to the next in line from the selected edit indexes
+                currentArgIndex = nextIndex;
+
+                //update remaining indexes
+                arguments.remove(EDIT_FIELDS_INDEX);
+                if (firstIndexAndRemainingIndexes.length <= 1) {
+                    arguments.add(EDIT_FIELDS_INDEX, "");
+                    break;
+                }
+                String remainingIndexes = firstIndexAndRemainingIndexes[1];
+                arguments.add(EDIT_FIELDS_INDEX, remainingIndexes);
+                break;
+            }
+            // Fallthrough
+
+        case AddCommand.COMMAND_WORD:
+            // Fallthrough
+
+        case DeleteCommand.COMMAND_WORD:
+            arguments.add(userInput);
+            currentArgIndex++;
+            break;
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+        }
+    }
+
+    /**
+     * Skips the current argument field.
+     */
+    private void skipArgumentField() {
+        arguments.add("");
+        currentArgIndex++;
     }
 
     /**
@@ -139,6 +242,9 @@ public class IntuitivePromptManager {
 
         case DeleteCommand.COMMAND_WORD:
             return retrieveDeleteInstruction();
+
+        case EditCommand.COMMAND_WORD:
+            return retrieveEditInstruction();
 
         default:
             return "Invalid";
@@ -222,6 +328,38 @@ public class IntuitivePromptManager {
         }
     }
 
+    private String retrieveEditInstruction() {
+        switch (currentArgIndex) {
+
+        case EDIT_TARGET_INDEX:
+            return EDIT_TARGET_INSTRUCTION;
+
+        case EDIT_FIELDS_INDEX:
+            return EDIT_FIELDS_INSTRUCTION;
+
+        case EDIT_NAME_INDEX:
+            return EDIT_NAME_INSTRUCTION;
+
+        case EDIT_PHONE_INDEX:
+            return EDIT_PHONE_INSTRUCTION;
+
+        case EDIT_EMAIL_INDEX:
+            return EDIT_EMAIL_INSTRUCTION;
+
+        case EDIT_ADDRESS_INDEX:
+            return EDIT_ADDRESS_INSTRUCTION;
+
+        case EDIT_TAGS_INDEX:
+            return EDIT_TAGS_INSTRUCTION;
+
+        case EDIT_MAX_ARGUMENTS:
+            return COMMAND_COMPLETE_MESSAGE;
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+        }
+    }
+
     /**
      * Given a command, retrieves the maximum number of arguments that the specified command takes in.
      *
@@ -236,6 +374,9 @@ public class IntuitivePromptManager {
 
         case DeleteCommand.COMMAND_WORD:
             return DELETE_MAX_ARGUMENTS;
+
+        case EditCommand.COMMAND_WORD:
+            return EDIT_MAX_ARGUMENTS;
 
         default:
             return 0;
@@ -261,6 +402,7 @@ public class IntuitivePromptManager {
      * past executed intuitive command
      */
     public String retrieveArguments() {
+
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
@@ -269,27 +411,12 @@ public class IntuitivePromptManager {
         case DeleteCommand.COMMAND_WORD:
             return prepareArgumentsForDelete();
 
+        case EditCommand.COMMAND_WORD:
+            return prepareArgumentsForEdit();
+
         default:
             return "Invalid";
         }
-    }
-
-    /**
-     * Prepares a string that is a single line 'delete' command (i.e. non-intuitive 'add') based on all
-     * the past arguments entered by the user during the execution of an intuitive 'add' command.
-     *
-     * @return a string that is the non-intuitive 'delete' command input, containing entered arguments of the
-     * past executed intuitive 'delete'
-     */
-    private String prepareArgumentsForDelete() {
-        String preparedString = "";
-        preparedString += DeleteCommand.COMMAND_WORD + " ";
-
-        String targetIndex = arguments.get(DELETE_TARGET_INDEX);
-        preparedString += targetIndex;
-
-        resetIntuitiveCache();
-        return preparedString;
     }
 
     /**
@@ -312,11 +439,51 @@ public class IntuitivePromptManager {
         String preparedString = "";
         preparedString += AddCommand.COMMAND_WORD + " ";
 
-        int index = 0;
-        for (String arg : arguments) {
-            preparedString += prefixAddArgument(index, arg); //TODO: optimise with StringBuilder
+        int index = MIN_ARGUMENT_INDEX;
+        for (String argument : arguments) {
+            preparedString += prefixAddArgument(index, argument); //TODO: optimise with StringBuilder
             preparedString += " ";
             index++;
+        }
+
+        resetIntuitiveCache();
+        return preparedString.trim();
+    }
+
+    /**
+     * Prepares a string that is a single line 'delete' command (i.e. non-intuitive 'add') based on all
+     * the past arguments entered by the user during the execution of an intuitive 'add' command.
+     *
+     * @return a string that is the non-intuitive 'delete' command input, containing entered arguments of the
+     * past executed intuitive 'delete'
+     */
+    private String prepareArgumentsForDelete() {
+        String preparedString = "";
+        preparedString += DeleteCommand.COMMAND_WORD + " ";
+
+        String targetIndex = arguments.get(DELETE_TARGET_INDEX);
+        preparedString += targetIndex;
+
+        resetIntuitiveCache();
+        return preparedString;
+    }
+
+    private String prepareArgumentsForEdit() {
+        String preparedString = "";
+        preparedString += EditCommand.COMMAND_WORD + " ";
+
+        for (int index = MIN_ARGUMENT_INDEX; index < EDIT_MAX_ARGUMENTS; index++) {
+            if (index == EDIT_FIELDS_INDEX) {
+                continue;
+            }
+
+            String argument = arguments.get(index);
+            if (argument.isEmpty()) {
+                continue;
+            }
+
+            preparedString += prefixEditArgument(index, argument); //TODO: optimise with StringBuilder
+            preparedString += " ";
         }
 
         resetIntuitiveCache();
@@ -367,6 +534,37 @@ public class IntuitivePromptManager {
 
         default:
             return "";
+        }
+    }
+
+    private String prefixEditArgument(int index, String argument) {
+        switch (index) {
+
+        case EDIT_TARGET_INDEX:
+            return argument;
+
+        case EDIT_NAME_INDEX:
+            return PREFIX_NAME + argument;
+
+        case EDIT_EMAIL_INDEX:
+            return PREFIX_EMAIL + argument;
+
+        case EDIT_PHONE_INDEX:
+            return PREFIX_PHONE + argument;
+
+        case EDIT_ADDRESS_INDEX:
+            return PREFIX_ADDRESS + argument;
+
+        case EDIT_TAGS_INDEX:
+            String resultArg = PREFIX_TAG + argument;
+            if (argument.equals(EDIT_CLEAR_TAGS_COMMAND)) {
+                resultArg = PREFIX_TAG + "";
+            }
+
+            return resultArg.replace(",", " " + PREFIX_TAG).trim();
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
         }
     }
 
