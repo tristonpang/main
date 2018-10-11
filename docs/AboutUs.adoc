@@ -52,7 +52,7 @@ image::garygohyp.png[width="150", align="left"]
 {empty}[https://github.com/garygohyp[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Testing
+Responsibilities: Documentation
 
 '''
 
@@ -61,6 +61,6 @@ image::guestuser0123.png[width="150", align="left"]
 {empty}[https://github.com/guestuser0123[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Documentation
+Responsibilities: Testing
 
 '''
