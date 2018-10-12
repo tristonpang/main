@@ -43,7 +43,8 @@ public class SampleDataUtil {
                     + "Dextromethorphan prescribed.")),
             new Patient(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"), new Address(
                     "Blk 436 Serangoon Gardens Street 26, #16-43"), getTagSet("family"),
-                    SAMPLE_APPOINTMENT_LIST, new Nric("S9991114A"), new MedicalRecord("Diagnosed with stage 3 testicular"
+                    SAMPLE_APPOINTMENT_LIST, new Nric("S9991114A"),
+                    new MedicalRecord("Diagnosed with stage 3 testicular"
                     + " cancer. Orchiectomy for both testicles.")),
             new Doctor(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                 new Address("Blk 47 Tampines Street 20, #17-35"), getTagSet("classmates"), SAMPLE_APPOINTMENT_LIST,

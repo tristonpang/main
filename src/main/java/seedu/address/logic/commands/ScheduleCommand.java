@@ -132,8 +132,8 @@ public class ScheduleCommand extends Command {
             editedPerson = new Patient(personToEdit.getName(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
                     personToEdit.getAddress(), personToEdit.getTags(),
-                    appointmentList, ((Patient) personToEdit).getNric(),
-                    ((Patient) personToEdit).getMedicalRecord());
+                    appointmentList, ((Patient) personToEdit).getNric(), (
+                            (Patient) personToEdit).getMedicalRecord());
         }
 
         model.updatePerson(personToEdit, editedPerson);
