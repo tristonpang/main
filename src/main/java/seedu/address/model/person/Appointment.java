@@ -131,7 +131,7 @@ public class Appointment {
 
     /**
      *
-     * @param person to be tested
+     * @param person to be tested.
      * @return boolean on whether the person is a valid patient.
      */
     public boolean hasValidPatient(Person person) {
