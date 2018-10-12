@@ -43,9 +43,10 @@ public class XmlAdaptedAppointment {
      * @throws IllegalValueException if there were any data constraints violated in the adapted appointment.
      */
     public String toModelType() throws IllegalValueException {
-//        if (!new Appointment(appointment).isValidAppointment()) {
-//            throw new IllegalValueException("Invalid Appointment");
-//        }
+        // TODO: checker
+        //if (!new Appointment(appointment).isValidAppointment()) {
+        //    throw new IllegalValueException("Invalid Appointment");
+        //}
         return appointment;
     }
 
