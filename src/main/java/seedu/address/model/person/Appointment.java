@@ -158,6 +158,10 @@ public class Appointment {
         return patientNric.isValidNric(patientNric.toString());
     }
 
+    /**
+     *
+     * @return whether an appointment is valid or not.
+     */
     public boolean isValidAppointment() {
         if (value.equals("")) {
             // For junit testing.
