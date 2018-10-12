@@ -326,6 +326,12 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Retrieves corresponding instruction for a field (specified by the current argument index) for the intuitive
+     * 'edit' command.
+     *
+     * @return the corresponding string instruction for the specified field
+     */
     private String retrieveEditInstruction() {
         switch (currentArgIndex) {
 
@@ -449,8 +455,8 @@ public class IntuitivePromptManager {
     }
 
     /**
-     * Prepares a string that is a single line 'delete' command (i.e. non-intuitive 'add') based on all
-     * the past arguments entered by the user during the execution of an intuitive 'add' command.
+     * Prepares a string that is a single line 'delete' command (i.e. non-intuitive 'delete') based on all
+     * the past arguments entered by the user during the execution of an intuitive 'delete' command.
      *
      * @return a string that is the non-intuitive 'delete' command input, containing entered arguments of the
      * past executed intuitive 'delete'
@@ -466,6 +472,13 @@ public class IntuitivePromptManager {
         return preparedString;
     }
 
+    /**
+     * Prepares a string that is a single line 'edit' command (i.e. non-intuitive 'edit') based on all
+     * the past arguments entered by the user during the execution of an intuitive 'edit' command.
+     *
+     * @return a string that is the non-intuitive 'edit' command input, containing entered arguments of the
+     * past executed intuitive 'edit'
+     */
     private String prepareArgumentsForEdit() {
         String preparedString = "";
         preparedString += EditCommand.COMMAND_WORD + " ";
@@ -535,6 +548,14 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Given an argument and an index that represents which field this argument belongs to in the 'edit' command,
+     * prefix and return the edited argument.
+     *
+     * @param index    the index that represents which field the argument belongs to in the 'edit' command
+     * @param argument the specified argument
+     * @return the prefixed argument
+     */
     private String prefixEditArgument(int index, String argument) {
         switch (index) {
 
