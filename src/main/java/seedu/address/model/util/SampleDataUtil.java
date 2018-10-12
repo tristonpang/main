@@ -72,4 +72,13 @@ public class SampleDataUtil {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Returns an Appointment list containing the list of strings given.
+     */
+    public static ArrayList<Appointment> getAppointmentsList(String... strings) {
+        return Arrays.stream(strings)
+                .map(Appointment::new)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
 }
