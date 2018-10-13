@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
+import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
@@ -34,8 +34,8 @@ public class SampleDataUtil {
                     new Email("alexyeoh@example.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
                     getTagSet("friends"), SAMPLE_APPOINTMENT, new MedicalRecord("")),
             new Doctor(new Name("Bernice Yu"), new Nric("S1010101A"), new Phone("99272758"),
-                    new Email("berniceyu" + "@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18")
-                    , getTagSet("colleagues", "friends"), SAMPLE_APPOINTMENT,
+                    new Email("berniceyu" + "@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
+                    getTagSet("colleagues", "friends"), SAMPLE_APPOINTMENT,
                     new MedicalDepartment("Neurology")),
             new Patient(new Name("Charlotte Oliveiro"), new Nric("S2020202B"), new Phone("93210283"),
                     new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),

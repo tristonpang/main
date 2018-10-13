@@ -42,7 +42,7 @@ public class AddCommand extends Command {
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TAG + "mandarin-only ";
 
-    private static final String USAGE_DOCTOR_EXAMPLE = USAGE_EXAMPLE.replaceFirst("<ROLE>","Doctor")
+    private static final String USAGE_DOCTOR_EXAMPLE = USAGE_EXAMPLE.replaceFirst("<ROLE>", "Doctor")
             + PREFIX_MEDICAL_DEPARTMENT + "Oncology";
 
     public static final String MESSAGE_PATIENT_USAGE =
@@ -53,8 +53,8 @@ public class AddCommand extends Command {
     public static final String MESSAGE_GENERAL_USAGE = MESSAGE_PATIENT_USAGE.replaceFirst("patient",
             "patient/doctor") + "\n" + USAGE_DOCTOR_EXAMPLE;
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     private final Person toAdd;
 
     /**

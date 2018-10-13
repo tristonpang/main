@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
+import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.person.Person;
 
 /**
