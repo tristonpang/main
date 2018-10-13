@@ -21,6 +21,9 @@ import seedu.address.storage.XmlAdaptedPerson;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Doctor extends Person {
+    public static final String IS_AVAILABLE = "FREE";
+    public static final String NOT_AVAILABLE = "BUSY";
+
     private final MedicalDepartment dept;
 
     /**
@@ -52,10 +55,12 @@ public class Doctor extends Person {
         return this.dept;
     }
 
-    public boolean isAvailableNow() {
+    public String currentAvailStatus() {
         long currentTime = new Date().getTime();
-        System.out.println(currentTime);
-        return true;
+        if (currentTime % 2 == 0) {
+            return NOT_AVAILABLE;
+        }
+        return IS_AVAILABLE;
     }
 
     @Override
