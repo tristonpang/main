@@ -21,6 +21,8 @@ import seedu.address.model.person.Person;
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
 
     public static final String COMMON_MESSAGE = COMMAND_WORD + ": Adds a person to the database. "
             + "Parameters: "
@@ -53,8 +55,6 @@ public class AddCommand extends Command {
     public static final String MESSAGE_GENERAL_USAGE = MESSAGE_PATIENT_USAGE.replaceFirst("patient",
             "patient/doctor") + "\n" + USAGE_DOCTOR_EXAMPLE;
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     private final Person toAdd;
 
     /**

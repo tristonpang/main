@@ -45,8 +45,8 @@ public class SampleDataUtil {
                     new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
                     getTagSet("family"), SAMPLE_APPOINTMENT,
                     new MedicalRecord("Diagnosed with stage 3 testicular cancer. Orchiectomy for both testicles.")),
-            new Doctor(new Name("Irfan Ibrahim"), new Nric("S3030303C"), new Phone("92492021"), new Email("irfan" +
-                    "@example.com"), new Address("Blk 47 Tampines Street 20, #17-35"), getTagSet("classmates"),
+            new Doctor(new Name("Irfan Ibrahim"), new Nric("S3030303C"), new Phone("92492021"), new Email("irfan"
+                    + "@example.com"), new Address("Blk 47 Tampines Street 20, #17-35"), getTagSet("classmates"),
                     SAMPLE_APPOINTMENT, new MedicalDepartment("Obstetrics")),
             new Doctor(new Name("Roy Balakrishnan"), new Nric("S4040404D"), new Phone("92624417"),
                     new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
