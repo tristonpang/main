@@ -54,8 +54,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         // Ensures Medical Department field is not empty when adding a Doctor.
         if (isRoleOf(Role.DOCTOR, argMultimap) && !arePrefixesPresent(argMultimap, PREFIX_MEDICAL_DEPARTMENT)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT,
-                        AddCommand.MESSAGE_DOCTOR_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT,
+                    AddCommand.MESSAGE_DOCTOR_USAGE));
         }
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());

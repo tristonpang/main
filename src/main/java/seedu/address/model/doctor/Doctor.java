@@ -55,6 +55,9 @@ public class Doctor extends Person {
         return this.dept;
     }
 
+    /**
+     * Returns the availability status of the Doctor, whether free or busy at the moment.
+     */
     public String currentAvailStatus() {
         long currentTime = new Date().getTime();
         if (currentTime % 2 == 0) {
