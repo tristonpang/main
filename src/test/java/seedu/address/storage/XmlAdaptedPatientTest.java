@@ -132,23 +132,23 @@ public class XmlAdaptedPatientTest {
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
-        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_MEDICAL_RECORD, invalidTags, VALID_APPOINTMENT);
+        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_MEDICAL_RECORD, invalidTags, VALID_APPOINTMENT);
         Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
 
     @Test
     public void toModelType_nullAppointment_throwsIllegalValueException() {
-        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                VALID_MEDICAL_RECORD, VALID_TAGS, null);
+        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_MEDICAL_RECORD, VALID_TAGS, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Appointment.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
     public void toModelType_nullMedicalRecord_throwsIllegalValueException() {
-        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                null, VALID_TAGS, VALID_APPOINTMENT);
+        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, null, VALID_TAGS, VALID_APPOINTMENT);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, MedicalRecord.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
