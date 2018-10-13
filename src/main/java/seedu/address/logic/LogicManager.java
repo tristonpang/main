@@ -42,7 +42,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 addressBookParser.exitIntuitiveMode();
 
                 String intuitiveArguments = model.retrieveIntuitiveArguments();
-                logger.info("Retrieved Argument String: " + intuitiveArguments);
+                logger.fine("Retrieved Argument String: " + intuitiveArguments);
                 Command intuitiveCompletedCommand = addressBookParser.parseCommand(intuitiveArguments);
                 return intuitiveCompletedCommand.execute(model, history);
             }

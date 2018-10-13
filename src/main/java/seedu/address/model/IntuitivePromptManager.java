@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.patient.Nric;
 import seedu.address.ui.UiManager;
 
 
@@ -29,10 +33,11 @@ public class IntuitivePromptManager {
 
     private static final int MIN_ARGUMENT_INDEX = 0;
 
+    private static final String INVALID_ARGUMENT_MESSAGE = "Invalid input! Please try again!\n %1$s";
+
     private static final String SKIP_COMMAND = "//";
     private static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
 
-    private static final String ADD_COMMAND_WORD = "add";
     private static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? "
             + "(Please enter patient or doctor)";
     private static final String ADD_NAME_INSTRUCTION = "Please enter person's name";
@@ -53,10 +58,14 @@ public class IntuitivePromptManager {
     private static final int ADD_TAGS_INDEX = 5;
     private static final int ADD_NRIC_OR_DEPT_INDEX = 6;
 
+    private static final int DELETE_MAX_ARGUMENTS = 1;
+    private static final int DELETE_TARGET_INDEX = 0;
+
+    private static final String DELETE_TARGET_INSTRUCTION = "Please enter the index of the person to be deleted";
+
     private static final String PATIENT_ARG_IDENTIFIER = "patient";
     private static final String DOCTOR_ARG_IDENTIFIER = "doctor";
 
-    //logger
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
 
@@ -76,25 +85,33 @@ public class IntuitivePromptManager {
      *
      * @param input the user's input
      */
-    public void addArgument(String input) {
-        if (isSkipCommand(input) && isCurrentFieldSkippable()) {
+    public void addArgument(String input) throws CommandException {
+        String userInput = input.trim();
+        if (commandWord == null) { //start of intuitive command, record command word
+            commandWord = userInput;
+            startIntuitiveMode();
+        } else if (isSkipCommand(userInput) && isCurrentFieldSkippable()) { //skip command
             arguments.add("");
             currentArgIndex++;
-        } else if (commandWord != null) { //intuitive command already executing
-            arguments.add(input.trim());
+        } else if (isArgumentValid(userInput)) { //any other valid argument
+            arguments.add(userInput);
             currentArgIndex++;
-        } else { //start intuitive command, record command word
-            commandWord = input.trim();
-            isIntuitiveMode = true;
+        } else {
+            throw new CommandException(String.format(INVALID_ARGUMENT_MESSAGE, getInstruction()));
         }
 
-        logger.info("Intuitive Argument index: " + currentArgIndex);
-        logger.info("Current arguments: " + arguments);
+
+        logger.fine("Intuitive Argument index: " + currentArgIndex);
+        logger.fine("Current arguments: " + arguments);
 
 
         if (currentArgIndex >= getMaximumArguments(commandWord)) {
             exitIntuitiveMode();
         }
+    }
+
+    private void startIntuitiveMode() {
+        isIntuitiveMode = true;
     }
 
     /**
@@ -106,8 +123,11 @@ public class IntuitivePromptManager {
     public String getInstruction() {
         switch (commandWord) {
 
-        case ADD_COMMAND_WORD:
+        case AddCommand.COMMAND_WORD:
             return retrieveAddInstruction();
+
+        case DeleteCommand.COMMAND_WORD:
+            return retrieveDeleteInstruction();
 
         default:
             return "Invalid";
@@ -135,6 +155,7 @@ public class IntuitivePromptManager {
     /**
      * Retrieves corresponding instruction for a field (specified by the current argument index) for the intuitive
      * 'add' command.
+     *
      * @return the corresponding string instruction for the specified field
      */
     private String retrieveAddInstruction() {
@@ -173,6 +194,24 @@ public class IntuitivePromptManager {
     }
 
     /**
+     * Retrieves corresponding instruction for a field (specified by the current argument index) for the intuitive
+     * 'delete' command.
+     *
+     * @return the corresponding string instruction for the specified field
+     */
+    private String retrieveDeleteInstruction() {
+        switch (currentArgIndex) {
+
+        case DELETE_TARGET_INDEX:
+            return DELETE_TARGET_INSTRUCTION;
+
+        default:
+            return "Invalid";
+
+        }
+    }
+
+    /**
      * Given a command, retrieves the maximum number of arguments that the specified command takes in.
      *
      * @param commandWord the specified command
@@ -181,8 +220,11 @@ public class IntuitivePromptManager {
     private int getMaximumArguments(String commandWord) {
         switch (commandWord) {
 
-        case ADD_COMMAND_WORD:
+        case AddCommand.COMMAND_WORD:
             return ADD_MAX_ARGUMENTS;
+
+        case DeleteCommand.COMMAND_WORD:
+            return DELETE_MAX_ARGUMENTS;
 
         default:
             return 0;
@@ -210,12 +252,32 @@ public class IntuitivePromptManager {
     public String retrieveArguments() {
         switch (commandWord) {
 
-        case ADD_COMMAND_WORD:
+        case AddCommand.COMMAND_WORD:
             return prepareArgumentsForAdd();
+
+        case DeleteCommand.COMMAND_WORD:
+            return prepareArgumentsForDelete();
 
         default:
             return "Invalid";
         }
+    }
+
+    /**
+     * Prepares a string that is a single line 'delete' command (i.e. non-intuitive 'add') based on all
+     * the past arguments entered by the user during the execution of an intuitive 'add' command.
+     *
+     * @return a string that is the non-intuitive 'delete' command input, containing entered arguments of the
+     * past executed intuitive 'delete'
+     */
+    private String prepareArgumentsForDelete() {
+        String preparedString = "";
+        preparedString += DeleteCommand.COMMAND_WORD + " ";
+
+        String targetIndex = arguments.get(DELETE_TARGET_INDEX);
+        preparedString += targetIndex;
+
+        return preparedString;
     }
 
     /**
@@ -236,7 +298,7 @@ public class IntuitivePromptManager {
      */
     private String prepareArgumentsForAdd() {
         String preparedString = "";
-        preparedString += ADD_COMMAND_WORD + " ";
+        preparedString += AddCommand.COMMAND_WORD + " ";
 
         int index = 0;
         for (String arg : arguments) {
@@ -253,7 +315,7 @@ public class IntuitivePromptManager {
      * Given an argument and an index that represents which field this argument belongs to in the 'add' command,
      * prefix and return the edited argument.
      *
-     * @param index the index that represents which field the argument belongs to in the 'add' command
+     * @param index    the index that represents which field the argument belongs to in the 'add' command
      * @param argument the specified argument
      * @return the prefixed argument
      */
@@ -316,11 +378,53 @@ public class IntuitivePromptManager {
     private boolean isCurrentFieldSkippable() {
         switch (commandWord) {
 
-        case ADD_COMMAND_WORD:
+        case AddCommand.COMMAND_WORD:
             return currentArgIndex == ADD_TAGS_INDEX;
 
         default:
             return false;
         }
+    }
+
+    /**
+     * Checks if given input is a valid argument.
+     *
+     * @param input the given input
+     * @return true if the input is a valid argument, false otherwise
+     */
+    private boolean isArgumentValid(String input) {
+        switch (commandWord) {
+
+        case AddCommand.COMMAND_WORD:
+            return isAddArgumentValid(input);
+
+        default:
+            return true;
+
+        }
+    }
+
+    /**
+     * Checks if given input is a valid argument for the add command.
+     *
+     * @param input the given input
+     * @return true if the input is a valid argument, false otherwise
+     */
+    private boolean isAddArgumentValid(String input) {
+        switch (currentArgIndex) {
+
+        case ADD_ROLE_INDEX:
+            return input.equals(DOCTOR_ARG_IDENTIFIER) || input.equals(PATIENT_ARG_IDENTIFIER);
+
+        case ADD_NRIC_OR_DEPT_INDEX:
+            if (isPatient()) {
+                return Nric.isValidNric(input);
+            }
+            // Fallthrough
+        default:
+            return true;
+
+        }
+
     }
 }
