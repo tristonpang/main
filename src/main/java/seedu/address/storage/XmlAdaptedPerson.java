@@ -62,7 +62,6 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(String name, String nric, String phone, String email, String address,
                             List<XmlAdaptedTag> tagged, String appointment) {
-
         this.name = name;
         this.phone = phone;
         this.nric = nric;
