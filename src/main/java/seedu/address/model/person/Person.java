@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.patient.Nric;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedPerson;
 
@@ -21,6 +22,7 @@ public class Person {
     protected final Name name;
     protected final Phone phone;
     protected final Email email;
+    protected final Nric nric;
 
     // Common Data fields
     protected final Address address;
@@ -32,24 +34,26 @@ public class Person {
      * Every field must be present and not null.
      * An empty {@code Appointment} will be created by default.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, nric, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.nric = nric;
         this.tags.addAll(tags);
     }
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Appointment appointment) {
-        requireAllNonNull(name, phone, email, address, tags, appointment);
+    public Person(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                  Appointment appointment) {
+        requireAllNonNull(name, phone, email, address, tags, nric, appointment);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.nric = nric;
         this.appointment = appointment;
         this.tags.addAll(tags);
-
         appointmentList.add(appointment);
     }
 
@@ -69,13 +73,16 @@ public class Person {
         return address;
     }
 
+    public Nric getNric() {
+        return nric;
+    }
+
     public Appointment getAppointment() {
         return appointment;
     }
 
-    // Error because there is nothing in appointmentList i.e. it is not used at all hence null so will throw error.
     public boolean hasClash(Appointment newAppointment) {
-        return AppointmentManager.isClash(appointment, newAppointment);
+        return AppointmentManager.isClash(appointmentList, newAppointment);
     }
 
     /**
@@ -95,9 +102,7 @@ public class Person {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName())
-                && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
+        return otherPerson != null && otherPerson.getNric().equals(this.getNric());
     }
 
     /**
@@ -128,19 +133,22 @@ public class Person {
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
                 && otherPerson.getAppointment().equals(getAppointment())
-                && otherPerson.getTags().equals(getTags());
+                && otherPerson.getTags().equals(getTags())
+                && otherPerson.getNric().equals(getNric());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, nric, tags);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" NRIC: ")
+                .append(getNric())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")

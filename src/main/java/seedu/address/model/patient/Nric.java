@@ -40,7 +40,7 @@ public class Nric {
     public boolean equals(Object obj) {
         return obj == this // short circuit if same object
                 || (obj instanceof Nric // instanceof handles nulls
-                && code.equals(((Nric) obj).code)); // state check
+                && code.equalsIgnoreCase(((Nric) obj).code)); // state check
     }
 
     @Override

@@ -95,15 +95,14 @@ public class ScheduleCommand extends Command {
         }
 
         if (personToEdit instanceof Doctor) {
-            editedPerson = new Doctor(personToEdit.getName(),
-                    personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getTags(),
+            editedPerson = new Doctor(personToEdit.getName(), personToEdit.getNric(), personToEdit.getPhone(),
+                    personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
                     appointment, ((Doctor) personToEdit).getMedicalDepartment());
         } else {
             assert personToEdit instanceof Patient;
-            editedPerson = new Patient(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getTags(),
-                    appointment, ((Patient) personToEdit).getNric(), ((Patient) personToEdit).getMedicalRecord());
+            editedPerson = new Patient(personToEdit.getName(), personToEdit.getNric(), personToEdit.getPhone(),
+                    personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
+                    appointment, ((Patient) personToEdit).getMedicalRecord());
         }
 
         model.updatePerson(personToEdit, editedPerson);

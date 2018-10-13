@@ -1,4 +1,4 @@
-package seedu.address.model.department;
+package seedu.address.model.doctor;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -41,7 +41,7 @@ public class MedicalDepartment {
         }
         if (obj instanceof MedicalDepartment) {
             MedicalDepartment department = (MedicalDepartment) obj;
-            return (department.deptName.equals(this.deptName));
+            return (department.deptName.equalsIgnoreCase(this.deptName));
         } else {
             return false;
         }

@@ -63,9 +63,9 @@ public class UpdateCommand extends Command {
         }
 
         Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
-        Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getPhone(),
-                personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
-                personToEdit.getAppointment(), personToEdit.getNric(),
+        Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getNric(),
+                personToEdit.getPhone(), personToEdit.getEmail(), personToEdit.getAddress(),
+                personToEdit.getTags(), personToEdit.getAppointment(),
                 medicalRecord);
 
         try {

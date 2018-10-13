@@ -4,7 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Set;
 
-import seedu.address.model.department.MedicalDepartment;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
@@ -26,8 +26,9 @@ public class Doctor extends Person {
      * Creates a new Doctor object based on given details.
      * All field must be present and non-null.
      */
-    public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags, MedicalDepartment dept) {
-        super(name, phone, email, address, tags);
+    public Doctor(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                  MedicalDepartment dept) {
+        super(name, nric, phone, email, address, tags);
         requireAllNonNull(dept);
         this.dept = dept;
     }
@@ -36,9 +37,9 @@ public class Doctor extends Person {
      * Creates a new Doctor object based on given details.
      * All field must be present and non-null.
      */
-    public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Appointment appointment,
-                  MedicalDepartment modelMedicalDept) {
-        super(name, phone, email, address, tags, appointment);
+    public Doctor(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                  Appointment appointment, MedicalDepartment modelMedicalDept) {
+        super(name, nric, phone, email, address, tags, appointment);
         requireAllNonNull(modelMedicalDept);
         this.dept = modelMedicalDept;
     }
@@ -57,7 +58,7 @@ public class Doctor extends Person {
         }
         if (obj instanceof Doctor) {
             Doctor otherDoctor = (Doctor) obj;
-            return (otherDoctor.name.equals(this.name) && (otherDoctor.dept.equals(this.dept)));
+            return super.equals(otherDoctor) && otherDoctor.getMedicalDepartment().equals(getMedicalDepartment());
         } else {
             return false;
         }
@@ -65,7 +66,23 @@ public class Doctor extends Person {
 
     @Override
     public String toString() {
-        return super.toString() + (" Department: " + this.dept) + (" Appointments: " + this.getAppointment());
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" NRIC: ")
+                .append(getNric())
+                .append(" Phone: ")
+                .append(getPhone())
+                .append(" Email: ")
+                .append(getEmail())
+                .append(" Address: ")
+                .append(getAddress())
+                .append(" Medical Department: ")
+                .append(getMedicalDepartment())
+                .append(" Appointments: ")
+                .append(getAppointment())
+                .append(" Tags: ");
+        getTags().forEach(builder::append);
+        return builder.toString();
     }
 
     /**
