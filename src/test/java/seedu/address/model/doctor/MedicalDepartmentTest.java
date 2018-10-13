@@ -15,13 +15,13 @@ public class MedicalDepartmentTest {
     }
 
     @Test
-    public void constructor_invalidNric_throwsIllegalArgumentException() {
+    public void constructor_invalidMedicalDept_throwsIllegalArgumentException() {
         String invalidMedicalDept = "";
         Assert.assertThrows(IllegalArgumentException.class, () -> new MedicalDepartment(invalidMedicalDept));
     }
 
     @Test
-    public void isValidNric() {
+    public void isValidMedDept() {
         // null medical department
         Assert.assertThrows(NullPointerException.class, () -> MedicalDepartment.isValidMedDept(null));
 
