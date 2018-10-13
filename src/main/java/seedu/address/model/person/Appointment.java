@@ -108,7 +108,7 @@ public class Appointment {
      */
     public boolean isOfCorrectNumberOfParts() {
         String[] parts = value.split(",");
-        if (value.equals("") || parts.length == Appointment.numberOfParts) {
+        if ("".equals(value) || parts.length == Appointment.numberOfParts) {
             return true;
         }
         return false;
@@ -163,7 +163,7 @@ public class Appointment {
      * @return whether an appointment is valid or not.
      */
     public boolean isValidAppointment() {
-        if (value.equals("")) {
+        if ("".equals(value)) {
             // For junit testing.
             return true;
         }

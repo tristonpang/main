@@ -155,7 +155,6 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Appointment.class.getSimpleName()));
         }
-        final Appointment modelAppointment = new Appointment(appointment);
 
         final ArrayList<Appointment> modelApptList = new ArrayList<>();
         for (XmlAdaptedAppointment appt : this.appointmentList) {
