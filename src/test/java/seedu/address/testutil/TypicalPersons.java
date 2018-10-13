@@ -39,7 +39,7 @@ public class TypicalPersons {
     public static final Patient CARL = new PatientBuilder().withName("Carl Kurz").withPhone("95352563")
             .withMedicalRecord("").withAppointment("").withEmail("heinz@example.com").withAddress("wall street")
             .withNric("S9898989B").build();
-    public static final Patient DANIEL = new PatientBuilder().withName("Daniel Meier").withPhone("87652533")
+    public static final Patient DANIEL = new PatientBuilder().withName("Daniel Meier").withPhone("87652599")
             .withMedicalRecord("").withAppointment("").withEmail("cornelia@example.com").withAddress("10th street")
             .withNric("s8234599a").withTags("friends").build();
     public static final Doctor ELLE = new DoctorBuilder().withName("Elle Meyer").withNric("s2234599a")

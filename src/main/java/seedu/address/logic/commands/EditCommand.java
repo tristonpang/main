@@ -110,12 +110,13 @@ public class EditCommand extends Command {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Nric updatedNric = editPersonDescriptor.getNric().orElse(((Patient) personToEdit).getNric());
+        Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Appointment updatedAppointment = personToEdit.getAppointment(); // edit command does not allow editing remarks
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+
         if (personToEdit instanceof Patient) {
             //edit command does not allow editing medical records
             MedicalRecord updatedMedicalRecord = ((Patient) personToEdit).getMedicalRecord();

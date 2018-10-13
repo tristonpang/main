@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.MedicalRecord;
-import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Person;
 
@@ -24,7 +23,7 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
     }
 
     /**
-     * Constructs an {@code XmlAdaptedPatient} with the given person details.
+     * Constructs an {@code XmlAdaptedPatient} with the given patient details.
      */
     public XmlAdaptedPatient(String name, String nric, String phone, String email, String address,
                              String medicalRecord, List<XmlAdaptedTag> tags, String appointment) {
@@ -46,7 +45,7 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
     /**
      * Converts this jaxb-friendly adapted patient object into the model's Patient object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted patient
      */
     public static Patient convertToPatientModelType(Person source, String medicalRecords) throws IllegalValueException {
         Person person = source;

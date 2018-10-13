@@ -24,7 +24,7 @@ public class XmlAdaptedDoctor extends XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPatient} with the given person details.
      */
-    public XmlAdaptedDoctor(String name, String phone, String email, String address,
+    public XmlAdaptedDoctor(String name, String nric, String phone, String email, String address,
                             List<XmlAdaptedTag> tags, String appointment, String medicalDepartment) {
         super(name, nric, phone, email, address, tags, appointment);
         this.medicalDepartment = medicalDepartment;

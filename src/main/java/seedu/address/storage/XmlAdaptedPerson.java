@@ -31,7 +31,7 @@ public class XmlAdaptedPerson {
     protected String role;
     @XmlElement(required = true)
     protected String name;
-    @XmlElement
+    @XmlElement(required = true)
     protected String nric;
     @XmlElement(required = true)
     protected String phone;

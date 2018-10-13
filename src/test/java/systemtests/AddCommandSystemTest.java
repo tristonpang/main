@@ -89,8 +89,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a person with all fields same as another person in the address book except nric -> added */
         toAdd = new PatientBuilder(AMY).withNric(VALID_NRIC_BOB).build();
-        command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + NRIC_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + NRIC_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
@@ -209,7 +209,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid medical department -> rejected */
         command = AddCommand.COMMAND_WORD + ROLE_DOCTOR_DESC + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + INVALID_MEDICAL_DEPARTMENT_DESC;
+                + ADDRESS_DESC_AMY + INVALID_MEDICAL_DEPARTMENT_DESC + NRIC_DESC_AMY;
         assertCommandFailure(command, MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS);
     }
 
