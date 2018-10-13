@@ -2,6 +2,7 @@ package seedu.address.model.doctor;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Date;
 import java.util.Set;
 
 import seedu.address.model.patient.Nric;
@@ -47,8 +48,14 @@ public class Doctor extends Person {
     /**
      * Returns Medical Department of this doctor.
      */
-    public MedicalDepartment getMedicalDepartment () {
+    public MedicalDepartment getMedicalDepartment() {
         return this.dept;
+    }
+
+    public boolean isAvailableNow() {
+        long currentTime = new Date().getTime();
+        System.out.println(currentTime);
+        return true;
     }
 
     @Override

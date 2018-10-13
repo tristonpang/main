@@ -53,11 +53,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         // Ensures Medical Department field is not empty when adding a Doctor.
-        if (isRoleOf(Role.DOCTOR, argMultimap)) {
-            if (!arePrefixesPresent(argMultimap, PREFIX_MEDICAL_DEPARTMENT)) {
+        if (isRoleOf(Role.DOCTOR, argMultimap) && !arePrefixesPresent(argMultimap, PREFIX_MEDICAL_DEPARTMENT)) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT,
                         AddCommand.MESSAGE_DOCTOR_USAGE));
-            }
         }
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
@@ -92,9 +90,6 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private static boolean isRoleOf(Enum role, ArgumentMultimap argMultiMap) {
         String person = argMultiMap.getValue(PREFIX_ROLE).get();
-        if (person != null && person.equalsIgnoreCase(role.toString())) {
-            return true;
-        }
-        return false;
+        return person != null && person.equalsIgnoreCase(role.toString());
     }
 }
