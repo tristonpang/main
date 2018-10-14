@@ -33,8 +33,7 @@ public class XmlAdaptedDoctorTest {
     private static final String VALID_PHONE = GEORGE.getPhone().toString();
     private static final String VALID_EMAIL = GEORGE.getEmail().toString();
     private static final String VALID_ADDRESS = GEORGE.getAddress().toString();
-    private static final String VALID_APPOINTMENT = "21.11.18,1300,1400,Jack,Heart,Pauline,S1234567A"; // will change
-    // this later stage
+    private static final String VALID_APPOINTMENT = "21.11.18,1300,1400,Jack,Heart,Pauline,S1234567A";
     private static final String VALID_MEDICAL_DEPARTMENT = GEORGE.getMedicalDepartment().toString();
     private static final List<XmlAdaptedTag> VALID_TAGS = GEORGE.getTags().stream()
             .map(XmlAdaptedTag::new)
