@@ -64,6 +64,14 @@ public class Appointment {
     }
 
     /**
+     *
+     * @return date of this Appointment.
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
      * Checks if there are any clashes between another appointment
      * compared to this appointment.
      *
@@ -104,14 +112,27 @@ public class Appointment {
     }
 
     /**
+     *
+     * @param time a given time input
+     * @return whether the appointment is ongoing at the given date and time.
+     */
+    public boolean isOngoing(String date, String time) {
+        // If different date, we know for sure Appointment is not ongoing.
+        if (!this.date.equals(date)) {
+            return false;
+        }
+        int givenTime = Integer.parseInt(time.trim());
+        int appointmentStartTime = Integer.parseInt(startTime.trim());
+        int appointmentEndTime = Integer.parseInt(endTime.trim());
+        return (givenTime >= appointmentStartTime && givenTime <= appointmentEndTime);
+    }
+
+    /**
      * Returns true if instance is a valid Appointment object.
      */
     public boolean isOfCorrectNumberOfParts() {
         String[] parts = value.split(",");
-        if (value == "" || parts.length == Appointment.numberOfParts) {
-            return true;
-        }
-        return false;
+        return ("".equals(value) || parts.length == Appointment.numberOfParts);
     }
 
     /**
@@ -131,7 +152,7 @@ public class Appointment {
 
     /**
      *
-     * @param person to be tested
+     * @param person to be tested.
      * @return boolean on whether the person is a valid patient.
      */
     public boolean hasValidPatient(Person person) {
@@ -156,6 +177,18 @@ public class Appointment {
 
     public boolean hasValidNric() {
         return patientNric.isValidNric(patientNric.toString());
+    }
+
+    /**
+     *
+     * @return whether an appointment is valid or not.
+     */
+    public boolean isValidAppointment() {
+        if ("".equals(value)) {
+            // For junit testing.
+            return true;
+        }
+        return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidNric();
     }
 
     @Override

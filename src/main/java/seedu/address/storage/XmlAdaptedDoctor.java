@@ -57,7 +57,7 @@ public class XmlAdaptedDoctor extends XmlAdaptedPerson {
         }
         final MedicalDepartment modelMedicalDept = new MedicalDepartment(medicalDept);
         return new Doctor(modelPerson.getName(), modelPerson.getNric(), modelPerson.getPhone(), modelPerson.getEmail(),
-                modelPerson.getAddress(), modelPerson.getTags(), modelPerson.getAppointment(), modelMedicalDept);
+                modelPerson.getAddress(), modelPerson.getTags(), modelPerson.getAppointmentList(), modelMedicalDept);
     }
 
     @Override
@@ -77,6 +77,7 @@ public class XmlAdaptedDoctor extends XmlAdaptedPerson {
                 && Objects.equals(email, otherDoctor.email)
                 && Objects.equals(address, otherDoctor.address)
                 && tagged.equals(otherDoctor.tagged)
+                && Objects.equals(appointmentList, otherDoctor.appointmentList)
                 && Objects.equals(medicalDepartment, otherDoctor.medicalDepartment);
     }
 }

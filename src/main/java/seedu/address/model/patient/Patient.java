@@ -3,6 +3,7 @@ package seedu.address.model.patient;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
@@ -39,6 +40,17 @@ public class Patient extends Person {
      * All field must be present and non-null.
      */
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                   ArrayList<Appointment> appointmentList, MedicalRecord medicalRecord) {
+        super(name, nric, phone, email, address, tags, appointmentList);
+        this.medicalRecord = medicalRecord;
+    }
+
+
+    /**
+     * Creates a new Patient object based on given details.
+     * All field must be present and non-null.
+     */
+    public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
                    Appointment appointment, MedicalRecord medicalRecord) {
         super(name, nric, phone, email, address, tags, appointment);
         this.medicalRecord = medicalRecord;
@@ -68,7 +80,7 @@ public class Patient extends Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, phone, email, address, medicalRecord, tags);
+        return Objects.hash(getName(), getNric(), getPhone(), getEmail(), getAddress(), medicalRecord, getTags());
     }
 
     @Override

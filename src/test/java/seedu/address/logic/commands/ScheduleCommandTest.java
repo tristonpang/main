@@ -37,6 +37,7 @@ public class ScheduleCommandTest {
     @Test
     public void execute_addRemarkUnfilteredList_success() {
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        firstPerson.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient editedPerson = new PatientBuilder(firstPerson).withAppointment(SCHEDULE_STUB).build();
 
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
@@ -53,6 +54,7 @@ public class ScheduleCommandTest {
     @Test
     public void execute_deleteRemarkUnfilteredList_success() {
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        firstPerson.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient editedPerson = new PatientBuilder(firstPerson)
                 .withAppointment("22.11.2018,1300,1400,Alice,Heart,"
                         + firstPerson.getName().toString()
@@ -75,6 +77,7 @@ public class ScheduleCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        firstPerson.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient editedPerson = new PatientBuilder((Patient) model.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withAppointment(SCHEDULE_STUB).build();
@@ -118,6 +121,7 @@ public class ScheduleCommandTest {
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Patient personToModify = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        personToModify.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient modifiedPerson = new PatientBuilder(personToModify).withAppointment(SCHEDULE_STUB).build();
 
         String[] parts = SCHEDULE_STUB.split(",");
@@ -128,7 +132,7 @@ public class ScheduleCommandTest {
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
 
-        // remark -> first person remark changed
+        // schedule -> first person schedule changed
         scheduleCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
@@ -171,6 +175,7 @@ public class ScheduleCommandTest {
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Patient personToModify = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        personToModify.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient modifiedPerson = new PatientBuilder(personToModify)
                 .withAppointment("22.11.2018,1300,1400,Alice,Heart,"
                         + personToModify.getName().toString() + ","

@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -118,15 +119,21 @@ public class ScheduleCommand extends Command {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH);
         }
 
+        ArrayList<Appointment> appointmentList = personToEdit.getAppointmentList();
+        appointmentList.add(appointment);
+
         if (personToEdit instanceof Doctor) {
-            editedPerson = new Doctor(personToEdit.getName(), personToEdit.getNric(), personToEdit.getPhone(),
-                    personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
-                    appointment, ((Doctor) personToEdit).getMedicalDepartment());
+            editedPerson = new Doctor(personToEdit.getName(), personToEdit.getNric(),
+                    personToEdit.getPhone(), personToEdit.getEmail(),
+                    personToEdit.getAddress(), personToEdit.getTags(),
+                    appointmentList, ((Doctor) personToEdit).getMedicalDepartment());
         } else {
             assert personToEdit instanceof Patient;
-            editedPerson = new Patient(personToEdit.getName(), personToEdit.getNric(), personToEdit.getPhone(),
-                    personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
-                    appointment, ((Patient) personToEdit).getMedicalRecord());
+            editedPerson = new Patient(personToEdit.getName(),
+                    personToEdit.getNric(), personToEdit.getPhone(),
+                    personToEdit.getEmail(), personToEdit.getAddress(),
+                    personToEdit.getTags(), appointmentList,
+                    ((Patient) personToEdit).getMedicalRecord());
         }
 
         model.updatePerson(personToEdit, editedPerson);

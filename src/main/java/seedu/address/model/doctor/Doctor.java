@@ -2,12 +2,14 @@ package seedu.address.model.doctor;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentManager;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -42,6 +44,17 @@ public class Doctor extends Person {
      * All field must be present and non-null.
      */
     public Doctor(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                  ArrayList<Appointment> appointmentList, MedicalDepartment modelMedicalDept) {
+        super(name, nric, phone, email, address, tags, appointmentList);
+        requireAllNonNull(modelMedicalDept);
+        this.dept = modelMedicalDept;
+    }
+
+    /**
+     * Creates a new Doctor object based on given details.
+     * All field must be present and non-null.
+     */
+    public Doctor(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
                   Appointment appointment, MedicalDepartment modelMedicalDept) {
         super(name, nric, phone, email, address, tags, appointment);
         requireAllNonNull(modelMedicalDept);
@@ -59,8 +72,7 @@ public class Doctor extends Person {
      * Returns the availability status of the Doctor, whether free or busy at the moment.
      */
     public String currentAvailStatus() {
-        long currentTime = new Date().getTime();
-        if (currentTime % 2 == 0) {
+        if (AppointmentManager.isAnyAppointmentOngoing(this.getAppointmentList())) {
             return NOT_AVAILABLE;
         }
         return IS_AVAILABLE;
@@ -77,6 +89,12 @@ public class Doctor extends Person {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(getName(), getNric(), getPhone(), getEmail(), getAddress(), dept, getTags());
     }
 
     @Override
