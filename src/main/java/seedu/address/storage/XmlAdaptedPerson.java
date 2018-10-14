@@ -169,7 +169,11 @@ public class XmlAdaptedPerson {
 
         final ArrayList<Appointment> modelApptList = new ArrayList<>();
         for (XmlAdaptedAppointment appt : this.appointmentList) {
-            modelApptList.add(new Appointment(appt.toModelType()));
+            try {
+                modelApptList.add(new Appointment(appt.toModelType()));
+            } catch(IllegalValueException e) {
+                throw e;
+            }
         }
 
         final Address modelAddress = new Address(address);

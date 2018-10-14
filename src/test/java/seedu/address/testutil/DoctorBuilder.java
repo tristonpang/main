@@ -84,6 +84,12 @@ public class DoctorBuilder extends PersonBuilder {
     }
 
     @Override
+    public DoctorBuilder withAppointments(String ... appointments) {
+        appointmentList = SampleDataUtil.getAppointmentsList(appointments);
+        return this;
+    }
+
+    @Override
     public Doctor build() {
         return new Doctor(name, nric, phone, email, address, tags, appointment, medicalDepartment);
     }

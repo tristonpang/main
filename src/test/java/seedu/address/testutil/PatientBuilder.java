@@ -74,6 +74,12 @@ public class PatientBuilder extends PersonBuilder {
         return this;
     }
 
+    @Override
+    public PatientBuilder withAppointments(String ... appointments) {
+        appointmentList = SampleDataUtil.getAppointmentsList(appointments);
+        return this;
+    }
+
     /**
      * Sets the {@code MedicalRecord} of the {@code Patient} that we are building.
      */
