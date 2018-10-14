@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import java.lang.reflect.Array;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -109,7 +108,7 @@ public class AppointmentManager {
         String year = dateParts[0];
         String month = dateParts[1];
         String day = dateParts[2];
-        currentDate = day+"."+month+"."+year;
+        currentDate = day + "." + month + "." + year;
 
         // Reformatting the oder of the time.
         String currentTime = dateAndTimeParts[1];
