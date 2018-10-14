@@ -17,6 +17,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_PATIENT_NAME = new Prefix("pn/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_MEDICAL_RECORD = new Prefix("mr/");
+    public static final Prefix PREFIX_DIAGNOSIS = new Prefix("dg/");
+    public static final Prefix PREFIX_TREATMENT = new Prefix("tr/");
+    public static final Prefix PREFIX_COMMENT = new Prefix("c/");
     public static final Prefix PREFIX_DATE = new Prefix("d/");
     public static final Prefix PREFIX_MEDICAL_DEPARTMENT = new Prefix("md/");
     public static final Prefix PREFIX_NRIC = new Prefix("ic/");
