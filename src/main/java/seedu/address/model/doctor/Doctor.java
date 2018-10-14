@@ -111,8 +111,10 @@ public class Doctor extends Person {
                 .append(getAddress())
                 .append(" Medical Department: ")
                 .append(getMedicalDepartment())
-                .append(" Appointments: ")
+                .append(" Latest Appointment: ")
                 .append(getAppointment())
+                .append(" AppointmentList: ")
+                .append(getAppointmentList())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

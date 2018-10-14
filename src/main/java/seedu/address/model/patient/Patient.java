@@ -97,8 +97,10 @@ public class Patient extends Person {
                 .append(getAddress())
                 .append(" Medical Records: ")
                 .append(getMedicalRecord())
-                .append(" Appointments: ")
+                .append(" Latest Appointment: ")
                 .append(getAppointment())
+                .append(" AppointmentList: ")
+                .append(getAppointmentList())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

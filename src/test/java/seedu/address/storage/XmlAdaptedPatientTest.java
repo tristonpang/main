@@ -33,7 +33,7 @@ public class XmlAdaptedPatientTest {
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
-    private static final String VALID_APPOINTMENT = "FAKE APPOINTMENT"; // will change this later stage
+    private static final String VALID_APPOINTMENT = "21.11.18,1300,1400,Jack,Heart,Pauline,S1234567A"; // will change this later stage
     private static final String VALID_MEDICAL_RECORD = BENSON.getMedicalRecord().toString();
     private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(XmlAdaptedTag::new)

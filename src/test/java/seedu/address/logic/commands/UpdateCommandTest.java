@@ -34,7 +34,7 @@ public class UpdateCommandTest {
         Patient editedPatient =
                 new PatientBuilder((Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withMedicalRecord("Some medical record").build();
-        System.out.println(editedPatient);
+
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPatient.getMedicalRecord());
 
         String expectedMessage = String.format(UpdateCommand.MESSAGE_UPDATE_MEDICAL_RECORD_SUCCESS, editedPatient);
