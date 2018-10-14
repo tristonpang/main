@@ -62,6 +62,6 @@ public class XmlAdaptedDoctor extends XmlAdaptedPerson {
         }
         final MedicalDepartment modelMedicalDept = new MedicalDepartment(medicalDept);
         return new Doctor(modelPerson.getName(), modelPerson.getPhone(), modelPerson.getEmail(),
-                modelPerson.getAddress(), modelPerson.getTags(), modelPerson.getAppointment(), modelMedicalDept);
+                modelPerson.getAddress(), modelPerson.getTags(), modelPerson.getAppointmentList(), modelMedicalDept);
     }
 }

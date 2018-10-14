@@ -49,6 +49,8 @@ public class XmlAdaptedPerson {
 
     @XmlElement(required = true)
     protected String appointment;
+    @XmlElement(required = true)
+    protected List<XmlAdaptedAppointment> appointmentList = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -61,7 +63,6 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address,
                             List<XmlAdaptedTag> tagged, String appointment) {
-
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -70,6 +71,7 @@ public class XmlAdaptedPerson {
             this.tagged = new ArrayList<>(tagged);
         }
         this.appointment = appointment;
+        appointmentList.add(new XmlAdaptedAppointment(appointment));
     }
 
     /**
@@ -84,6 +86,9 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         appointment = source.getAppointment().value;
+        appointmentList = source.getAppointmentList().stream()
+                .map(XmlAdaptedAppointment::new)
+                .collect(Collectors.toList());
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -150,18 +155,22 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Appointment.class.getSimpleName()));
         }
-        final Appointment modelAppointment = new Appointment(appointment);
+
+        final ArrayList<Appointment> modelApptList = new ArrayList<>();
+        for (XmlAdaptedAppointment appt : this.appointmentList) {
+            modelApptList.add(new Appointment(appt.toModelType()));
+        }
 
         final Address modelAddress = new Address(address);
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
         if (modelRole.equals(Role.DOCTOR)) {
             return XmlAdaptedDoctor.convertToDoctorModelType(new Person(modelName, modelPhone, modelEmail,
-                    modelAddress, modelTags, modelAppointment), medicalDepartment);
+                    modelAddress, modelTags, modelApptList), medicalDepartment);
         } else {
             assert modelRole.equals(Role.PATIENT); // person must be a patient if he/she is not a doctor.
             return XmlAdaptedPatient.convertToPatientModelType(new Person(modelName, modelPhone, modelEmail,
-                    modelAddress, modelTags, modelAppointment), nric, medicalRecord);
+                    modelAddress, modelTags, modelApptList), nric, medicalRecord);
         }
     }
 

@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Appointment;
 
 /**
  * JAXB-friendly adapted version of the Appointment.
@@ -28,15 +29,24 @@ public class XmlAdaptedAppointment {
     }
 
     /**
+     * Converts a given Appointmetn into this class for JAXB use.
+     *
+     * @param appointment future changes to this will not affect the created
+     */
+    public XmlAdaptedAppointment(Appointment appointment) {
+        this.appointment = appointment.toString();
+    }
+
+    /**
      * Converts this jaxb-friendly adapted appointment object into the model's Appointment object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted appointment.
      */
     public String toModelType() throws IllegalValueException {
-        // TODO: 25/9/2018 Create Appointment class and isValidAppt method
-        /*if (!Tag.isValidTagName(tagName)) {
-            throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
-        }*/
+        // TODO: checker
+        //if (!new Appointment(appointment).isValidAppointment()) {
+        //    throw new IllegalValueException("Invalid Appointment");
+        //}
         return appointment;
     }
 
