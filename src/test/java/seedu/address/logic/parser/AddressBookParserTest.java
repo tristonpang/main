@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DIAGNOSIS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
@@ -13,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -167,10 +170,23 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_updateCommandWord_returnsUpdateCommand() throws Exception {
-        final String medicalRecord = "Some medical record.";
-        UpdateCommand command = (UpdateCommand) parser.parseCommand(UpdateCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_MEDICAL_RECORD + " " + medicalRecord);
-        assertEquals(new UpdateCommand(INDEX_FIRST_PERSON, new MedicalRecord(medicalRecord)), command);
+        final MedicalRecord medicalRecordWithoutComment = new MedicalRecord("22.11.2018", "flu",
+                "tamiflu", "");
+        final String testMedicalRecordWithoutComment = PREFIX_DATE + "22.11.2018 "
+                + PREFIX_DIAGNOSIS + "flu "
+                + PREFIX_TREATMENT + "tamiflu";
+        UpdateCommand commandWithoutComment = (UpdateCommand) parser.parseCommand(UpdateCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + testMedicalRecordWithoutComment);
+        assertEquals(new UpdateCommand(INDEX_FIRST_PERSON, medicalRecordWithoutComment), commandWithoutComment);
+
+        final MedicalRecord medicalRecordWithComment = new MedicalRecord("22.11.2018", "flu",
+                "tamiflu", "");
+        final String testMedicalRecordWithComment = PREFIX_DATE + "22.11.2018 "
+                + PREFIX_DIAGNOSIS + "flu "
+                + PREFIX_TREATMENT + "tamiflu";
+        UpdateCommand commandWithComment = (UpdateCommand) parser.parseCommand(UpdateCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + testMedicalRecordWithComment);
+        assertEquals(new UpdateCommand(INDEX_FIRST_PERSON, medicalRecordWithComment), commandWithComment);
     }
 
     @Test
