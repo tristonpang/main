@@ -171,7 +171,7 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedAppointment appt : this.appointmentList) {
             try {
                 modelApptList.add(new Appointment(appt.toModelType()));
-            } catch(IllegalValueException e) {
+            } catch (IllegalValueException e) {
                 throw e;
             }
         }
