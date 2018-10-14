@@ -77,6 +77,6 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
         final Nric modelNric = new Nric(nric);
 
         return new Patient(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getTags(), person.getAppointment(), modelNric, modelMedicalRecords);
+                person.getTags(), person.getAppointmentList(), modelNric, modelMedicalRecords);
     }
 }

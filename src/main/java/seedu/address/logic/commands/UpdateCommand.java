@@ -73,7 +73,7 @@ public class UpdateCommand extends Command {
         Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
         Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getPhone(),
                 personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
-                personToEdit.getAppointment(), personToEdit.getNric(),
+                personToEdit.getAppointmentList(), personToEdit.getNric(),
                 medicalRecord);
 
         try {
