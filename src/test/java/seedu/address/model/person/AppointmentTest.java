@@ -138,7 +138,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void TestForAnyOngoingAppointmentAtCurrentTime() {
+    public void testForAnyOngoingAppointmentAtCurrentTime() {
         Appointment appt1 = new Appointment("13.10.2018", "1300", "1400",
                 "Alice", "Heart", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("13.10.2018", "1401", "1405",

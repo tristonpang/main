@@ -132,10 +132,7 @@ public class Appointment {
      */
     public boolean isOfCorrectNumberOfParts() {
         String[] parts = value.split(",");
-        if ("".equals(value) || parts.length == Appointment.numberOfParts) {
-            return true;
-        }
-        return false;
+        return ("".equals(value) || parts.length == Appointment.numberOfParts);
     }
 
     /**
