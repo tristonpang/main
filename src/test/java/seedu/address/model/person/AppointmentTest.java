@@ -136,4 +136,17 @@ public class AppointmentTest {
 
         assertTrue(AppointmentManager.isClash(appointments, appt4));
     }
+
+    @Test
+    public void TestForAnyOngoingAppointmentAtCurrentTime() {
+        Appointment appt1 = new Appointment("13.10.2018", "1300", "1400",
+                "Alice", "Heart", "Bob", "S1234567A");
+        Appointment appt2 = new Appointment("13.10.2018", "1401", "1405",
+                "Alice", "Heart", "Bob", "S1234567A");
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        appointments.add(appt1);
+        appointments.add(appt2);
+        // Those appointments are in all in the past.
+        assertFalse(AppointmentManager.isAnyAppointmentOngoing(appointments));
+    }
 }
