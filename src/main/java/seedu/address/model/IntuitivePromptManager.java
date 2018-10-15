@@ -208,6 +208,11 @@ public class IntuitivePromptManager {
             }
             // Fallthrough
 
+        case DeleteCommand.COMMAND_WORD:
+            arguments.add(userInput);
+            currentArgIndex++;
+            break;
+
         case AddCommand.COMMAND_WORD:
             arguments.add(userInput);
             if (currentArgIndex != ADD_NRIC_INDEX || isDoctor()) {
@@ -220,11 +225,6 @@ public class IntuitivePromptManager {
                 break;
             }
             // Fallthrough
-
-        case DeleteCommand.COMMAND_WORD:
-            arguments.add(userInput);
-            currentArgIndex++;
-            break;
 
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
