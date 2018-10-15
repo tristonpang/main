@@ -102,6 +102,10 @@ public class IntuitivePromptManager {
     private static final String EDIT_TAGS_INSTRUCTION = "Please enter person's new tags, "
             + "separated by commas (with no spaces after a comma) (Type %1$s to clear tags)";
 
+    private static final String EDIT_INVALID_INDEX_MESSAGE = "Index must be a non-zero positive integer";
+    private static final String EDIT_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
+            + "and must be between %1$s and %2$s";
+
     private static final String PATIENT_ARG_IDENTIFIER = "patient";
     private static final String DOCTOR_ARG_IDENTIFIER = "doctor";
 
@@ -263,16 +267,6 @@ public class IntuitivePromptManager {
     }
 
     /**
-     * Removes the latest stored argument of the currently executing intuitive command.
-     */
-    public void removeArgument() {
-        if (currentArgIndex != MIN_ARGUMENT_INDEX) {
-            arguments.remove(currentArgIndex - 1);
-            currentArgIndex--;
-        }
-    }
-
-    /**
      * Indicates that currently executing intuitive command has completed.
      * i.e. all fields have been filled up, intuitive command mode has exited.
      */
@@ -313,6 +307,9 @@ public class IntuitivePromptManager {
         case ADD_DEPT_INDEX:
             return ADD_DEPT_INSTRUCTION;
 
+        case ADD_MAX_ARGUMENTS:
+            return COMMAND_COMPLETE_MESSAGE;
+
         default:
             return "Invalid";
         }
@@ -329,6 +326,9 @@ public class IntuitivePromptManager {
 
         case DELETE_TARGET_INDEX:
             return DELETE_TARGET_INSTRUCTION;
+
+        case DELETE_MAX_ARGUMENTS:
+            return COMMAND_COMPLETE_MESSAGE;
 
         default:
             return "Invalid";
@@ -364,7 +364,7 @@ public class IntuitivePromptManager {
             return EDIT_ADDRESS_INSTRUCTION;
 
         case EDIT_TAGS_INDEX:
-            return EDIT_TAGS_INSTRUCTION;
+            return String.format(EDIT_TAGS_INSTRUCTION, EDIT_CLEAR_TAGS_COMMAND);
 
         case EDIT_MAX_ARGUMENTS:
             return COMMAND_COMPLETE_MESSAGE;
@@ -372,6 +372,52 @@ public class IntuitivePromptManager {
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
         }
+    }
+
+    /**
+     * Removes the latest stored argument of the currently executing intuitive command.
+     */
+    public void removeArgument() {
+        if (currentArgIndex <= MIN_ARGUMENT_INDEX) {
+            return;
+        }
+
+        switch (commandWord) {
+
+        case AddCommand.COMMAND_WORD:
+            removeArgumentForAdd();
+
+        case EditCommand.COMMAND_WORD:
+            removeArgumentForEdit();
+
+        default:
+            return;
+
+        }
+    }
+
+    /**
+     * Removes the latest stored argument of the currently executing intuitive "add" command.
+     */
+    private void removeArgumentForAdd() {
+        arguments.remove(currentArgIndex - 1);
+        currentArgIndex--;
+    }
+
+    /**
+     * Removes the latest stored argument of the currently executing intuitive "edit" command.
+     */
+    private void removeArgumentForEdit() {
+        if (currentArgIndex == EDIT_FIELDS_INDEX) {
+            arguments.remove(currentArgIndex - 1);
+            currentArgIndex--;
+            return;
+        }
+
+        String targetIndex = arguments.get(EDIT_TARGET_INDEX);
+        arguments.clear();
+        arguments.add(targetIndex);
+        currentArgIndex = EDIT_FIELDS_INDEX;
     }
 
     /**
@@ -640,6 +686,9 @@ public class IntuitivePromptManager {
         case DeleteCommand.COMMAND_WORD:
             return isDeleteArgumentValid(input);
 
+        case EditCommand.COMMAND_WORD:
+            return isEditArgumentValid(input);
+
         default:
             return true;
 
@@ -702,6 +751,53 @@ public class IntuitivePromptManager {
     }
 
     /**
+     * Checks if given input is a valid argument for the "edit" command.
+     *
+     * @param input the given input
+     * @return true if the input is a valid argument, false otherwise
+     */
+    private boolean isEditArgumentValid(String input) {
+        switch (currentArgIndex) {
+
+        case EDIT_TARGET_INDEX:
+            return StringUtil.isNonZeroUnsignedInteger(input);
+
+        case EDIT_FIELDS_INDEX:
+            for (String index : input.split(" ")) {
+                if (!StringUtil.isNonZeroUnsignedInteger(index)
+                        || Integer.valueOf(index) >= EDIT_TAGS_INDEX) {
+                    return false;
+                }
+            }
+            return true;
+
+        case EDIT_NAME_INDEX:
+            return Name.isValidName(input);
+
+        case EDIT_PHONE_INDEX:
+            return Phone.isValidPhone(input);
+
+        case EDIT_EMAIL_INDEX:
+            return Email.isValidEmail(input);
+
+        case EDIT_ADDRESS_INDEX:
+            return Address.isValidAddress(input);
+
+        case EDIT_TAGS_INDEX:
+            for (String tag : input.split(",")) {
+                if (!Tag.isValidTagName(tag)) {
+                    return false;
+                }
+            }
+            return true;
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
+    }
+
+    /**
      * Retrieves message to be thrown with exception when an invalid argument is detected.
      *
      * @return string message to be thrown with exception
@@ -714,6 +810,9 @@ public class IntuitivePromptManager {
 
         case (DeleteCommand.COMMAND_WORD):
             return retrieveInvalidDeleteArgumentExceptionMessage();
+
+        case (EditCommand.COMMAND_WORD):
+            return retrieveInvalidEditArgumentExceptionMessage();
 
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
@@ -749,12 +848,10 @@ public class IntuitivePromptManager {
             return Tag.MESSAGE_TAG_CONSTRAINTS;
 
         case (ADD_NRIC_INDEX):
-            if (isPatient()) {
-                return Nric.MESSAGE_NRIC_CONSTRAINTS;
-            } else if (isDoctor()) {
-                return MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS;
-            }
-            // Fallthrough
+            return Nric.MESSAGE_NRIC_CONSTRAINTS;
+
+        case (ADD_DEPT_INDEX):
+            return MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS;
 
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
@@ -764,5 +861,37 @@ public class IntuitivePromptManager {
 
     private String retrieveInvalidDeleteArgumentExceptionMessage() {
         return DELETE_INVALID_ARGUMENT_MESSAGE;
+    }
+
+    private String retrieveInvalidEditArgumentExceptionMessage() {
+        switch (currentArgIndex) {
+
+        case EDIT_TARGET_INDEX:
+            return EDIT_INVALID_INDEX_MESSAGE;
+
+        case EDIT_FIELDS_INDEX:
+            return String.format(EDIT_INVALID_FIELDS_MESSAGE,
+                    EDIT_NAME_INDEX - EDIT_INDEX_OFFSET,
+                    EDIT_TAGS_INDEX - EDIT_INDEX_OFFSET);
+
+        case EDIT_NAME_INDEX:
+            return Name.MESSAGE_NAME_CONSTRAINTS;
+
+        case EDIT_PHONE_INDEX:
+            return Phone.MESSAGE_PHONE_CONSTRAINTS;
+
+        case EDIT_EMAIL_INDEX:
+            return Email.MESSAGE_EMAIL_CONSTRAINTS;
+
+        case EDIT_ADDRESS_INDEX:
+            return Address.MESSAGE_ADDRESS_CONSTRAINTS;
+
+        case EDIT_TAGS_INDEX:
+            return Tag.MESSAGE_TAG_CONSTRAINTS;
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
     }
 }
