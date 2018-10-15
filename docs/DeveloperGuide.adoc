@@ -333,19 +333,19 @@ The key operation implemented is `ScheduleCommand#execute`.
 
 Given below is an example usage scenario and how the schedule command mechanism behaves at each step.
 
-Step 1. The user wants to schedule an `Appointment`. User proceeds to fill in the details behind the respective prefixes.
+Step 1. The user wants to schedule an appointment. User proceeds to fill in the details behind the respective prefixes.
 
 Step 2. The user executes the `ScheduleCommand` which calls the `ScheduleCommandParser`.
 `ScheduleCommandParser` will parse the inputs and return a `ScheduleCommand`.
 
 Step 3. `ScheduleCommand` will then be executed.
-Various checks will be conducted to ensure that the `Appointment` scheduled is valid.
+Various checks will be conducted to ensure that the appointment scheduled is valid.
 If it is invalid, an exception message will be thrown.
 The `Appointment` will not be scheduled.
 
 Step 4. Once the check is successful, we will have 2 objects, `PersonToEdit` and `Appointment` object.
 We created another `Person` object called `editedPerson` that is equal to `PersonToEdit`.
-We then add the `Appointment` to the `appointmentList` of the person.
+We then add the `Appointment` to the `appointmentList` of `editedPerson.
 Lastly, we edit the `personToEdit` with `editedPerson` in our model.
 
 Step 5. `appointmentList` will be updated in storage under `XmlAdaptedPerson`.
