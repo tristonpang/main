@@ -88,6 +88,9 @@ public class AddressBookParser {
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
+            if (arguments.isEmpty()) {
+                return triggerIntuitiveMode(userInput);
+            }
             return new FindCommandParser().parse(arguments);
 
         case ScheduleCommand.COMMAND_WORD:

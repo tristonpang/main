@@ -18,6 +18,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.Nric;
@@ -105,6 +106,12 @@ public class IntuitivePromptManager {
     private static final String EDIT_INVALID_INDEX_MESSAGE = "Index must be a non-zero positive integer";
     private static final String EDIT_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
             + "and must be between %1$s and %2$s";
+
+    private static final int FIND_MAX_ARGUMENTS = 1;
+    private static final int FIND_KEYWORDS_INDEX = 0;
+
+    private static final String FIND_KEYWORDS_INSTRUCTION = "Please enter keywords to be searched for, "
+            + "separated by spaces";
 
     private static final String PATIENT_ARG_IDENTIFIER = "patient";
     private static final String DOCTOR_ARG_IDENTIFIER = "doctor";
@@ -212,6 +219,9 @@ public class IntuitivePromptManager {
             }
             // Fallthrough
 
+        case FindCommand.COMMAND_WORD:
+            // Fallthrough
+
         case DeleteCommand.COMMAND_WORD:
             arguments.add(userInput);
             currentArgIndex++;
@@ -260,6 +270,9 @@ public class IntuitivePromptManager {
 
         case EditCommand.COMMAND_WORD:
             return retrieveEditInstruction();
+
+        case FindCommand.COMMAND_WORD:
+            return retrieveFindInstruction();
 
         default:
             return "Invalid";
@@ -375,6 +388,27 @@ public class IntuitivePromptManager {
     }
 
     /**
+     * Retrieves corresponding instruction for a field (specified by the current argument index) for the intuitive
+     * 'find' command.
+     *
+     * @return the corresponding string instruction for the specified field
+     */
+    private String retrieveFindInstruction() {
+        switch (currentArgIndex) {
+
+        case FIND_KEYWORDS_INDEX:
+            return FIND_KEYWORDS_INSTRUCTION;
+
+        case FIND_MAX_ARGUMENTS:
+            return COMMAND_COMPLETE_MESSAGE;
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
+    }
+
+    /**
      * Removes the latest stored argument of the currently executing intuitive command.
      */
     public void removeArgument() {
@@ -474,6 +508,9 @@ public class IntuitivePromptManager {
         case EditCommand.COMMAND_WORD:
             return prepareArgumentsForEdit();
 
+        case FindCommand.COMMAND_WORD:
+            return prepareArgumentsForFind();
+
         default:
             return "Invalid";
         }
@@ -555,6 +592,17 @@ public class IntuitivePromptManager {
 
         resetIntuitiveCache();
         return preparedString.trim();
+    }
+
+    private String prepareArgumentsForFind() {
+        String preparedString = "";
+        preparedString += FindCommand.COMMAND_WORD + " ";
+
+        String keywords = arguments.get(FIND_KEYWORDS_INDEX);
+        preparedString += keywords.trim();
+
+        resetIntuitiveCache();
+        return preparedString;
     }
 
     /**
@@ -689,6 +737,9 @@ public class IntuitivePromptManager {
         case EditCommand.COMMAND_WORD:
             return isEditArgumentValid(input);
 
+        case FindCommand.COMMAND_WORD:
+            return true;
+
         default:
             return true;
 
@@ -796,6 +847,8 @@ public class IntuitivePromptManager {
 
         }
     }
+
+
 
     /**
      * Retrieves message to be thrown with exception when an invalid argument is detected.
