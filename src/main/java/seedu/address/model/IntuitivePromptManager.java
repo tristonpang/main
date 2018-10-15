@@ -420,10 +420,12 @@ public class IntuitivePromptManager {
 
         case AddCommand.COMMAND_WORD:
             removeArgumentForAdd();
+            return;
 
         case EditCommand.COMMAND_WORD:
             removeArgumentForEdit();
-
+            return;
+            
         default:
             return;
 
@@ -594,6 +596,13 @@ public class IntuitivePromptManager {
         return preparedString.trim();
     }
 
+    /**
+     * Prepares a string that is a single line 'find' command (i.e. non-intuitive 'find') based on all
+     * the past arguments entered by the user during the execution of an intuitive 'find' command.
+     *
+     * @return a string that is the non-intuitive 'find' command input, containing entered arguments of the
+     * past executed intuitive 'find'
+     */
     private String prepareArgumentsForFind() {
         String preparedString = "";
         preparedString += FindCommand.COMMAND_WORD + " ";
