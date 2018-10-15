@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -71,6 +72,7 @@ public class IntuitivePromptManager {
     private static final int DELETE_TARGET_INDEX = 0;
 
     private static final String DELETE_TARGET_INSTRUCTION = "Please enter the index of the person to be deleted";
+    private static final String DELETE_INVALID_ARGUMENT_MESSAGE = "Index must be a non-zero positive integer";
 
     private static final int EDIT_MAX_ARGUMENTS = 7;
     private static final int EDIT_TARGET_INDEX = 0;
@@ -635,6 +637,9 @@ public class IntuitivePromptManager {
         case AddCommand.COMMAND_WORD:
             return isAddArgumentValid(input);
 
+        case DeleteCommand.COMMAND_WORD:
+            return isDeleteArgumentValid(input);
+
         default:
             return true;
 
@@ -642,7 +647,7 @@ public class IntuitivePromptManager {
     }
 
     /**
-     * Checks if given input is a valid argument for the add command.
+     * Checks if given input is a valid argument for the "add" command.
      *
      * @param input the given input
      * @return true if the input is a valid argument, false otherwise
@@ -687,6 +692,16 @@ public class IntuitivePromptManager {
     }
 
     /**
+     * Checks if given input is a valid argument for the "delete" command.
+     *
+     * @param input the given input
+     * @return true if the input is a valid argument, false otherwise
+     */
+    private boolean isDeleteArgumentValid(String input) {
+        return StringUtil.isNonZeroUnsignedInteger(input);
+    }
+
+    /**
      * Retrieves message to be thrown with exception when an invalid argument is detected.
      *
      * @return string message to be thrown with exception
@@ -696,6 +711,9 @@ public class IntuitivePromptManager {
 
         case (AddCommand.COMMAND_WORD):
             return retrieveInvalidAddArgumentExceptionMessage();
+
+        case (DeleteCommand.COMMAND_WORD):
+            return retrieveInvalidDeleteArgumentExceptionMessage();
 
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
@@ -742,5 +760,9 @@ public class IntuitivePromptManager {
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
 
         }
+    }
+
+    private String retrieveInvalidDeleteArgumentExceptionMessage() {
+        return DELETE_INVALID_ARGUMENT_MESSAGE;
     }
 }
