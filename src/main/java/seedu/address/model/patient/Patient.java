@@ -22,7 +22,6 @@ import seedu.address.storage.XmlAdaptedPerson;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Patient extends Person {
-    private final Nric nric;
     private MedicalRecord medicalRecord;
 
     /**
@@ -30,10 +29,9 @@ public class Patient extends Person {
      * An empty {@code MedicalRecord} will be created by default for the patient.
      * All field must be present and non-null.
      */
-    public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Nric nric) {
-        super(name, phone, email, address, tags);
+    public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags) {
+        super(name, nric, phone, email, address, tags);
         requireAllNonNull(nric);
-        this.nric = nric;
         this.medicalRecord = new MedicalRecord("");
     }
 
@@ -41,10 +39,9 @@ public class Patient extends Person {
      * Creates a new Patient object based on given details.
      * All field must be present and non-null.
      */
-    public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
-                   ArrayList<Appointment> appointmentList, Nric nric, MedicalRecord medicalRecord) {
-        super(name, phone, email, address, tags, appointmentList);
-        this.nric = nric;
+    public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                   ArrayList<Appointment> appointmentList, MedicalRecord medicalRecord) {
+        super(name, nric, phone, email, address, tags, appointmentList);
         this.medicalRecord = medicalRecord;
     }
 
@@ -53,15 +50,10 @@ public class Patient extends Person {
      * Creates a new Patient object based on given details.
      * All field must be present and non-null.
      */
-    public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
-                   Appointment appointment, Nric nric, MedicalRecord medicalRecord) {
-        super(name, phone, email, address, tags, appointment);
-        this.nric = nric;
+    public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                   Appointment appointment, MedicalRecord medicalRecord) {
+        super(name, nric, phone, email, address, tags, appointment);
         this.medicalRecord = medicalRecord;
-    }
-
-    public Nric getNric() {
-        return nric;
     }
 
     public MedicalRecord getMedicalRecord() {
@@ -72,19 +64,6 @@ public class Patient extends Person {
         this.medicalRecord = requireNonNull(medicalRecord);
     }
 
-    /**
-     * Check if the patient is the same as other patient.
-     * @param otherPatient The other patient to compare to.
-     * @return True if the two patient are the same.
-     */
-    public boolean isSamePerson(Patient otherPatient) {
-        if (otherPatient == this) {
-            return true;
-        } else {
-            return otherPatient != null && otherPatient.getNric().equals(getNric());
-        }
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -92,7 +71,7 @@ public class Patient extends Person {
         }
         if (obj instanceof Patient) {
             Patient otherPatient = (Patient) obj;
-            return (otherPatient.nric.code.toUpperCase().equals(this.nric.code.toUpperCase()));
+            return super.equals(otherPatient) && otherPatient.getMedicalRecord().equals(getMedicalRecord());
         } else {
             return false;
         }
@@ -101,7 +80,7 @@ public class Patient extends Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, phone, email, address, medicalRecord, tags);
+        return Objects.hash(getName(), getNric(), getPhone(), getEmail(), getAddress(), medicalRecord, getTags());
     }
 
     @Override
@@ -118,8 +97,10 @@ public class Patient extends Person {
                 .append(getAddress())
                 .append(" Medical Records: ")
                 .append(getMedicalRecord())
-                .append(" Appointments: ")
+                .append(" Latest Appointment: ")
                 .append(getAppointment())
+                .append(" AppointmentList: ")
+                .append(getAppointmentList())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

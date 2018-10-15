@@ -1,6 +1,7 @@
 package seedu.address.model.patient;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Patient's NRIC in the address book.
@@ -20,7 +21,7 @@ public class Nric {
      */
     public Nric(String code) {
         requireNonNull(code);
-        // checkArgument(isValidNric(code), MESSAGE_NRIC_CONSTRAINTS);
+        checkArgument(isValidNric(code), MESSAGE_NRIC_CONSTRAINTS);
         this.code = code;
     }
 
@@ -40,7 +41,7 @@ public class Nric {
     public boolean equals(Object obj) {
         return obj == this // short circuit if same object
                 || (obj instanceof Nric // instanceof handles nulls
-                && code.equals(((Nric) obj).code)); // state check
+                && code.equalsIgnoreCase(((Nric) obj).code)); // state check
     }
 
     @Override

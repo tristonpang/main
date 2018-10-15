@@ -119,21 +119,20 @@ public class ScheduleCommand extends Command {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH);
         }
 
-        ArrayList<Appointment> appointmentList = personToEdit.getAppointmentList();
+        ArrayList<Appointment> appointmentList = new ArrayList<>(personToEdit.getAppointmentList());
         appointmentList.add(appointment);
 
         if (personToEdit instanceof Doctor) {
-            editedPerson = new Doctor(personToEdit.getName(),
+            editedPerson = new Doctor(personToEdit.getName(), personToEdit.getNric(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
                     personToEdit.getAddress(), personToEdit.getTags(),
                     appointmentList, ((Doctor) personToEdit).getMedicalDepartment());
         } else {
             assert personToEdit instanceof Patient;
             editedPerson = new Patient(personToEdit.getName(),
-                    personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getTags(),
-                    appointmentList, ((Patient) personToEdit).getNric(), (
-                            (Patient) personToEdit).getMedicalRecord());
+                    personToEdit.getNric(), personToEdit.getPhone(),
+                    personToEdit.getEmail(), personToEdit.getAddress(),
+                    personToEdit.getTags(), appointmentList, ((Patient) personToEdit).getMedicalRecord());
         }
 
         model.updatePerson(personToEdit, editedPerson);
