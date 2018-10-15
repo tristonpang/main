@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.MedicalRecord;
-import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Person;
 
@@ -15,12 +14,6 @@ import seedu.address.model.person.Person;
  * JAXB-friendly version of the Patient.
  */
 public class XmlAdaptedPatient extends XmlAdaptedPerson {
-
-    /**
-     * Constructs an XmlAdaptedPatient.
-     * This is the no-arg constructor that is required by JAXB.
-     */
-    public XmlAdaptedPatient() {}
 
     /**
      * Constructs an {@code XmlAdaptedPatient} with the given patient details.
@@ -35,12 +28,11 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
     }
 
     /**
-     * Constructs an {@code XmlAdaptedPatient} with the given person details.
+     * Constructs an {@code XmlAdaptedPatient} with the given patient details.
      */
-    public XmlAdaptedPatient(String name, String phone, String email, String address,
-                             String medicalRecord, List<XmlAdaptedTag> tags, String nric, String appointment) {
-        super(name, phone, email, address, tags, appointment);
-        this.nric = nric;
+    public XmlAdaptedPatient(String name, String nric, String phone, String email, String address,
+                             String medicalRecord, List<XmlAdaptedTag> tags, String appointment) {
+        super(name, nric, phone, email, address, tags, appointment);
         this.medicalRecord = medicalRecord;
         this.medicalRecordLibrary.add(new XmlAdaptedMedicalRecord(medicalRecord));
         this.role = "Patient";
@@ -59,7 +51,7 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
     /**
      * Converts this jaxb-friendly adapted patient object into the model's Patient object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted patient
      */
     public static Patient convertToPatientModelType(
             Person source, String nric, String medicalRecord) throws IllegalValueException {
@@ -73,13 +65,17 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
             throw new IllegalValueException(MedicalRecord.MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
         }
 
-        if (nric == null) {
-            throw new IllegalValueException((String.format(MISSING_FIELD_MESSAGE_FORMAT, Nric.class.getSimpleName())));
-        }
-        if (!Nric.isValidNric((nric))) {
-            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
-        }
+        final MedicalRecord modelMedicalRecords = new MedicalRecord(medicalRecords);
 
+        return new Patient(person.getName(), person.getNric(), person.getPhone(), person.getEmail(),
+                person.getAddress(), person.getTags(), person.getAppointmentList(), modelMedicalRecords);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
         final MedicalRecord modelMedicalRecord = new MedicalRecord(medicalRecord);
         final Nric modelNric = new Nric(nric);
 

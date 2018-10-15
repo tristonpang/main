@@ -78,7 +78,6 @@ public class UpdateCommand extends Command {
                 personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
                 personToEdit.getAppointmentList(), personToEdit.getNric(),
                 editedMedicalRecordLibrary);
-
         try {
             model.updatePerson(personToEdit, editedPerson);
             model.commitAddressBook();

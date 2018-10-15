@@ -34,6 +34,8 @@ public class PersonListPanelTest extends GuiUnitTest {
 
     private static final long CARD_CREATION_AND_DELETION_TIMEOUT = 2500;
 
+    private static final int TEST_IC_NUMBER = 1000000;
+
     private PersonListPanelHandle personListPanelHandle;
 
     @Test
@@ -90,6 +92,8 @@ public class PersonListPanelTest extends GuiUnitTest {
      * Returns a .xml file containing {@code personCount} persons. This file will be deleted when the JVM terminates.
      */
     private Path createXmlFileWithPersons(int personCount) throws Exception {
+        int icNum = TEST_IC_NUMBER;
+
         StringBuilder builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         builder.append("<addressbook>\n");
@@ -100,7 +104,7 @@ public class PersonListPanelTest extends GuiUnitTest {
             builder.append("<phone>000</phone>\n");
             builder.append("<email>a@aa</email>\n");
             builder.append("<address>a</address>\n");
-            builder.append("<nric>S9").append(i % 10).append(i % 5).append("4567A</nric>\n");
+            builder.append("<nric>S").append(icNum++).append("A</nric>\n");
             builder.append("<medicalRecord>a</medicalRecord>");
             builder.append("<appointment>a</appointment>\n");
             builder.append("</persons>\n");

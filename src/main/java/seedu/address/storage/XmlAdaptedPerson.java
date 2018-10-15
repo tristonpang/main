@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
@@ -31,6 +32,8 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
+    protected String nric;
+    @XmlElement(required = true)
     protected String phone;
     @XmlElement(required = true)
     protected String email;
@@ -39,8 +42,6 @@ public class XmlAdaptedPerson {
     @XmlElement
     protected List<XmlAdaptedTag> tagged = new ArrayList<>();
 
-    @XmlElement
-    protected String nric;
     @XmlElement
     protected String medicalRecord;
     @XmlElement
@@ -63,10 +64,11 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address,
+    public XmlAdaptedPerson(String name, String nric, String phone, String email, String address,
                             List<XmlAdaptedTag> tagged, String appointment) {
         this.name = name;
         this.phone = phone;
+        this.nric = nric;
         this.email = email;
         this.address = address;
         if (tagged != null) {
@@ -84,6 +86,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson(Person source) {
         role = source.getClass().getSimpleName();
         name = source.getName().fullName;
+        nric = source.getNric().code;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
@@ -131,6 +134,14 @@ public class XmlAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
+        if (nric == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Nric.class.getSimpleName()));
+        }
+        if (!Nric.isValidNric(nric)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
+        }
+        final Nric modelNric = new Nric(nric);
+
         if (phone == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
         }
@@ -160,19 +171,23 @@ public class XmlAdaptedPerson {
 
         final ArrayList<Appointment> modelApptList = new ArrayList<>();
         for (XmlAdaptedAppointment appt : this.appointmentList) {
-            modelApptList.add(new Appointment(appt.toModelType()));
+            try {
+                modelApptList.add(new Appointment(appt.toModelType()));
+            } catch (IllegalValueException e) {
+                throw e;
+            }
         }
 
         final Address modelAddress = new Address(address);
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
         if (modelRole.equals(Role.DOCTOR)) {
-            return XmlAdaptedDoctor.convertToDoctorModelType(new Person(modelName, modelPhone, modelEmail,
+            return XmlAdaptedDoctor.convertToDoctorModelType(new Person(modelName, modelNric, modelPhone, modelEmail,
                     modelAddress, modelTags, modelApptList), medicalDepartment);
         } else {
             assert modelRole.equals(Role.PATIENT); // person must be a patient if he/she is not a doctor.
-            return XmlAdaptedPatient.convertToPatientModelType(new Person(modelName, modelPhone, modelEmail,
-                    modelAddress, modelTags, modelApptList), nric, medicalRecord);
+            return XmlAdaptedPatient.convertToPatientModelType(new Person(modelName, modelNric, modelPhone, modelEmail,
+                    modelAddress, modelTags, modelApptList), medicalRecord);
         }
     }
 
@@ -188,6 +203,7 @@ public class XmlAdaptedPerson {
 
         XmlAdaptedPerson otherPerson = (XmlAdaptedPerson) other;
         return Objects.equals(name, otherPerson.name)
+                && Objects.equals(nric, otherPerson.nric)
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)

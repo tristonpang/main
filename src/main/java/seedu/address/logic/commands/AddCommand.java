@@ -21,31 +21,40 @@ import seedu.address.model.person.Person;
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
 
-    public static final String COMMON_MESSAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String COMMON_MESSAGE = COMMAND_WORD + ": Adds a person to the database. "
             + "Parameters: "
             + PREFIX_ROLE + "ROLE "
             + PREFIX_NAME + "NAME "
+            + PREFIX_NRIC + "NRIC "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_ROLE + "patient "
+            + "[" + PREFIX_TAG + "TAG]...\n";
+
+    private static final String USAGE_EXAMPLE = "Example: "
+            + COMMAND_WORD + " "
+            + PREFIX_ROLE + "<ROLE> "
             + PREFIX_NAME + "John Doe "
+            + PREFIX_NRIC + "S1234567A "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney ";
+            + PREFIX_TAG + "mandarin-only ";
 
-    public static final String MESSAGE_GENERAL_USAGE = COMMON_MESSAGE.replaceFirst("Example", "Example (ADD NEW "
-            + "PATIENT)") + PREFIX_NRIC + "S123XXXXA";
+    private static final String USAGE_DOCTOR_EXAMPLE = USAGE_EXAMPLE.replaceFirst("<ROLE>", "Doctor")
+            + PREFIX_MEDICAL_DEPARTMENT + "Oncology";
 
-    public static final String MESSAGE_DOCTOR_USAGE = COMMON_MESSAGE + PREFIX_MEDICAL_DEPARTMENT + "Oncology";
-    public static final String MESSAGE_PATIENT_USAGE = COMMON_MESSAGE + PREFIX_NRIC + " S123XXXXA";
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_PATIENT_USAGE =
+            COMMON_MESSAGE.replaceFirst("person", "patient") + USAGE_EXAMPLE.replaceFirst("<ROLE>",
+            "Patient");
+    public static final String MESSAGE_DOCTOR_USAGE =
+            COMMON_MESSAGE.replaceFirst("person", "doctor") + USAGE_DOCTOR_EXAMPLE;
+    public static final String MESSAGE_GENERAL_USAGE = MESSAGE_PATIENT_USAGE.replaceFirst("patient",
+            "patient/doctor") + "\n" + USAGE_DOCTOR_EXAMPLE;
+
     private final Person toAdd;
 
     /**
