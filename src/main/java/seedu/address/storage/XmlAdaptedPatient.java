@@ -1,10 +1,10 @@
 package seedu.address.storage;
 
 import java.util.List;
+import java.util.Objects;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.MedicalRecord;
-import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Person;
 
@@ -12,12 +12,6 @@ import seedu.address.model.person.Person;
  * JAXB-friendly version of the Patient.
  */
 public class XmlAdaptedPatient extends XmlAdaptedPerson {
-
-    /**
-     * Constructs an XmlAdaptedPatient.
-     * This is the no-arg constructor that is required by JAXB.
-     */
-    public XmlAdaptedPatient() {}
 
     /**
      * Constructs an {@code XmlAdaptedPatient} with the given patient details.
@@ -29,12 +23,11 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
     }
 
     /**
-     * Constructs an {@code XmlAdaptedPatient} with the given person details.
+     * Constructs an {@code XmlAdaptedPatient} with the given patient details.
      */
-    public XmlAdaptedPatient(String name, String phone, String email, String address,
-                             String medicalRecord, List<XmlAdaptedTag> tags, String nric, String appointment) {
-        super(name, phone, email, address, tags, appointment);
-        this.nric = nric;
+    public XmlAdaptedPatient(String name, String nric, String phone, String email, String address,
+                             String medicalRecord, List<XmlAdaptedTag> tags, String appointment) {
+        super(name, nric, phone, email, address, tags, appointment);
         this.medicalRecord = medicalRecord;
         this.role = "Patient";
     }
@@ -52,10 +45,9 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
     /**
      * Converts this jaxb-friendly adapted patient object into the model's Patient object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted patient
      */
-    public static Patient convertToPatientModelType(
-            Person source, String nric, String medicalRecords) throws IllegalValueException {
+    public static Patient convertToPatientModelType(Person source, String medicalRecords) throws IllegalValueException {
         Person person = source;
 
         if (medicalRecords == null) {
@@ -66,17 +58,30 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
             throw new IllegalValueException(MedicalRecord.MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
         }
 
-        if (nric == null) {
-            throw new IllegalValueException((String.format(MISSING_FIELD_MESSAGE_FORMAT, Nric.class.getSimpleName())));
-        }
-        if (!Nric.isValidNric((nric))) {
-            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
-        }
-
         final MedicalRecord modelMedicalRecords = new MedicalRecord(medicalRecords);
-        final Nric modelNric = new Nric(nric);
 
-        return new Patient(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getTags(), person.getAppointmentList(), modelNric, modelMedicalRecords);
+        return new Patient(person.getName(), person.getNric(), person.getPhone(), person.getEmail(),
+                person.getAddress(), person.getTags(), person.getAppointmentList(), modelMedicalRecords);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof XmlAdaptedPatient)) {
+            return false;
+        }
+
+        XmlAdaptedPatient otherPatient = (XmlAdaptedPatient) other;
+        return Objects.equals(name, otherPatient.name)
+                && Objects.equals(nric, otherPatient.nric)
+                && Objects.equals(phone, otherPatient.phone)
+                && Objects.equals(email, otherPatient.email)
+                && Objects.equals(address, otherPatient.address)
+                && tagged.equals(otherPatient.tagged)
+                && Objects.equals(appointmentList, otherPatient.appointmentList)
+                && Objects.equals(medicalRecord, otherPatient.medicalRecord);
     }
 }

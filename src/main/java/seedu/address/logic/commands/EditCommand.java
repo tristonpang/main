@@ -21,8 +21,8 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
+import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
@@ -111,23 +111,24 @@ public class EditCommand extends Command {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         // edit command does not allow editing remarks
         ArrayList<Appointment> updatedAppointmentList = personToEdit.getAppointmentList();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+
         if (personToEdit instanceof Patient) {
-            //edit command does not allow editing medical records
+            // edit command does not allow editing medical records
             MedicalRecord updatedMedicalRecord = ((Patient) personToEdit).getMedicalRecord();
-            Nric updatedNric = editPersonDescriptor.getNric().orElse(((Patient) personToEdit).getNric());
-            return new Patient(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
-                    updatedAppointmentList, updatedNric, updatedMedicalRecord);
+            return new Patient(updatedName, updatedNric, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                    updatedAppointmentList, updatedMedicalRecord);
         } else {
             assert personToEdit instanceof Doctor; // Person must be either Patient or Doctor.
             MedicalDepartment updateMedicalDepartment =
                     editPersonDescriptor.getMedicalDepartment().orElse(((Doctor) personToEdit).getMedicalDepartment());
-            return new Doctor(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+            return new Doctor(updatedName, updatedNric, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                     updatedAppointmentList, updateMedicalDepartment);
         }
     }

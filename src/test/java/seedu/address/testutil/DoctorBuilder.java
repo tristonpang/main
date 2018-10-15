@@ -1,9 +1,8 @@
 package seedu.address.testutil;
 
-import java.util.HashSet;
-
-import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
+import seedu.address.model.doctor.MedicalDepartment;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
@@ -21,13 +20,8 @@ public class DoctorBuilder extends PersonBuilder {
     private MedicalDepartment medicalDepartment;
 
     public DoctorBuilder() {
-        name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
-        email = new Email(DEFAULT_EMAIL);
-        address = new Address(DEFAULT_ADDRESS);
+        super();
         medicalDepartment = new MedicalDepartment(DEFAULT_MEDICAL_DEPARTMENT);
-        appointment = new Appointment(DEFAULT_APPOINTMENT);
-        tags = new HashSet<>();
     }
 
 
@@ -35,13 +29,8 @@ public class DoctorBuilder extends PersonBuilder {
      * Initializes the PatientBuilder with the data of {@code patientToCopy}.
      */
     public DoctorBuilder(Doctor doctorToCopy) {
-        name = doctorToCopy.getName();
-        phone = doctorToCopy.getPhone();
-        email = doctorToCopy.getEmail();
-        address = doctorToCopy.getAddress();
+        super(doctorToCopy);
         medicalDepartment = doctorToCopy.getMedicalDepartment();
-        tags = new HashSet<>(doctorToCopy.getTags());
-        appointment = doctorToCopy.getAppointment();
     }
 
     /**
@@ -55,6 +44,12 @@ public class DoctorBuilder extends PersonBuilder {
     @Override
     public DoctorBuilder withName(String name) {
         this.name = new Name(name);
+        return this;
+    }
+
+    @Override
+    public DoctorBuilder withNric(String nric) {
+        this.nric = new Nric(nric);
         return this;
     }
 
@@ -89,8 +84,14 @@ public class DoctorBuilder extends PersonBuilder {
     }
 
     @Override
+    public DoctorBuilder withAppointments(String ... appointments) {
+        appointmentList = SampleDataUtil.getAppointmentsList(appointments);
+        return this;
+    }
+
+    @Override
     public Doctor build() {
-        return new Doctor(name, phone, email, address, tags, appointment, medicalDepartment);
+        return new Doctor(name, nric, phone, email, address, tags, appointment, medicalDepartment);
     }
 
 }
