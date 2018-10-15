@@ -822,7 +822,7 @@ public class IntuitivePromptManager {
 
     /**
      * Retrieves message to be thrown with exception when an invalid argument is detected
-     * for the specific case of the add command.
+     * for the specific case of the "add" command.
      *
      * @return string message to be thrown with exception
      */
@@ -859,10 +859,22 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Retrieves message to be thrown with exception when an invalid argument is detected
+     * for the specific case of the "delete" command.
+     *
+     * @return string message to be thrown with exception
+     */
     private String retrieveInvalidDeleteArgumentExceptionMessage() {
         return DELETE_INVALID_ARGUMENT_MESSAGE;
     }
 
+    /**
+     * Retrieves message to be thrown with exception when an invalid argument is detected
+     * for the specific case of the "edit" command.
+     *
+     * @return string message to be thrown with exception
+     */
     private String retrieveInvalidEditArgumentExceptionMessage() {
         switch (currentArgIndex) {
 
