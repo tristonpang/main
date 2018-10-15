@@ -57,14 +57,15 @@ public class IntuitivePromptManager {
     private static final String ADD_NRIC_INSTRUCTION = "Please enter patient's NRIC";
     private static final String ADD_DEPT_INSTRUCTION = "Please enter doctor's medical department";
 
-    private static final int ADD_MAX_ARGUMENTS = 7;
+    private static final int ADD_MAX_ARGUMENTS = 8;
     private static final int ADD_ROLE_INDEX = 0;
     private static final int ADD_NAME_INDEX = 1;
     private static final int ADD_PHONE_INDEX = 2;
     private static final int ADD_EMAIL_INDEX = 3;
     private static final int ADD_ADDRESS_INDEX = 4;
     private static final int ADD_TAGS_INDEX = 5;
-    private static final int ADD_NRIC_OR_DEPT_INDEX = 6;
+    private static final int ADD_NRIC_INDEX = 6;
+    private static final int ADD_DEPT_INDEX = 7;
 
     private static final int DELETE_MAX_ARGUMENTS = 1;
     private static final int DELETE_TARGET_INDEX = 0;
@@ -206,6 +207,16 @@ public class IntuitivePromptManager {
             // Fallthrough
 
         case AddCommand.COMMAND_WORD:
+            arguments.add(userInput);
+            if (currentArgIndex != ADD_NRIC_INDEX || isDoctor()) {
+                currentArgIndex++;
+                break;
+            }
+
+            if (isPatient()) {
+                currentArgIndex = ADD_MAX_ARGUMENTS;
+                break;
+            }
             // Fallthrough
 
         case DeleteCommand.COMMAND_WORD:
@@ -294,14 +305,11 @@ public class IntuitivePromptManager {
         case ADD_TAGS_INDEX:
             return ADD_TAGS_INSTRUCTION + String.format(SKIP_INSTRUCTION, SKIP_COMMAND);
 
-        case ADD_NRIC_OR_DEPT_INDEX:
-            if (isPatient()) {
-                return ADD_NRIC_INSTRUCTION;
-            } else if (isDoctor()) {
-                return ADD_DEPT_INSTRUCTION;
-            } else {
-                return "Invalid";
-            }
+        case ADD_NRIC_INDEX:
+            return ADD_NRIC_INSTRUCTION;
+
+        case ADD_DEPT_INDEX:
+            return ADD_DEPT_INSTRUCTION;
 
         default:
             return "Invalid";
@@ -534,7 +542,7 @@ public class IntuitivePromptManager {
             String resultArg = PREFIX_TAG + argument;
             return resultArg.replace(",", " " + PREFIX_TAG).trim();
 
-        case ADD_NRIC_OR_DEPT_INDEX:
+        case ADD_NRIC_INDEX:
             if (isPatient()) {
                 return PREFIX_NRIC + argument;
             } else if (isDoctor()) {
@@ -665,13 +673,12 @@ public class IntuitivePromptManager {
             }
             return true;
 
-        case ADD_NRIC_OR_DEPT_INDEX:
-            if (isPatient()) {
-                return Nric.isValidNric(input);
-            } else if (isDoctor()) {
-                return MedicalDepartment.isValidMedDept(input);
-            }
-            // Fallthrough
+        case ADD_NRIC_INDEX:
+            return Nric.isValidNric(input);
+
+        case ADD_DEPT_INDEX:
+            return MedicalDepartment.isValidMedDept(input);
+
         default:
             return true;
 
@@ -723,7 +730,7 @@ public class IntuitivePromptManager {
         case (ADD_TAGS_INDEX):
             return Tag.MESSAGE_TAG_CONSTRAINTS;
 
-        case (ADD_NRIC_OR_DEPT_INDEX):
+        case (ADD_NRIC_INDEX):
             if (isPatient()) {
                 return Nric.MESSAGE_NRIC_CONSTRAINTS;
             } else if (isDoctor()) {
