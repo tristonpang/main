@@ -425,7 +425,7 @@ public class IntuitivePromptManager {
         case EditCommand.COMMAND_WORD:
             removeArgumentForEdit();
             return;
-            
+
         default:
             return;
 
