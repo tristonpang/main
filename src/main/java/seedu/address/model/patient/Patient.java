@@ -3,6 +3,7 @@ package seedu.address.model.patient;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
@@ -40,8 +41,20 @@ public class Patient extends Person {
      * Creates a new Patient object based on given details.
      * All field must be present and non-null.
      */
-    public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Appointment appointment,
-                   Nric nric, MedicalRecord medicalRecord) {
+    public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                   ArrayList<Appointment> appointmentList, Nric nric, MedicalRecord medicalRecord) {
+        super(name, phone, email, address, tags, appointmentList);
+        this.nric = nric;
+        this.medicalRecord = medicalRecord;
+    }
+
+
+    /**
+     * Creates a new Patient object based on given details.
+     * All field must be present and non-null.
+     */
+    public Patient(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                   Appointment appointment, Nric nric, MedicalRecord medicalRecord) {
         super(name, phone, email, address, tags, appointment);
         this.nric = nric;
         this.medicalRecord = medicalRecord;

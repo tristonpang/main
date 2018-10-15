@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -113,20 +114,21 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Appointment updatedAppointment = personToEdit.getAppointment(); // edit command does not allow editing remarks
+        // edit command does not allow editing remarks
+        ArrayList<Appointment> updatedAppointmentList = personToEdit.getAppointmentList();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         if (personToEdit instanceof Patient) {
             //edit command does not allow editing medical records
             MedicalRecord updatedMedicalRecord = ((Patient) personToEdit).getMedicalRecord();
             Nric updatedNric = editPersonDescriptor.getNric().orElse(((Patient) personToEdit).getNric());
             return new Patient(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
-                    updatedAppointment, updatedNric, updatedMedicalRecord);
+                    updatedAppointmentList, updatedNric, updatedMedicalRecord);
         } else {
             assert personToEdit instanceof Doctor; // Person must be either Patient or Doctor.
             MedicalDepartment updateMedicalDepartment =
                     editPersonDescriptor.getMedicalDepartment().orElse(((Doctor) personToEdit).getMedicalDepartment());
             return new Doctor(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
-                    updatedAppointment, updateMedicalDepartment);
+                    updatedAppointmentList, updateMedicalDepartment);
         }
     }
 
