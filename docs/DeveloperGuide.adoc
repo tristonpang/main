@@ -324,6 +324,44 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::schedulecommand[]
+=== Schedule Command Feature
+==== Current Implementation
+The scheduling appointment mechanism is facilitated by `ScheduleCommandParser`, `ScheduleCommand`, `Appointment` and `AppointmentManager`.
+`ScheduleCommand` extends from `Command` and `ScheduleCommandParser` extends from `Parser`.
+The key operation implemented is `ScheduleCommand#execute`.
+
+Given below is an example usage scenario and how the schedule command mechanism behaves at each step.
+
+Step 1. The user wants to schedule an `Appointment`. User proceeds to fill in the details behind the respective prefixes.
+
+Step 2. The user executes the `ScheduleCommand` which calls the `ScheduleCommandParser`.
+`ScheduleCommandParser` will parse the inputs and return a `ScheduleCommand`.
+
+Step 3. `ScheduleCommand` will then be executed.
+Various checks will be conducted to ensure that the `Appointment` scheduled is valid.
+If it is invalid, an exception message will be thrown.
+The `Appointment` will not be scheduled.
+
+Step 4. Once the check is successful, we will have 2 objects, `PersonToEdit` and `Appointment` object.
+We created another `Person` object called `editedPerson` that is equal to `PersonToEdit`.
+We then add the `Appointment` to the `appointmentList` of the person.
+Lastly, we edit the `personToEdit` with `editedPerson` in our model.
+
+Step 5. `appointmentList` will be updated in storage under `XmlAdaptedPerson`.
+
+The following sequence diagram shows how the undo operation works:
+
+==== Design Considerations
+An alternative considered is to use a comma-seperated long string in the command prompt to schedule an appointment.
+In our current implementation, we split up the various parts of an appointment into their respective prefixes.
+
+** Pros: The user has to type less when scheduling a command.
+The user is not required to type all the prefixes, he just has to type 1.
+** Cons: The design would not be consistent with the other commands.
+This might confuse the user.
+// end::schedulecommand[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
