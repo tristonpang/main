@@ -128,12 +128,13 @@ public class ScheduleCommand extends Command {
                     personToEdit.getAddress(), personToEdit.getTags(),
                     appointmentList, ((Doctor) personToEdit).getMedicalDepartment());
         } else {
+
             assert personToEdit instanceof Patient;
             editedPerson = new Patient(personToEdit.getName(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
                     personToEdit.getAddress(), personToEdit.getTags(),
                     appointmentList, ((Patient) personToEdit).getNric(), (
-                            (Patient) personToEdit).getMedicalRecord());
+                            (Patient) personToEdit).getMedicalRecordLibrary());
         }
 
         model.updatePerson(personToEdit, editedPerson);

@@ -33,7 +33,9 @@ public class UpdateCommandTest {
     public void execute_updateMedicalRecord_success() throws Exception {
         Patient editedPatient =
                 new PatientBuilder((Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withMedicalRecord("Some medical record").build();
+                        .withMedicalRecord("Some medical record")
+                        .withAppointment("23.11.2018,1300,1400,Priscilia,Heart,Alice Pauline,S7412345C")
+                        .build();
 
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPatient.getMedicalRecord());
 
@@ -47,30 +49,14 @@ public class UpdateCommandTest {
     }
 
     @Test
-    public void execute_deleteMedicalRecord_success() throws Exception {
-        Patient editedPatient =
-                new PatientBuilder((Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withMedicalRecord("Some medical record").build();
-
-        editedPatient.setMedicalRecord(new MedicalRecord(""));
-
-        UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPatient.getMedicalRecord());
-
-        String expectedMessage = String.format(UpdateCommand.MESSAGE_DELETE_MEDICAL_RECORD_SUCCESS, editedPatient);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-        expectedModel.commitAddressBook();
-
-        assertCommandSuccess(updateCommand, model, commandHistory, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_filteredList_success() throws Exception {
 
-        Patient personInFilteredList = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Patient
+                personInFilteredList = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Patient editedPerson = new PatientBuilder(personInFilteredList)
-                .withMedicalRecord("Some medical record").build();
+                .withMedicalRecord("Some medical record")
+                .withAppointment("23.11.2018,1300,1400,Priscilia,Heart,Alice Pauline,S7412345C")
+                .build();
 
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPerson.getMedicalRecord());
 

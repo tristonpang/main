@@ -1,6 +1,9 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.MedicalRecord;
@@ -26,6 +29,9 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
         super(source);
         nric = source.getNric().code;
         medicalRecord = source.getMedicalRecord().value;
+        medicalRecordLibrary = source.getMedicalRecordLibrary().stream()
+                .map(XmlAdaptedMedicalRecord::new)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -36,6 +42,7 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
         super(name, phone, email, address, tags, appointment);
         this.nric = nric;
         this.medicalRecord = medicalRecord;
+        this.medicalRecordLibrary.add(new XmlAdaptedMedicalRecord(medicalRecord));
         this.role = "Patient";
     }
 
@@ -55,14 +62,14 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public static Patient convertToPatientModelType(
-            Person source, String nric, String medicalRecords) throws IllegalValueException {
+            Person source, String nric, String medicalRecord) throws IllegalValueException {
         Person person = source;
 
-        if (medicalRecords == null) {
+        if (medicalRecord == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     MedicalRecord.class.getSimpleName()));
         }
-        if (!MedicalRecord.isValidMedicalRecord(medicalRecords)) {
+        if (!MedicalRecord.isValidMedicalRecord(medicalRecord)) {
             throw new IllegalValueException(MedicalRecord.MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
         }
 
@@ -73,10 +80,10 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
             throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
         }
 
-        final MedicalRecord modelMedicalRecords = new MedicalRecord(medicalRecords);
+        final MedicalRecord modelMedicalRecord = new MedicalRecord(medicalRecord);
         final Nric modelNric = new Nric(nric);
 
         return new Patient(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getTags(), person.getAppointmentList(), modelNric, modelMedicalRecords);
+                person.getTags(), person.getAppointmentList(), modelNric, modelMedicalRecord);
     }
 }

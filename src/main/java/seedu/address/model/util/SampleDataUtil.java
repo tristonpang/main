@@ -39,13 +39,13 @@ public class SampleDataUtil {
                     SAMPLE_APPOINTMENT_LIST, new MedicalDepartment("Neurology")),
             new Patient(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                     new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), getTagSet("neighbours"),
-                    SAMPLE_APPOINTMENT_LIST, new Nric("S2222222B"), new MedicalRecord("Diagnosed with cough. "
-                    + "Dextromethorphan prescribed.")),
+                    SAMPLE_APPOINTMENT_LIST, new Nric("S2222222B"), new MedicalRecord("22.11.2018",
+                    "cough","Dextromethorphan", "")),
             new Patient(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"), new Address(
                     "Blk 436 Serangoon Gardens Street 26, #16-43"), getTagSet("family"),
-                    SAMPLE_APPOINTMENT_LIST, new Nric("S9991114A"),
-                    new MedicalRecord("Diagnosed with stage 3 testicular"
-                    + " cancer. Orchiectomy for both testicles.")),
+                    SAMPLE_APPOINTMENT_LIST, new Nric("S9991114A"), new MedicalRecord("10.10.2017",
+                            "Stage 3 testicular cancer", "Orchiectomy for both testicles.",
+                            "chances of survival 15%")),
             new Doctor(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                 new Address("Blk 47 Tampines Street 20, #17-35"), getTagSet("classmates"), SAMPLE_APPOINTMENT_LIST,
                 new MedicalDepartment("Obstetrics")),

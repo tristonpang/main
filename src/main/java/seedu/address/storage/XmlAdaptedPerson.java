@@ -43,6 +43,8 @@ public class XmlAdaptedPerson {
     protected String nric;
     @XmlElement
     protected String medicalRecord;
+    @XmlElement
+    protected List<XmlAdaptedMedicalRecord> medicalRecordLibrary = new ArrayList<>();
 
     @XmlElement
     protected String medicalDepartment;

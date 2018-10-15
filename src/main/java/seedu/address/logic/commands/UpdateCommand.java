@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DIAGNOSIS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -69,12 +71,13 @@ public class UpdateCommand extends Command {
         if (!(lastShownList.get(index.getZeroBased()) instanceof Patient)) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_CHOSEN);
         }
-
         Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
+        ArrayList<MedicalRecord> editedMedicalRecordLibrary = personToEdit.getMedicalRecordLibrary();
+        editedMedicalRecordLibrary.add(medicalRecord);
         Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getPhone(),
                 personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
                 personToEdit.getAppointmentList(), personToEdit.getNric(),
-                medicalRecord);
+                editedMedicalRecordLibrary);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
