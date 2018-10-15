@@ -18,7 +18,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.department.MedicalDepartment;
+import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -543,13 +543,13 @@ public class IntuitivePromptManager {
             return resultArg.replace(",", " " + PREFIX_TAG).trim();
 
         case ADD_NRIC_INDEX:
-            if (isPatient()) {
-                return PREFIX_NRIC + argument;
-            } else if (isDoctor()) {
-                return PREFIX_MEDICAL_DEPARTMENT + argument;
-            } else {
+            return PREFIX_NRIC + argument;
+
+        case ADD_DEPT_INDEX:
+            if (argument.isEmpty()) {
                 return "";
             }
+            return PREFIX_MEDICAL_DEPARTMENT + argument;
 
         default:
             return "";
