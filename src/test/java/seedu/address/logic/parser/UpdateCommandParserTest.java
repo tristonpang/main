@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DIAGNOSIS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -30,7 +29,8 @@ public class UpdateCommandParserTest {
                 + PREFIX_DATE + "22.11.2018 "
                 + PREFIX_DIAGNOSIS + "flu "
                 + PREFIX_TREATMENT + "tamiflu";
-        UpdateCommand expectedCommandWithoutComment = new UpdateCommand(INDEX_FIRST_PERSON, medicalRecordWithoutComment);
+        UpdateCommand expectedCommandWithoutComment = new UpdateCommand(INDEX_FIRST_PERSON,
+                medicalRecordWithoutComment);
         assertParseSuccess(parser, userInputWithoutComment, expectedCommandWithoutComment);
         // medical record with comment
         final MedicalRecord medicalRecordWithComment = new MedicalRecord("22.11.2018", "flu",
