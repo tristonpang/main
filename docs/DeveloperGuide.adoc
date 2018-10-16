@@ -379,32 +379,6 @@ The user is not required to type all the prefixes, he just has to type 1.
 This might confuse the user.
 // end::schedulecommand[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
-=== Logging
-
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
-
-*Logging Levels*
-
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-[[Implementation-Configuration]]
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::display doctor's availability
 === Display doctor's current availability feature
@@ -450,7 +424,34 @@ the information, thus the information provided can be outdated.
 ** Cons: Have a separate command dedicated to this feature which may not be necessary and not as convenient as compared
  to having a badge that is on the display at all times. Also this adds on to the list of commands
  that the user has to get familiar with.
+// end::display doctor's availability
 
+// tag::dataencryption[]
+=== [Proposed] Data Encryption
+
+_{Explain here how the data encryption feature will be implemented}_
+
+// end::dataencryption[]
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+[[Implementation-Configuration]]
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 
 == Documentation
