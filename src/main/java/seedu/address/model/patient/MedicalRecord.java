@@ -30,11 +30,12 @@ public class MedicalRecord {
      */
     public MedicalRecord(String date, String diagnosis, String treatment, String comments) {
         requireAllNonNull(date, diagnosis, treatment);
-        if (comments == null || comments == "") {
-            comments = "-";
+        String actualComment = comments;
+        if (actualComment == null || actualComment.equals("")) {
+            actualComment = "-";
         }
         this.value = date + "," + " Diagnosis: " + diagnosis + ", Treatment: " + treatment + ", Comments: "
-                + comments;
+                + actualComment;
     }
 
     public static boolean isValidMedicalRecord(String medicalRecord) {
