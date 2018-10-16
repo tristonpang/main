@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
