@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Objects;
@@ -32,6 +33,7 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
     public XmlAdaptedPatient(String name, String nric, String phone, String email, String address,
                              String medicalRecord, List<XmlAdaptedTag> tags, String appointment) {
         super(name, nric, phone, email, address, tags, appointment);
+
         this.medicalRecord = medicalRecord;
         this.medicalRecordLibrary.add(new XmlAdaptedMedicalRecord(medicalRecord));
         this.role = "Patient";
@@ -70,6 +72,25 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
                 person.getAddress(), person.getTags(), person.getAppointmentList(), modelMedicalRecords);
     }
 
+    public static Patient convertToPatientModelType(Person source, String medicalRecords,
+                                                    ArrayList<MedicalRecord> medicalRecordLibrary) throws
+            IllegalValueException {
+        Person person = source;
+
+        if (medicalRecords == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    MedicalRecord.class.getSimpleName()));
+        }
+        if (!MedicalRecord.isValidMedicalRecord(medicalRecords)) {
+            throw new IllegalValueException(MedicalRecord.MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
+        }
+
+        final MedicalRecord modelMedicalRecords = new MedicalRecord(medicalRecords);
+        final ArrayList<MedicalRecord> modelMedicalRecordLibrary = new ArrayList<> (medicalRecordLibrary);
+        return new Patient(person.getName(), person.getNric(), person.getPhone(), person.getEmail(),
+                person.getAddress(), person.getTags(), person.getAppointmentList(), modelMedicalRecords,
+                modelMedicalRecordLibrary);
+    }
     @Override
     public boolean equals(Object other) {
         if (other == this) {

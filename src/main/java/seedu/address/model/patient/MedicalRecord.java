@@ -20,8 +20,8 @@ public class MedicalRecord {
      *
      */
     public MedicalRecord(String medicalRecord) {
-        requireNonNull(medicalRecord);
         checkArgument(isValidMedicalRecord(medicalRecord), MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
+        requireNonNull(medicalRecord);
         this.value = medicalRecord;
     }
 

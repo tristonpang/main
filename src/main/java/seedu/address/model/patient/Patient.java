@@ -46,6 +46,14 @@ public class Patient extends Person {
     }
 
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                   ArrayList<Appointment> appointmentList, MedicalRecord medicalRecord,
+                   ArrayList<MedicalRecord> medicalRecordLibrary) {
+        super(name, nric, phone, email, address, tags, appointmentList);
+        this.latestMedicalRecord = medicalRecord;
+        this.medicalRecordLibrary = medicalRecordLibrary;
+    }
+
+    public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
                    ArrayList<Appointment> appointmentList, ArrayList<MedicalRecord> medicalRecordLibrary) {
         super(name, nric, phone, email, address, tags, appointmentList);
         this.medicalRecordLibrary = medicalRecordLibrary;

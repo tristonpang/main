@@ -144,12 +144,4 @@ public class XmlAdaptedPatientTest {
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Appointment.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
-
-    @Test
-    public void toModelType_nullMedicalRecord_throwsIllegalValueException() {
-        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL,
-                VALID_ADDRESS, null, VALID_TAGS, VALID_APPOINTMENT);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, MedicalRecord.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
 }
