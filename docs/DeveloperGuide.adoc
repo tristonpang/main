@@ -388,8 +388,6 @@ The display of each doctor's current availability is facilitated by `PersonCard`
 Given below is an example usage scenario and how the information is generated and propagated to be displayed in the
 `PersonCard` at the final stage.
 
-image::DisplayDoctorAvailabilitySequenceDiagram.png[width="800"]
-
 Step 1. The user launches the application for the first time. The `MainWindow` will be initialized and construct a
 `PersonListPanel`.
 
@@ -409,7 +407,9 @@ available.
 Step 6. The status information generated in `AppointmentManager` will then be propagated back up to the `PersonCard`
 which then sets a badge to reflect the availability status of that doctor.
 
-The following activity diagram summarizes what happens when a user executes a new command:
+The following activity diagram summarizes what happens when a user launches the application:
+
+image::DisplayDoctorAvailabilitySequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
@@ -424,6 +424,16 @@ the information, thus the information provided can be outdated.
 ** Cons: Have a separate command dedicated to this feature which may not be necessary and not as convenient as compared
  to having a badge that is on the display at all times. Also this adds on to the list of commands
  that the user has to get familiar with.
+
+===== Aspect: How to update the status of each doctor's availability
+
+* **Alternative 1 (current choice):** Updates the status/badge only on launch of application and when there is a
+change in doctor's appointment.
+** Pros: Easy to implement.
+** Cons: Information is outdated aas it does not truly reflect the doctor's current availability.
+* **Alternative 2:** A function that will refresh the badge every few minutes.
+** Pros: Provides accurate information on the doctor's availability.
+** Cons: Affects the performance of the application due to this function continuously running in the background.
 // end::display doctor's availability
 
 // tag::dataencryption[]
