@@ -384,7 +384,7 @@ This might confuse the user.
 === Display doctor's current availability feature
 ==== Current Implementation
 
-The display of each doctor's current availability is facilitated by `PersonCard`,`Doctor`, `AppointmentManager`.
+The display of each doctor's current availability is facilitated by `PersonCard`, `Doctor`, `AppointmentManager`.
 Given below is an example usage scenario and how the information is generated and propagated to be displayed in the
 `PersonCard` at the final stage.
 
@@ -406,6 +406,7 @@ available.
 
 Step 6. The status information generated in `AppointmentManager` will then be propagated back up to the `PersonCard`
 which then sets a badge to reflect the availability status of that doctor.
+
 
 The following activity diagram summarizes what happens when a user launches the application:
 
