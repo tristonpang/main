@@ -328,7 +328,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 === Schedule Command Feature
 ==== Current Implementation
 The scheduling appointment mechanism is facilitated by `ScheduleCommandParser`, `ScheduleCommand`, `Appointment` and `AppointmentManager`.
-`ScheduleCommand` extends from `Command` and `ScheduleCommandParser` extends from `Parser`.
+`ScheduleCommand` extends from `Command` and `ScheduleCommandParser` implements `Parser`.
 The key operation implemented is `ScheduleCommand#execute`.
 
 Given below is an example usage scenario and how the schedule command mechanism behaves at each step.
@@ -436,6 +436,42 @@ change in doctor's appointment.
 ** Pros: Provides accurate information on the doctor's availability.
 ** Cons: Affects the performance of the application due to this function continuously running in the background.
 // end::display doctor's availability
+
+// tag::findcommand[]
+=== Find Command Feature
+==== Current Implementation
+The find mechanism is facilitated by `FindCommand`, `FindCommandParser` and `PersonContainsKeywordPredicate`.
+`FindCommand` extends from `Command`, `FindCommandParser` implements `Parser` and `PersonContainsKeywordPredicate` implements `Predicate`.
+The key operation implemented is `FindCommand#execute`.
+
+Given below is an example usage scenario and how the find command mechanism behaves at each step.
+
+Step 1. The user wants to find all `Person` with `Name` Alex by executing `find Alex`.
+
+Step 2. `FindCommandParser` will parse the input and verify that is it valid before returning a `PersonContainsKeywordsPredicate`, which is passed into `FindCommand`.
+
+[NOTE]
+If there is no input after the "find" keyword, `IntuitiveEntryCommand` will be triggered, which will prompt the user to input search parameters.
+
+Step 3. `FindCommand` will then be executed.
+
+Step 4. `Model#updateFilteredPersonList()` will be called, which will update `Model` to show all `Person` that contains the searched parameter.
+
+The following activity diagram summarises what happens when a user launches the application:
+
+image::FindSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: How to input search fields
+
+* **Alternative 1 (current choice):** Allow users to perform global search using any keywords
+** Pros: Allows for a powerful search function by allowing the user to search through all `Person` attributes.
+** Cons: Users will not be able to filter the unwanted results.
+* **Alternative 2:** Allow the use of tags to specify certain fields if needed.
+** Pros: Allows for a more precise search.
+** Cons: Increased inconvenience of having to tag search fields.
+// end:: findcommand[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
