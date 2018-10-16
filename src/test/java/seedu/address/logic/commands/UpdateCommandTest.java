@@ -33,8 +33,7 @@ public class UpdateCommandTest {
     public void execute_updateMedicalRecord_success() throws Exception {
         Patient editedPatient =
                 new PatientBuilder((Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                        .withMedicalRecord("Some medical record")
-                        .withAppointment("23.11.2018,1300,1400,Priscilia,Heart,Alice Pauline,S7412345C")
+                        .withMedicalRecord(",Some medical record")
                         .build();
 
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPatient.getMedicalRecord());
@@ -55,7 +54,6 @@ public class UpdateCommandTest {
                 personInFilteredList = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Patient editedPerson = new PatientBuilder(personInFilteredList)
                 .withMedicalRecord("Some medical record")
-                .withAppointment("23.11.2018,1300,1400,Priscilia,Heart,Alice Pauline,S7412345C")
                 .build();
 
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPerson.getMedicalRecord());

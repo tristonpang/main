@@ -324,6 +324,119 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::schedulecommand[]
+=== Schedule Command Feature
+==== Current Implementation
+The scheduling appointment mechanism is facilitated by `ScheduleCommandParser`, `ScheduleCommand`, `Appointment` and `AppointmentManager`.
+`ScheduleCommand` extends from `Command` and `ScheduleCommandParser` extends from `Parser`.
+The key operation implemented is `ScheduleCommand#execute`.
+
+Given below is an example usage scenario and how the schedule command mechanism behaves at each step.
+
+Step 1. The user wants to schedule an appointment. User proceeds to fill in the details behind the respective prefixes.
+
+For example: `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A`
+
+Step 2. The user executes the `ScheduleCommand` which calls the `ScheduleCommandParser`.
+`ScheduleCommandParser` will parse the inputs and return a `ScheduleCommand`.
+
+Step 3. `ScheduleCommand` will then be executed.
+Various checks will be conducted to ensure that the appointment scheduled is valid.
+If it is invalid, an exception message will be thrown.
+The `Appointment` will not be scheduled.
+
+Checks:
+
+** Whether the index of input person is valid.
+** Whether the nric of the patient is valid.
+** Whether the start and end times of the appointment are valid
+** Whether there are any timing clashes between this appointment and the appointments currently stored in the appointment list under the person selected.
+
+Step 4. Once the check is successful, we will have 2 objects, `personToEdit` and `Appointment` object.
+We created another `Person` object called `editedPerson` that is equal to `personToEdit`.
+We then add the `Appointment` to the `appointmentList` of `editedPerson`.
+Lastly, we edit the `personToEdit` with `editedPerson` in our model.
+
+image::ScheduleCommandStep4.png[width="800"]
+
+Step 5. `appointmentList` will be updated in storage under `XmlAdaptedPerson`.
+
+The following sequence diagram shows how the schedule appointment operation works:
+
+image::ScheduleSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+An alternative considered is to use a comma-separated long string in the command prompt to schedule an appointment.
+In our current implementation, we split up the various parts of an appointment into their respective prefixes.
+
+For example:
+
+`schedule 1 s/23.11.2018,1300,1400,Jack,Heart,John Doe,S1234567A`
+
+** Pros: The user has to type less when scheduling a command.
+The user is not required to type all the prefixes, he just has to type 1.
+** Cons: The design would not be consistent with the other commands.
+This might confuse the user.
+// end::schedulecommand[]
+
+
+// tag::display doctor's availability
+=== Display doctor's current availability feature
+==== Current Implementation
+
+The display of each doctor's current availability is facilitated by `PersonCard`, `Doctor`, `AppointmentManager`.
+Given below is an example usage scenario and how the information is generated and propagated to be displayed in the
+`PersonCard` at the final stage.
+
+Step 1. The user launches the application for the first time. The `MainWindow` will be initialized and construct a
+`PersonListPanel`.
+
+Step 2. The `PersonListPanel` will then construct a list of `PersonCard`.
+
+Step 3. Each `PersonCard` is associated with a person's particulars, be it a doctor or patient. In the event that
+ this `PersonCard` belongs to a doctor, it will call the method `Doctor#currentAvailStatus` to get information on
+ the doctor's current availability.
+
+Step 4. Upon calling the method `Doctor#currentAvailStatus`, a helper method in `AppointmentManager`, called
+`AppointmentManager#isAnyAppointmentOngoing` will be executed.
+
+Step 5. `AppointmentManager` will then get the current locale time from Java's `ZoneDateTime` class and compare the
+current time with all the scheduled appointments that the doctor has, and determines if the doctor is currently
+available.
+
+Step 6. The status information generated in `AppointmentManager` will then be propagated back up to the `PersonCard`
+which then sets a badge to reflect the availability status of that doctor.
+
+
+The following activity diagram summarizes what happens when a user launches the application:
+
+image::DisplayDoctorAvailabilitySequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: How to display each doctor's availability
+
+* **Alternative 1 (current choice):** A badge on each doctor's card display that shows his/her current availability.
+** Pros: Convenient for the user to refer to since the badge is always on the display.
+** Cons: Does not integrate any form of auto-updating nor is there any dedicated command to allow the user to refresh
+the information, thus the information provided can be outdated.
+* **Alternative 2:** A separate command that the user can call upon to look up the current availability of each doctor.
+** Pros: Able to call this method repeatedly/when needed and will be provided with the latest information.
+** Cons: Have a separate command dedicated to this feature which may not be necessary and not as convenient as compared
+ to having a badge that is on the display at all times. Also this adds on to the list of commands
+ that the user has to get familiar with.
+
+===== Aspect: How to update the status of each doctor's availability
+
+* **Alternative 1 (current choice):** Updates the status/badge only on launch of application and when there is a
+change in doctor's appointment.
+** Pros: Easy to implement.
+** Cons: Information is outdated aas it does not truly reflect the doctor's current availability.
+* **Alternative 2:** A function that will refresh the badge every few minutes.
+** Pros: Provides accurate information on the doctor's availability.
+** Cons: Affects the performance of the application due to this function continuously running in the background.
+// end::display doctor's availability
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
@@ -350,6 +463,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
 
 == Documentation
 
@@ -689,27 +803,27 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 ****
 
 [[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `appointment`
+=== Creating a new command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
 *Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `appointment` field for each contact, rather than relying on tags alone. After designing the specification for the `appointment` command, you are convinced that this feature is worth implementing. Your job is to implement the `appointment` command.
 
 ==== Description
-Edits the appointment for a person specified in the `INDEX`. +
-Format: `appointment INDEX r/[REMARK]`
+Edits the remark for a person specified in the `INDEX`. +
+Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
-* `appointment 1 r/Likes to drink coffee.` +
-Edits the appointment for the first person to `Likes to drink coffee.`
-* `appointment 1 r/` +
-Removes the appointment for the first person.
+* `remark 1 r/Likes to drink coffee.` +
+Edits the remark for the first person to `Likes to drink coffee.`
+* `remark 1 r/` +
+Removes the remark for the first person.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'appointment' which does nothing
-Let's start by teaching the application how to parse a `appointment` command. We will add the logic of `appointment` later.
+===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
+Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
 
 **Main:**
 
@@ -719,7 +833,7 @@ Let's start by teaching the application how to parse a `appointment` command. We
 **Tests:**
 
 . Add `RemarkCommandTest` that tests that `execute()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "appointment" returns an instance of `RemarkCommand`.
+. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
 
 ===== [Step 2] Logic: Teach the app to accept 'appointment' arguments
 Let's teach the application to parse arguments that our `appointment` command will accept. E.g. `1 r/Likes to drink coffee.`

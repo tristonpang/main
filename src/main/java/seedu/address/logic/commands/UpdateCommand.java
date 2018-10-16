@@ -74,10 +74,9 @@ public class UpdateCommand extends Command {
         Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
         ArrayList<MedicalRecord> editedMedicalRecordLibrary = personToEdit.getMedicalRecordLibrary();
         editedMedicalRecordLibrary.add(medicalRecord);
-        Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getPhone(),
-                personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTags(),
-                personToEdit.getAppointmentList(), personToEdit.getNric(),
-                editedMedicalRecordLibrary);
+        Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getNric(),
+                personToEdit.getPhone(), personToEdit.getEmail(), personToEdit.getAddress(),
+                personToEdit.getTags(), personToEdit.getAppointmentList(), editedMedicalRecordLibrary);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
