@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
@@ -44,6 +45,8 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     protected String medicalRecord;
+    @XmlElement
+    protected List<XmlAdaptedMedicalRecord> medicalRecordLibrary = new ArrayList<>();
 
     @XmlElement
     protected String medicalDepartment;
@@ -176,6 +179,14 @@ public class XmlAdaptedPerson {
             }
         }
 
+        final ArrayList<MedicalRecord> modelMedicalRecordLibrary = new ArrayList<>();
+        for (XmlAdaptedMedicalRecord medicalRecord : this.medicalRecordLibrary) {
+            try {
+                modelMedicalRecordLibrary.add(new MedicalRecord(medicalRecord.toModelType()));
+            } catch (IllegalValueException e) {
+                throw e;
+            }
+        }
         final Address modelAddress = new Address(address);
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
@@ -185,7 +196,7 @@ public class XmlAdaptedPerson {
         } else {
             assert modelRole.equals(Role.PATIENT); // person must be a patient if he/she is not a doctor.
             return XmlAdaptedPatient.convertToPatientModelType(new Person(modelName, modelNric, modelPhone, modelEmail,
-                    modelAddress, modelTags, modelApptList), medicalRecord);
+                    modelAddress, modelTags, modelApptList), medicalRecord, modelMedicalRecordLibrary);
         }
     }
 

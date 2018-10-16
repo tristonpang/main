@@ -101,7 +101,6 @@ public class Person {
     public ArrayList<Appointment> getAppointmentList() {
         return appointmentList;
     }
-
     /**
      * Empties out the AppointmentList to assist junit testing.
      * This prevents appointments collected from different tests to clash.
