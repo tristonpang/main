@@ -328,7 +328,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 === Schedule Command Feature
 ==== Current Implementation
 The scheduling appointment mechanism is facilitated by `ScheduleCommandParser`, `ScheduleCommand`, `Appointment` and `AppointmentManager`.
-`ScheduleCommand` extends from `Command` and `ScheduleCommandParser` extends from `Parser`.
+`ScheduleCommand` extends from `Command` and `ScheduleCommandParser` implements `Parser`.
 The key operation implemented is `ScheduleCommand#execute`.
 
 Given below is an example usage scenario and how the schedule command mechanism behaves at each step.
@@ -352,9 +352,9 @@ Checks:
 ** Whether the start and end times of the appointment are valid
 ** Whether there are any timing clashes between this appointment and the appointments currently stored in the appointment list under the person selected.
 
-Step 4. Once the check is successful, we will have 2 objects, `personToEdit` and `Appointment` object.
-We created another `Person` object called `editedPerson` that is equal to `personToEdit`.
-We then add the `Appointment` to the `appointmentList` of `editedPerson`.
+Step 4. A successful check will give 2 objects, `personToEdit` and `Appointment` object.
+Program creates another `Person` object called `editedPerson` that is equal to `personToEdit`.
+`Appointment` will be added to the `appointmentList` of `editedPerson`.
 Lastly, we edit the `personToEdit` with `editedPerson` in our model.
 
 image::ScheduleCommandStep4.png[width="800"]
@@ -569,6 +569,98 @@ change in doctor's appointment.
 ** Cons: Affects the performance of the application due to this function continuously running in the background.
 // end::display doctor's availability
 
+// tag::updatecommand[]
+=== Update Command Feature
+==== Current Implementation
+The updating medical record mechanism is facilitated by `UpdateCommandParser`, `UpdateCommand` and `MedicalRecord`.
+`UpdateCommand` extends from `Command` and `UpdateCommandParser` extends from `Parser`.
+The key operation implemented is `UpdateCommand#execute`.
+
+Given below is an example usage scenario and how the update command mechanism behaves at each step.
+
+Step 1. The user wants to update the medical record library of a `Patient`. User proceeds to fill in the details behind the respective prefixes.
+
+For example: `update 1 d/16.10.2018 dg/flu tr/tamiflu c/to be taken thrice a day`
+
+Step 2. The user executes the command which calls the `UpdateCommandParser`.
+`UpdateCommandParser` will first parse the inputs and create a `MedicalRecord` with the given date, diagnosis, treatment and comment, and return an `UpdateCommand` with the new `MedicalRecord`
+
+[NOTE]
+If no comment is given the default comment "-" is used.
+
+Step 3. `UpdateCommand` will then be executed.
+`UpdateCommand` will first do the following checks on the user input to ensure that the command input was valid:
+
+Checks:
+
+** Whether the index of input person is valid.
+** Whether the person specified by the index is a patient.
+
+If it was invalid, an exception message will be thrown and the `MedicalRecord` will not be added into the patient's medical record library.
+
+Step 4. If the checks are successful, all the attributes of all the attributes of the specified person will first be copied, including the existing medical record library of the specified `Patient`
+
+Step 5. The new `MedicalRecord` will be added into the copied medical record library. The medical record library is an `ArrayList` of `MedicalRecord`. The new `MedicalRecord` is added to the back of the list and the pointer to the latest `MedicalRecord` is updated.
+
+image::UpdateSequenceDiagramStep5.png[width="800"]
+
+Step 6. A new `Patient` is created with all the copied attributes and the updated medical record library.
+
+Step 7. The existing `Patient` that was specified is updated to the newly created `Patient` in the model.
+
+The following sequence diagram shows how the update medical record operation works:
+
+image::UpdateSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+An alternative considered is to use a comma-separated long string in the command prompt to schedule an appointment.
+In our current implementation, we split up the various parts of an appointment into their respective prefixes.
+
+For example:
+
+`schedule 1 s/23.11.2018,1300,1400,Jack,Heart,John Doe,S1234567A`
+
+** Pros: The user has to type less when scheduling a command.
+The user is not required to type all the prefixes, he just has to type 1.
+** Cons: The design would not be consistent with the other commands.
+This might confuse the user.
+// end::schedulecommand[]
+
+// tag::findcommand[]
+=== Find Command Feature
+==== Current Implementation
+The find mechanism is facilitated by `FindCommand`, `FindCommandParser` and `PersonContainsKeywordPredicate`.
+`FindCommand` extends from `Command`, `FindCommandParser` implements `Parser` and `PersonContainsKeywordPredicate` implements `Predicate`.
+The key operation implemented is `FindCommand#execute`.
+
+Given below is an example usage scenario and how the find command mechanism behaves at each step.
+
+Step 1. The user wants to find all `Person` with `Name` Alex by executing `find Alex`.
+
+Step 2. `FindCommandParser` will parse the input and verify that is it valid before returning a `PersonContainsKeywordsPredicate`, which is passed into `FindCommand`.
+
+[NOTE]
+If there is no input after the "find" keyword, `IntuitiveEntryCommand` will be triggered, which will prompt the user to input search parameters.
+
+Step 3. `FindCommand` will then be executed.
+
+Step 4. `Model#updateFilteredPersonList()` will be called, which will update `Model` to show all `Person` that contains the searched parameter.
+
+The following activity diagram summarises what happens when a user launches the application:
+
+image::FindSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: How to input search fields
+
+* **Alternative 1 (current choice):** Allow users to perform global search using any keywords
+** Pros: Allows for a powerful search function by allowing the user to search through all `Person` attributes.
+** Cons: Users will not be able to filter the unwanted results.
+* **Alternative 2:** Allow the use of tags to specify certain fields if needed.
+** Pros: Allows for a more precise search.
+** Cons: Increased inconvenience of having to tag search fields.
+// end::findcommand[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
