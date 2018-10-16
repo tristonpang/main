@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DIAGNOSIS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,13 +80,13 @@ public class UpdateCommand extends Command {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             model.commitAddressBook();
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        //model.updateFilteredListToShowAll();
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
