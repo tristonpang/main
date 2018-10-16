@@ -2,8 +2,9 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.MedicalRecord;
@@ -54,23 +55,6 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted patient
      */
-
-    public static Patient convertToPatientModelType(Person source, String medicalRecords) throws IllegalValueException {
-        Person person = source;
-
-        if (medicalRecords == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    MedicalRecord.class.getSimpleName()));
-        }
-        if (!MedicalRecord.isValidMedicalRecord(medicalRecords)) {
-            throw new IllegalValueException(MedicalRecord.MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
-        }
-
-        final MedicalRecord modelMedicalRecords = new MedicalRecord(medicalRecords);
-
-        return new Patient(person.getName(), person.getNric(), person.getPhone(), person.getEmail(),
-                person.getAddress(), person.getTags(), person.getAppointmentList(), modelMedicalRecords);
-    }
 
     public static Patient convertToPatientModelType(Person source, String medicalRecords,
                                                     ArrayList<MedicalRecord> medicalRecordLibrary) throws

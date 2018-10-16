@@ -39,15 +39,6 @@ public class XmlAdaptedMedicalRecord {
         this.medicalRecord = medicalRecord.toString();
     }
 
-    public static ArrayList<XmlAdaptedMedicalRecord> toXmlAdpatedMedicalRecordLibrary(
-            ArrayList<MedicalRecord> medicalRecordLibrary) {
-        ArrayList<XmlAdaptedMedicalRecord> result = new ArrayList<>();
-        for (MedicalRecord medicalRecord : medicalRecordLibrary) {
-            result.add(new XmlAdaptedMedicalRecord(medicalRecord));
-        }
-        return result;
-    }
-
     /**
      * Converts this jaxb-friendly adapted medicalRecord object into the model's Appointment object.
      *
