@@ -379,6 +379,138 @@ The user is not required to type all the prefixes, he just has to type 1.
 This might confuse the user.
 // end::schedulecommand[]
 
+// tag::intuitivecommandprompt[]
+=== Intuitive Command Prompt
+==== Current Implementation
+The Intuitive Command Prompt feature is facilitated mainly by two classes: `IntuitivePromptManager`
+and `IntuitiveEntryCommand`.
+
+`IntuitiveEntryCommand` extends `Command`, and represents the logic to be
+executed when the user enters an input during the execution of an intuitive command. The `IntuitiveEntryCommand`
+communicates with the `Model` interface in order to add an input into, or remove an input from the
+`IntuitivePromptManager`.
+
+The `IntuitivePromptManager` exists to store the inputs entered by the user during the execution of an
+intuitive command, and once all prompts or fields of the intuitive command have been filled, uses the stored inputs
+to prepare a String that represents a non-intuitive command (e.g. `add n/NAME p/PHONE ...`) back to the
+AddressBookParser in order to execute this command.
+
+`IntuitivePromptManager` has six public-access methods that allow the `Model` to communicate with it.
+They are the following:
+
+* `IntuitivePromptManager#addArgument(input)`: takes in a string input and stores it as an argument
+* `IntuitivePromptManager#removeArgument()`: removes the latest stored argument(s)
+* `IntuitivePromptManager#getInstruction()`: retrieves the instruction or prompt to be shown to the user
+(for the field that One Life is currently prompting the user for)
+* `IntuitivePromptManager#retrieveArguments()`: prepares and returns the String that represents the non-intuitive
+command, called when all fields have been filled
+* `IntuitivePromptManager#isIntuitiveMode()`: checks if One Life is currently executing an intuitive command
+* `IntuitivePromptManager#areArgsAvailable()`: checks if there are any arguments still being stored in the
+`IntuitivePromptManager`
+
+With the above operations in mind, below is an example usage scenario of how an intuitive command works at each step.
+We will be using the example of an intuitive `add` command.
+
+===== Start of Intuitive Command
+The intuitive command first needs to be triggered:
+
+Step 1. User wishes to add a new patient. User types `add` into the command prompt and submits.
+
+Step 2. `AddressBookParser` parses the input and detects the `add` command word without any trailing arguments.
+Intuitive mode is triggered and a new `IntuitiveEntryCommand` is created.
+
+Step 3. `LogicManager` executes the `IntuitiveEntryCommand`.
+`IntuitiveEntryCommand` interfaces with `Model` to add and store the user's input
+in the `IntuitivePromptManager`.
+
+Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. Since the user's
+input is the `add` command word, the user's input is stored as a `commandWord` and the `IntuitivePromptManager`
+triggers it's intuitive mode.
+
+Step 5. `Model` then calls the `IntuitivePromptManager` to retrieve the next prompt to be shown to the user.
+A String instruction representing the prompt to be shown is returned by `IntuitivePromptManager` and `Model` then
+proceeds to return this String instruction to the executing `IntuitiveEntryCommand`.
+
+Step 6. `IntuitiveEntryCommand` uses the String instruction to create a new `CommandResult`, which is then returned
+to the `LogicManager` to be displayed to the user.
+
+The following sequence diagram describes the above process:
+
+image::IntuitiveCommandWordSequenceDiagram.png[width="800"]
+
+===== Middle of Intuitive Command
+
+As the intuitive command has now started and is in the midst of execution, the system prompts the
+user for an input for the next field:
+
+Step 1. The system displays the instruction which prompts the user for the role of the person to be added.
+The user enters `patient` to indicate that the person added is a patient.
+
+Step 2-3. Remains the same as before with `patient` as the user's input.
+
+Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. Since the intuitive
+command is already executing, the user's input is stored as an argument in the `arguments` list.
+The `currentArgIndex`, which allows the `IntuitivePromptManager` to determine the what field it should prompt for next
+is incremented accordingly.
+
+image::IntuitiveInternalDiagram.png[width="800"]
+
+Step 5-6. Remains the same.
+
+===== End of Intuitive Command
+Once all fields have been filled by the user, the system will exit intuitive mode as follows:
+
+Step 1-3. Remains the same. Take note that this is the last field that the user has to fill.
+
+Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. The input is
+stored as an argument in the `arguments` list. The `IntuitivePromptManager` detects that this is the last
+field required to be filled and calls `IntuitivePromptManager#exitIntuitiveMode()` to signal the end of
+the intuitive command.
+
+Step 5. `Model` retrieves the next prompt from the `IntuitivePromptManager` but since there are no more
+fields needing to be filled, `IntuitivePromptManager` returns a loading message to be displayed to the user,
+to inform the user that the intuitive command is complete and the arguments provided by the user are being processed
+
+Step 6. `LogicManager` detects that the intuitive command has exited and that there are arguments stored in the
+`IntuitivePromptManager`. Using the `Model` interface, it requests to retrieve the arguments in the
+`IntuitivePromptManager` as a String line (representing a non-intuitive command).
+
+Step 7. This String line is passed into the `AddressBookParser` to be parsed. The sequence flow from here is
+the same as if the user entered the non-intuitive version of the command.
+
+The following sequence diagram describes Step 6 and onwards.
+
+image::IntuitiveEndSequenceDiagram.png[width="800"]
+
+===== Going Back
+The user has the ability to undo the inputs that he enters into each field. This is known as going back,
+and is achieved when the user types `/bk`. The following usage scenario describes how this takes place:
+
+Step 1. The user decides to undo his input for the previous field, and types `/bk`.
+
+Step 2. The system behaves as per normal as mentioned above, treating `/bk` as a normal input.
+
+Step 3. When `IntuitiveEntryCommand#execute()` is called, it detects that the input is the go back command
+`/bk`. It calls `Model#removeIntuitiveEntry()` to remove the input filled into the latest field.
+
+Step 4. `Model#removeIntuitiveEntry()` calls `IntuitivePromptManager#removeArgument()`, and the
+`IntuitivePromptManager` removes the input filled into the latest field, and decrements the `currentArgIndex`
+as accordingly.
+
+Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
+`IntuitivePromptManager`. Execution continues normally as described in the above sections.
+
+==== Supported Commands
+The following commands are supported by the Intuitive Command Prompt feature, and thus have an intuitive version:
+
+* `add`
+* `delete`
+* `find`
+* `edit`
+
+
+// end::intuitivecommandprompt[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
