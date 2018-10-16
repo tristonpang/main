@@ -1,9 +1,7 @@
 package seedu.address.model.patient;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,7 +20,8 @@ import seedu.address.storage.XmlAdaptedPerson;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Patient extends Person {
-    private MedicalRecord medicalRecord;
+    private ArrayList<MedicalRecord> medicalRecordLibrary = new ArrayList<>();
+    private MedicalRecord latestMedicalRecord;
 
     /**
      * Creates a new Patient object based on given details.
@@ -31,20 +30,37 @@ public class Patient extends Person {
      */
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(name, nric, phone, email, address, tags);
-        requireAllNonNull(nric);
-        this.medicalRecord = new MedicalRecord("");
+        this.latestMedicalRecord = new MedicalRecord("");
+        this.medicalRecordLibrary = new ArrayList<>();
     }
 
     /**
-     * Creates a new Patient object based on given details.
+     * Creates a Patient object based on given details.
      * All field must be present and non-null.
      */
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
                    ArrayList<Appointment> appointmentList, MedicalRecord medicalRecord) {
         super(name, nric, phone, email, address, tags, appointmentList);
-        this.medicalRecord = medicalRecord;
+        this.latestMedicalRecord = medicalRecord;
+        this.medicalRecordLibrary.add(medicalRecord);
     }
 
+    public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                   ArrayList<Appointment> appointmentList, MedicalRecord medicalRecord,
+                   ArrayList<MedicalRecord> medicalRecordLibrary) {
+        super(name, nric, phone, email, address, tags, appointmentList);
+        this.latestMedicalRecord = medicalRecord;
+        this.medicalRecordLibrary = medicalRecordLibrary;
+    }
+
+    public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                   ArrayList<Appointment> appointmentList, ArrayList<MedicalRecord> medicalRecordLibrary) {
+        super(name, nric, phone, email, address, tags, appointmentList);
+        this.medicalRecordLibrary = medicalRecordLibrary;
+        if (!medicalRecordLibrary.isEmpty()) {
+            latestMedicalRecord = medicalRecordLibrary.get(medicalRecordLibrary.size() - 1);
+        }
+    }
 
     /**
      * Creates a new Patient object based on given details.
@@ -53,15 +69,29 @@ public class Patient extends Person {
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
                    Appointment appointment, MedicalRecord medicalRecord) {
         super(name, nric, phone, email, address, tags, appointment);
-        this.medicalRecord = medicalRecord;
+        this.latestMedicalRecord = medicalRecord;
+        this.medicalRecordLibrary = new ArrayList<>(Arrays.asList(medicalRecord));
     }
 
     public MedicalRecord getMedicalRecord() {
-        return this.medicalRecord;
+        return this.latestMedicalRecord;
     }
 
-    public void setMedicalRecord(MedicalRecord medicalRecord) {
-        this.medicalRecord = requireNonNull(medicalRecord);
+    public ArrayList<MedicalRecord> getMedicalRecordLibrary() {
+        return this.medicalRecordLibrary;
+    }
+
+    /**
+     * Check if the patient is the same as other patient.
+     * @param otherPatient The other patient to compare to.
+     * @return True if the two patient are the same.
+     */
+    public boolean isSamePerson(Patient otherPatient) {
+        if (otherPatient == this) {
+            return true;
+        } else {
+            return otherPatient != null && otherPatient.getNric().equals(getNric());
+        }
     }
 
     @Override
@@ -80,7 +110,8 @@ public class Patient extends Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(getName(), getNric(), getPhone(), getEmail(), getAddress(), medicalRecord, getTags());
+        return Objects.hash(getName(), getNric(), getPhone(), getEmail(), getAddress(), getMedicalRecord(),
+                getMedicalRecordLibrary(), getTags());
     }
 
     @Override

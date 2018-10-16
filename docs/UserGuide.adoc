@@ -284,12 +284,12 @@ Displays the most recent medical records of `Jack`.
 === Updating medical records of patients : `update`
 
 Adds a new medical record for the patient as the most updated record using the current date as date of record. +
-Format: `update n/NAME mr/NEW_MEDICAL_RECORDS`
+Format: `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT [c/COMMENTS]`
 
 Examples:
 
-* `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.` +
-Updates `Jack` medical records with the given sentences.
+* `update 1 d/22.11.2018 dg/flu tr/tamiflu` +
+Updates patient at index 1 medical records with the given description.
 
 === Exiting the program : `exit`
 
@@ -361,5 +361,5 @@ e.g.`select 2`
 * *Schedule Medical Appointments* : `schedule s/DATE,START_TIME,END_TIME,DOCTOR_NAME,DOCTOR_DEPARTMENT,PATIENT_NAME,PATIENT_NRIC` +
 e.g. `schedule 1 s/22.11.2018,1300,1400,Jack,Heart,Jill,S1234567I`
 * *View Medical Records* : `records n/NAME [d/DATE]`
-* *Update Medical Records* : `update n/NAME mr/NEW_MEDICAL_RECORDS` +
-e.g. `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.`
+* *Update Medical Records* : `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT c/COMMENTS +
+e.g. `update 2 d/22.11.2018 dg/flu tr/tamiflu`

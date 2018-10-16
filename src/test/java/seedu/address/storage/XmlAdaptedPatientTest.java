@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
@@ -142,14 +141,6 @@ public class XmlAdaptedPatientTest {
         XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL,
                 VALID_ADDRESS, VALID_MEDICAL_RECORD, VALID_TAGS, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Appointment.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-    @Test
-    public void toModelType_nullMedicalRecord_throwsIllegalValueException() {
-        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, VALID_NRIC, VALID_PHONE, VALID_EMAIL,
-                VALID_ADDRESS, null, VALID_TAGS, VALID_APPOINTMENT);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, MedicalRecord.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 }

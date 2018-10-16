@@ -1,8 +1,13 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DIAGNOSIS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -26,10 +31,14 @@ public class UpdateCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": updates the medical record of the person identified by "
             + "the index number used in the last person listing. "
-            + "Existing medical record will be overwritten by the input.\n"
+            + "Medical record library of the patient will be the updated with the given input.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + PREFIX_MEDICAL_RECORD + "MEDICAL_RECORD\n"
+            + PREFIX_DATE + "DATE\n"
+            + PREFIX_DIAGNOSIS + "DIAGNOSIS\n"
+            + PREFIX_TREATMENT + "TREATMENT\n"
+            + PREFIX_COMMENT + "COMMENTS\n"
             + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_DATE + "22.11.2018 "
             + PREFIX_MEDICAL_RECORD + "Diagnosed with flue. Tamiflu prescribed.";
 
     public static final String MESSAGE_UPDATE_MEDICAL_RECORD_SUCCESS = "Updated medical record of Person: %1$s";
@@ -61,11 +70,12 @@ public class UpdateCommand extends Command {
         if (!(lastShownList.get(index.getZeroBased()) instanceof Patient)) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_CHOSEN);
         }
-
         Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
+        ArrayList<MedicalRecord> editedMedicalRecordLibrary = personToEdit.getMedicalRecordLibrary();
+        editedMedicalRecordLibrary.add(medicalRecord);
         Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getNric(),
                 personToEdit.getPhone(), personToEdit.getEmail(), personToEdit.getAddress(),
-                personToEdit.getTags(), personToEdit.getAppointmentList(), medicalRecord);
+                personToEdit.getTags(), personToEdit.getAppointmentList(), editedMedicalRecordLibrary);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
