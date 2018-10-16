@@ -2,7 +2,10 @@ package seedu.address.storage;
 
 import java.util.List;
 import java.util.stream.Collectors;
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+>>>>>>> aecc44dfe7594f12eb967b93c90d344642541cae
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.MedicalRecord;
@@ -52,8 +55,13 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted patient
      */
+<<<<<<< HEAD
 
     public static Patient convertToPatientModelType(Person source, String medicalRecords) throws IllegalValueException {
+=======
+    public static Patient convertToPatientModelType(
+            Person source, String nric, String medicalRecord) throws IllegalValueException {
+>>>>>>> aecc44dfe7594f12eb967b93c90d344642541cae
         Person person = source;
 
         if (medicalRecords == null) {
@@ -75,6 +83,7 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
         if (other == this) {
             return true;
         }
+<<<<<<< HEAD
         if (!(other instanceof XmlAdaptedPatient)) {
             return false;
         }
@@ -88,5 +97,12 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
                 && tagged.equals(otherPatient.tagged)
                 && Objects.equals(appointmentList, otherPatient.appointmentList)
                 && Objects.equals(medicalRecord, otherPatient.medicalRecord);
+=======
+        final MedicalRecord modelMedicalRecord = new MedicalRecord(medicalRecord);
+        final Nric modelNric = new Nric(nric);
+
+        return new Patient(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                person.getTags(), person.getAppointmentList(), modelNric, modelMedicalRecord);
+>>>>>>> aecc44dfe7594f12eb967b93c90d344642541cae
     }
 }
