@@ -369,6 +369,10 @@ image::ScheduleSequenceDiagram.png[width="800"]
 An alternative considered is to use a comma-separated long string in the command prompt to schedule an appointment.
 In our current implementation, we split up the various parts of an appointment into their respective prefixes.
 
+For example:
+
+`schedule 1 s/23.11.2018,1300,1400,Jack,Heart,John Doe,S1234567A`
+
 ** Pros: The user has to type less when scheduling a command.
 The user is not required to type all the prefixes, he just has to type 1.
 ** Cons: The design would not be consistent with the other commands.
@@ -740,27 +744,27 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 ****
 
 [[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `appointment`
+=== Creating a new command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
 *Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `appointment` field for each contact, rather than relying on tags alone. After designing the specification for the `appointment` command, you are convinced that this feature is worth implementing. Your job is to implement the `appointment` command.
 
 ==== Description
-Edits the appointment for a person specified in the `INDEX`. +
-Format: `appointment INDEX r/[REMARK]`
+Edits the remark for a person specified in the `INDEX`. +
+Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
-* `appointment 1 r/Likes to drink coffee.` +
-Edits the appointment for the first person to `Likes to drink coffee.`
-* `appointment 1 r/` +
-Removes the appointment for the first person.
+* `remark 1 r/Likes to drink coffee.` +
+Edits the remark for the first person to `Likes to drink coffee.`
+* `remark 1 r/` +
+Removes the remark for the first person.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'appointment' which does nothing
-Let's start by teaching the application how to parse a `appointment` command. We will add the logic of `appointment` later.
+===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
+Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
 
 **Main:**
 
@@ -770,7 +774,7 @@ Let's start by teaching the application how to parse a `appointment` command. We
 **Tests:**
 
 . Add `RemarkCommandTest` that tests that `execute()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "appointment" returns an instance of `RemarkCommand`.
+. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
 
 ===== [Step 2] Logic: Teach the app to accept 'appointment' arguments
 Let's teach the application to parse arguments that our `appointment` command will accept. E.g. `1 r/Likes to drink coffee.`
