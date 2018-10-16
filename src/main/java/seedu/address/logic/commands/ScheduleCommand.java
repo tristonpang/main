@@ -21,6 +21,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
@@ -122,18 +123,20 @@ public class ScheduleCommand extends Command {
         ArrayList<Appointment> appointmentList = new ArrayList<>(personToEdit.getAppointmentList());
         appointmentList.add(appointment);
 
+        ArrayList<MedicalRecord> newMedicalRecordLibrary =
+                new ArrayList<>(((Patient) personToEdit).getMedicalRecordLibrary());
+
         if (personToEdit instanceof Doctor) {
             editedPerson = new Doctor(personToEdit.getName(), personToEdit.getNric(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
                     personToEdit.getAddress(), personToEdit.getTags(),
                     appointmentList, ((Doctor) personToEdit).getMedicalDepartment());
         } else {
-
             assert personToEdit instanceof Patient;
             editedPerson = new Patient(personToEdit.getName(),
                     personToEdit.getNric(), personToEdit.getPhone(),
                     personToEdit.getEmail(), personToEdit.getAddress(),
-                    personToEdit.getTags(), appointmentList, ((Patient) personToEdit).getMedicalRecordLibrary());
+                    personToEdit.getTags(), appointmentList, newMedicalRecordLibrary);
         }
 
         model.updatePerson(personToEdit, editedPerson);
