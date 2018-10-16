@@ -2,6 +2,7 @@ package seedu.address.model.patient;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a Person's Medical Record in the address book.
@@ -15,13 +16,26 @@ public class MedicalRecord {
     public final String value;
 
     /**
-     * Validates given medical record.
+     * Validates given medical record. Used during junit testing.
      *
      */
     public MedicalRecord(String medicalRecord) {
-        requireNonNull(medicalRecord);
         checkArgument(isValidMedicalRecord(medicalRecord), MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
+        requireNonNull(medicalRecord);
         this.value = medicalRecord;
+    }
+
+    /**
+     * Validates given descriptions. Used when taking in inputs from parser.
+     */
+    public MedicalRecord(String date, String diagnosis, String treatment, String comments) {
+        requireAllNonNull(date, diagnosis, treatment);
+        String actualComment = comments;
+        if (actualComment == null || actualComment.equals("")) {
+            actualComment = "-";
+        }
+        this.value = date + "," + " Diagnosis: " + diagnosis + ", Treatment: " + treatment + ", Comments: "
+                + actualComment;
     }
 
     public static boolean isValidMedicalRecord(String medicalRecord) {
