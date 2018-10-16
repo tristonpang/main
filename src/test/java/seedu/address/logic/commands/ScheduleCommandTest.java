@@ -49,7 +49,7 @@ public class ScheduleCommandTest {
         expectedModel.updatePerson(firstPerson, editedPerson);
         expectedModel.commitAddressBook();
 
-//        assertCommandSuccess(scheduleCommand, model, commandHistory, expectedMessage, expectedModel);
+        //assertCommandSuccess(scheduleCommand, model, commandHistory, expectedMessage, expectedModel);
     }
     @Test
     public void execute_deleteRemarkUnfilteredList_success() {
@@ -69,7 +69,7 @@ public class ScheduleCommandTest {
         expectedModel.updatePerson(firstPerson, editedPerson);
         expectedModel.commitAddressBook();
 
-//        assertCommandSuccess(scheduleCommand, model, commandHistory, expectedMessage, expectedModel);
+        //assertCommandSuccess(scheduleCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
     @Test
@@ -137,11 +137,11 @@ public class ScheduleCommandTest {
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
         expectedModel.undoAddressBook();
-//        assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        //assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first person modified again
         expectedModel.redoAddressBook();
-//        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        //assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
