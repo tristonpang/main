@@ -352,9 +352,9 @@ Checks:
 ** Whether the start and end times of the appointment are valid
 ** Whether there are any timing clashes between this appointment and the appointments currently stored in the appointment list under the person selected.
 
-Step 4. Once the check is successful, we will have 2 objects, `personToEdit` and `Appointment` object.
-We created another `Person` object called `editedPerson` that is equal to `personToEdit`.
-We then add the `Appointment` to the `appointmentList` of `editedPerson`.
+Step 4. A successful check will give 2 objects, `personToEdit` and `Appointment` object.
+Program creates another `Person` object called `editedPerson` that is equal to `personToEdit`.
+`Appointment` will be added to the `appointmentList` of `editedPerson`.
 Lastly, we edit the `personToEdit` with `editedPerson` in our model.
 
 image::ScheduleCommandStep4.png[width="800"]
