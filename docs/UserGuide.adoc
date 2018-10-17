@@ -242,21 +242,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the database. +
 Format: `clear`
 
-=== Adding a doctor : `adddoc`
-
-Create and add a new doctor into the database. +
-Format: `adddoc n/NAME p/PHONE_NUMBER e/EMAIL md/MEDICAL_DEPARTMENT [t/TAG]`
-
-Examples:
-
-* `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD` +
-Creates a new doctor in the database.
-
-=== Listing doctors : `listdoc`
-
-Lists all doctors in the database and their current availability based on their appointment. +
-Format: `listdoc`
-
 === Displaying medical appointments : `display`
 
 Displays a list of medical appointments that are currently scheduled for the specified person. +
@@ -365,7 +350,7 @@ _{explain how the user can enable/disable data encryption}_
 
 * *Add Patient* : `add r/patient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add r/patient n/James Ho ic/S1234567A p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend
-t/colleague ic/S1234567A`
+t/colleague`
 * *Add Doctor* : `add r/doctor n/Bobby Tan ic/S1234567B p/91234567 e/BBTan@example.com a/123, Clementi Rd, 123456
 md/Dentistry`
 * *Clear* : `clear`
@@ -382,9 +367,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Add Doctor* : `adddoc n/NAME p/PHONE_NUMBER e/EMAIL md/MEDICAL_DEPARTMENT [t/TAG]` +
-e.g. `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD`
-* *List Doctors* : `listdoc`
 * *Display Medical Appointments* : `display INDEX`
 * *Schedule Medical Appointments* : `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME md/DOCTOR_MEDICAL_DEPARTMENT pn/PATIENT_NAME ic/PATIENT_NRIC` +
 e.g. `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A`
