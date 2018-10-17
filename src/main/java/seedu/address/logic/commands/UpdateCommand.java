@@ -72,7 +72,7 @@ public class UpdateCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_CHOSEN);
         }
         Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
-        ArrayList<MedicalRecord> editedMedicalRecordLibrary = personToEdit.getMedicalRecordLibrary();
+        ArrayList<MedicalRecord> editedMedicalRecordLibrary = new ArrayList<>(personToEdit.getMedicalRecordLibrary());
         editedMedicalRecordLibrary.add(medicalRecord);
         Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getNric(),
                 personToEdit.getPhone(), personToEdit.getEmail(), personToEdit.getAddress(),
