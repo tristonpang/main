@@ -387,8 +387,8 @@ This might confuse the user.
 // end::schedulecommand[]
 
 // tag::intuitivecommandprompt[]
-=== Intuitive Command Prompt
-==== Current Implementation
+=== Intuitive command prompt
+==== Current implementation
 The Intuitive Command Prompt feature is facilitated mainly by two classes: `IntuitivePromptManager`
 and `IntuitiveEntryCommand`.
 
@@ -633,8 +633,8 @@ This section describes the pros and cons of the current and other alternate impl
 // end::updatecommand[]
 
 // tag::findcommand[]
-=== Find Command Feature
-==== Current Implementation
+=== Find command feature
+==== Current implementation
 The find mechanism is facilitated by `FindCommand`, `FindCommandParser` and `PersonContainsKeywordPredicate`.
 `FindCommand` extends from `Command`, `FindCommandParser` implements `Parser` and `PersonContainsKeywordPredicate` implements `Predicate`.
 The key operation implemented is `FindCommand#execute`.
@@ -656,11 +656,11 @@ The following activity diagram summarises what happens when a user launches the 
 
 image::FindSequenceDiagram.png[width="800"]
 
-==== Design Considerations
+==== Design considerations
 
 ===== Aspect: How to input search fields
 
-* **Alternative 1 (current choice):** Allow users to perform global search using any keywords
+* **Alternative 1 (current choice):** Allow users to perform global search using any keywords.
 ** Pros: Allows for a powerful search function by allowing the user to search through all `Person` attributes.
 ** Cons: Users will not be able to filter the unwanted results.
 * **Alternative 2:** Allow the use of tags to specify certain fields if needed.
