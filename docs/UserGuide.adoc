@@ -21,6 +21,7 @@ By: `Team W16-3`      Since: `Sep 2018`      Licence: `MIT`
 One Life (OL) is for service providers in the healthcare industry who *prefer to use a desktop application for managing patient and doctor information*. More importantly, One Life is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you prefer typing, One Life can get your medical information management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
+Listed below are instructions to help you get started:
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
@@ -30,13 +31,13 @@ One Life (OL) is for service providers in the healthcare industry who *prefer to
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+E.g. typing *`help`* and pressing kbd:[Enter] will open the help window. +
+Some example commands you can try:
 
-* *`list`* : lists all contacts
+* *`list`* : lists all contacts.
 * **`add`**`r/patient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ic/S9601234A` : adds a patient named `John Doe` to the database.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* **`delete`**`3` : deletes the 3rd contact shown in the current list.
+* *`exit`* : exits the app.
 
 .  Refer to <<Features>> for details of each command.
 
@@ -243,14 +244,23 @@ Creates a new doctor in the database.
 Lists all doctors in the database and their current availability based on their appointment. +
 Format: `listdoc`
 
-=== Displaying medical appointments : `appts`
+=== Displaying medical appointments : `display`
 
-Displays a list of medical appointments that are currently scheduled. All appointments will be listed if date is not entered. +
-Format: `appts[d/DATE]`
+Displays a list of medical appointments that are currently scheduled for the specified person. +
+Format: `display INDEX`
+
+****
+* Index is the position of the person selected from the person card list.
+****
+
+Examples:
+
+* `display 1` +
+Displays the list of appointments of the person in the person card list.
 
 === Scheduling medical appointments : `schedule`
 
-Schedules a patient/doctor for a medical appointment at a specific date and time.
+Schedules a patient/doctor for a medical appointment at a specific date and time. +
 Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME md/DOCTOR_MEDICAL_DEPARTMENT pn/PATIENT_NAME ic/PATIENT_NRIC`
 
 ****
@@ -264,7 +274,7 @@ Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME md/DOCTO
 
 Examples:
 
-* `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A ` +
+* `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A` +
 Schedules `John Doe` for an appointment with doctor `Jack` of the `Heart` department on the 23nd of November 2018 from 1pm to 2pm.
 
 === Viewing medical records of patients : `records`
@@ -305,7 +315,7 @@ There is no need to save manually.
 
 // tag::dataencryption[]
 
-=== Intuitive Command Prompting
+=== Intuitive command prompting
 
 Intuitive prompting for the user when a command that takes in parameters is entered without any parameters specified. This feature aids new users and makes it easier and more natural for them to use the system. The nature of this feature allows users to enter data without adding prefix tags, and also supports cases where certain data fields are intentionally left blank. The original command input format is still supported to allow quick command entry for seasoned users.
 [TIP]
@@ -360,9 +370,9 @@ e.g.`select 2`
 * *Add Doctor* : `adddoc n/NAME p/PHONE_NUMBER e/EMAIL md/MEDICAL_DEPARTMENT [t/TAG]` +
 e.g. `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD`
 * *List Doctors* : `listdoc`
-* *Display Medical Appointments* : `appts`
-* *Schedule Medical Appointments* : `schedule s/DATE,START_TIME,END_TIME,DOCTOR_NAME,DOCTOR_DEPARTMENT,PATIENT_NAME,PATIENT_NRIC` +
-e.g. `schedule 1 s/22.11.2018,1300,1400,Jack,Heart,Jill,S1234567I`
+* *Display Medical Appointments* : `display INDEX`
+* *Schedule Medical Appointments* : `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME md/DOCTOR_MEDICAL_DEPARTMENT pn/PATIENT_NAME ic/PATIENT_NRIC` +
+e.g. `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A`
 * *View Medical Records* : `records n/NAME [d/DATE]`
 * *Update Medical Records* : `update n/NAME mr/NEW_MEDICAL_RECORDS` +
 e.g. `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.`
