@@ -46,7 +46,7 @@ public class CommandTestUtil {
     public static final String VALID_SCHEDULE_BOB = "22.11.2018,1300,1400,Jack,Heart,Bob,S1234567B";
     public static final String VALID_ROLE_DOCTOR = "doctor";
     public static final String VALID_ROLE_PATIENT = "patient";
-    public static final String VALID_MEDICAL_DEPARTMENT = "Cardiology";
+    public static final String VALID_MEDICAL_DEPARTMENT = "Dermatology";
     public static final String VALID_NRIC_AMY = "S1234567A";
     public static final String VALID_NRIC_BOB = "S9876543B";
 

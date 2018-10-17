@@ -25,7 +25,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -44,8 +44,8 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
+import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
@@ -87,17 +87,10 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a person with all fields same as another person in the address book except name -> added */
-        toAdd = new PatientBuilder(AMY).withName(VALID_NAME_BOB).build();
-        command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + NRIC_DESC_AMY;
-        assertCommandSuccess(command, toAdd);
-
-        /* Case: add a person with all fields same as another person in the address book except phone and email
-         * -> added
-         */
-        toAdd = new PatientBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
-        command = PatientUtil.getAddCommand(toAdd);
+        /* Case: add a person with all fields same as another person in the address book except nric -> added */
+        toAdd = new PatientBuilder(AMY).withNric(VALID_NRIC_BOB).build();
+        command = AddCommand.COMMAND_WORD + ROLE_PATIENT_DESC + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + NRIC_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
@@ -216,7 +209,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid medical department -> rejected */
         command = AddCommand.COMMAND_WORD + ROLE_DOCTOR_DESC + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + INVALID_MEDICAL_DEPARTMENT_DESC;
+                + ADDRESS_DESC_AMY + INVALID_MEDICAL_DEPARTMENT_DESC + NRIC_DESC_AMY;
         assertCommandFailure(command, MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS);
     }
 

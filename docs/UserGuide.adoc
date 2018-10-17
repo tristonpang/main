@@ -61,60 +61,73 @@ Format: `help`
 Adds a patient or doctor to the database. +
 
 *Adding a patient* +
-Format: `add r/patient n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... ic/NRIC`
+Format: `add r/patient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 *Adding a doctor* +
-Format: `add r/doctor n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... md/MEDICAL_DEPARTMENT`
+Format: `add r/doctor n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS md/MEDICAL_DEPARTMENT [t/TAG]...`
 [TIP]
-A patient can have any number of tags (including 0)
+A person can have any number of tags (including 0)
 
 Examples:
 
-* `add r/patient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ic/S1234567A`
-* `add r/doctor n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal md/dentistry`
+* `add r/patient n/John Doe Xiao Huang ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01
+t/Hokkien-speaker`
+* `add r/doctor n/Betsy Crowe ic/S8234567F e/betsycrowe@example.com a/Newgate Estates p/1234567 md/dentistry`
 
 
 [NOTE]
-When adding a Patient, you are required to specify his/her NRIC,
-whilst adding a Doctor requires you to specify the Medical Department.
+When adding a new doctor you are required to specify his/her medical department.
 
-=== Listing all relevent personnels : `list`
+=== Listing all relevant personnel : `list`
 
-Shows a list of all patients in the database. +
-Format: `list`
+Shows a list of all of the people in the database. +
+Format: `list [r/ROLE]`
 
-=== Editing a patient : `edit`
+Examples:
 
-Edits an existing patient in the database. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+* `list` +
+Lists all doctors and patients in the database.
+* `list r/patient` +
+Lists all patients in the database.
+* `list r/doctor` +
+Lists all the doctors in the database.
+
+=== Editing a person : `edit`
+
+Edits an existing person in the database. +
+Format: `edit INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed patient list.
+The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
-* You can remove all the patient's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating patient by any attribute: `find`
+=== Locating person by any attribute: `find`
 
-Finds patients with the keyword specified by the user. Specified keyword can belong to any part of any attribute of the patient (i.e. name, phone number, address, tags etc).
+Finds people with the keyword specified by the user. Specified keyword can belong to any part of any attribute of the
+person (i.e. name, phone number, address, tags etc).
  +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case-insensitive. e.g. `nelvin` will match `Nelvin`.
-* The search is a global search. e.g. `Kang` will return patients whose name includes `Kang` and patients with street address `Choa Chu Kang`.
+* The search is a global search. e.g. `Kang` will return people whose name includes `Kang` and patients with street
+address `Choa Chu Kang`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only full words will be matched. e.g. `Tris` will not return `Tristan`.
-* Patients with at least one keyword will be returned. e.g. `Goh` will return `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
+* People with at least one keyword will be returned. e.g. `Goh` will return `Gary Goh Yipeng` and `Kenneth Goh Jun
+Teck`.
 ****
 
 Examples:
@@ -122,16 +135,16 @@ Examples:
 * `find Goh` +
 Returns `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
 * `find Ng Tan` +
-Returns any patient having names `Ng Kang Tze` and `Tan Thong Cai, Nelvin`.
+Returns any person having names `Ng Kang Tze` and `Tan Thong Cai, Nelvin`.
 
-=== Deleting a patient : `delete`
+=== Deleting a person : `delete`
 
-Deletes the specified patient from the database. +
+Deletes the specified person from the database. +
 Format: `delete INDEX`
 
 ****
-* Deletes the patient at the specified `INDEX`.
-* The index refers to the index number shown in the displayed patient list.
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -139,19 +152,19 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd patient in the database.
+Deletes the 2nd person in the database.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st patient in the results of the `find` command.
+Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a patient : `select`
+=== Selecting a person : `select`
 
-Selects the patient identified by the index number used in the displayed patient list. +
+Selects the person identified by the index number used in the displayed person list. +
 Format: `select INDEX`
 
 ****
-* Selects the patient and loads the Google search page the patient at the specified `INDEX`.
-* The index refers to the index number shown in the displayed patient list.
+* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -159,7 +172,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd patient in the database.
+Selects the 2nd person in the database.
 * `find Betsy` +
 `select 1` +
 Selects the 1st patient in the results of the `find` command.
@@ -296,12 +309,12 @@ Displays the most recent medical records of `Jack`.
 === Updating medical records of patients : `update`
 
 Adds a new medical record for the patient as the most updated record using the current date as date of record. +
-Format: `update n/NAME mr/NEW_MEDICAL_RECORDS`
+Format: `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT [c/COMMENTS]`
 
 Examples:
 
-* `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.` +
-Updates `Jack` medical records with the given sentences.
+* `update 1 d/22.11.2018 dg/flu tr/tamiflu` +
+Updates patient at index 1 medical records with the given description.
 
 === Exiting the program : `exit`
 
@@ -350,9 +363,11 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add Patient* : `add r/patient n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... ic/NRIC` +
-e.g. `add r/patient n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague ic/S1234567A`
-* *Add Doctor* : `add r/doctor n/Bobby Tan p/91234567 e/BBTan@example.com a/123, Clementi Rd, 123456 md/Dentistry`
+* *Add Patient* : `add r/patient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add r/patient n/James Ho ic/S1234567A p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend
+t/colleague ic/S1234567A`
+* *Add Doctor* : `add r/doctor n/Bobby Tan ic/S1234567B p/91234567 e/BBTan@example.com a/123, Clementi Rd, 123456
+md/Dentistry`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -360,7 +375,7 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List Patients* : `list`
+* *List People* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
@@ -374,5 +389,5 @@ e.g. `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD`
 * *Schedule Medical Appointments* : `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME md/DOCTOR_MEDICAL_DEPARTMENT pn/PATIENT_NAME ic/PATIENT_NRIC` +
 e.g. `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A`
 * *View Medical Records* : `records n/NAME [d/DATE]`
-* *Update Medical Records* : `update n/NAME mr/NEW_MEDICAL_RECORDS` +
-e.g. `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.`
+* *Update Medical Records* : `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT c/COMMENTS +
+e.g. `update 2 d/22.11.2018 dg/flu tr/tamiflu`

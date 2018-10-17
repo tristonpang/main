@@ -3,56 +3,57 @@
     <persons>
         <role>Patient</role>
         <name>Hans Muster</name>
+        <nric>S9234567A</nric>
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
-        <nric>S9234567A</nric>
         <medicalRecord isPrivate="false"> </medicalRecord>
         <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
         <role>Patient</role>
         <name>Ruth Mueller</name>
+        <nric>S9874567B</nric>
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
-        <nric>S9874567B</nric>
         <medicalRecord isPrivate="false"> </medicalRecord>
         <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
         <role>Patient</role>
         <name>Heinz Kurz</name>
+        <nric>S7234567C</nric>
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
-        <nric>S7234567C</nric>
         <medicalRecord isPrivate="false"> </medicalRecord>
         <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
         <role>Patient</role>
         <name>Cornelia Meier</name>
+        <nric>S9634567D</nric>
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
-        <nric>S9634567D</nric>
         <medicalRecord isPrivate="false"> </medicalRecord>
         <appointment isPrivate="false">Likes to eat</appointment>
     </persons>
     <persons>
         <role>Patient</role>
         <name>Werner Meyer</name>
+        <nric>S8834567A</nric>
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
-        <nric>S8834567A</nric>
         <medicalRecord isPrivate="false"> </medicalRecord>
         <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
         <role>Doctor</role>
         <name>Lydia Kunz</name>
+        <nric>S1010101A</nric>
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
@@ -62,6 +63,7 @@
     <persons>
         <role>Doctor</role>
         <name>Anna Best</name>
+        <nric>S2020202B</nric>
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
@@ -71,6 +73,7 @@
     <persons>
         <role>Doctor</role>
         <name>Stefan Meier</name>
+        <nric>S3030303C</nric>
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
@@ -80,6 +83,7 @@
     <persons>
         <role>Doctor</role>
         <name>Martin Mueller</name>
+        <nric>S4040404D</nric>
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>

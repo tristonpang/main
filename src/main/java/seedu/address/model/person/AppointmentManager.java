@@ -75,15 +75,20 @@ public class AppointmentManager {
      * @return a boolean stating if there exists any appointment ongoing at the current time.
      */
     public static boolean isAnyAppointmentOngoing(ArrayList<Appointment> appointmentList) {
+        if (appointmentList == null) {
+            return false;
+        }
         // We first retrieve the current date and time in the same format as Appointment's.
         String[] dateAndTime = getCurrentDateAndTime().split(",");
         String currentDate = dateAndTime[0];
         String currentTime = dateAndTime[1];
-        System.out.println(currentDate + " " + currentTime);
+        // System.out.println(currentDate + " " + currentTime);
 
         // We check if the current time lies in the time interval of any Appointment.
         for (Appointment appt : appointmentList) {
-            if (appt.isOngoing(currentDate, currentTime)) {
+            if (appt.value.equals("")) {
+                continue;
+            } else if (appt.isOngoing(currentDate, currentTime)) {
                 return true;
             }
         }

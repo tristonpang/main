@@ -1,22 +1,17 @@
 package seedu.address.storage;
 
 import java.util.List;
+import java.util.Objects;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.department.MedicalDepartment;
 import seedu.address.model.doctor.Doctor;
+import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.person.Person;
 
 /**
  * JAXB-friendly version of the Doctor.
  */
 public class XmlAdaptedDoctor extends XmlAdaptedPerson {
-
-    /**
-     * Constructs an XmlAdaptedDoctor.
-     * This is the no-arg constructor that is required by JAXB.
-     */
-    public XmlAdaptedDoctor() {}
 
     /**
      * Constructs an {@code XmlAdaptedDoctor} with the given doctor details.
@@ -29,9 +24,9 @@ public class XmlAdaptedDoctor extends XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPatient} with the given person details.
      */
-    public XmlAdaptedDoctor(String name, String phone, String email, String address,
+    public XmlAdaptedDoctor(String name, String nric, String phone, String email, String address,
                             List<XmlAdaptedTag> tags, String appointment, String medicalDepartment) {
-        super(name, phone, email, address, tags, appointment);
+        super(name, nric, phone, email, address, tags, appointment);
         this.medicalDepartment = medicalDepartment;
         this.role = "Doctor";
     }
@@ -61,7 +56,28 @@ public class XmlAdaptedDoctor extends XmlAdaptedPerson {
             throw new IllegalValueException(MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS);
         }
         final MedicalDepartment modelMedicalDept = new MedicalDepartment(medicalDept);
-        return new Doctor(modelPerson.getName(), modelPerson.getPhone(), modelPerson.getEmail(),
+        return new Doctor(modelPerson.getName(), modelPerson.getNric(), modelPerson.getPhone(), modelPerson.getEmail(),
                 modelPerson.getAddress(), modelPerson.getTags(), modelPerson.getAppointmentList(), modelMedicalDept);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof XmlAdaptedDoctor)) {
+            return false;
+        }
+
+        XmlAdaptedDoctor otherDoctor = (XmlAdaptedDoctor) other;
+        return Objects.equals(name, otherDoctor.name)
+                && Objects.equals(nric, otherDoctor.nric)
+                && Objects.equals(phone, otherDoctor.phone)
+                && Objects.equals(email, otherDoctor.email)
+                && Objects.equals(address, otherDoctor.address)
+                && tagged.equals(otherDoctor.tagged)
+                && Objects.equals(appointmentList, otherDoctor.appointmentList)
+                && Objects.equals(medicalDepartment, otherDoctor.medicalDepartment);
     }
 }

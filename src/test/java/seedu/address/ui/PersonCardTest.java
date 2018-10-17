@@ -11,7 +11,6 @@ import guitests.guihandles.PersonCardHandle;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PatientBuilder;
-import seedu.address.testutil.PersonBuilder;
 
 public class PersonCardTest extends GuiUnitTest {
 
@@ -24,7 +23,7 @@ public class PersonCardTest extends GuiUnitTest {
         assertCardDisplay(personCard, personWithNoTags, 1);
 
         // with tags
-        Person personWithTags = new PersonBuilder().build();
+        Person personWithTags = new PatientBuilder().build();
         personCard = new PersonCard(personWithTags, 2);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
@@ -32,7 +31,7 @@ public class PersonCardTest extends GuiUnitTest {
 
     @Test
     public void equals() {
-        Person person = new PersonBuilder().build();
+        Person person = new PatientBuilder().build();
         PersonCard personCard = new PersonCard(person, 0);
 
         // same person, same index -> returns true
@@ -49,7 +48,7 @@ public class PersonCardTest extends GuiUnitTest {
         assertFalse(personCard.equals(0));
 
         // different person, same index -> returns false
-        Person differentPerson = new PersonBuilder().withName("differentName").build();
+        Person differentPerson = new PatientBuilder().withName("differentName").build();
         assertFalse(personCard.equals(new PersonCard(differentPerson, 0)));
 
         // same person, different index -> returns false
