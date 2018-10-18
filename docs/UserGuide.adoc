@@ -317,16 +317,24 @@ There is no need to save manually.
 
 === Intuitive command prompting
 
-Intuitive prompting for the user provides a step-by-step guide, prompting the user of what input parameters are
-required when executing the different instructions (e.g. `add`, `edit`, `schedule`). This eliminates the need to
-know how to type one-liner commands and thus aiding new users and makes it easier and more natural for them to
-use the system. The nature of this feature allows users to enter data without adding prefix tags, and also supports cases where certain data fields are intentionally left blank. The original command input format is still supported to allow quick command entry for seasoned users.
+Provides a more natural way of entering commands into OneLife. OneLife will prompt the user for the next required
+input - no prefixes are required.
+
+Commands that support intuitive prompting:
+****
+* `add`
+* `delete`
+* `edit`
+* `find`
+****
+
+Format: `COMMAND`
+
 [TIP]
 Type `/bk` to re-enter previous field. +
 Type `//` if the field is to be left blank.
 
-
-Examples:
+Example of the intuitive add command prompting:
 ```
 add
 
