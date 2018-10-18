@@ -3,11 +3,13 @@ package seedu.address.model.doctor;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.department.MedicalDepartment;
+import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentManager;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -21,14 +23,18 @@ import seedu.address.storage.XmlAdaptedPerson;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Doctor extends Person {
+    public static final String IS_AVAILABLE = "FREE";
+    public static final String NOT_AVAILABLE = "BUSY";
+
     private final MedicalDepartment dept;
 
     /**
      * Creates a new Doctor object based on given details.
      * All field must be present and non-null.
      */
-    public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags, MedicalDepartment dept) {
-        super(name, phone, email, address, tags);
+    public Doctor(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                  MedicalDepartment dept) {
+        super(name, nric, phone, email, address, tags);
         requireAllNonNull(dept);
         this.dept = dept;
     }
@@ -37,9 +43,9 @@ public class Doctor extends Person {
      * Creates a new Doctor object based on given details.
      * All field must be present and non-null.
      */
-    public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+    public Doctor(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
                   ArrayList<Appointment> appointmentList, MedicalDepartment modelMedicalDept) {
-        super(name, phone, email, address, tags, appointmentList);
+        super(name, nric, phone, email, address, tags, appointmentList);
         requireAllNonNull(modelMedicalDept);
         this.dept = modelMedicalDept;
     }
@@ -48,9 +54,9 @@ public class Doctor extends Person {
      * Creates a new Doctor object based on given details.
      * All field must be present and non-null.
      */
-    public Doctor(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+    public Doctor(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
                   Appointment appointment, MedicalDepartment modelMedicalDept) {
-        super(name, phone, email, address, tags, appointment);
+        super(name, nric, phone, email, address, tags, appointment);
         requireAllNonNull(modelMedicalDept);
         this.dept = modelMedicalDept;
     }
@@ -58,8 +64,18 @@ public class Doctor extends Person {
     /**
      * Returns Medical Department of this doctor.
      */
-    public MedicalDepartment getMedicalDepartment () {
+    public MedicalDepartment getMedicalDepartment() {
         return this.dept;
+    }
+
+    /**
+     * Returns the availability status of the Doctor, whether free or busy at the moment.
+     */
+    public String currentAvailStatus() {
+        if (AppointmentManager.isAnyAppointmentOngoing(this.getAppointmentList())) {
+            return NOT_AVAILABLE;
+        }
+        return IS_AVAILABLE;
     }
 
     @Override
@@ -69,15 +85,39 @@ public class Doctor extends Person {
         }
         if (obj instanceof Doctor) {
             Doctor otherDoctor = (Doctor) obj;
-            return (otherDoctor.name.equals(this.name) && (otherDoctor.dept.equals(this.dept)));
+            return super.equals(otherDoctor) && otherDoctor.getMedicalDepartment().equals(getMedicalDepartment());
         } else {
             return false;
         }
     }
 
     @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(getName(), getNric(), getPhone(), getEmail(), getAddress(), dept, getTags());
+    }
+
+    @Override
     public String toString() {
-        return super.toString() + (" Department: " + this.dept) + (" Appointments: " + this.getAppointment());
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" NRIC: ")
+                .append(getNric())
+                .append(" Phone: ")
+                .append(getPhone())
+                .append(" Email: ")
+                .append(getEmail())
+                .append(" Address: ")
+                .append(getAddress())
+                .append(" Medical Department: ")
+                .append(getMedicalDepartment())
+                .append(" Latest Appointment: ")
+                .append(getAppointment())
+                .append(" AppointmentList: ")
+                .append(getAppointmentList())
+                .append(" Tags: ");
+        getTags().forEach(builder::append);
+        return builder.toString();
     }
 
     /**

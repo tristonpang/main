@@ -1,4 +1,4 @@
-package seedu.address.model.department;
+package seedu.address.model.doctor;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class MedicalDepartment {
     public static final String MESSAGE_DEPTNAME_CONSTRAINTS =
             "Medical Department should only contain alphabetic characters and spaces, and it should not be blank";
-    public static final String DEPTNAME_VALIDATION_REGEX = "[a-zA-Z]+";
+    public static final String DEPTNAME_VALIDATION_REGEX = "[\\p{Alpha}][\\p{Alpha} ]*";
 
     public final String deptName;
 
@@ -41,7 +41,7 @@ public class MedicalDepartment {
         }
         if (obj instanceof MedicalDepartment) {
             MedicalDepartment department = (MedicalDepartment) obj;
-            return (department.deptName.equals(this.deptName));
+            return (department.deptName.equalsIgnoreCase(this.deptName));
         } else {
             return false;
         }

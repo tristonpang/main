@@ -15,6 +15,7 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String EMPTY_VALUE = ""; // empty value to set for the availability of patients.
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -45,9 +46,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label appointment;
     @FXML
-    private FlowPane tags;
+    private Label availability;
     @FXML
     private Label uniqueField;
+    @FXML
+    private FlowPane tags;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -58,9 +61,17 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         if (person instanceof Doctor) {
-            uniqueField.setText(((Doctor) person).getMedicalDepartment().deptName);
+            Doctor doctor = (Doctor) person;
+            uniqueField.setText(doctor.getMedicalDepartment().deptName);
+            availability.setText(doctor.currentAvailStatus());
+            if (doctor.currentAvailStatus().equals(doctor.IS_AVAILABLE)) {
+                availability.setStyle("-fx-background-color: #33ff77");
+            } else {
+                availability.setStyle("-fx-background-color: #ff4d4d");
+            }
         } else if (person instanceof Patient) {
             uniqueField.setText(((Patient) person).getMedicalRecord().value);
+            availability.setText(EMPTY_VALUE);
         }
         role.setText(person.getClass().getSimpleName());
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

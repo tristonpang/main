@@ -12,15 +12,15 @@ image::docs/images/Ui.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::images/Ui.png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is an application intended for medical professionals to accelerate their working processes.
 * Features include:
-** Quick and User-Friendly Patient Management
-*** Add/Edit/Delete Patient details
-*** Instantly locate Patients in the Database
+** Quick and User-Friendly Patient & Doctor Management
+*** Add/Edit/Delete a person's details
+*** Instantly locate a person in the Database
 ** High Resistance to User Error
 *** Undo/Redo Actions for all data modification commands
 *** Display chronological history of user actions

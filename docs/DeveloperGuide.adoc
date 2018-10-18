@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= OneLife - Developer Guide
 :site-section: DeveloperGuide
 :toc:
 :toc-title:
@@ -17,17 +17,18 @@ endif::[]
 
 By: `Team W16-3`      Since: `Sep 2018`      Licence: `MIT`
 
-== Setting up
+== Setting Up
 
 === Prerequisites
+Listed below are the prerequites:
 
-. *JDK `9`* or later
+** *JDK `9`* or later
 +
 [WARNING]
 JDK `10` on Windows will fail to run tests in <<UsingGradle#Running-Tests, headless mode>> due to a https://github.com/javafxports/openjdk-jfx/issues/66[JavaFX bug].
 Windows developers are highly recommended to use JDK `9`.
 
-. *IntelliJ* IDE
+** *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
@@ -35,41 +36,43 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 
 === Setting up the project in your computer
+Listed below are the steps to set up the project:
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ. (If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first.)
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
-. Open link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson.java`] and link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`] and check for any code errors
-.. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully
-.. To resolve this, place your cursor over any of the code section highlighted in red. Press kbd:[ALT + ENTER], and select `Add '--add-modules=...' to module compiler options` for each error
-. Repeat this for the test folder as well (e.g. check link:{repoURL}/src/test/java/seedu/address/commons/util/XmlUtilTest.java[`XmlUtilTest.java`] and link:{repoURL}/src/test/java/seedu/address/ui/HelpWindowTest.java[`HelpWindowTest.java`] for code errors, and if so, resolve it the same way)
+. Open link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson.java`] and link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`] and check for any code errors.
+.. Due to an ongoing https://youtrack.jetbrains.com/issue/IDEA-189060[issue] with some of the newer versions of IntelliJ, code errors may be detected even if the project can be built and run successfully.
+.. To resolve this, place your cursor over any of the code section highlighted in red. Press kbd:[ALT + ENTER], and select `Add '--add-modules=...' to module compiler options` for each error.
+. Repeat this for the test folder as well. (E.g. check link:{repoURL}/src/test/java/seedu/address/commons/util/XmlUtilTest.java[`XmlUtilTest.java`] and link:{repoURL}/src/test/java/seedu/address/ui/HelpWindowTest.java[`HelpWindowTest.java`] for code errors, and if so, resolve it the same way.)
 
 === Verifying the setup
+Listed below are the steps to verify the setup:
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify, follow these steps:
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
-
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: Change the import order to `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
+[NOTE]
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
@@ -94,37 +97,37 @@ Coverage reporting could be useful for a team repository that hosts the final ve
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms. (Travis is Unix-based and AppVeyor is Windows-based.)
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Listed below are some things to try when you are ready to start coding:
 
-1. Get some sense of the overall design by reading <<Design-Architecture>>.
-2. Take a look at <<GetStartedProgramming>>.
+** Get some sense of the overall design by reading <<Design-Architecture>>.
+** Take a look at <<GetStartedProgramming>>.
 
 == Design
 
 [[Design-Architecture]]
 === Architecture
+The *_Architecture Diagram_* given below explains the high-level design of the App.
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
-
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializing the components in the correct sequence, and connecting them up with each other.
+* At shut down: Shutting down the components and invoking cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events. (i.e. a form of _Event Driven_ design)
+* `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
 
 The rest of the App consists of four components.
 
@@ -148,7 +151,7 @@ image::LogicClassDiagram.png[width="800"]
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
-.Component interactions for `delete 1` command (part 1)
+.Component Interactions for `delete 1` Command (Part 1)
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
@@ -156,7 +159,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
+.Component Interactions for `delete 1` Command (Part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
 
 [NOTE]
@@ -166,13 +169,14 @@ The sections below give more details of each component.
 
 [[Design-Ui]]
 === UI component
+Given below is the structure of the UI component.
 
-.Structure of the UI Component
+.Structure of the `UI` Component
 image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+As shown in the figure above, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -184,6 +188,7 @@ The `UI` component,
 
 [[Design-Logic]]
 === Logic component
+Shown below is the structure of the `Logic` component.
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
@@ -192,10 +197,10 @@ image::LogicClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+As shown in the figure above, `Logic` uses the `AddressBookParser` class to parse the user command. This results in a `Command` object which is executed by the `LogicManager`.
+
+The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
@@ -204,13 +209,14 @@ image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
+Shown below is the structure of the `Model` component.
 
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+As shown by the figure above, the `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
@@ -224,13 +230,14 @@ image:ModelClassBetterOopDiagram.png[width="800"]
 
 [[Design-Storage]]
 === Storage component
+Shown below is the structure of the `Storage` component.
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+As shown by the figure above, the `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
@@ -246,7 +253,7 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::undoredo[]
 === Undo/Redo feature
-==== Current Implementation
+==== Current implementation
 
 The undo/redo mechanism is facilitated by `VersionedAddressBook`.
 It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
@@ -303,16 +310,16 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 image::UndoRedoActivityDiagram.png[width="650"]
 
-==== Design Considerations
-
+==== Design considerations
+This section describes the pros and cons of the current and other alternate implementations of undo & redo.
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Save the entire address book.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
+* **Alternative 2:** Use individual commands to undo/redo by itself.
 ** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
+** Cons: Must ensure that the implementations of individual commands are correct.
 
 ===== Aspect: Data structure to support the undo/redo commands
 
@@ -325,10 +332,10 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::schedulecommand[]
-=== Schedule Command Feature
-==== Current Implementation
+=== Schedule command feature
+==== Current implementation
 The scheduling appointment mechanism is facilitated by `ScheduleCommandParser`, `ScheduleCommand`, `Appointment` and `AppointmentManager`.
-`ScheduleCommand` extends from `Command` and `ScheduleCommandParser` extends from `Parser`.
+`ScheduleCommand` extends from `Command` and `ScheduleCommandParser` implements `Parser`.
 The key operation implemented is `ScheduleCommand#execute`.
 
 Given below is an example usage scenario and how the schedule command mechanism behaves at each step.
@@ -383,8 +390,290 @@ The user is not required to type all the prefixes, he just has to type 1.
 This might confuse the user.
 // end::schedulecommand[]
 
+// tag::intuitivecommandprompt[]
+=== Intuitive command prompt
+==== Current implementation
+The Intuitive Command Prompt feature is facilitated mainly by two classes: `IntuitivePromptManager`
+and `IntuitiveEntryCommand`.
+
+`IntuitiveEntryCommand` extends `Command`, and represents the logic to be
+executed when the user enters an input during the execution of an intuitive command. The `IntuitiveEntryCommand`
+communicates with the `Model` interface in order to add an input into, or remove an input from the
+`IntuitivePromptManager`.
+
+The `IntuitivePromptManager` exists to store the inputs entered by the user during the execution of an
+intuitive command, and once all prompts or fields of the intuitive command have been filled, uses the stored inputs
+to prepare a String that represents a non-intuitive command (e.g. `add n/NAME p/PHONE ...`) back to the
+AddressBookParser in order to execute this command.
+
+`IntuitivePromptManager` has six public-access methods that allow the `Model` to communicate with it.
+They are the following:
+
+* `IntuitivePromptManager#addArgument(input)`: takes in a string input and stores it as an argument
+* `IntuitivePromptManager#removeArgument()`: removes the latest stored argument(s)
+* `IntuitivePromptManager#getInstruction()`: retrieves the instruction or prompt to be shown to the user
+(for the field that One Life is currently prompting the user for)
+* `IntuitivePromptManager#retrieveArguments()`: prepares and returns the String that represents the non-intuitive
+command, called when all fields have been filled
+* `IntuitivePromptManager#isIntuitiveMode()`: checks if One Life is currently executing an intuitive command
+* `IntuitivePromptManager#areArgsAvailable()`: checks if there are any arguments still being stored in the
+`IntuitivePromptManager`
+
+With the above operations in mind, below is an example usage scenario of how an intuitive command works at each step.
+We will be using the example of an intuitive `add` command.
+
+===== Start of Intuitive Command
+The intuitive command first needs to be triggered:
+
+Step 1. User wishes to add a new patient. User types `add` into the command prompt and submits.
+
+Step 2. `AddressBookParser` parses the input and detects the `add` command word without any trailing arguments.
+Intuitive mode is triggered and a new `IntuitiveEntryCommand` is created.
+
+Step 3. `LogicManager` executes the `IntuitiveEntryCommand`.
+`IntuitiveEntryCommand` interfaces with `Model` to add and store the user's input
+in the `IntuitivePromptManager`.
+
+Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. Since the user's
+input is the `add` command word, the user's input is stored as a `commandWord` and the `IntuitivePromptManager`
+triggers it's intuitive mode.
+
+Step 5. `Model` then calls the `IntuitivePromptManager` to retrieve the next prompt to be shown to the user.
+A String instruction representing the prompt to be shown is returned by `IntuitivePromptManager` and `Model` then
+proceeds to return this String instruction to the executing `IntuitiveEntryCommand`.
+
+Step 6. `IntuitiveEntryCommand` uses the String instruction to create a new `CommandResult`, which is then returned
+to the `LogicManager` to be displayed to the user.
+
+The following sequence diagram describes the above process:
+
+image::IntuitiveCommandWordSequenceDiagram.png[width="800"]
+
+===== Middle of Intuitive Command
+
+As the intuitive command has now started and is in the midst of execution, the system prompts the
+user for an input for the next field:
+
+Step 1. The system displays the instruction which prompts the user for the role of the person to be added.
+The user enters `patient` to indicate that the person added is a patient.
+
+Step 2-3. Remains the same as before with `patient` as the user's input.
+
+Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. Since the intuitive
+command is already executing, the user's input is stored as an argument in the `arguments` list.
+The `currentArgIndex`, which allows the `IntuitivePromptManager` to determine the what field it should prompt for next
+is incremented accordingly.
+
+image::IntuitiveInternalDiagram.png[width="800"]
+
+Step 5-6. Remains the same.
+
+===== End of Intuitive Command
+Once all fields have been filled by the user, the system will exit intuitive mode as follows:
+
+Step 1-3. Remains the same. Take note that this is the last field that the user has to fill.
+
+Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. The input is
+stored as an argument in the `arguments` list. The `IntuitivePromptManager` detects that this is the last
+field required to be filled and calls `IntuitivePromptManager#exitIntuitiveMode()` to signal the end of
+the intuitive command.
+
+Step 5. `Model` retrieves the next prompt from the `IntuitivePromptManager` but since there are no more
+fields needing to be filled, `IntuitivePromptManager` returns a loading message to be displayed to the user,
+to inform the user that the intuitive command is complete and the arguments provided by the user are being processed
+
+Step 6. `LogicManager` detects that the intuitive command has exited and that there are arguments stored in the
+`IntuitivePromptManager`. Using the `Model` interface, it requests to retrieve the arguments in the
+`IntuitivePromptManager` as a String line (representing a non-intuitive command).
+
+Step 7. This String line is passed into the `AddressBookParser` to be parsed. The sequence flow from here is
+the same as if the user entered the non-intuitive version of the command.
+
+The following sequence diagram describes Step 6 and onwards.
+
+image::IntuitiveEndSequenceDiagram.png[width="800"]
+
+===== Going Back
+The user has the ability to undo the inputs that he enters into each field. This is known as going back,
+and is achieved when the user types `/bk`. The following usage scenario describes how this takes place:
+
+Step 1. The user decides to undo his input for the previous field, and types `/bk`.
+
+Step 2. The system behaves as per normal as mentioned above, treating `/bk` as a normal input.
+
+Step 3. When `IntuitiveEntryCommand#execute()` is called, it detects that the input is the go back command
+`/bk`. It calls `Model#removeIntuitiveEntry()` to remove the input filled into the latest field.
+
+Step 4. `Model#removeIntuitiveEntry()` calls `IntuitivePromptManager#removeArgument()`, and the
+`IntuitivePromptManager` removes the input filled into the latest field, and decrements the `currentArgIndex`
+as accordingly.
+
+Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
+`IntuitivePromptManager`. Execution continues normally as described in the above sections.
+
+==== Supported Commands
+The following commands are supported by the Intuitive Command Prompt feature, and thus have an intuitive version:
+
+* `add`
+* `delete`
+* `find`
+* `edit`
+
+
+// end::intuitivecommandprompt[]
+
+
+// tag::display doctor's availability
+=== Display doctor's current availability feature
+==== Current implementation
+
+The display of each doctor's current availability is facilitated by `PersonCard`, `Doctor`, `AppointmentManager`.
+Given below is an example usage scenario and how the information is generated and propagated to be displayed in the
+`PersonCard` at the final stage.
+
+Step 1. The user launches the application for the first time. The `MainWindow` will be initialized and construct a
+`PersonListPanel`.
+
+Step 2. The `PersonListPanel` will then construct a list of `PersonCard`.
+
+Step 3. Each `PersonCard` is associated with a person's particulars, be it a doctor or patient. In the event that
+ this `PersonCard` belongs to a doctor, it will call the method `Doctor#currentAvailStatus` to get information on
+ the doctor's current availability.
+
+Step 4. Upon calling the method `Doctor#currentAvailStatus`, a helper method in `AppointmentManager`, called
+`AppointmentManager#isAnyAppointmentOngoing` will be executed.
+
+Step 5. `AppointmentManager` will then get the current locale time from Java's `ZoneDateTime` class and compare the
+current time with all the scheduled appointments that the doctor has, and determines if the doctor is currently
+available.
+
+Step 6. The status information generated in `AppointmentManager` will then be propagated back up to the `PersonCard`
+which then sets a badge to reflect the availability status of that doctor.
+
+
+The following activity diagram summarizes what happens when a user launches the application:
+
+image::DisplayDoctorAvailabilitySequenceDiagram.png[width="800"]
+
+==== Design considerations
+This section describes the pros and cons of the current and other alternate implementations of the doctor's availability feature.
+
+===== Aspect: How to display each doctor's availability
+
+* **Alternative 1 (current choice):** A badge on each doctor's card display that shows his/her current availability.
+** Pros: Convenient for the user to refer to since the badge is always on the display.
+** Cons: Does not integrate any form of auto-updating nor is there any dedicated command to allow the user to refresh
+the information, thus the information provided can be outdated.
+* **Alternative 2:** A separate command that the user can call upon to look up the current availability of each doctor.
+** Pros: Able to call this method repeatedly/when needed and will be provided with the latest information.
+** Cons: Have a separate command dedicated to this feature which may not be necessary and not as convenient as compared
+ to having a badge that is on the display at all times. Also this adds on to the list of commands
+ that the user has to get familiar with.
+
+===== Aspect: How to update the status of each doctor's availability
+
+* **Alternative 1 (current choice):** Updates the status/badge only on launch of application and when there is a
+change in doctor's appointment.
+** Pros: Easy to implement.
+** Cons: Information is outdated aas it does not truly reflect the doctor's current availability.
+* **Alternative 2:** A function that will refresh the badge every few minutes.
+** Pros: Provides accurate information on the doctor's availability.
+** Cons: Affects the performance of the application due to this function continuously running in the background.
+// end::display doctor's availability
+
+// tag::updatecommand[]
+=== Update command feature
+==== Current implementation
+The updating medical record mechanism is facilitated by `UpdateCommandParser`, `UpdateCommand` and `MedicalRecord`.
+`UpdateCommand` extends from `Command` and `UpdateCommandParser` extends from `Parser`.
+The key operation implemented is `UpdateCommand#execute`.
+
+Given below is an example usage scenario and how the update command mechanism behaves at each step.
+
+Step 1. The user wants to update the medical record library of a `Patient`. User proceeds to fill in the details behind the respective prefixes.
+
+For example: `update 1 d/16.10.2018 dg/flu tr/tamiflu c/to be taken thrice a day`
+
+Step 2. The user executes the command which calls the `UpdateCommandParser`.
+`UpdateCommandParser` will first parse the inputs and create a `MedicalRecord` with the given date, diagnosis, treatment and comment, and return an `UpdateCommand` with the new `MedicalRecord`.
+
+[NOTE]
+If no comment is given the default comment "-" is used.
+
+Step 3. `UpdateCommand` will then be executed.
+`UpdateCommand` will first do the following checks on the user input to ensure that the command input was valid:
+
+Checks:
+
+** Whether the index of input person is valid.
+** Whether the person specified by the index is a patient.
+
+If it was invalid, an exception message will be thrown and the `MedicalRecord` will not be added into the patient's medical record library.
+
+Step 4. If the checks are successful, all the attributes of all the attributes of the specified person will first be copied, including the existing medical record library of the specified `Patient`.
+
+Step 5. The new `MedicalRecord` will be added into the copied medical record library. The medical record library is an `ArrayList` of `MedicalRecord`. The new `MedicalRecord` is added to the back of the list and the pointer to the latest `MedicalRecord` is updated.
+
+image::UpdateSequenceDiagramStep5.png[width="800"]
+
+Step 6. A new `Patient` is created with all the copied attributes and the updated medical record library.
+
+Step 7. The existing `Patient` that was specified is updated to the newly created `Patient` in the model.
+
+The following sequence diagram shows how the update medical record operation works:
+
+image::UpdateSequenceDiagram.png[width="800"]
+
+==== Design considerations
+This section describes the pros and cons of the current and other alternate implementations of updating medical records.
+===== Aspect: How to store a patient's medical record library
+
+* **Alternative 1 (current choice):** Use an ArrayList of `MedicalRecord` as the patient's medical record library.
+** Pros: Easy to access the most recent record by retrieving the last `MedicalRecord` in the ArrayList.
+** Cons: Takes longer to retrieve the latest `MedicalRecord` before a specified date as each `MedicalRecord` has to be checked sequentially until the last `MedicalRecord` before the specified date is found.
+* **Alternative 2:** Use a different data structure like a TreeMap of `MedicalRecord` as the value and date for the key as the patient's medical record library.
+** Pros: Retrieving the latest `MedicalRecord` before a specified date is made convenient by  just using the floor function already defined in the TreeMap API.
+** Cons: May be difficult to maintain the TreeSet for more complicated tasks like editing `MedicalRecord` since a new `MedicalRecord` has to be created and reinserted into the same location in the TreeSet.
+// end::updatecommand[]
+
+// tag::findcommand[]
+=== Find command feature
+==== Current implementation
+The find mechanism is facilitated by `FindCommand`, `FindCommandParser` and `PersonContainsKeywordPredicate`.
+`FindCommand` extends from `Command`, `FindCommandParser` implements `Parser` and `PersonContainsKeywordPredicate` implements `Predicate`.
+The key operation implemented is `FindCommand#execute`.
+
+Given below is an example usage scenario and how the find command mechanism behaves at each step.
+
+Step 1. The user wants to find all `Person` with `Name` Alex by executing `find Alex`.
+
+Step 2. `FindCommandParser` will parse the input and verify that is it valid before returning a `PersonContainsKeywordsPredicate`, which is passed into `FindCommand`.
+
+[NOTE]
+If there is no input after the "find" keyword, `IntuitiveEntryCommand` will be triggered, which will prompt the user to input search parameters.
+
+Step 3. `FindCommand` will then be executed.
+
+Step 4. `Model#updateFilteredPersonList()` will be called, which will update `Model` to show all `Person` that contains the searched parameter.
+
+The following activity diagram summarises what happens when a user launches the application:
+
+image::FindSequenceDiagram.png[width="800"]
+
+==== Design considerations
+
+===== Aspect: How to input search fields
+
+* **Alternative 1 (current choice):** Allow users to perform global search using any keywords.
+** Pros: Allows for a powerful search function by allowing the user to search through all `Person` attributes.
+** Cons: Users will not be able to filter the unwanted results.
+* **Alternative 2:** Allow the use of tags to specify certain fields if needed.
+** Pros: Allows for a more precise search.
+** Cons: Increased inconvenience of having to tag search fields.
+// end::findcommand[]
+
 // tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== Data encryption [proposed]
 
 _{Explain here how the data encryption feature will be implemented}_
 
@@ -410,6 +699,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -417,16 +707,16 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -441,13 +731,14 @@ Here are the steps to convert the project documentation files to PDF format.
 image::chrome_save_as_pdf.png[width="300"]
 
 [[Docs-SiteWideDocSettings]]
-=== Site-wide Documentation Settings
+=== Site-wide documentation settings
 
 The link:{repoURL}/build.gradle[`build.gradle`] file specifies some project-specific https://asciidoctor.org/docs/user-manual/#attributes[asciidoc attributes] which affects how all documentation files within this project are rendered.
 
 [TIP]
 Attributes left unset in the `build.gradle` file will use their *default value*, if any.
 
+Shown below is a list of site-wide attributes and a short description for each attribute.
 [cols="1,2a,1", options="header"]
 .List of site-wide attributes
 |===
@@ -471,7 +762,7 @@ This will render the SE-EDU navigation bar at the top of the page, and add some 
 |===
 
 [[Docs-PerFileDocSettings]]
-=== Per-file Documentation Settings
+=== Per-file documentation settings
 
 Each `.adoc` file may also specify some file-specific https://asciidoctor.org/docs/user-manual/#attributes[asciidoc attributes] which affects how the file is rendered.
 
@@ -479,6 +770,8 @@ Asciidoctor's https://asciidoctor.org/docs/user-manual/#builtin-attributes[built
 
 [TIP]
 Attributes left unset in `.adoc` files will use their *default value*, if any.
+
+Shown below is a list of per-file attributes and a short description for each.
 
 [cols="1,2a,1", options="header"]
 .List of per-file attributes, excluding Asciidoctor's built-in attributes
@@ -499,7 +792,7 @@ _{asterisk} Official SE-EDU projects only_
 
 |===
 
-=== Site Template
+=== Site template
 
 The files in link:{repoURL}/docs/stylesheets[`docs/stylesheets`] are the https://developer.mozilla.org/en-US/docs/Web/CSS[CSS stylesheets] of the site.
 You can modify them to change some properties of the site's design.
@@ -517,7 +810,7 @@ The SE-EDU team does not provide support for modified template files.
 [[Testing]]
 == Testing
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -526,12 +819,12 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests`. (Mac/Linux: `./gradlew clean allTests`)
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
@@ -540,7 +833,7 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests`. (Mac/Linux: `./gradlew clean headless allTests`)
 
 === Types of tests
 
@@ -558,7 +851,7 @@ e.g. `seedu.address.storage.StorageManagerTest`
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `HelpWindow.html` in `src/main/resources/docs` is missing.
@@ -566,22 +859,22 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
-=== Build Automation
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Coverage Reporting
+=== Coverage reporting
 
 We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
-=== Documentation Previews
+=== Documentation previews
 When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -590,11 +883,11 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+a. Include those libraries in the repo. (this bloats the repo size) +
+b. Require developers to download those libraries manually. (this creates extra work for developers)
 
 [[GetStartedProgramming]]
 [appendix]
@@ -891,6 +1184,7 @@ Value proposition: manage contacts faster than a typical mouse/GUI driven applic
 
 [appendix]
 == User Stories
+Shown below are the user stories collected and used to conceptualize the features of OneLife.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -950,28 +1244,28 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 *MSS*
 
-1.  User requests to view all medical appointments or appointments on a specific day
-2.  AddressBook shows a list of all appointments
-3.  User requests to appointment a patient at a specific date and time
-4.  AddressBook updates appointment details in database
-5.  AddressBook shows the appointments details to the user
+1.  User requests to view all medical appointments or appointments on a specific day.
+2.  AddressBook shows a list of all appointments.
+3.  User requests to appointment a patient at a specific date and time.
+4.  AddressBook updates appointment details in database.
+5.  AddressBook shows the appointments details to the user.
 +
-Use case ends
+Use case ends.
 
 *Extensions*
 
 [none]
-* 3a. Patient is not in database
+* 3a. Patient is not in database.
 [none]
-** 3a1. AddressBook warns user that patient is not in database
+** 3a1. AddressBook warns user that patient is not in database.
 +
-Use case resumes at step 1
+Use case resumes at step 1.
 
-* 4a. Appointment clashes with another appointment
+* 4a. Appointment clashes with another appointment.
 [none]
-** 4a1. AddressBook warns user of appointment clash
+** 4a1. AddressBook warns user of appointment clash.
 +
-Use case resumes at step 1
+Use case resumes at step 1.
 
 
 [discrete]
@@ -979,78 +1273,78 @@ Use case resumes at step 1
 
 *MSS*
 
-1.  User enters in command that takes in in arguments without any specified arguments (e.g. add, delete)
-2.  AddressBook shows instructions to guide user
-3.  User responds to instructions with respective answers/inputs
-4.  AddressBook performs command for user and echoes changes made to user
+1.  User enters in command that takes in in arguments without any specified arguments. (e.g. add, delete)
+2.  AddressBook shows instructions to guide user.
+3.  User responds to instructions with respective answers/inputs.
+4.  AddressBook performs command for user and echoes changes made to user.
 +
-Use case ends
+Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User enters unrecognised command
+* 1a. User enters unrecognised command.
 [none]
-** 1a1. AddressBook shows error message and shows list of available commands
+** 1a1. AddressBook shows error message and shows list of available commands.
 +
-Use case resumes at step 1
+Use case resumes at step 1.
 
-* 3a. User accidentally enters wrong data when prompted by instruction
+* 3a. User accidentally enters wrong data when prompted by instruction.
 [none]
-** 3a1. User follows instruction to return to previous instruction/undo (e.g. type /bk)
+** 3a1. User follows instruction to return to previous instruction/undo. (e.g. type /bk)
 +
-Use case resumes at step 3
+Use case resumes at step 3.
 
 [discrete]
 === Use case: Viewing and updating medical history
 
 *MSS*
 
-1.  User requests to view medical history of a particular patient at a specific date
-2.  AddressBook displays medical history of the patient
-3.  User requests to update medical history
-4.  AddressBook updates patient medical history in database using current date
-5.  AddressBook displays success message
+1.  User requests to view medical history of a particular patient at a specific date.
+2.  AddressBook displays medical history of the patient.
+3.  User requests to update medical history.
+4.  AddressBook updates patient medical history in database using current date.
+5.  AddressBook displays success message.
 +
-Use case ends
+Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. Patient is not in database
+* 1a. Patient is not in database.
 [none]
-** 1a1. AddressBook warns user that patient is not in database
+** 1a1. AddressBook warns user that patient is not in database.
 +
-Use case resumes at step 1
+Use case resumes at step 1.
 
-* 1b. No specified date
+* 1b. No specified date.
 [none]
-** 1b1. AddressBook displays most recent medical history
+** 1b1. AddressBook displays most recent medical history.
 +
-Use case resumes at step 3
+Use case resumes at step 3.
 
 [discrete]
 === Use case: Add and display doctors' profile
 
 *MSS*
 
-1.  User adds new doctor to the database
-2.  Addressbook shows success message
-3.  User requests to display all doctors
+1.  User adds new doctor to the database.
+2.  Addressbook shows success message.
+3.  User requests to display all doctors.
 4.  Addressbook displays all doctors’ information and indicates their current availability.
 +
-Use case ends
+Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User does not specify the doctor’s medical speciality
+* 1a. User does not specify the doctor’s medical speciality.
 [none]
 ** 1a1. Addressbook prompts user of insufficient information.
 +
-Use case resumes at step 1
+Use case resumes at step 1.
 
-* 1b. Similar name already exists in the same medical department
+* 1b. Similar name already exists in the same medical department.
 [none]
 ** 1b1. Addressbook prompts user that similar name already exists.
 +
@@ -1062,42 +1356,42 @@ Use case resumes at Step 1.
 *MSS*
 
 1.  User requests to view the appointment of a particular doctor.
-2.  Addressbook displays appointment of the specified doctor (in ascending chronological order)
+2.  Addressbook displays appointment of the specified doctor. (In ascending chronological order)
 +
-Use case ends
+Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User inputs wrong/invalid doctor’s name or medical department
+* 1a. User inputs wrong/invalid doctor’s name or medical department.
 [none]
 ** 1a1. Addressbook informs user that there is no doctor with the name and/or medical department specified by the user.
 +
-Use case ends
+Use case ends.
 
-* 1b. User does not specify doctor’s name
+* 1b. User does not specify doctor’s name.
 [none]
 ** 1b1. Addressbook informs use that no doctor was specified.
 +
-Use case ends
+Use case ends.
 
-* 1c. User enters a doctor whose name appears in more than 1 medical department
+* 1c. User enters a doctor whose name appears in more than 1 medical department.
 [none]
 ** 1c1. Addressbook displays to user that there are more than 1 Dr [name] detected.
 [none]
 ** 1c2. Addressbook requests user to re-enter input and indicate the doctor’s medical department as well.
 +
-Use case resumes from Step 1
+Use case resumes from Step 1.
 
 [discrete]
 === Use case: Find patients by any keywords
 
 *MSS*
 
-1.  User requests to find patients by tag
-2.  Addressbook lists all users with that tag
+1.  User requests to find patients by tag.
+2.  Addressbook lists all users with that tag.
 +
-Use case ends
+Use case ends.
 
 *Extensions*
 
@@ -1106,15 +1400,15 @@ Use case ends
 [none]
 ** 1a1. Addressbook returns an empty list of patients.
 +
-Use case resumes at step 1
+Use case resumes at step 1.
 
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `9` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+**  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `9` or higher installed.
+**  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+**  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 
 [appendix]
@@ -1148,12 +1442,12 @@ Given below are instructions to test the app manually.
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
 
-=== Launch and Shutdown
+=== Launch and shutdown
 
 . Initial launch
 
-.. Download the jar file and copy into an empty folder
-.. Double-click the jar file +
+.. Download the jar file and copy into an empty folder.
+.. Double-click the jar file. +
    Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 . Saving window preferences

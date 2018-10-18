@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.patient.Nric;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedPerson;
 
@@ -18,13 +19,14 @@ import seedu.address.storage.XmlAdaptedPerson;
 public class Person {
 
     // Identity fields
-    protected final Name name;
-    protected final Phone phone;
-    protected final Email email;
+    private final Name name;
+    private final Phone phone;
+    private final Email email;
+    private final Nric nric;
 
     // Common Data fields
-    protected final Address address;
-    protected final Set<Tag> tags = new HashSet<>();
+    private final Address address;
+    private final Set<Tag> tags = new HashSet<>();
     private Appointment appointment = new Appointment("");
     private ArrayList<Appointment> appointmentList = new ArrayList<>();
 
@@ -32,31 +34,34 @@ public class Person {
      * Every field must be present and not null.
      * An empty {@code Appointment} will be created by default.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, nric, tags);
         this.name = name;
+        this.nric = nric;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
     }
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Appointment appointment) {
-        requireAllNonNull(name, phone, email, address, tags, appointment);
+    public Person(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
+                  Appointment appointment) {
+        requireAllNonNull(name, phone, email, address, tags, nric, appointment);
         this.name = name;
+        this.nric = nric;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.appointment = appointment;
         this.tags.addAll(tags);
-
         appointmentList.add(appointment);
     }
 
-    public Person(Name name, Phone phone, Email email, Address address,
+    public Person(Name name, Nric nric, Phone phone, Email email, Address address,
                   Set<Tag> tags, ArrayList<Appointment> appointmentList) {
         requireAllNonNull(name, phone, email, address, tags, appointmentList);
         this.name = name;
+        this.nric = nric;
         this.phone = phone;
         this.email = email;
         this.address = address;
@@ -85,6 +90,10 @@ public class Person {
         return address;
     }
 
+    public Nric getNric() {
+        return nric;
+    }
+
     public Appointment getAppointment() {
         return appointment;
     }
@@ -92,7 +101,6 @@ public class Person {
     public ArrayList<Appointment> getAppointmentList() {
         return appointmentList;
     }
-
     /**
      * Empties out the AppointmentList to assist junit testing.
      * This prevents appointments collected from different tests to clash.
@@ -101,7 +109,9 @@ public class Person {
         appointmentList = new ArrayList<>();
     }
 
-    // Error because there is nothing in appointmentList i.e. it is not used at all hence null so will throw error.
+    /**
+     * Checks for clash with the appointment that is to be scheduled.
+     */
     public boolean hasClash(Appointment newAppointment) {
         return AppointmentManager.isClash(appointmentList, newAppointment);
     }
@@ -123,9 +133,7 @@ public class Person {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName())
-                && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
+        return otherPerson != null && otherPerson.getNric().equals(this.getNric());
     }
 
     /**
@@ -152,29 +160,35 @@ public class Person {
 
         Person otherPerson = (Person) other;
         return otherPerson.getName().equals(getName())
+                && otherPerson.getNric().equals(getNric())
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
-                && otherPerson.getAppointment().equals(getAppointment())
                 && otherPerson.getTags().equals(getTags());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, nric, tags, appointmentList);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" NRIC: ")
+                .append(getNric())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Latest Appointment: ")
+                .append(getAppointment())
+                .append(" AppointmentList: ")
+                .append(getAppointmentList())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
