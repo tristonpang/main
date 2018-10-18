@@ -18,17 +18,18 @@ By: `Team W16-3`      Since: `Sep 2018`      Licence: `MIT`
 
 == Introduction
 
-One Life (OL) is for service providers in the healthcare industry who *prefer to use a desktop application for managing patient and doctor information*. More importantly, One Life is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you prefer typing, One Life can get your medical information management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+OneLife (OL) is designed for service providers in the healthcare industry who *prefer to use a desktop application for
+managing patient and doctor information*. More importantly, OneLife is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you prefer typing, OneLife can get your medical information management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 Listed below are instructions to help you get started:
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for One Life.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Copy the file into the folder you want to use as the home folder for OneLife.
+.  Double-click the file to start the app. The GUI (as shown in Figure 1 below) should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::UserGuide_Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 E.g. typing *`help`* and pressing kbd:[Enter] will open the help window. +
@@ -262,18 +263,19 @@ Schedules a patient/doctor for a medical appointment at a specific date and time
 Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME md/DOCTOR_MEDICAL_DEPARTMENT pn/PATIENT_NAME ic/PATIENT_NRIC`
 
 ****
-* Date is DD.MM.YYYY and dot separated e.g.  `7.11.1996` is the 7th of November 1996
-* Time is 24 hour clock e.g. `1300` is 1pm
-* Doctor name is doctor's full name e.g. `John Doe`
-* Doctor department is doctor's medical department e.g. `Heart`
-* Patient name is patient's full name e.g. `Kim Tan`
-* Patient nric is patient's nric e.g. `S1234567A`
+* Date is formatted as DD.MM.YYYY and is dot separated e.g.  `7.11.1996` is the 7th of November 1996
+* Time uses the 24-hour clock time e.g. `1300` is 1pm
+* Doctor name is the doctor's full name e.g. `John Doe`
+* Doctor department is the doctor's medical department e.g. `Heart`
+* Patient name is the patient's full name e.g. `Kim Tan`
+* Patient nric is the patient's nric e.g. `S1234567A`
 ****
 
 Examples:
 
 * `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A` +
-Schedules `John Doe` for an appointment with doctor `Jack` of the `Heart` department on the 23nd of November 2018 from 1pm to 2pm.
+Schedules `John Doe` for an appointment with doctor `Jack` from the `Heart` department on the 23nd of November 2018 from
+ 1pm to 2pm.
 
 === Viewing medical records of patients : `records`
 
@@ -281,7 +283,7 @@ Displays the most updated medical records of a given patient if no date is speci
 Format: `records n/name [d/DATE]`
 
 ****
-* Date is DD/MM/YYYY and is dot separated. e.g.  `7.11.1996` is the 7th of November 1996
+* Date is formatted as DD.MM.YYYY and is dot separated. e.g.  `7.11.1996` is the 7th of November 1996
 ****
 
 Examples:
@@ -299,7 +301,7 @@ Format: `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT [c/COMMENTS]`
 Examples:
 
 * `update 1 d/22.11.2018 dg/flu tr/tamiflu` +
-Updates patient at index 1 medical records with the given description.
+Updates the patient at index 1 medical records with the given description.
 
 === Exiting the program : `exit`
 
@@ -308,14 +310,14 @@ Format: `exit`
 
 === Saving the data
 
-One Life data are saved in the hard disk automatically after any command that changes the data. +
+OneLife data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
 
 === Intuitive command prompting
 
-Provides a more natural way of entering commands into One Life. One Life will prompt the user for the next required
+Provides a more natural way of entering commands into OneLife. OneLife will prompt the user for the next required
 input - no prefixes are required.
 
 Commands that support intuitive prompting:
@@ -329,8 +331,8 @@ Commands that support intuitive prompting:
 Format: `COMMAND`
 
 [TIP]
-Use `/bk` to re-enter previous field. +
-Use `//` if the field is to be blank.
+Type `/bk` to re-enter previous field. +
+Type `//` if the field is to be left blank.
 
 Example of the intuitive add command prompting:
 ```
