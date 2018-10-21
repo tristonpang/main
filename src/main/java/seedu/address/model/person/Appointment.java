@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.model.Date;
+import seedu.address.model.Time;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.Nric;
@@ -19,11 +21,11 @@ public class Appointment {
     /** String value of whole appointment **/
     public final String value;
     /** Date of appointment */
-    private String date;
+    private Date date;
     /** Starting time of appointment */
-    private String startTime;
+    private Time startTime;
     /** Ending time of appointment */
-    private String endTime;
+    private Time endTime;
     /** Name of doctor */
     private Name doctorName;
     /** Medical department of doctorName */
@@ -39,9 +41,9 @@ public class Appointment {
         value = appointment;
         String[] parts = value.split(",");
         if (parts.length == numberOfParts) {
-            date = parts[0].trim();
-            startTime = parts[1].trim();
-            endTime = parts[2].trim();
+            date = new Date(parts[0].trim());
+            startTime = new Time(parts[1].trim());
+            endTime = new Time(parts[2].trim());
             doctorName = new Name(parts[3].trim());
             medicalDepartment = new MedicalDepartment(parts[4].trim());
             patientName = new Name(parts[5].trim());
@@ -54,21 +56,13 @@ public class Appointment {
                        String doctorName, String department, String patientName, String nric) {
         value = date + "," + startTime + "," + endTime
                 + "," + doctorName + "," + department + "," + patientName + "," + nric;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.date = new Date(date);
+        this.startTime = new Time(startTime);
+        this.endTime = new Time(endTime);
         this.doctorName = new Name(doctorName);
         this.medicalDepartment = new MedicalDepartment(department);
         this.patientName = new Name(patientName);
         this.patientNric = new Nric(nric);
-    }
-
-    /**
-     *
-     * @return date of this Appointment.
-     */
-    public String getDate() {
-        return date;
     }
 
     /**
@@ -80,29 +74,28 @@ public class Appointment {
      */
     public boolean isClash(Appointment otherAppointment) {
         // TODO: 1/10/2018 : Change this quick fix.
-        if (this.value.equals("") || otherAppointment.value.equals("")) {
-            return false;
-        }
+//        if (this.value.equals("") || otherAppointment.value.equals("")) {
+//            return false;
+//        }
+
         // different or doctor means definitely no clash
         if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
             return false;
         }
 
-        int currentStartTime = Integer.parseInt(startTime.trim());
-        int currentEndTime = Integer.parseInt(endTime.trim());
-        int otherStartTime = Integer.parseInt(otherAppointment.startTime.trim());
-        int otherEndTime = Integer.parseInt(otherAppointment.endTime.trim());
+        Time otherStartTime = otherAppointment.startTime;
+        Time otherEndTime = otherAppointment.endTime;
 
         // 3 Cases where other appointment clashes with current appointment
-        if (otherStartTime <= currentStartTime && otherEndTime >= currentEndTime) {
+        if (otherStartTime.comesBefore(startTime) && otherEndTime.comesAfter(endTime)) {
             // Case 1: other appointment's start time is before current appointment's start time
             // and other appointment's end time is after current appointment's end time
             return true;
-        } else if (otherStartTime >= currentStartTime && otherStartTime <= currentEndTime) {
+        } else if (otherStartTime.comesAfter(startTime) && otherStartTime.comesBefore(endTime)) {
             // Case 2: other appointment's start time is after current appointment's start time
             // and before current appointment's end time
             return true;
-        } else if (otherEndTime <= currentEndTime && otherEndTime >= currentStartTime) {
+        } else if (otherEndTime.comesBefore(endTime) && otherEndTime.comesAfter(startTime)) {
             // Case 3: Other appointment's end time is before current appointment's end time
             // and after current appointment's start time
             return true;
@@ -121,10 +114,8 @@ public class Appointment {
         if (!this.date.equals(date)) {
             return false;
         }
-        int givenTime = Integer.parseInt(time.trim());
-        int appointmentStartTime = Integer.parseInt(startTime.trim());
-        int appointmentEndTime = Integer.parseInt(endTime.trim());
-        return (givenTime >= appointmentStartTime && givenTime <= appointmentEndTime);
+        Time givenTime = new Time(time);
+        return (givenTime.comesAfter(startTime) && givenTime.comesBefore(endTime));
     }
 
     /**
@@ -170,9 +161,7 @@ public class Appointment {
      * @return boolean on whether the start and end times are valid.
      */
     public boolean hasValidStartandEndTime() {
-        int currentStartTime = Integer.parseInt(startTime.trim());
-        int currentEndTime = Integer.parseInt(endTime.trim());
-        return (currentStartTime < currentEndTime);
+        return (startTime.comesBeforeStrictly(endTime));
     }
 
     public boolean hasValidNric() {
