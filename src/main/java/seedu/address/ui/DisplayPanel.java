@@ -48,17 +48,17 @@ public class DisplayPanel extends UiPart<Region> {
     }
 
     @Subscribe
-        private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-            logger.info(LogsCenter.getEventHandlingLogMessage(event));
-            Person selectedPerson = event.getNewSelection();
-            if (selectedPerson instanceof Patient) {
-                ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) selectedPerson)
-                        .getMedicalRecordLibrary();
-                Collections.reverse(selectedPersonMedicalRecordLibrary);
-                setConnections(new FilteredList<>(FXCollections.observableArrayList(selectedPersonMedicalRecordLibrary)));
-            } else {
-                setConnections(new FilteredList<>((FXCollections.observableArrayList())));
-            }
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Person selectedPerson = event.getNewSelection();
+        if (selectedPerson instanceof Patient) {
+            ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) selectedPerson)
+                    .getMedicalRecordLibrary();
+            Collections.reverse(selectedPersonMedicalRecordLibrary);
+            setConnections(new FilteredList<>(FXCollections.observableArrayList(selectedPersonMedicalRecordLibrary)));
+        } else {
+            setConnections(new FilteredList<>((FXCollections.observableArrayList())));
+        }
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
