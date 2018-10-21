@@ -55,7 +55,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                 && personSearchKeywords.get(PREFIX_GLOBAL).stream().anyMatch(keyword -> {
                     return StringUtil.containsWordIgnoreCase(builder.toString().replaceAll(",", " "),
                             keyword);
-                        });
+                });
 
         boolean isAnyNameMatch = personSearchKeywords.get(PREFIX_NAME) != null
                 && personSearchKeywords.get(PREFIX_NAME).stream()
