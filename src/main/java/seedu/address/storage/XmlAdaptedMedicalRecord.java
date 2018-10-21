@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -80,6 +81,10 @@ public class XmlAdaptedMedicalRecord {
             return false;
         }
 
-        return medicalRecord.equals(((XmlAdaptedMedicalRecord) other).medicalRecord);
+        XmlAdaptedMedicalRecord otherMedicalRecord = (XmlAdaptedMedicalRecord) other;
+        return Objects.equals(date, otherMedicalRecord.date)
+                && Objects.equals(diagnosis, otherMedicalRecord.diagnosis)
+                && Objects.equals(treatment, otherMedicalRecord.treatment)
+                && Objects.equals(comments, otherMedicalRecord.comments);
     }
 }
