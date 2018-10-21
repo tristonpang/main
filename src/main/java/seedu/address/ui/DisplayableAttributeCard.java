@@ -6,6 +6,9 @@ import javafx.scene.layout.Region;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.person.DisplayableAttribute;
 
+/**
+ * A UI component that displays information of a {@code DisplayableAttribute}
+ */
 public class DisplayableAttributeCard extends UiPart<Region> {
     private static final String FXML = "DisplayableAttributeCard.fxml";
 
@@ -29,7 +32,7 @@ public class DisplayableAttributeCard extends UiPart<Region> {
     public DisplayableAttributeCard(DisplayableAttribute displayableAttribute, int displayedIndex) {
         super(FXML);
         this.displayableAttribute = displayableAttribute;
-        id.setText(displayedIndex +". ");
+        id.setText(displayedIndex + ". ");
         if (displayableAttribute instanceof MedicalRecord) {
             date.setText(((MedicalRecord) displayableAttribute).getDate());
             diagnosis.setText("Diagnosis: " + ((MedicalRecord) displayableAttribute).getDiagnosis());

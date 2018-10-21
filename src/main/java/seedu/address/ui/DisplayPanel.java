@@ -1,12 +1,11 @@
 package seedu.address.ui;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,14 +16,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.DisplayPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.DisplayableAttribute;
 import seedu.address.model.person.Person;
 
-public class DisplayPanel extends UiPart<Region>{
+/**
+ * Panel containing the list of displayable attributes.
+ */
+public class DisplayPanel extends UiPart<Region> {
     private static final String FXML = "DisplayPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
 
@@ -52,7 +53,10 @@ public class DisplayPanel extends UiPart<Region>{
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person selectedPerson = event.getNewSelection();
         if (selectedPerson instanceof Patient) {
-            setConnections(new FilteredList<>(FXCollections.observableArrayList(((Patient) selectedPerson).getMedicalRecordLibrary())));
+            ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) selectedPerson)
+                    .getMedicalRecordLibrary();
+            Collections.reverse(selectedPersonMedicalRecordLibrary);
+            setConnections(new FilteredList<>(FXCollections.observableArrayList(selectedPersonMedicalRecordLibrary)));
         } else {
             setConnections(new FilteredList<>((FXCollections.observableArrayList())));
         }
@@ -78,12 +82,6 @@ public class DisplayPanel extends UiPart<Region>{
             displayableAttributeListView.getSelectionModel().clearAndSelect(index);
         });
     }
-
-//    @Subscribe
-//    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-//        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-//        scrollTo(event.targetIndex);
-//    }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code DisplayableAttribute}
