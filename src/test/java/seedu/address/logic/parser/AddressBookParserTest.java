@@ -117,9 +117,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_find() throws Exception {
         Map<Prefix, List<String>> keywords = Map.of(PREFIX_GLOBAL, new ArrayList<>(Arrays.asList("foo", "bar", "baz")));
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " +
-                        keywords.get(PREFIX_GLOBAL).stream().collect(Collectors.joining(" ")));
+        FindCommand command = (FindCommand) parser.parseCommand(FindCommand.COMMAND_WORD + " "
+                + keywords.get(PREFIX_GLOBAL).stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new PersonContainsKeywordsPredicate(keywords)), command);
     }
 
