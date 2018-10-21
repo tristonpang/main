@@ -48,7 +48,7 @@ public class ScheduleCommand extends Command {
             + PREFIX_START_TIME + "1300 "
             + PREFIX_END_TIME + "1400 "
             + PREFIX_DOCTOR_NAME + "Jack "
-            + PREFIX_DOCTOR_NRIC + "Heart "
+            + PREFIX_DOCTOR_NRIC + "S1234567B "
             + PREFIX_PATIENT_NAME + "John Doe "
             + PREFIX_PATIENT_NRIC + "S1234567A ";
 

@@ -260,21 +260,21 @@ Displays the list of appointments of the person in the person card list.
 === Scheduling medical appointments : `schedule`
 
 Schedules a patient/doctor for a medical appointment at a specific date and time. +
-Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME md/DOCTOR_MEDICAL_DEPARTMENT pn/PATIENT_NAME ic/PATIENT_NRIC`
+Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME di/DOCTOR_NRIC pn/PATIENT_NAME pi/PATIENT_NRIC`
 
 ****
 * Date is formatted as DD.MM.YYYY and is dot separated e.g.  `7.11.1996` is the 7th of November 1996
 * Time uses the 24-hour clock time e.g. `1300` is 1pm
 * Doctor name is the doctor's full name e.g. `John Doe`
-* Doctor department is the doctor's medical department e.g. `Heart`
+* Doctor nric is the doctor's nric e.g. `S1234567B`
 * Patient name is the patient's full name e.g. `Kim Tan`
 * Patient nric is the patient's nric e.g. `S1234567A`
 ****
 
 Examples:
 
-* `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A` +
-Schedules `John Doe` for an appointment with doctor `Jack` from the `Heart` department on the 23nd of November 2018 from
+* `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/John Doe pi/S1234567A` +
+Schedules `John Doe` for an appointment with doctor `Jack` on the 23nd of November 2018 from
  1pm to 2pm.
 
 === Viewing medical records of patients : `records`
@@ -381,7 +381,7 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Display Medical Appointments* : `display INDEX`
-* *Schedule Medical Appointments* : `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME md/DOCTOR_MEDICAL_DEPARTMENT pn/PATIENT_NAME ic/PATIENT_NRIC` +
+* *Schedule Medical Appointments* : `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME pi/DOCTOR_NRIC pn/PATIENT_NAME pi/PATIENT_NRIC` +
 e.g. `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A`
 * *View Medical Records* : `records n/NAME [d/DATE]`
 * *Update Medical Records* : `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT c/COMMENTS +

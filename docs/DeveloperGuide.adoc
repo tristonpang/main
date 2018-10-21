@@ -342,7 +342,7 @@ Given below is an example usage scenario and how the schedule command mechanism 
 
 Step 1. The user wants to schedule an appointment. User proceeds to fill in the details behind the respective prefixes.
 
-For example: `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A`
+For example: `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/John Doe pi/S1234567A`
 
 Step 2. The user executes the `ScheduleCommand` which calls the `ScheduleCommandParser`.
 `ScheduleCommandParser` will parse the inputs and return a `ScheduleCommand`.
@@ -356,18 +356,19 @@ The various checks are displayed below.
 Checks:
 
 ** Whether the index of input person is valid.
+** Whether the nric of the doctor is valid.
 ** Whether the nric of the patient is valid.
 ** Whether the start and end times of the appointment are valid
 ** Whether there are any timing clashes between this appointment and the appointments currently stored in the appointment list under the person selected.
 
-Step 4. A successful check will give 2 objects, `personToEdit` and `Appointment` object.
+Step 4. A successful check gives 2 objects, `personToEdit` and `Appointment` object.
 Program creates another `Person` object called `editedPerson` that is equal to `personToEdit`.
 `ScheduleCommand` then adds `Appointment` to the `appointmentList` of `editedPerson`.
 Lastly, `ScheduleCommand` replaces `personToEdit` with `editedPerson` in our model.
 
 image::ScheduleCommandStep4.png[width="800"]
 
-Step 5. `appointmentList` will be updated in storage under `XmlAdaptedPerson`.
+Step 5. `XmlAdaptedPerson` updates storage of `appointmentList`.
 
 The following sequence diagram shows how the schedule appointment operation works:
 
@@ -382,7 +383,7 @@ In our current implementation, we split up the various parts of an appointment i
 
 For example:
 
-`schedule 1 s/23.11.2018,1300,1400,Jack,Heart,John Doe,S1234567A`
+`schedule 1 s/23.11.2018,1300,1400,Jack,S1234567B,John Doe,S1234567A`
 
 ** Pros: The user has to type less when scheduling a command.
 The user is not required to type all the prefixes, he just has to type 1.
