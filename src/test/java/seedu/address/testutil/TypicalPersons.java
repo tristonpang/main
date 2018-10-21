@@ -34,13 +34,16 @@ public class TypicalPersons {
             .withNric("S7412345C").withTags("friends").withAppointments("").build();
     public static final Patient BENSON = new PatientBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withNric("S8234567A")
-            .withEmail("johnd@example.com").withPhone("98765432").withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -")
+            .withEmail("johnd@example.com").withPhone("98765432")
+            .withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -")
             .withAppointment("").withAppointments("").withTags("owesMoney", "friends").build();
     public static final Patient CARL = new PatientBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -").withAppointment("").withAppointments("").withEmail("heinz@example.com")
+            .withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -").withAppointment("").withAppointments("")
+            .withEmail("heinz@example.com")
             .withAddress("wall street").withNric("S9898989B").build();
     public static final Patient DANIEL = new PatientBuilder().withName("Daniel Meier").withPhone("87652599")
-            .withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -").withAppointment("").withAppointments("").withEmail("cornelia@example.com")
+            .withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -").withAppointment("").withAppointments("")
+            .withEmail("cornelia@example.com")
             .withAddress("10th street").withNric("s8234599a").withTags("friends").build();
     public static final Doctor ELLE = new DoctorBuilder().withName("Elle Meyer").withNric("s2234599a")
             .withPhone("9482224").withMedicalDepartment("Oncology").withEmail("werner@example.com")
