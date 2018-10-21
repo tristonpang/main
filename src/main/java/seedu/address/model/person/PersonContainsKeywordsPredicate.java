@@ -51,11 +51,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                     .append(PREFIX_MEDICAL_RECORD.toString() + ((Patient) person).getMedicalRecord()).append(" ");
         }
 
-        boolean isAnyKeywordMatch = personSearchKeywords.get(PREFIX_GLOBAL) != null &&
-                personSearchKeywords.get(PREFIX_GLOBAL).stream()
-                        .anyMatch(keyword -> {
-                            return StringUtil.containsWordIgnoreCase(builder.toString()
-                                    .replaceAll(",", " "), keyword);
+        boolean isAnyKeywordMatch = personSearchKeywords.get(PREFIX_GLOBAL) != null
+                && personSearchKeywords.get(PREFIX_GLOBAL).stream().anyMatch(keyword -> {
+                    return StringUtil.containsWordIgnoreCase(builder.toString().replaceAll(",", " "),
+                            keyword);
                         });
 
         boolean isAnyNameMatch = personSearchKeywords.get(PREFIX_NAME) != null
@@ -123,7 +122,8 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof PersonContainsKeywordsPredicate // instanceof handles nulls
-                && personSearchKeywords.equals(((PersonContainsKeywordsPredicate) other).personSearchKeywords)); // state check
+                && personSearchKeywords.equals(((PersonContainsKeywordsPredicate) other)
+                .personSearchKeywords)); // state check
     }
 
 }
