@@ -33,7 +33,7 @@ public class SampleDataUtil {
         return new Person[] {
             new Patient(new Name("Alex Yeoh"), new Nric("S1234567A"), new Phone("87438807"),
                     new Email("alexyeoh@example.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
-                    getTagSet("friends"), SAMPLE_APPOINTMENT_LIST, new MedicalRecord("")),
+                    getTagSet("friends"), SAMPLE_APPOINTMENT_LIST, new MedicalRecord("12.12.2018","flu", "tamiflu", "")),
             new Doctor(new Name("Bernice Yu"), new Nric("S1010101A"), new Phone("99272758"),
                     new Email("berniceyu" + "@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
                     getTagSet("colleagues", "friends"), SAMPLE_APPOINTMENT_LIST,
@@ -41,11 +41,11 @@ public class SampleDataUtil {
             new Patient(new Name("Charlotte Oliveiro"), new Nric("S2020202B"), new Phone("93210283"),
                     new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
                     getTagSet("neighbours"), SAMPLE_APPOINTMENT_LIST,
-                    new MedicalRecord("Diagnosed with cough. " + "Dextromethorphan prescribed.")),
+                    new MedicalRecord("22.22.2017","cough", "Dextromethorphan", "take thrice a day")),
             new Patient(new Name("David Li"), new Nric("S9991114A"), new Phone("91031282"),
                     new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
                     getTagSet("family"), SAMPLE_APPOINTMENT_LIST,
-                    new MedicalRecord("Diagnosed with stage 3 testicular cancer. Orchiectomy for both testicles.")),
+                    new MedicalRecord("20.10.2018", "Stage 3 testicular cancer", "Orchiectomy for both testicles", "15% chance of survival")),
             new Doctor(new Name("Irfan Ibrahim"), new Nric("S3030303C"), new Phone("92492021"), new Email("irfan"
                     + "@example.com"), new Address("Blk 47 Tampines Street 20, #17-35"), getTagSet("classmates"),
                     SAMPLE_APPOINTMENT_LIST, new MedicalDepartment("Obstetrics")),

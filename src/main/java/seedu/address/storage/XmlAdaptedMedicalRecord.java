@@ -1,5 +1,9 @@
 package seedu.address.storage;
 
+import java.util.Arrays;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
@@ -12,8 +16,20 @@ import seedu.address.model.patient.MedicalRecord;
 @XmlRootElement(name = "medicalRecords")
 public class XmlAdaptedMedicalRecord {
 
-    @XmlValue
+    @XmlElement
     private String medicalRecord;
+
+    @XmlElement
+    private String date;
+
+    @XmlElement
+    private String diagnosis;
+
+    @XmlElement
+    private String treatment;
+
+    @XmlElement
+    private String comments;
 
     /**
      * Constructs an XmlAdaptedMedicalRecord.
@@ -26,6 +42,11 @@ public class XmlAdaptedMedicalRecord {
      */
     public XmlAdaptedMedicalRecord(String medicalRecord) {
         this.medicalRecord = medicalRecord;
+        List<String> valueList = Arrays.asList(medicalRecord.split(","));
+        this.date = valueList.get(0);
+        this.diagnosis = valueList.get(1).substring(12);
+        this.treatment = valueList.get(2).substring(12);
+        this.comments = valueList.get(3).substring(11);
     }
 
     /**
