@@ -52,7 +52,8 @@ public class PatientUtil extends PersonUtil {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
-        descriptor.getNric().ifPresent(nric -> sb.append(" ").append(PREFIX_PATIENT_NRIC).append(nric.code).append(" "));
+        descriptor.getNric().ifPresent(nric -> sb.append(" ")
+                .append(PREFIX_PATIENT_NRIC).append(nric.code).append(" "));
         return sb.toString();
     }
 }

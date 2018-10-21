@@ -3,8 +3,8 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
@@ -73,7 +73,7 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_NRIC_DESC = " " + PREFIX_PATIENT_NRIC + "JB123456A"; // cannot start with 2 letters
+    public static final String INVALID_NRIC_DESC = " " + PREFIX_PATIENT_NRIC + "JB123456A"; // cant start with 2 letters
     public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE + "teacher"; // not a valid role
     public static final String INVALID_MEDICAL_DEPARTMENT_DESC = " " + PREFIX_DOCTOR_NRIC + "HE12RT";
     // numbers not allowed
