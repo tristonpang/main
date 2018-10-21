@@ -1,7 +1,11 @@
 package seedu.address.model;
 
+/**
+ * Represents a date in the address book.
+ */
 public class Date {
 
+    /** String representation of the date */
     private String date;
 
     public Date(String date) {
