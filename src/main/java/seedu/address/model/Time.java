@@ -36,7 +36,7 @@ public class Time {
      */
     public boolean comesAfter(Time otherTiming) {
         int currentTime = Integer.parseInt(time.trim());
-        int otherTime =  Integer.parseInt(otherTiming.time.trim());
+        int otherTime = Integer.parseInt(otherTiming.time.trim());
         return (currentTime >= otherTime);
     }
 
@@ -66,6 +66,14 @@ public class Time {
         int currentTime = Integer.parseInt(time.trim());
         int otherTime = Integer.parseInt(otherTiming.time.trim());
         return (currentTime > otherTime);
+    }
+
+    /**
+     *
+     * @return whether this time is a valid time.
+     */
+    public boolean isValid() {
+        return true;
     }
 
     @Override

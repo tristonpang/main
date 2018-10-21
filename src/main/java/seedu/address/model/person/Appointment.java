@@ -74,9 +74,9 @@ public class Appointment {
      */
     public boolean isClash(Appointment otherAppointment) {
         // TODO: 1/10/2018 : Change this quick fix.
-//        if (this.value.equals("") || otherAppointment.value.equals("")) {
-//            return false;
-//        }
+        //if (this.value.equals("") || otherAppointment.value.equals("")) {
+        //    return false;
+        //}
 
         // different or doctor means definitely no clash
         if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
@@ -158,17 +158,46 @@ public class Appointment {
 
     /**
      *
-     * @return boolean on whether the start and end times are valid.
+     * @return boolean on whether the start time comes strictly before end time.
      */
     public boolean hasValidStartandEndTime() {
         return (startTime.comesBeforeStrictly(endTime));
     }
 
+    /**
+     *
+     * @return boolean on whether nric of patient is valid.
+     */
     public boolean hasValidNric() {
         return patientNric.isValidNric(patientNric.toString());
     }
 
     /**
+     *
+     * @return boolean on whether date of appointment is valid.
+     */
+    public boolean hasValidDate() {
+        return date.isValid();
+    }
+
+    /**
+     *
+     * @return boolean on whether start time of appointment is valid.
+     */
+    public boolean hasValidStartTime() {
+        return startTime.isValid();
+    }
+
+    /**
+     *
+     * @return boolean on whether end time of appointment is valid.
+     */
+    public boolean hasValidEndTime() {
+        return endTime.isValid();
+    }
+
+    /**
+     * Test only used in junit testing.
      *
      * @return whether an appointment is valid or not.
      */

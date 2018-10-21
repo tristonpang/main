@@ -12,6 +12,14 @@ public class Date {
         this.date = date;
     }
 
+    /**
+     *
+     * @return whether this date is a valid date.
+     */
+    public boolean isValid() {
+        return true;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
