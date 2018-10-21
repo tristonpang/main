@@ -34,13 +34,14 @@ public class UpdateCommand extends Command {
             + "the index number used in the last person listing. "
             + "Medical record library of the patient will be the updated with the given input.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + PREFIX_DATE + "DATE\n"
-            + PREFIX_DIAGNOSIS + "DIAGNOSIS\n"
-            + PREFIX_TREATMENT + "TREATMENT\n"
-            + PREFIX_COMMENT + "COMMENTS\n"
+            + PREFIX_DATE + "DATE "
+            + PREFIX_DIAGNOSIS + "DIAGNOSIS "
+            + PREFIX_TREATMENT + "TREATMENT "
+            + "[" + PREFIX_COMMENT + "COMMENTS]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_DATE + "22.11.2018 "
-            + PREFIX_MEDICAL_RECORD + "Diagnosed with flue. Tamiflu prescribed.";
+            + PREFIX_DIAGNOSIS + "flu "
+            + PREFIX_TREATMENT + "tamiflu";
 
     public static final String MESSAGE_UPDATE_MEDICAL_RECORD_SUCCESS = "Updated medical record of Person: %1$s";
     public static final String MESSAGE_DELETE_MEDICAL_RECORD_SUCCESS = "Medical record deleted from Person: %1$s";
@@ -86,8 +87,7 @@ public class UpdateCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
-        }
-        (new SelectCommand(index)).execute(model, history);
+        } (new SelectCommand(index)).execute(model, history);
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
