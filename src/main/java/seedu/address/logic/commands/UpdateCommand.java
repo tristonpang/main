@@ -87,6 +87,7 @@ public class UpdateCommand extends Command {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
+
         (new SelectCommand(index)).execute(model, history);
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
