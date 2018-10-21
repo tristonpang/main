@@ -21,7 +21,7 @@ public class Nric {
      */
     public Nric(String code) {
         requireNonNull(code);
-        checkArgument(isValidNric(code), MESSAGE_NRIC_CONSTRAINTS);
+        // checkArgument(isValidNric(code), MESSAGE_NRIC_CONSTRAINTS);
         this.code = code;
     }
 

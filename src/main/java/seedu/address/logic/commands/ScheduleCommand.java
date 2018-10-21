@@ -4,8 +4,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
@@ -40,17 +40,17 @@ public class ScheduleCommand extends Command {
             + PREFIX_START_TIME + "START_TIME "
             + PREFIX_END_TIME + "END_TIME "
             + PREFIX_DOCTOR_NAME + "DOCTOR_NAME "
-            + PREFIX_MEDICAL_DEPARTMENT + "DOCTOR_MEDICAL_DEPARTMENT "
+            + PREFIX_DOCTOR_NRIC + "DOCTOR_MEDICAL_DEPARTMENT "
             + PREFIX_PATIENT_NAME + "PATIENT_NAME "
-            + PREFIX_NRIC + "PATIENT_NRIC\n"
+            + PREFIX_PATIENT_NRIC + "PATIENT_NRIC\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_DATE + "23.11.2018 "
             + PREFIX_START_TIME + "1300 "
             + PREFIX_END_TIME + "1400 "
             + PREFIX_DOCTOR_NAME + "Jack "
-            + PREFIX_MEDICAL_DEPARTMENT + "Heart "
+            + PREFIX_DOCTOR_NRIC + "Heart "
             + PREFIX_PATIENT_NAME + "John Doe "
-            + PREFIX_NRIC + "S1234567A ";
+            + PREFIX_PATIENT_NRIC + "S1234567A ";
 
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_SUCCESS = "Scheduled appointment to Person: %1$s";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER =
@@ -77,9 +77,12 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH = "There is a clash of appointments. "
             + "Please choose another slot.\n";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_NRIC = "NRIC format is wrong. "
-            + "NRIC should contain only alphanumeric characters and should not be left blank.\n";;
-    private static final String MESSAGE_SCHEDULE_APPOINTMENT_MISMATCH = "Please check input name matches person chosen";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT_NRIC =
+            "Patient NRIC format is wrong. "
+            + "NRIC should contain only alphanumeric characters and should not be left blank.\n";
+    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR_NRIC =
+            "Doctor NRIC format is wrong. "
+            + "NRIC should contain only alphanumeric characters and should not be left blank.\n";
 
     private final Index index;
     private final Appointment appointment;
@@ -106,8 +109,12 @@ public class ScheduleCommand extends Command {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER);
         }
 
-        if (!appointment.hasValidNric()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_NRIC);
+        if (!appointment.hasValidPatientNric()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT_NRIC);
+        }
+
+        if (!appointment.hasValidDoctorNric()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR_NRIC);
         }
 
         if (!appointment.hasValidDate()) {

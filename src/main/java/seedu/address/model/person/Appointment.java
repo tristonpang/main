@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.model.Date;
 import seedu.address.model.Time;
 import seedu.address.model.doctor.Doctor;
-import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 
@@ -29,7 +28,7 @@ public class Appointment {
     /** Name of doctor */
     private Name doctorName;
     /** Medical department of doctorName */
-    private MedicalDepartment medicalDepartment;
+    private Nric doctorNric;
     /** Name of patient */
     private Name patientName;
     /** nric of patient */
@@ -45,7 +44,7 @@ public class Appointment {
             startTime = new Time(parts[1].trim());
             endTime = new Time(parts[2].trim());
             doctorName = new Name(parts[3].trim());
-            medicalDepartment = new MedicalDepartment(parts[4].trim());
+            doctorNric = new Nric(parts[4].trim());
             patientName = new Name(parts[5].trim());
             patientNric = new Nric(parts[6].trim());
         }
@@ -53,16 +52,16 @@ public class Appointment {
 
     // Constructor used when taking in inputs from parser.
     public Appointment(String date, String startTime, String endTime,
-                       String doctorName, String department, String patientName, String nric) {
+                       String doctorName, String doctorNric, String patientName, String patientNric) {
         value = date + "," + startTime + "," + endTime
-                + "," + doctorName + "," + department + "," + patientName + "," + nric;
+                + "," + doctorName + "," + doctorNric + "," + patientName + "," + patientNric;
         this.date = new Date(date);
         this.startTime = new Time(startTime);
         this.endTime = new Time(endTime);
         this.doctorName = new Name(doctorName);
-        this.medicalDepartment = new MedicalDepartment(department);
+        this.doctorNric = new Nric(doctorNric);
         this.patientName = new Name(patientName);
-        this.patientNric = new Nric(nric);
+        this.patientNric = new Nric(patientNric);
     }
 
     /**
@@ -73,11 +72,6 @@ public class Appointment {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
-        // TODO: 1/10/2018 : Change this quick fix.
-        // if (this.value.equals("") || otherAppointment.value.equals("")) {
-        //     return false;
-        // }
-
         // different or doctor means definitely no clash
         if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
             return false;
@@ -134,8 +128,8 @@ public class Appointment {
     public boolean hasValidDoctor(Person person) {
         Doctor doctor = (Doctor) person;
         Name name = doctor.getName();
-        MedicalDepartment medicalDepartment = doctor.getMedicalDepartment();
-        if (doctorName.equals(name) && this.medicalDepartment.equals(medicalDepartment)) {
+        Nric doctorNric = doctor.getNric();
+        if (doctorName.equals(name) && this.doctorNric.equals(doctorNric)) {
             return true;
         }
         return false;
@@ -168,8 +162,16 @@ public class Appointment {
      *
      * @return boolean on whether nric of patient is valid.
      */
-    public boolean hasValidNric() {
+    public boolean hasValidPatientNric() {
         return patientNric.isValidNric(patientNric.toString());
+    }
+
+    /**
+     *
+     * @return boolean on whether nric of doctor is valid.
+     */
+    public boolean hasValidDoctorNric() {
+        return patientNric.isValidNric(doctorNric.toString());
     }
 
     /**
@@ -206,7 +208,7 @@ public class Appointment {
             // For junit testing.
             return true;
         }
-        return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidNric();
+        return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidPatientNric();
     }
 
     @Override
