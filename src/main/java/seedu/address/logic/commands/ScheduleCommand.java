@@ -144,9 +144,6 @@ public class ScheduleCommand extends Command {
         ArrayList<Appointment> appointmentList = new ArrayList<>(personToEdit.getAppointmentList());
         appointmentList.add(appointment);
 
-        ArrayList<MedicalRecord> newMedicalRecordLibrary =
-                new ArrayList<>(((Patient) personToEdit).getMedicalRecordLibrary());
-
         if (personToEdit instanceof Doctor) {
             editedPerson = new Doctor(personToEdit.getName(), personToEdit.getNric(),
                     personToEdit.getPhone(), personToEdit.getEmail(),
@@ -154,6 +151,10 @@ public class ScheduleCommand extends Command {
                     appointmentList, ((Doctor) personToEdit).getMedicalDepartment());
         } else {
             assert personToEdit instanceof Patient;
+
+            ArrayList<MedicalRecord> newMedicalRecordLibrary =
+                    new ArrayList<>(((Patient) personToEdit).getMedicalRecordLibrary());
+
             editedPerson = new Patient(personToEdit.getName(),
                     personToEdit.getNric(), personToEdit.getPhone(),
                     personToEdit.getEmail(), personToEdit.getAddress(),
