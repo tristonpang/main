@@ -22,7 +22,7 @@ public class Time {
      */
     public boolean comesBefore(Time otherTiming) {
         int currentTime = Integer.parseInt(time.trim());
-        int otherTime =  Integer.parseInt(otherTiming.time.trim());
+        int otherTime = Integer.parseInt(otherTiming.time.trim());
         return (currentTime <= otherTime);
     }
 
@@ -50,7 +50,7 @@ public class Time {
      */
     public boolean comesBeforeStrictly(Time otherTiming) {
         int currentTime = Integer.parseInt(time.trim());
-        int otherTime =  Integer.parseInt(otherTiming.time.trim());
+        int otherTime = Integer.parseInt(otherTiming.time.trim());
         return (currentTime < otherTime);
     }
 
@@ -64,12 +64,12 @@ public class Time {
      */
     public boolean comesAfterStrictly(Time otherTiming) {
         int currentTime = Integer.parseInt(time.trim());
-        int otherTime =  Integer.parseInt(otherTiming.time.trim());
+        int otherTime = Integer.parseInt(otherTiming.time.trim());
         return (currentTime > otherTime);
     }
 
     @Override
-    public boolean equals(Object obj ) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
