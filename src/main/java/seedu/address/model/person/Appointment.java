@@ -2,8 +2,9 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.model.Date;
+import seedu.address.model.Time;
 import seedu.address.model.doctor.Doctor;
-import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 
@@ -19,15 +20,15 @@ public class Appointment {
     /** String value of whole appointment **/
     public final String value;
     /** Date of appointment */
-    private String date;
+    private Date date;
     /** Starting time of appointment */
-    private String startTime;
+    private Time startTime;
     /** Ending time of appointment */
-    private String endTime;
+    private Time endTime;
     /** Name of doctor */
     private Name doctorName;
     /** Medical department of doctorName */
-    private MedicalDepartment medicalDepartment;
+    private Nric doctorNric;
     /** Name of patient */
     private Name patientName;
     /** nric of patient */
@@ -39,11 +40,11 @@ public class Appointment {
         value = appointment;
         String[] parts = value.split(",");
         if (parts.length == numberOfParts) {
-            date = parts[0].trim();
-            startTime = parts[1].trim();
-            endTime = parts[2].trim();
+            date = new Date(parts[0].trim());
+            startTime = new Time(parts[1].trim());
+            endTime = new Time(parts[2].trim());
             doctorName = new Name(parts[3].trim());
-            medicalDepartment = new MedicalDepartment(parts[4].trim());
+            doctorNric = new Nric(parts[4].trim());
             patientName = new Name(parts[5].trim());
             patientNric = new Nric(parts[6].trim());
         }
@@ -51,24 +52,16 @@ public class Appointment {
 
     // Constructor used when taking in inputs from parser.
     public Appointment(String date, String startTime, String endTime,
-                       String doctorName, String department, String patientName, String nric) {
+                       String doctorName, String doctorNric, String patientName, String patientNric) {
         value = date + "," + startTime + "," + endTime
-                + "," + doctorName + "," + department + "," + patientName + "," + nric;
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
+                + "," + doctorName + "," + doctorNric + "," + patientName + "," + patientNric;
+        this.date = new Date(date);
+        this.startTime = new Time(startTime);
+        this.endTime = new Time(endTime);
         this.doctorName = new Name(doctorName);
-        this.medicalDepartment = new MedicalDepartment(department);
+        this.doctorNric = new Nric(doctorNric);
         this.patientName = new Name(patientName);
-        this.patientNric = new Nric(nric);
-    }
-
-    /**
-     *
-     * @return date of this Appointment.
-     */
-    public String getDate() {
-        return date;
+        this.patientNric = new Nric(patientNric);
     }
 
     /**
@@ -79,30 +72,24 @@ public class Appointment {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
-        // TODO: 1/10/2018 : Change this quick fix.
-        if (this.value.equals("") || otherAppointment.value.equals("")) {
-            return false;
-        }
         // different or doctor means definitely no clash
         if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
             return false;
         }
 
-        int currentStartTime = Integer.parseInt(startTime.trim());
-        int currentEndTime = Integer.parseInt(endTime.trim());
-        int otherStartTime = Integer.parseInt(otherAppointment.startTime.trim());
-        int otherEndTime = Integer.parseInt(otherAppointment.endTime.trim());
+        Time otherStartTime = otherAppointment.startTime;
+        Time otherEndTime = otherAppointment.endTime;
 
         // 3 Cases where other appointment clashes with current appointment
-        if (otherStartTime <= currentStartTime && otherEndTime >= currentEndTime) {
+        if (otherStartTime.comesBefore(startTime) && otherEndTime.comesAfter(endTime)) {
             // Case 1: other appointment's start time is before current appointment's start time
             // and other appointment's end time is after current appointment's end time
             return true;
-        } else if (otherStartTime >= currentStartTime && otherStartTime <= currentEndTime) {
+        } else if (otherStartTime.comesAfter(startTime) && otherStartTime.comesBefore(endTime)) {
             // Case 2: other appointment's start time is after current appointment's start time
             // and before current appointment's end time
             return true;
-        } else if (otherEndTime <= currentEndTime && otherEndTime >= currentStartTime) {
+        } else if (otherEndTime.comesBefore(endTime) && otherEndTime.comesAfter(startTime)) {
             // Case 3: Other appointment's end time is before current appointment's end time
             // and after current appointment's start time
             return true;
@@ -121,10 +108,8 @@ public class Appointment {
         if (!this.date.equals(date)) {
             return false;
         }
-        int givenTime = Integer.parseInt(time.trim());
-        int appointmentStartTime = Integer.parseInt(startTime.trim());
-        int appointmentEndTime = Integer.parseInt(endTime.trim());
-        return (givenTime >= appointmentStartTime && givenTime <= appointmentEndTime);
+        Time givenTime = new Time(time);
+        return (givenTime.comesAfter(startTime) && givenTime.comesBefore(endTime));
     }
 
     /**
@@ -143,8 +128,8 @@ public class Appointment {
     public boolean hasValidDoctor(Person person) {
         Doctor doctor = (Doctor) person;
         Name name = doctor.getName();
-        MedicalDepartment medicalDepartment = doctor.getMedicalDepartment();
-        if (doctorName.equals(name) && this.medicalDepartment.equals(medicalDepartment)) {
+        Nric doctorNric = doctor.getNric();
+        if (doctorName.equals(name) && this.doctorNric.equals(doctorNric)) {
             return true;
         }
         return false;
@@ -167,19 +152,54 @@ public class Appointment {
 
     /**
      *
-     * @return boolean on whether the start and end times are valid.
+     * @return boolean on whether the start time comes strictly before end time.
      */
     public boolean hasValidStartandEndTime() {
-        int currentStartTime = Integer.parseInt(startTime.trim());
-        int currentEndTime = Integer.parseInt(endTime.trim());
-        return (currentStartTime < currentEndTime);
+        return (startTime.comesBeforeStrictly(endTime));
     }
 
-    public boolean hasValidNric() {
+    /**
+     *
+     * @return boolean on whether nric of patient is valid.
+     */
+    public boolean hasValidPatientNric() {
         return patientNric.isValidNric(patientNric.toString());
     }
 
     /**
+     *
+     * @return boolean on whether nric of doctor is valid.
+     */
+    public boolean hasValidDoctorNric() {
+        return patientNric.isValidNric(doctorNric.toString());
+    }
+
+    /**
+     *
+     * @return boolean on whether date of appointment is valid.
+     */
+    public boolean hasValidDate() {
+        return date.isValid();
+    }
+
+    /**
+     *
+     * @return boolean on whether start time of appointment is valid.
+     */
+    public boolean hasValidStartTime() {
+        return startTime.isValid();
+    }
+
+    /**
+     *
+     * @return boolean on whether end time of appointment is valid.
+     */
+    public boolean hasValidEndTime() {
+        return endTime.isValid();
+    }
+
+    /**
+     * Test only used in junit testing.
      *
      * @return whether an appointment is valid or not.
      */
@@ -188,7 +208,7 @@ public class Appointment {
             // For junit testing.
             return true;
         }
-        return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidNric();
+        return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidPatientNric();
     }
 
     @Override

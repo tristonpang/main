@@ -20,7 +20,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_TREATMENT = new Prefix("tr/");
     public static final Prefix PREFIX_COMMENT = new Prefix("c/");
     public static final Prefix PREFIX_DATE = new Prefix("d/");
-    public static final Prefix PREFIX_MEDICAL_DEPARTMENT = new Prefix("md/");
-    public static final Prefix PREFIX_NRIC = new Prefix("ic/");
+    public static final Prefix PREFIX_DOCTOR_NRIC = new Prefix("di/");
+    public static final Prefix PREFIX_PATIENT_NRIC = new Prefix("pi/");
     public static final Prefix PREFIX_ROLE = new Prefix("r/");
 }

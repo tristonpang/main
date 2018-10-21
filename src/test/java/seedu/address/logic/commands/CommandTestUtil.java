@@ -3,11 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -61,11 +61,11 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String NRIC_DESC_AMY = " " + PREFIX_NRIC + VALID_NRIC_AMY;
-    public static final String NRIC_DESC_BOB = " " + PREFIX_NRIC + VALID_NRIC_BOB;
+    public static final String NRIC_DESC_AMY = " " + PREFIX_PATIENT_NRIC + VALID_NRIC_AMY;
+    public static final String NRIC_DESC_BOB = " " + PREFIX_PATIENT_NRIC + VALID_NRIC_BOB;
     public static final String MEDICAL_RECORD_DESC_AMY = " " + PREFIX_MEDICAL_RECORD + VALID_MEDICAL_RECORD_AMY;
     public static final String MEDICAL_RECORD_DESC_BOB = " " + PREFIX_MEDICAL_RECORD + VALID_MEDICAL_RECORD_BOB;
-    public static final String MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + VALID_MEDICAL_DEPARTMENT;
+    public static final String MEDICAL_DEPARTMENT_DESC = " " + PREFIX_DOCTOR_NRIC + VALID_MEDICAL_DEPARTMENT;
     public static final String ROLE_DOCTOR_DESC = " " + PREFIX_ROLE + VALID_ROLE_DOCTOR;
     public static final String ROLE_PATIENT_DESC = " " + PREFIX_ROLE + VALID_ROLE_PATIENT;
 
@@ -74,9 +74,9 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "JB123456A"; // cannot start with 2 letters
+    public static final String INVALID_NRIC_DESC = " " + PREFIX_PATIENT_NRIC + "JB123456A"; // cant start with 2 letters
     public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE + "teacher"; // not a valid role
-    public static final String INVALID_MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + "HE12RT";
+    public static final String INVALID_MEDICAL_DEPARTMENT_DESC = " " + PREFIX_DOCTOR_NRIC + "HE12RT";
     // numbers not allowed
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

@@ -2,10 +2,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -28,7 +28,7 @@ public class AddCommand extends Command {
             + "Parameters: "
             + PREFIX_ROLE + "ROLE "
             + PREFIX_NAME + "NAME "
-            + PREFIX_NRIC + "NRIC "
+            + PREFIX_PATIENT_NRIC + "NRIC "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
@@ -38,14 +38,14 @@ public class AddCommand extends Command {
             + COMMAND_WORD + " "
             + PREFIX_ROLE + "<ROLE> "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_NRIC + "S1234567A "
+            + PREFIX_PATIENT_NRIC + "S1234567A "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TAG + "friend";
 
     private static final String USAGE_DOCTOR_EXAMPLE = USAGE_EXAMPLE.replaceFirst("<ROLE>", "Doctor")
-            + PREFIX_MEDICAL_DEPARTMENT + "Oncology";
+            + PREFIX_DOCTOR_NRIC + "Oncology";
 
     public static final String MESSAGE_PATIENT_USAGE =
             COMMON_MESSAGE.replaceFirst("person", "patient") + USAGE_EXAMPLE.replaceFirst("<ROLE>",
