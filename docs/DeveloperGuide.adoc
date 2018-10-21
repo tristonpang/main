@@ -347,10 +347,11 @@ For example: `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John D
 Step 2. The user executes the `ScheduleCommand` which calls the `ScheduleCommandParser`.
 `ScheduleCommandParser` will parse the inputs and return a `ScheduleCommand`.
 
-Step 3. `ScheduleCommand` will then be executed.
-Various checks will be conducted to ensure that the appointment scheduled is valid.
+Step 3. `ScheduleCommand` then executes.
+`ScheduleCommand` then conducts various checks to ensure that the appointment scheduled is valid.
 If it is invalid, an exception message will be thrown.
 The `Appointment` will not be scheduled.
+The various checks are displayed below.
 
 Checks:
 
@@ -361,8 +362,8 @@ Checks:
 
 Step 4. A successful check will give 2 objects, `personToEdit` and `Appointment` object.
 Program creates another `Person` object called `editedPerson` that is equal to `personToEdit`.
-`Appointment` will be added to the `appointmentList` of `editedPerson`.
-Lastly, we edit the `personToEdit` with `editedPerson` in our model.
+`ScheduleCommand` then adds `Appointment` to the `appointmentList` of `editedPerson`.
+Lastly, we replace `personToEdit` with `editedPerson` in our model.
 
 image::ScheduleCommandStep4.png[width="800"]
 
@@ -373,6 +374,9 @@ The following sequence diagram shows how the schedule appointment operation work
 image::ScheduleSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
+
+===== Aspect: Command for schedule command
+
 An alternative considered is to use a comma-separated long string in the command prompt to schedule an appointment.
 In our current implementation, we split up the various parts of an appointment into their respective prefixes.
 
