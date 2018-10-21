@@ -363,7 +363,7 @@ Checks:
 Step 4. A successful check will give 2 objects, `personToEdit` and `Appointment` object.
 Program creates another `Person` object called `editedPerson` that is equal to `personToEdit`.
 `ScheduleCommand` then adds `Appointment` to the `appointmentList` of `editedPerson`.
-Lastly, we replace `personToEdit` with `editedPerson` in our model.
+Lastly, `ScheduleCommand` replaces `personToEdit` with `editedPerson` in our model.
 
 image::ScheduleCommandStep4.png[width="800"]
 
