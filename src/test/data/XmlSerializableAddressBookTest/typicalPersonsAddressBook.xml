@@ -8,7 +8,7 @@
         <phone>94351253</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
-        <medicalRecord></medicalRecord>
+        <medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>
         <appointment></appointment>
         <tagged>friends</tagged>
     </persons>
@@ -19,7 +19,7 @@
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
-        <medicalRecord></medicalRecord>
+        <medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>
         <appointment></appointment>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
@@ -31,7 +31,7 @@
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <address>wall street</address>
-        <medicalRecord></medicalRecord>
+        <medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>
         <appointment></appointment>
     </persons>
     <persons>
@@ -42,7 +42,7 @@
         <email>cornelia@example.com</email>
         <address>10th street</address>
         <tagged>friends</tagged>
-        <medicalRecord></medicalRecord>
+        <medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>
         <appointment></appointment>
     </persons>
     <persons>

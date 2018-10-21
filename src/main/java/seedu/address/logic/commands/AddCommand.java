@@ -42,7 +42,7 @@ public class AddCommand extends Command {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "mandarin-only ";
+            + PREFIX_TAG + "friend";
 
     private static final String USAGE_DOCTOR_EXAMPLE = USAGE_EXAMPLE.replaceFirst("<ROLE>", "Doctor")
             + PREFIX_MEDICAL_DEPARTMENT + "Oncology";

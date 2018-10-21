@@ -312,6 +312,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design considerations
 This section describes the pros and cons of the current and other alternate implementations of undo & redo.
+
 ===== Aspect: How undo & redo executes
 
 * **Alternative 1 (current choice):** Save the entire address book.
@@ -626,6 +627,7 @@ image::UpdateSequenceDiagram.png[width="800"]
 
 ==== Design considerations
 This section describes the pros and cons of the current and other alternate implementations of updating medical records.
+
 ===== Aspect: How to store a patient's medical record library
 
 * **Alternative 1 (current choice):** Use an ArrayList of `MedicalRecord` as the patient's medical record library.

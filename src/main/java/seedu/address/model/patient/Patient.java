@@ -30,7 +30,7 @@ public class Patient extends Person {
      */
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(name, nric, phone, email, address, tags);
-        this.latestMedicalRecord = new MedicalRecord("");
+        this.latestMedicalRecord = new MedicalRecord("", "", "", "");
         this.medicalRecordLibrary = new ArrayList<>();
     }
 
@@ -101,7 +101,7 @@ public class Patient extends Person {
         }
         if (obj instanceof Patient) {
             Patient otherPatient = (Patient) obj;
-            return super.equals(otherPatient) && otherPatient.getMedicalRecord().equals(getMedicalRecord());
+            return super.equals(otherPatient);
         } else {
             return false;
         }

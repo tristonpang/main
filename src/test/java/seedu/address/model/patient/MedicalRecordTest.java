@@ -10,7 +10,7 @@ public class MedicalRecordTest {
     @Test
     public void equals() {
 
-        MedicalRecord medicalRecord = new MedicalRecord("Hello");
+        MedicalRecord medicalRecord = new MedicalRecord("12.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -");
 
         // same object -> returns true
         assertTrue(medicalRecord.equals(medicalRecord));
@@ -26,7 +26,8 @@ public class MedicalRecordTest {
         assertFalse(medicalRecord.equals(null));
 
         // different person -> returns false
-        MedicalRecord differentMedicalRecord = new MedicalRecord("Bye");
+        MedicalRecord differentMedicalRecord = new MedicalRecord("13.13.2018 , Diagnosis: cough,"
+                + " Treatment: dextromethorphan, Comments: -");
         assertFalse(medicalRecord.equals(differentMedicalRecord));
     }
 }
