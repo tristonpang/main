@@ -74,9 +74,9 @@ public class Appointment {
      */
     public boolean isClash(Appointment otherAppointment) {
         // TODO: 1/10/2018 : Change this quick fix.
-        //if (this.value.equals("") || otherAppointment.value.equals("")) {
-        //    return false;
-        //}
+        // if (this.value.equals("") || otherAppointment.value.equals("")) {
+        //     return false;
+        // }
 
         // different or doctor means definitely no clash
         if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {

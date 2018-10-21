@@ -32,7 +32,7 @@ public class Time {
      * return true.
      *
      * @param otherTiming
-     * @return
+     * @return oolean stating if current time comes after otherTiming
      */
     public boolean comesAfter(Time otherTiming) {
         int currentTime = Integer.parseInt(time.trim());
