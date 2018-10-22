@@ -844,6 +844,10 @@ public class IntuitivePromptManager {
             return Address.isValidAddress(input);
 
         case EDIT_TAGS_INDEX:
+            if (input.equals(EDIT_CLEAR_TAGS_COMMAND)) {
+                return true;
+            }
+
             for (String tag : input.split(",")) {
                 if (!Tag.isValidTagName(tag)) {
                     return false;
