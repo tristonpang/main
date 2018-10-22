@@ -105,13 +105,13 @@ public class PersonListPanelTest extends GuiUnitTest {
             builder.append("<email>a@aa</email>\n");
             builder.append("<address>a</address>\n");
             builder.append("<nric>S").append(icNum++).append("A</nric>\n");
-            builder.append("<medicalRecord>a</medicalRecord>");
+            builder.append("<medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>");
             builder.append("<appointment>a</appointment>\n");
             builder.append("</persons>\n");
         }
         builder.append("</addressbook>\n");
 
-        Path manyPersonsFile = Paths.get(TEST_DATA_FOLDER + "manyPersons.xml");
+        Path manyPersonsFile = TEST_DATA_FOLDER.resolve("manyPersons.xml");
         FileUtil.createFile(manyPersonsFile);
         FileUtil.writeToFile(manyPersonsFile, builder.toString());
         manyPersonsFile.toFile().deleteOnExit();

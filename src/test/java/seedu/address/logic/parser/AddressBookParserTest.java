@@ -7,17 +7,20 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DIAGNOSIS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GLOBAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -97,9 +100,9 @@ public class AddressBookParserTest {
                 + PREFIX_START_TIME + "1300 "
                 + PREFIX_END_TIME + "1400 "
                 + PREFIX_DOCTOR_NAME + "Alice "
-                + PREFIX_MEDICAL_DEPARTMENT + "Heart "
+                + PREFIX_DOCTOR_NRIC + "Heart "
                 + PREFIX_PATIENT_NAME + "Betty "
-                + PREFIX_NRIC + "S1234567A ";
+                + PREFIX_PATIENT_NRIC + "S1234567A ";
         ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + testAppointment);
         assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, appointment), command);
@@ -113,9 +116,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        Map<Prefix, List<String>> keywords = Map.of(PREFIX_GLOBAL, new ArrayList<>(Arrays.asList("foo", "bar", "baz")));
+        FindCommand command = (FindCommand) parser.parseCommand(FindCommand.COMMAND_WORD + " "
+                + keywords.get(PREFIX_GLOBAL).stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new PersonContainsKeywordsPredicate(keywords)), command);
     }
 

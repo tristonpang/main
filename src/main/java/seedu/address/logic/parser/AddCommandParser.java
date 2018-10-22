@@ -3,10 +3,10 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -39,11 +39,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ROLE, PREFIX_NRIC, PREFIX_NAME,
-                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ROLE, PREFIX_PATIENT_NRIC, PREFIX_NAME,
+                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_DOCTOR_NRIC);
 
         // Ensures information for common prefixes are entered.
-        if (!arePrefixesPresent(argMultimap, PREFIX_ROLE, PREFIX_NAME, PREFIX_NRIC, PREFIX_PHONE, PREFIX_EMAIL,
+        if (!arePrefixesPresent(argMultimap, PREFIX_ROLE, PREFIX_NAME, PREFIX_PATIENT_NRIC, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_ADDRESS) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_GENERAL_USAGE));
         }
@@ -53,13 +53,13 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         // Ensures Medical Department field is not empty when adding a Doctor.
-        if (isRoleOf(Role.DOCTOR, argMultimap) && !arePrefixesPresent(argMultimap, PREFIX_MEDICAL_DEPARTMENT)) {
+        if (isRoleOf(Role.DOCTOR, argMultimap) && !arePrefixesPresent(argMultimap, PREFIX_DOCTOR_NRIC)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_DOCTOR_FORMAT,
                     AddCommand.MESSAGE_DOCTOR_USAGE));
         }
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Nric nric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC).get());
+        Nric nric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_PATIENT_NRIC).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
@@ -70,7 +70,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             person = new Patient(name, nric, phone, email, address, tagList);
         } else if (isRoleOf(Role.DOCTOR, argMultimap)) {
             MedicalDepartment medicalDepartment =
-                    ParserUtil.parseMedicalDepartment(argMultimap.getValue((PREFIX_MEDICAL_DEPARTMENT)).get());
+                    ParserUtil.parseMedicalDepartment(argMultimap.getValue((PREFIX_DOCTOR_NRIC)).get());
             person = new Doctor(name, nric, phone, email, address, tagList, medicalDepartment);
         }
 

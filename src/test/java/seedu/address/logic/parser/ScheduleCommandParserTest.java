@@ -3,10 +3,10 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -24,9 +24,9 @@ public class ScheduleCommandParserTest {
             + PREFIX_START_TIME + "1300 "
             + PREFIX_END_TIME + "1400 "
             + PREFIX_DOCTOR_NAME + "Alice "
-            + PREFIX_MEDICAL_DEPARTMENT + "Heart "
+            + PREFIX_DOCTOR_NRIC + "S1234567B "
             + PREFIX_PATIENT_NAME + "Betty "
-            + PREFIX_NRIC + "S1234567A ";
+            + PREFIX_PATIENT_NRIC + "S1234567A ";
 
     @Test
     public void parse_indexSpecified_success() {
@@ -35,14 +35,14 @@ public class ScheduleCommandParserTest {
         String userInput = targetIndex.getOneBased() + " " + nonEmptyAppointment;
         ScheduleCommand expectedCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
                 new Appointment("22.11.2018", "1300", "1400",
-                        "Alice", "Heart", "Betty", "S1234567A"));
+                        "Alice", "S1234567B", "Betty", "S1234567A"));
         assertParseSuccess(parser, userInput, expectedCommand);
         // no remark
 
         userInput = targetIndex.getOneBased() + " " + nonEmptyAppointment;
         expectedCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
                 new Appointment("22.11.2018", "1300", "1400",
-                "Alice", "Heart", "Betty", "S1234567A"));
+                "Alice", "S1234567B", "Betty", "S1234567A"));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
