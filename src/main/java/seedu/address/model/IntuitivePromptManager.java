@@ -972,4 +972,9 @@ public class IntuitivePromptManager {
 
         }
     }
+
+    public void cancelIntuitiveCommand() {
+        exitIntuitiveMode();
+        resetIntuitiveCache();
+    }
 }

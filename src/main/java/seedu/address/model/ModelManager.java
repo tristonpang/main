@@ -179,4 +179,9 @@ public class ModelManager extends ComponentManager implements Model {
         return intuitivePromptManager.areArgsAvailable();
     }
 
+    @Override
+    public void cancelIntuitiveCommand() {
+        intuitivePromptManager.cancelIntuitiveCommand();
+    }
+
 }
