@@ -1,4 +1,4 @@
-package seedu.address.model;
+package seedu.address.model.person;
 
 /**
  * Represents a time in the address book.

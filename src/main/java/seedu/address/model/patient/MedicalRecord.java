@@ -7,6 +7,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.person.Date;
 import seedu.address.model.person.DisplayableAttribute;
 
 /**
@@ -19,9 +20,9 @@ public class MedicalRecord extends DisplayableAttribute {
             "Person medical record can take any values, and it should not be blank";
 
     public final String value;
-    public final String date;
-    public final String diagnosis;
-    public final String treatment;
+    public final Date date;
+    public final Diagnosis diagnosis;
+    public final Treatment treatment;
     public final String comments;
 
     /**
@@ -33,9 +34,9 @@ public class MedicalRecord extends DisplayableAttribute {
         requireNonNull(medicalRecord);
         this.value = medicalRecord;
         List<String> valueList = Arrays.asList(value.split(","));
-        this.date = valueList.get(0);
-        this.diagnosis = valueList.get(1).substring(12);
-        this.treatment = valueList.get(2).substring(12);
+        this.date = new Date(valueList.get(0));
+        this.diagnosis = new Diagnosis(valueList.get(1).substring(12));
+        this.treatment = new Treatment(valueList.get(2).substring(12));
         this.comments = valueList.get(3).substring(11);
     }
 
@@ -48,9 +49,9 @@ public class MedicalRecord extends DisplayableAttribute {
         if (actualComments == null || actualComments.equals("")) {
             actualComments = "-";
         }
-        this.date = date;
-        this.diagnosis = diagnosis;
-        this.treatment = treatment;
+        this.date = new Date(date);
+        this.diagnosis = new Diagnosis(diagnosis);
+        this.treatment = new Treatment(treatment);
         this.comments = actualComments;
         this.value = date + "," + " Diagnosis: " + diagnosis + ", Treatment: " + treatment + ", Comments: "
                 + actualComments;
@@ -60,16 +61,47 @@ public class MedicalRecord extends DisplayableAttribute {
         return medicalRecord != null;
     }
 
+    public String getFailureReason() {
+        assert(!isValid());
+        String reason;
+        if (!hasValidDate()) {
+            reason = date.getFailureReason();
+        } else if (!hasValidDiagnosis()) {
+            reason = diagnosis.getFailureReason();
+        } else {
+            reason = treatment.getFailureReason();
+        }
+        return reason;
+    }
+    public boolean isValid() {
+        return hasValidDate()
+                && hasValidDiagnosis()
+                && hasValidTreatment();
+    }
+
+
+    public boolean hasValidDate() {
+        return this.date.isValid();
+    }
+
+    public boolean hasValidDiagnosis() {
+        return this.diagnosis.isValid();
+    }
+
+    public boolean hasValidTreatment() {
+        return this.treatment.isValid();
+    }
+
     public String getDate() {
-        return this.date;
+        return this.date.toString();
     }
 
     public String getDiagnosis() {
-        return this.diagnosis;
+        return this.diagnosis.toString();
     }
 
     public String getTreatment() {
-        return this.treatment;
+        return this.treatment.toString();
     }
 
     public String getComments() {
