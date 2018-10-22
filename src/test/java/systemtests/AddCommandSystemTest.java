@@ -46,7 +46,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.doctor.MedicalDepartment;
-import seedu.address.model.patient.Nric;
+import seedu.address.model.person.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;

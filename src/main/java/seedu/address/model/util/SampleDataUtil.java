@@ -10,7 +10,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.MedicalRecord;
-import seedu.address.model.patient.Nric;
+import seedu.address.model.person.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;

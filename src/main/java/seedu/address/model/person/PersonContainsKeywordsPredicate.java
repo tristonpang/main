@@ -21,22 +21,23 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     public boolean test(Person person) {
         final StringBuilder builder = new StringBuilder();
         builder.append(person.getName()).append(" ")
+                .append(person.getNric()).append(" ")
                 .append(person.getPhone()).append(" ")
                 .append(person.getEmail()).append(" ")
                 .append(person.getAddress()).append(" ")
                 .append(person.getAppointment()).append(" ")
                 .append(person.getClass().getSimpleName()).append(" ");
-        person.getTags().stream()
-                .map(x -> x.toString().replaceAll("[\\[\\]]", ""))
-                .map(x -> x + " ")
-                .forEach(builder::append);
 
         if (person instanceof Doctor) {
             builder.append(((Doctor) person).getMedicalDepartment()).append(" ");
         } else if (person instanceof Patient) {
-            builder.append(((Patient) person).getNric()).append(" ")
-                    .append(((Patient) person).getMedicalRecord()).append(" ");
+            builder.append(((Patient) person).getMedicalRecord()).append(" ");
         }
+
+        person.getTags().stream()
+                .map(x -> x.toString().replaceAll("[\\[\\]]", ""))
+                .map(x -> x + " ")
+                .forEach(builder::append);
 
         return keywords.stream()
                 .anyMatch(keyword -> {

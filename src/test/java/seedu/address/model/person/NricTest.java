@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import seedu.address.model.patient.Nric;
 import seedu.address.testutil.Assert;
 
 public class NricTest {
