@@ -19,6 +19,7 @@ public class StringUtil {
      *       containsWordIgnoreCase("ABc def", "abc") == true
      *       containsWordIgnoreCase("ABc def", "DEF") == true
      *       containsWordIgnoreCase("ABc def", "AB") == true // ABc def contains AB
+     *       containsWordIgnoreCase("aaa BBB", "a B") == true
      *       </pre>
      * @param sentence cannot be null
      * @param word cannot be null, cannot be empty
@@ -31,11 +32,7 @@ public class StringUtil {
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length != 0, "Word parameter should not be null");
 
-        String preppedSentence = sentence;
-        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
-
-        return Arrays.stream(wordsInPreppedSentence)
-                .anyMatch(s -> s.toLowerCase().contains(preppedWord.toLowerCase()));
+        return sentence.toLowerCase().contains(preppedWord.toLowerCase());
     }
 
     /**
