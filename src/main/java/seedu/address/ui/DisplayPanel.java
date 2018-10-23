@@ -18,6 +18,7 @@ import seedu.address.commons.events.ui.DisplayPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.DisplayableAttribute;
 import seedu.address.model.person.Person;
 
