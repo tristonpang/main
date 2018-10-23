@@ -9,9 +9,6 @@ import java.util.List;
  */
 public class Date {
 
-    /** String representation of the date */
-    private String date;
-
     /*
      * Dates should be in DD.MM.YYYY format. Date and month can be 1 or 2 digits long
      */
@@ -24,12 +21,16 @@ public class Date {
     private final ArrayList<Integer> monthsWithThirtyOneDays = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 8, 10, 12));
     private final ArrayList<Integer> monthsWithThirtyDays = new ArrayList<>(Arrays.asList(4, 6, 9, 11));
 
+    /** String representation of the date */
+    private String date;
+
+
     public Date(String date) {
         this.date = date;
     }
 
     /**
-     *
+     * Checks if the date is a valid date.
      * @return whether this date is a valid date.
      */
     public boolean isValid() {
@@ -54,7 +55,7 @@ public class Date {
             result = false;
         } else if (isLeapYear(year) && (date > 29)) {
             result = false;
-        } else if(!isLeapYear(year) && (date > 28)) {
+        } else if (!isLeapYear(year) && (date > 28)) {
             result = false;
         }
         return result;

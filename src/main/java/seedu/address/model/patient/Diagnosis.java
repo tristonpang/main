@@ -5,16 +5,17 @@ package seedu.address.model.patient;
  */
 public class Diagnosis {
 
-    /** String representation of the diagnosis */
-    private String diagnosis;
-
     /*
      * The first character of the diagnosis must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String DIAGNOSIS_VALIDATION_REGEX = "[^\\s].*";
 
-    public static final String MESSAGE_DIAGNOSIS_CONSTRAINTS = "Diagnosis can take any values, and should not be blank.";
+    public static final String MESSAGE_DIAGNOSIS_CONSTRAINTS = "Diagnosis can take any values, "
+            + "and should not be blank.";
+
+    /** String representation of the diagnosis */
+    private String diagnosis;
 
     public Diagnosis (String diagnosis) {
         this.diagnosis = diagnosis;
