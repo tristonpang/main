@@ -1,13 +1,12 @@
 package seedu.address.model.person;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GLOBAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -34,16 +33,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         final StringBuilder builder = new StringBuilder();
-<<<<<<< HEAD
-        builder.append(person.getName()).append(" ")
-                .append(person.getNric()).append(" ")
-                .append(person.getPhone()).append(" ")
-                .append(person.getEmail()).append(" ")
-                .append(person.getAddress()).append(" ")
-                .append(person.getAppointment()).append(" ")
-                .append(person.getClass().getSimpleName()).append(" ");
-=======
+
         builder.append(PREFIX_NAME.toString() + person.getName()).append(" ")
+                .append(PREFIX_NRIC.toString() + person.getNric()).append(" ")
                 .append(PREFIX_PHONE.toString() + person.getPhone()).append(" ")
                 .append(PREFIX_EMAIL.toString() + person.getEmail()).append(" ")
                 .append(PREFIX_ADDRESS.toString() + person.getAddress()).append(" ")
@@ -52,34 +44,18 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                 .map(x -> x.toString().replaceAll("[\\[\\]]", ""))
                 .map(x -> PREFIX_TAG.toString() + x + " ")
                 .forEach(builder::append);
->>>>>>> master
 
         if (person instanceof Doctor) {
             builder.append(PREFIX_MEDICAL_DEPARTMENT.toString() + ((Doctor) person).getMedicalDepartment()).append(" ");
-        } else if (person instanceof Patient) {
-<<<<<<< HEAD
+        } else {
+            assert person instanceof Patient;
             builder.append(((Patient) person).getMedicalRecord()).append(" ");
-        }
-
-        person.getTags().stream()
-                .map(x -> x.toString().replaceAll("[\\[\\]]", ""))
-                .map(x -> x + " ")
-                .forEach(builder::append);
-
-        return keywords.stream()
-                .anyMatch(keyword -> {
-                    return StringUtil.containsWordIgnoreCase(builder.toString()
-                            .replaceAll(",", " "), keyword);
-=======
-            builder.append(PREFIX_PATIENT_NRIC.toString() + ((Patient) person).getNric()).append(" ")
-                    .append(PREFIX_MEDICAL_RECORD.toString() + ((Patient) person).getMedicalRecord()).append(" ");
         }
 
         boolean isAnyKeywordMatch = personSearchKeywords.get(PREFIX_GLOBAL) != null
                 && personSearchKeywords.get(PREFIX_GLOBAL).stream().anyMatch(keyword -> {
                     return StringUtil.containsWordIgnoreCase(builder.toString().replaceAll(",", " "),
                             keyword);
->>>>>>> master
                 });
 
         boolean isAnyNameMatch = personSearchKeywords.get(PREFIX_NAME) != null
@@ -113,15 +89,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                         StringUtil.containsWordIgnoreCase(((Doctor) person).getMedicalDepartment().toString(),
                                 medicalDepartment));
 
-        boolean isAnyDoctorNricMatch = person instanceof Doctor
-                && personSearchKeywords.get(PREFIX_DOCTOR_NRIC) != null
-                && personSearchKeywords.get(PREFIX_DOCTOR_NRIC).stream()
-                .anyMatch(doctorNric -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), doctorNric));
-
-        boolean isAnyPatientNricMatch = person instanceof Patient
-                && personSearchKeywords.get(PREFIX_PATIENT_NRIC) != null
-                && personSearchKeywords.get(PREFIX_PATIENT_NRIC).stream()
-                .anyMatch(patientNric -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), patientNric));
+        boolean isAnyNricMatch = personSearchKeywords.get(PREFIX_NRIC) != null
+                && personSearchKeywords.get(PREFIX_NRIC).stream()
+                .anyMatch(nric -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), nric));
 
         boolean isAnyMedicalRecordMatch = person instanceof Patient
                 && personSearchKeywords.get(PREFIX_MEDICAL_RECORD) != null
@@ -138,8 +108,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                 || isAnyRoleMatch
                 || isAnyTagMatch
                 || isAnyMedicalDepartmentMatch
-                || isAnyDoctorNricMatch
-                || isAnyPatientNricMatch
+                || isAnyNricMatch
                 || isAnyMedicalRecordMatch;
     }
 
