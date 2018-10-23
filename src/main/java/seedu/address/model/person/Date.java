@@ -73,7 +73,7 @@ public class Date {
     }
 
     public String getFailureReason() {
-        if(isValid()) {
+        if (isValid()) {
             return "Date is valid.";
         }
         String reason;
