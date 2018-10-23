@@ -8,6 +8,11 @@ public class Time {
     /** String representation of the time **/
     private String time;
 
+    /*
+     * Time should be in 24 hour format, HHMM.
+     */
+    public static final String TIME_VALIDATION_REGEX = "^\\d{4}";
+
     public Time(String time) {
         this.time = time;
     }
@@ -73,7 +78,23 @@ public class Time {
      * @return whether this time is a valid time.
      */
     public boolean isValid() {
-        return true;
+        return isCorrectFormat() && doesExist();
+    }
+
+    private boolean isCorrectFormat() {
+        return this.time.matches(TIME_VALIDATION_REGEX);
+    }
+
+    private boolean doesExist() {
+        boolean result = true;
+        int hour = Integer.parseInt(this.time.substring(0,2));
+        int minute = Integer.parseInt(this.time.substring(2));
+        if (hour < 0 || minute < 0) {
+            result = false;
+        } else if (hour > 23 || minute > 59) {
+            result = false;
+        }
+        return result;
     }
 
     @Override
