@@ -7,7 +7,6 @@ import seedu.address.model.Time;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
-import seedu.address.model.person.DisplayableAttribute;
 
 /**
  * Represents a Person's Appointment in the address book.

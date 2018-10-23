@@ -1,10 +1,5 @@
 package seedu.address.ui;
 
-import com.sun.xml.bind.v2.schemagen.xmlschema.Appinfo;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.logging.Logger;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
@@ -22,6 +17,9 @@ import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.DisplayableAttribute;
 import seedu.address.model.person.Person;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Logger;
 
 /**
  * Panel containing the list of displayable attributes.
