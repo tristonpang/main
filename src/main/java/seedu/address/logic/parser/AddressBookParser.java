@@ -47,7 +47,6 @@ public class AddressBookParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public Command parseCommand(String userInput) throws ParseException {
-        
         //detect if in intuitive mode
         if (isIntuitiveMode) {
             return new IntuitiveEntryCommand(userInput.trim());
