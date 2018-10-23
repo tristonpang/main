@@ -1,9 +1,14 @@
-package seedu.address.model;
+package seedu.address.model.person;
 
 /**
  * Represents a time in the address book.
  */
 public class Time {
+
+    /*
+     * Time should be in 24 hour format, HHMM.
+     */
+    public static final String TIME_VALIDATION_REGEX = "^\\d{4}";
 
     /** String representation of the time **/
     private String time;
@@ -73,7 +78,30 @@ public class Time {
      * @return whether this time is a valid time.
      */
     public boolean isValid() {
-        return true;
+        return isCorrectFormat() && doesExist();
+    }
+
+    private boolean isCorrectFormat() {
+        return this.time.matches(TIME_VALIDATION_REGEX);
+    }
+
+    /**
+     * Checks if a given time in the correct format exists.
+     * @return whether the given time exists.
+     */
+    private boolean doesExist() {
+        if (!isCorrectFormat()) {
+            return false;
+        }
+        boolean result = true;
+        int hour = Integer.parseInt(this.time.substring(0, 2));
+        int minute = Integer.parseInt(this.time.substring(2));
+        if (hour < 0 || minute < 0) {
+            result = false;
+        } else if (hour > 23 || minute > 59) {
+            result = false;
+        }
+        return result;
     }
 
     @Override

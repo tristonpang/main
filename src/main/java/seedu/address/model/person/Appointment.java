@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.model.Date;
-import seedu.address.model.Time;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
