@@ -71,7 +71,6 @@ public class EditCommandParser implements Parser<EditCommand> {
                     .getValue(PREFIX_MEDICAL_DEPARTMENT).get()));
         }
 
-
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
