@@ -27,7 +27,7 @@ public class SampleDataUtil {
 
     // NOTE: Error when whitespace inserted Appointment
     public static final ArrayList<Appointment> SAMPLE_APPOINTMENT_LIST =
-            new ArrayList<>(Arrays.asList(new Appointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A")));
+            new ArrayList<>(Arrays.asList(new Appointment("22.11.2018,1300,1400,Alice,S1234567B,Betty,S1234567A")));
 
     public static Person[] getSamplePersons() {
         return new Person[] {
@@ -42,7 +42,8 @@ public class SampleDataUtil {
             new Patient(new Name("Charlotte Oliveiro"), new Nric("S2020202B"), new Phone("93210283"),
                     new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
                     getTagSet("neighbours"), SAMPLE_APPOINTMENT_LIST,
-                    new MedicalRecord("22.22.2017", "cough", "Dextromethorphan", "take thrice a day")),
+                    new MedicalRecord("22.22.2017", "cough",
+                            "Dextromethorphan", "take thrice a day")),
             new Patient(new Name("David Li"), new Nric("S9991114A"), new Phone("91031282"),
                     new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
                     getTagSet("family"), SAMPLE_APPOINTMENT_LIST,

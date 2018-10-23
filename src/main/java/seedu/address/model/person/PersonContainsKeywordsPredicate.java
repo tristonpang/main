@@ -34,22 +34,22 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     public boolean test(Person person) {
         final StringBuilder builder = new StringBuilder();
 
-        builder.append(PREFIX_NAME.toString() + person.getName()).append(" ")
-                .append(PREFIX_NRIC.toString() + person.getNric()).append(" ")
-                .append(PREFIX_PHONE.toString() + person.getPhone()).append(" ")
-                .append(PREFIX_EMAIL.toString() + person.getEmail()).append(" ")
-                .append(PREFIX_ADDRESS.toString() + person.getAddress()).append(" ")
-                .append(PREFIX_ROLE.toString() + person.getClass().getSimpleName()).append(" ");
+        builder.append(person.getName()).append(" ")
+                .append(person.getNric()).append(" ")
+                .append(person.getPhone()).append(" ")
+                .append(person.getEmail()).append(" ")
+                .append(person.getAddress()).append(" ")
+                .append(person.getClass().getSimpleName()).append(" ");
         person.getTags().stream()
                 .map(x -> x.toString().replaceAll("[\\[\\]]", ""))
-                .map(x -> PREFIX_TAG.toString() + x + " ")
+                .map(x -> x + " ")
                 .forEach(builder::append);
 
         if (person instanceof Doctor) {
-            builder.append(PREFIX_MEDICAL_DEPARTMENT.toString() + ((Doctor) person).getMedicalDepartment()).append(" ");
-        } else {
-            assert person instanceof Patient;
-            builder.append(((Patient) person).getMedicalRecord()).append(" ");
+            builder.append(((Doctor) person).getMedicalDepartment()).append(" ");
+        } else if (person instanceof Patient) {
+            builder.append(person.getNric()).append(" ")
+                    .append(((Patient) person).getMedicalRecord()).append(" ");
         }
 
         boolean isAnyKeywordMatch = personSearchKeywords.get(PREFIX_GLOBAL) != null
