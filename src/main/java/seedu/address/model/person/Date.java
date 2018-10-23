@@ -41,7 +41,14 @@ public class Date {
         return this.date.matches(DATE_VALIDATION_REGEX);
     }
 
+    /**
+     * Checks if a given date in the correct format exists.
+     * @return whether given date exists.
+     */
     private boolean doesExist() {
+        if (!isCorrectFormat()) {
+            return false;
+        }
         boolean result = true;
         List<String> valueList = Arrays.asList(this.date.split("\\."));
         int date = Integer.parseInt(valueList.get(0));
@@ -66,7 +73,9 @@ public class Date {
     }
 
     public String getFailureReason() {
-        assert(!isValid());
+        if(isValid()) {
+            return "Date is valid.";
+        }
         String reason;
         if (!isCorrectFormat()) {
             reason = MESSAGE_DATE_INVALID_FORMAT_CONSTRAINTS;

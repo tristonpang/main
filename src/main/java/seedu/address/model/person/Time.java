@@ -5,13 +5,13 @@ package seedu.address.model.person;
  */
 public class Time {
 
-    /** String representation of the time **/
-    private String time;
-
     /*
      * Time should be in 24 hour format, HHMM.
      */
     public static final String TIME_VALIDATION_REGEX = "^\\d{4}";
+
+    /** String representation of the time **/
+    private String time;
 
     public Time(String time) {
         this.time = time;
@@ -85,9 +85,16 @@ public class Time {
         return this.time.matches(TIME_VALIDATION_REGEX);
     }
 
+    /**
+     * Checks if a given time in the correct format exists.
+     * @return whether the given time exists.
+     */
     private boolean doesExist() {
+        if (!isCorrectFormat()) {
+            return false;
+        }
         boolean result = true;
-        int hour = Integer.parseInt(this.time.substring(0,2));
+        int hour = Integer.parseInt(this.time.substring(0, 2));
         int minute = Integer.parseInt(this.time.substring(2));
         if (hour < 0 || minute < 0) {
             result = false;
