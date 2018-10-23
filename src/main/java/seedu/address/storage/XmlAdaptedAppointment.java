@@ -26,7 +26,6 @@ public class XmlAdaptedAppointment {
      */
     public XmlAdaptedAppointment(String appointment) {
         this.appointment = appointment;
-        String[] parts = appointment.split(",");
     }
 
     /**
@@ -37,7 +36,6 @@ public class XmlAdaptedAppointment {
     public XmlAdaptedAppointment(Appointment appointment) {
         String value = appointment.toString();
         this.appointment = value;
-        String[] parts = value.split(",");
     }
 
     /**
