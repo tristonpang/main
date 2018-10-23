@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.model.Date;
-import seedu.address.model.Time;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.person.Nric;
 import seedu.address.model.patient.Patient;
@@ -12,7 +10,7 @@ import seedu.address.model.patient.Patient;
  * Represents a Person's Appointment in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Appointment {
+public class Appointment extends DisplayableAttribute {
 
     /** Number of parts of an appointment */
     private static int numberOfParts = 7;
@@ -62,6 +60,34 @@ public class Appointment {
         this.doctorNric = new Nric(doctorNric);
         this.patientName = new Name(patientName);
         this.patientNric = new Nric(patientNric);
+    }
+
+    public String getDateString() {
+        return date.toString();
+    }
+
+    public String getStartTimeString() {
+        return startTime.toString();
+    }
+
+    public String getEndTimeString() {
+        return endTime.toString();
+    }
+
+    public String getDoctorNameString() {
+        return doctorName.toString();
+    }
+
+    public String getDoctorNricString() {
+        return doctorNric.toString();
+    }
+
+    public String getPatientNameString() {
+        return patientName.toString();
+    }
+
+    public String getPatientNricString() {
+        return patientNric.toString();
     }
 
     /**
