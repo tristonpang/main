@@ -2,9 +2,6 @@ package seedu.address.ui;
 
 import com.google.common.eventbus.Subscribe;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -12,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.DisplayPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
