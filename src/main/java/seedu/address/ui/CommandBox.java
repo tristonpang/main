@@ -58,6 +58,7 @@ public class CommandBox extends UiPart<Region> {
 
         case ESCAPE:
             handleCommandCancelled();
+            break;
 
         default:
             // let JavaFx handle the keypress

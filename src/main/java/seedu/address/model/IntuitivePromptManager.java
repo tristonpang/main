@@ -973,6 +973,9 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Cancels and exits out of the currently executing intuitive command.
+     */
     public void cancelIntuitiveCommand() {
         exitIntuitiveMode();
         resetIntuitiveCache();
