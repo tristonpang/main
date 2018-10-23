@@ -38,9 +38,9 @@
                                 <Pane HBox.hgrow="ALWAYS" />
                             </children>
                         </HBox>
-                        <Label fx:id="diagnosis" styleClass="cell_small_label" text="\$diagnosis" />
-                        <Label fx:id="treatment" styleClass="cell_small_label" text="\$treatment" />
-                        <Label fx:id="comments" styleClass="cell_small_label" text="\$comments" />
+                        <Label fx:id="displayableField1" styleClass="cell_small_label" text="\$displayableField1" />
+                        <Label fx:id="displayableField2" styleClass="cell_small_label" text="\$displayableField2" />
+                        <Label fx:id="displayableField3" styleClass="cell_small_label" text="\$displayableField3" />
                     </children>
                 </VBox>
             </children>
