@@ -34,7 +34,8 @@ public class XmlAdaptedAppointment {
      * @param appointment future changes to this will not affect the created
      */
     public XmlAdaptedAppointment(Appointment appointment) {
-        this.appointment = appointment.toString();
+        String value = appointment.toString();
+        this.appointment = value;
     }
 
     /**

@@ -27,7 +27,7 @@ public class SampleDataUtil {
 
     // NOTE: Error when whitespace inserted Appointment
     public static final ArrayList<Appointment> SAMPLE_APPOINTMENT_LIST =
-            new ArrayList<>(Arrays.asList(new Appointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A")));
+            new ArrayList<>(Arrays.asList(new Appointment("22.11.2018,1300,1400,Alice,S1234567B,Betty,S1234567A")));
 
     public static Person[] getSamplePersons() {
         return new Person[] {

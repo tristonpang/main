@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.model.patient.MedicalRecord;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.DisplayableAttribute;
 
 /**
@@ -21,13 +22,13 @@ public class DisplayableAttributeCard extends UiPart<Region> {
     private Label date;
 
     @FXML
-    private Label diagnosis;
+    private Label displayableField1;
 
     @FXML
-    private Label treatment;
+    private Label displayableField2;
 
     @FXML
-    private Label comments;
+    private Label displayableField3;
 
     public DisplayableAttributeCard(DisplayableAttribute displayableAttribute, int displayedIndex) {
         super(FXML);
@@ -35,9 +36,18 @@ public class DisplayableAttributeCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         if (displayableAttribute instanceof MedicalRecord) {
             date.setText(((MedicalRecord) displayableAttribute).getDate());
-            diagnosis.setText("Diagnosis: " + ((MedicalRecord) displayableAttribute).getDiagnosis());
-            treatment.setText("Treatment: " + ((MedicalRecord) displayableAttribute).getTreatment());
-            comments.setText("Comments: " + ((MedicalRecord) displayableAttribute).getComments());
+            displayableField1.setText("Diagnosis: " + ((MedicalRecord) displayableAttribute).getDiagnosis());
+            displayableField2.setText("Treatment: " + ((MedicalRecord) displayableAttribute).getTreatment());
+            displayableField3.setText("Comments: " + ((MedicalRecord) displayableAttribute).getComments());
+        } else if (displayableAttribute instanceof Appointment) {
+            Appointment appointment = (Appointment) displayableAttribute;
+            date.setText(appointment.getDateString());
+            displayableField1.setText("Start Time: " + appointment.getStartTimeString()
+                    + ", End Time: " + appointment.getEndTimeString());
+            displayableField2.setText("Doctor Name: " + appointment.getDoctorNameString()
+                    + ", Doctor NRIC: " + appointment.getDoctorNricString());
+            displayableField3.setText("Patient Name: " + appointment.getPatientNameString()
+                    + ", Patient NRIC " + appointment.getPatientNricString());
         }
     }
 
