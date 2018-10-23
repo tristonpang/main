@@ -15,27 +15,6 @@ public class XmlAdaptedAppointment {
     @XmlElement
     private String appointment;
 
-    @XmlElement
-    private String date;
-
-    @XmlElement
-    private String startTime;
-
-    @XmlElement
-    private String endTime;
-
-    @XmlElement
-    private String doctorName;
-
-    @XmlElement
-    private String doctorNric;
-
-    @XmlElement
-    private String patientName;
-
-    @XmlElement
-    private String patientNric;
-
     /**
      * Constructs an XmlAdaptedAppointment.
      * This is the no-arg constructor that is required by JAXB.
@@ -48,13 +27,6 @@ public class XmlAdaptedAppointment {
     public XmlAdaptedAppointment(String appointment) {
         this.appointment = appointment;
         String[] parts = appointment.split(",");
-        date = parts[0].trim();
-        startTime = parts[1].trim();
-        endTime = parts[2].trim();
-        doctorName = parts[3].trim();
-        doctorNric = parts[4].trim();
-        patientName = parts[5].trim();
-        patientNric = parts[6].trim();
     }
 
     /**
@@ -66,13 +38,6 @@ public class XmlAdaptedAppointment {
         String value = appointment.toString();
         this.appointment = value;
         String[] parts = value.split(",");
-        date = parts[0].trim();
-        startTime = parts[1].trim();
-        endTime = parts[2].trim();
-        doctorName = parts[3].trim();
-        doctorNric = parts[4].trim();
-        patientName = parts[5].trim();
-        patientNric = parts[6].trim();
     }
 
     /**
