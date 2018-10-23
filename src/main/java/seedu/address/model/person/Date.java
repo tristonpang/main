@@ -46,7 +46,9 @@ public class Date {
         int date = Integer.parseInt(valueList.get(0));
         int month = Integer.parseInt(valueList.get(1));
         int year = Integer.parseInt(valueList.get(2));
-        if (monthsWithThirtyDays.contains(month) && (date > 30)) {
+        if (date < 1) {
+            result = false;
+        } else if (monthsWithThirtyDays.contains(month) && (date > 30)) {
             result = false;
         } else if (monthsWithThirtyOneDays.contains(month) && (date > 31)) {
             result = false;

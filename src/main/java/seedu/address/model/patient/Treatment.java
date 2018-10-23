@@ -9,11 +9,12 @@ public class Treatment {
     private String treatment;
 
     /*
-     * Treatment should be alphanumeric
+     * The first character of the treatment must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String TREATMENT_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String TREATMENT_VALIDATION_REGEX = "[^\\s].*";
 
-    public static final String MESSAGE_TREATMENT_CONSTRAINTS = "Treatment should be alphanumeric.";
+    public static final String MESSAGE_TREATMENT_CONSTRAINTS = "Treatments can take any values, and should not be blank.";
 
     public Treatment (String treatment) {
         this.treatment = treatment;

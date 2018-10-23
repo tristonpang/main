@@ -9,11 +9,12 @@ public class Diagnosis {
     private String diagnosis;
 
     /*
-     * Diagnosis should be alphanumeric
+     * The first character of the diagnosis must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DIAGNOSIS_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String DIAGNOSIS_VALIDATION_REGEX = "[^\\s].*";
 
-    public static final String MESSAGE_DIAGNOSIS_CONSTRAINTS = "Diagnosis should be alphanumeric.";
+    public static final String MESSAGE_DIAGNOSIS_CONSTRAINTS = "Diagnosis can take any values, and should not be blank.";
 
     public Diagnosis (String diagnosis) {
         this.diagnosis = diagnosis;
