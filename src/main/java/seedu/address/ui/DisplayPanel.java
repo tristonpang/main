@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import com.sun.xml.bind.v2.schemagen.xmlschema.Appinfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ import seedu.address.commons.events.ui.DisplayPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.DisplayableAttribute;
 import seedu.address.model.person.Person;
 
@@ -55,9 +57,19 @@ public class DisplayPanel extends UiPart<Region> {
             ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) selectedPerson)
                     .getMedicalRecordLibrary();
             Collections.reverse(selectedPersonMedicalRecordLibrary);
-            setConnections(new FilteredList<>(FXCollections.observableArrayList(selectedPersonMedicalRecordLibrary)));
+            ArrayList<Appointment> selectedPersonAppointmentList = selectedPerson.getAppointmentList();
+            ArrayList<DisplayableAttribute> displayableAttributesList = new ArrayList<>();
+            for (MedicalRecord medicalRecord : selectedPersonMedicalRecordLibrary) {
+                displayableAttributesList.add((DisplayableAttribute) medicalRecord);
+            }
+            for (Appointment appointment : selectedPersonAppointmentList) {
+                displayableAttributesList.add((DisplayableAttribute) appointment);
+            }
+
+            setConnections(new FilteredList<>(FXCollections.observableArrayList(displayableAttributesList)));
         } else {
-            setConnections(new FilteredList<>((FXCollections.observableArrayList())));
+            ArrayList<Appointment> selectedPersonAppointmentList = selectedPerson.getAppointmentList();
+            setConnections(new FilteredList<>((FXCollections.observableArrayList(selectedPersonAppointmentList))));
         }
     }
 
