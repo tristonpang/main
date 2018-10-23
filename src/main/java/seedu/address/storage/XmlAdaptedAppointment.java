@@ -1,6 +1,6 @@
 package seedu.address.storage;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -12,7 +12,7 @@ import seedu.address.model.person.Appointment;
 @XmlRootElement(name = "appointments")
 public class XmlAdaptedAppointment {
 
-    @XmlElement
+    @XmlValue
     private String appointment;
 
     /**
