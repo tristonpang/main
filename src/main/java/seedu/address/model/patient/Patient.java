@@ -57,7 +57,6 @@ public class Patient extends Person {
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
                    ArrayList<Appointment> appointmentList, ArrayList<MedicalRecord> medicalRecordLibrary) {
         super(name, nric, phone, email, address, tags, appointmentList);
-        this.latestMedicalRecord = new MedicalRecord("");
         this.medicalRecordLibrary = medicalRecordLibrary;
         if (!medicalRecordLibrary.isEmpty()) {
             latestMedicalRecord = medicalRecordLibrary.get(medicalRecordLibrary.size() - 1);
