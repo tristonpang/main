@@ -16,6 +16,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.DisplayPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.doctor.Doctor;
 import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Appointment;
@@ -30,7 +31,9 @@ public class DisplayPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
 
     @FXML
-    private ListView<DisplayableAttribute> displayableAttributeListView;
+    private ListView<DisplayableAttribute> displayableAppointmentsListView;
+    @FXML
+    private ListView<DisplayableAttribute> displayableMedicalRecordsListView;
 
     public DisplayPanel() {
         super(FXML);
@@ -38,14 +41,21 @@ public class DisplayPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<DisplayableAttribute> displayableList) {
-        displayableAttributeListView.setItems(displayableList);
-        displayableAttributeListView.setCellFactory(listView -> new DisplayPanel.DisplayableListViewCell());
+    private void setAppointmentsConnections(ObservableList<DisplayableAttribute> displayableList) {
+        displayableAppointmentsListView.setItems(displayableList);
+        displayableAppointmentsListView.setCellFactory(listView -> new DisplayPanel.DisplayableListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setMedicalRecordsConnections(ObservableList<DisplayableAttribute> displayableList) {
+        displayableMedicalRecordsListView.setItems(displayableList);
+        displayableMedicalRecordsListView.setCellFactory(listView -> new DisplayPanel.DisplayableListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
     public void showDefaultDisplayPanel() {
-        displayableAttributeListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
+        displayableAppointmentsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
+        displayableMedicalRecordsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
     }
 
     @Subscribe
@@ -57,23 +67,40 @@ public class DisplayPanel extends UiPart<Region> {
                     .getMedicalRecordLibrary();
             Collections.reverse(selectedPersonMedicalRecordLibrary);
             ArrayList<Appointment> selectedPersonAppointmentList = selectedPerson.getAppointmentList();
-            ArrayList<DisplayableAttribute> displayableAttributesList = new ArrayList<>();
+            ArrayList<DisplayableAttribute> displayableMedicalRecordsList = new ArrayList<>();
+            ArrayList<DisplayableAttribute> displayableAppointmentsList = new ArrayList<>();
             for (MedicalRecord medicalRecord : selectedPersonMedicalRecordLibrary) {
-                displayableAttributesList.add((DisplayableAttribute) medicalRecord);
+                displayableMedicalRecordsList.add((DisplayableAttribute) medicalRecord);
             }
             for (Appointment appointment : selectedPersonAppointmentList) {
-                displayableAttributesList.add((DisplayableAttribute) appointment);
+                displayableAppointmentsList.add((DisplayableAttribute) appointment);
             }
 
-            setConnections(new FilteredList<>(FXCollections.observableArrayList(displayableAttributesList)));
+            setAppointmentsConnections(
+                    new FilteredList<>(FXCollections.observableArrayList(displayableAppointmentsList)));
+            setMedicalRecordsConnections(
+                    new FilteredList<>(FXCollections.observableArrayList(displayableMedicalRecordsList)));
         } else {
+            assert selectedPerson instanceof Doctor;
             ArrayList<Appointment> selectedPersonAppointmentList = selectedPerson.getAppointmentList();
-            setConnections(new FilteredList<>((FXCollections.observableArrayList(selectedPersonAppointmentList))));
+            setAppointmentsConnections(
+                    new FilteredList<>(FXCollections.observableArrayList(selectedPersonAppointmentList)));
+            setMedicalRecordsConnections(
+                    new FilteredList<>(FXCollections.observableArrayList()));
         }
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        displayableAttributeListView.getSelectionModel().selectedItemProperty()
+        displayableAppointmentsListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in displayable attribute list panel changed to : '"
+                                + newValue + "'");
+                        raise(new DisplayPanelSelectionChangedEvent(newValue));
+                    }
+                });
+
+        displayableMedicalRecordsListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in displayable attribute list panel changed to : '"
@@ -100,6 +127,4 @@ public class DisplayPanel extends UiPart<Region> {
             }
         }
     }
-
-
 }
