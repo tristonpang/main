@@ -159,7 +159,7 @@ public class IntuitivePromptManagerTest {
     }
 
     @Test
-    public void getInstruction_goBackForEditCommand_correctInstruction()  throws Exception {
+    public void getInstruction_goBackForEditCommand_correctInstruction() throws Exception {
         intuitivePromptManager.addArgument(EditCommand.COMMAND_WORD);
         intuitivePromptManager.addArgument("2");
         intuitivePromptManager.addArgument("1 3"); //edit name and email
