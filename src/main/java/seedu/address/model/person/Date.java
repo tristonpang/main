@@ -18,6 +18,7 @@ public class Date {
 
     public static final String MESSAGE_DATE_INVALID_FORMAT_CONSTRAINTS = "Dates should be entered in DD.MM.YYYY format."
             + " Date and month can have 1 or 2 digits, but the year must be 4 digits.";
+    public static final String MESSAGE_DATE_INVALID_IN_THE_PAST = "This date is in the past and not in the future: ";
     public static final String MESSAGE_DATE_INVALID_DOES_NOT_EXIST = "This date does not exist: ";
 
     private final ArrayList<Integer> monthsWithThirtyOneDays = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 8, 10, 12));
@@ -36,7 +37,7 @@ public class Date {
      * @return whether this date is a valid date.
      */
     public boolean isValid() {
-        return isCorrectFormat() && doesExist();
+        return isCorrectFormat() && !isInThePast() && doesExist();
     }
 
     private boolean isCorrectFormat() {
@@ -70,6 +71,45 @@ public class Date {
         return result;
     }
 
+    private boolean isInThePast() {
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
+        String stringZonedDateTime = zonedDateTime.toString();
+
+        // Splitting output from API into a date part and a time part.
+        String[] dateAndTimeParts = stringZonedDateTime.split("T");
+
+        // Reformatting the order of the date.
+        String currentDate = dateAndTimeParts[0];
+        String[] dateParts = currentDate.split("-");
+        String year = dateParts[0];
+        String month = dateParts[1];
+        String day = dateParts[2];
+        currentDate = day + "." + month + "." + year;
+        return (isBefore(currentDate));
+    }
+
+    private boolean isBefore(String currentDate) {
+        List<String> dateParts = Arrays.asList(date.split("\\."));
+        int year = Integer.parseInt(dateParts.get(0));
+        int month = Integer.parseInt(dateParts.get(1));
+        int day = Integer.parseInt(dateParts.get(2));
+
+        List<String> currentDateParts = Arrays.asList(currentDate.split("\\."));
+        int currentYear = Integer.parseInt(currentDateParts.get(0));
+        int currentMonth = Integer.parseInt(currentDateParts.get(1));
+        int currentDay = Integer.parseInt(currentDateParts.get(2));
+
+        if (year < currentYear) {
+            return true;
+        } else if (month < currentMonth) {
+            return true;
+        } else if (day < currentDay) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private boolean isLeapYear(int year) {
         return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
     }
@@ -81,6 +121,8 @@ public class Date {
         String reason;
         if (!isCorrectFormat()) {
             reason = MESSAGE_DATE_INVALID_FORMAT_CONSTRAINTS;
+        } else if (isInThePast()) {
+            reason = MESSAGE_DATE_INVALID_IN_THE_PAST + this.date;
         } else {
             reason = MESSAGE_DATE_INVALID_DOES_NOT_EXIST + this.date;
         }
