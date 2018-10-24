@@ -49,11 +49,13 @@ public class PersonProfilePage extends UiPart<Region> {
     }
 
     public void showDefaultDisplayPanel() {
+
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
         Person selectedPerson = event.getNewSelection();
         name.setText(selectedPerson.getName().fullName);
         phone.setText(selectedPerson.getPhone().value);
@@ -73,6 +75,8 @@ public class PersonProfilePage extends UiPart<Region> {
             availability.setText(EMPTY_VALUE);
         }
         role.setText(selectedPerson.getClass().getSimpleName());
+
+        tags.getChildren().clear();
         selectedPerson.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
