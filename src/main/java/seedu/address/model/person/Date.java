@@ -90,22 +90,25 @@ public class Date {
 
     private boolean isBefore(String currentDate) {
         List<String> dateParts = Arrays.asList(date.split("\\."));
-        int year = Integer.parseInt(dateParts.get(0));
+        int day = Integer.parseInt(dateParts.get(0));
         int month = Integer.parseInt(dateParts.get(1));
-        int day = Integer.parseInt(dateParts.get(2));
+        int year = Integer.parseInt(dateParts.get(2));
 
         List<String> currentDateParts = Arrays.asList(currentDate.split("\\."));
-        int currentYear = Integer.parseInt(currentDateParts.get(0));
+        int currentDay = Integer.parseInt(currentDateParts.get(0));
         int currentMonth = Integer.parseInt(currentDateParts.get(1));
-        int currentDay = Integer.parseInt(currentDateParts.get(2));
+        int currentYear = Integer.parseInt(currentDateParts.get(2));
 
         if (year < currentYear) {
             return true;
         } else if (month < currentMonth) {
             return true;
+        } else if (month > currentMonth) {
+            return false;
         } else if (day < currentDay) {
             return true;
         } else {
+
             return false;
         }
     }
