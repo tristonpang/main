@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -37,7 +38,7 @@ public class IntuitivePromptManagerTest {
     @Test
     public void getInstruction_getNextRequiredAddInstruction_getCorrectInstruction() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
-        assertTrue(IntuitivePromptManager.ADD_ROLE_INSTRUCTION.equals(intuitivePromptManager.getInstruction()));
+        assertEquals(IntuitivePromptManager.ADD_ROLE_INSTRUCTION, intuitivePromptManager.getInstruction());
     }
 
     @Test
@@ -48,7 +49,7 @@ public class IntuitivePromptManagerTest {
     }
 
     @Test
-    public void retrieveArguments_patientWithTags_successfulRetrieval() throws Exception{
+    public void retrieveArguments_addPatientWithTags_successfulRetrieval() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
         intuitivePromptManager.addArgument(IntuitivePromptManager.PATIENT_ARG_IDENTIFIER);
         intuitivePromptManager.addArgument("John Doe");
@@ -69,5 +70,27 @@ public class IntuitivePromptManagerTest {
                 + PREFIX_TAG + "vegetarian "
                 + PREFIX_TAG + "prefersTablets "
                 + PREFIX_PATIENT_NRIC + "S2345123A"));
+    }
+
+    @Test
+    public void retrieveArguments_addPatientWithoutTags_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument(IntuitivePromptManager.PATIENT_ARG_IDENTIFIER);
+        intuitivePromptManager.addArgument("John Doe");
+        intuitivePromptManager.addArgument("95592345");
+        intuitivePromptManager.addArgument("doe@gmail.com");
+        intuitivePromptManager.addArgument("Blk 123 Smith Street");
+        intuitivePromptManager.addArgument("//");
+        intuitivePromptManager.addArgument("S2345123A");
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, AddCommand.COMMAND_WORD + " "
+                + PREFIX_ROLE + "patient "
+                + PREFIX_NAME + "John Doe "
+                + PREFIX_PHONE + "95592345 "
+                + PREFIX_EMAIL + "doe@gmail.com "
+                + PREFIX_ADDRESS + "Blk 123 Smith Street "
+                + PREFIX_PATIENT_NRIC + "S2345123A");
     }
 }

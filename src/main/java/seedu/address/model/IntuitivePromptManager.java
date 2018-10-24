@@ -540,6 +540,10 @@ public class IntuitivePromptManager {
 
         int index = MIN_ARGUMENT_INDEX;
         for (String argument : arguments) {
+            if (argument.isEmpty()) {
+                index++;
+                continue;
+            }
             preparedString += prefixAddArgument(index, argument); //TODO: optimise with StringBuilder
             preparedString += " ";
             index++;
@@ -641,9 +645,6 @@ public class IntuitivePromptManager {
             return PREFIX_ADDRESS + argument;
 
         case ADD_TAGS_INDEX:
-            if (argument.isEmpty()) {
-                return "";
-            }
             String resultArg = PREFIX_TAG + argument;
             return resultArg.replace(",", " " + PREFIX_TAG).trim();
 
