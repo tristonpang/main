@@ -45,7 +45,8 @@ public class UpdateCommand extends Command {
     public static final String MESSAGE_UPDATE_MEDICAL_RECORD_SUCCESS = "Updated medical record of Person: %1$s";
     public static final String MESSAGE_DELETE_MEDICAL_RECORD_SUCCESS = "Medical record deleted from Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-
+    public static final String MESSAGE_UPDATE_MEDICAL_RECORD_FAILURE = "Failed to update medical record "
+            + "library to Person.\n";
     private final Index index;
     private final MedicalRecord medicalRecord;
 
@@ -70,6 +71,10 @@ public class UpdateCommand extends Command {
 
         if (!(lastShownList.get(index.getZeroBased()) instanceof Patient)) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_CHOSEN);
+        }
+
+        if (!medicalRecord.isValid()) {
+            throw new CommandException(MESSAGE_UPDATE_MEDICAL_RECORD_FAILURE + medicalRecord.getFailureReason());
         }
         Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
         ArrayList<MedicalRecord> editedMedicalRecordLibrary = new ArrayList<>(personToEdit.getMedicalRecordLibrary());
