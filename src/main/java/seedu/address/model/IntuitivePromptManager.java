@@ -36,7 +36,72 @@ import seedu.address.ui.UiManager;
  * execution.
  */
 public class IntuitivePromptManager {
-    private static int currentArgIndex; //change this to enum in future version
+    public static final String SKIP_COMMAND = "//";
+    public static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
+
+    public static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? "
+            + "(Please enter patient or doctor)";
+    public static final String ADD_NAME_INSTRUCTION = "Please enter person's name";
+    public static final String ADD_EMAIL_INSTRUCTION = "Please enter person's email";
+    public static final String ADD_PHONE_INSTRUCTION = "Please enter person's phone number";
+    public static final String ADD_ADDRESS_INSTRUCTION = "Please enter person's address";
+    public static final String ADD_TAGS_INSTRUCTION = "Please enter person's tags, "
+            + "separated by commas (with no spaces after a comma)";
+    public static final String ADD_NRIC_INSTRUCTION = "Please enter patient's NRIC";
+    public static final String ADD_DEPT_INSTRUCTION = "Please enter doctor's medical department";
+
+    public static final String DELETE_TARGET_INSTRUCTION = "Please enter the index of the person to be deleted";
+    public static final String DELETE_INVALID_ARGUMENT_MESSAGE = "Index must be a non-zero positive integer";
+
+    public static final String EDIT_CLEAR_TAGS_COMMAND = "--";
+
+    public static final String EDIT_TARGET_INSTRUCTION = "Please enter the index of the person to be edited";
+    public static final String EDIT_FIELDS_INSTRUCTION = "Please indicate which fields you want to edit, by typing"
+            + "down the corresponding numbers, separated by spaces:\n"
+            + "1. Name\n"
+            + "2. Phone\n"
+            + "3. Email\n"
+            + "4. Address\n"
+            + "5. Tags";
+    public static final String EDIT_NAME_INSTRUCTION = "Please enter person's new name";
+    public static final String EDIT_EMAIL_INSTRUCTION = "Please enter person's new email";
+    public static final String EDIT_PHONE_INSTRUCTION = "Please enter person's new phone number";
+    public static final String EDIT_ADDRESS_INSTRUCTION = "Please enter person's new address";
+    public static final String EDIT_TAGS_INSTRUCTION = "Please enter person's new tags, "
+            + "separated by commas (with no spaces after a comma) (Type %1$s to clear tags)";
+
+    public static final String EDIT_INVALID_INDEX_MESSAGE = "Index must be a non-zero positive integer";
+    public static final String EDIT_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
+            + "and must be between %1$s and %2$s";
+
+    public static final String FIND_SEARCH_FIELDS_INSTRUCTION = "Please select what fields to search in, by typing"
+            + "down the corresponding numbers, separated by spaces:\n"
+            + "1. Global Search\n"
+            + "2. Search by Name\n"
+            + "3. Search by Phone\n"
+            + "4. Search by Email\n"
+            + "5. Search by Address\n"
+            + "6. Search by Tags";
+    public static final String FIND_GLOBAL_INSTRUCTION = "Please enter keywords to be searched everywhere, "
+            + "separated only by commas";
+    public static final String FIND_NAME_INSTRUCTION = "Please enter keywords to be searched for (by name), "
+            + "separated only by commas";
+    public static final String FIND_PHONE_INSTRUCTION = "Please enter keywords to be searched for (by phone number), "
+            + "separated only by commas";
+    public static final String FIND_EMAIL_INSTRUCTION = "Please enter keywords to be searched for (by email), "
+            + "separated only by commas";
+    public static final String FIND_ADDRESS_INSTRUCTION = "Please enter keywords to be searched for (by address), "
+            + "separated only by commas";
+    public static final String FIND_TAGS_INSTRUCTION = "Please enter keywords to be searched for (by tags), "
+            + "separated only by commas";
+
+    public static final String FIND_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
+            + "and must be between %1$s and %2$s";
+
+    public static final String PATIENT_ARG_IDENTIFIER = "patient";
+    public static final String DOCTOR_ARG_IDENTIFIER = "doctor";
+
+    private static int currentArgIndex;
     private static List<String> arguments;
     private static String commandWord;
     private static boolean isIntuitiveMode;
@@ -44,20 +109,6 @@ public class IntuitivePromptManager {
     private static final int MIN_ARGUMENT_INDEX = 0;
 
     private static final String COMMAND_COMPLETE_MESSAGE = "All required inputs received, processing...";
-
-    private static final String SKIP_COMMAND = "//";
-    private static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
-
-    public static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? "
-            + "(Please enter patient or doctor)";
-    private static final String ADD_NAME_INSTRUCTION = "Please enter person's name";
-    private static final String ADD_EMAIL_INSTRUCTION = "Please enter person's email";
-    private static final String ADD_PHONE_INSTRUCTION = "Please enter person's phone number";
-    private static final String ADD_ADDRESS_INSTRUCTION = "Please enter person's address";
-    private static final String ADD_TAGS_INSTRUCTION = "Please enter person's tags, "
-            + "separated by commas (with no spaces after a comma)";
-    private static final String ADD_NRIC_INSTRUCTION = "Please enter patient's NRIC";
-    private static final String ADD_DEPT_INSTRUCTION = "Please enter doctor's medical department";
 
     private static final int ADD_MAX_ARGUMENTS = 8;
     private static final int ADD_ROLE_INDEX = 0;
@@ -72,9 +123,6 @@ public class IntuitivePromptManager {
     private static final int DELETE_MAX_ARGUMENTS = 1;
     private static final int DELETE_TARGET_INDEX = 0;
 
-    private static final String DELETE_TARGET_INSTRUCTION = "Please enter the index of the person to be deleted";
-    private static final String DELETE_INVALID_ARGUMENT_MESSAGE = "Index must be a non-zero positive integer";
-
     private static final int EDIT_MAX_ARGUMENTS = 7;
     private static final int EDIT_TARGET_INDEX = 0;
     private static final int EDIT_FIELDS_INDEX = 1;
@@ -86,62 +134,14 @@ public class IntuitivePromptManager {
 
     private static final int EDIT_INDEX_OFFSET = 1;
 
-    private static final String EDIT_CLEAR_TAGS_COMMAND = "--";
-
-    private static final String EDIT_TARGET_INSTRUCTION = "Please enter the index of the person to be edited";
-    private static final String EDIT_FIELDS_INSTRUCTION = "Please indicate which fields you want to edit, by typing"
-            + "down the corresponding numbers, separated by spaces:\n"
-            + "1. Name\n"
-            + "2. Phone\n"
-            + "3. Email\n"
-            + "4. Address\n"
-            + "5. Tags";
-    private static final String EDIT_NAME_INSTRUCTION = "Please enter person's new name";
-    private static final String EDIT_EMAIL_INSTRUCTION = "Please enter person's new email";
-    private static final String EDIT_PHONE_INSTRUCTION = "Please enter person's new phone number";
-    private static final String EDIT_ADDRESS_INSTRUCTION = "Please enter person's new address";
-    private static final String EDIT_TAGS_INSTRUCTION = "Please enter person's new tags, "
-            + "separated by commas (with no spaces after a comma) (Type %1$s to clear tags)";
-
-    private static final String EDIT_INVALID_INDEX_MESSAGE = "Index must be a non-zero positive integer";
-    private static final String EDIT_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
-            + "and must be between %1$s and %2$s";
-
     private static final int FIND_MAX_ARGUMENTS = 7;
     private static final int FIND_SEARCH_FIELDS_INDEX = 0;
-    public static final int FIND_GLOBAL_INDEX = 1;
-    public static final int FIND_NAME_INDEX = 2;
-    public static final int FIND_PHONE_INDEX = 3;
-    public static final int FIND_EMAIL_INDEX = 4;
-    public static final int FIND_ADDRESS_INDEX = 5;
-    public static final int FIND_TAGS_INDEX = 6;
-
-    private static final String FIND_SEARCH_FIELDS_INSTRUCTION = "Please select what fields to search in, by typing"
-            + "down the corresponding numbers, separated by spaces:\n"
-            + "1. Global Search\n"
-            + "2. Search by Name\n"
-            + "3. Search by Phone\n"
-            + "4. Search by Email\n"
-            + "5. Search by Address\n"
-            + "6. Search by Tags";
-    private static final String FIND_GLOBAL_INSTRUCTION = "Please enter keywords to be searched everywhere, "
-            + "separated only by commas";
-    private static final String FIND_NAME_INSTRUCTION = "Please enter keywords to be searched for (by name), "
-            + "separated only by commas";
-    private static final String FIND_PHONE_INSTRUCTION = "Please enter keywords to be searched for (by phone number), "
-            + "separated only by commas";
-    private static final String FIND_EMAIL_INSTRUCTION = "Please enter keywords to be searched for (by email), "
-            + "separated only by commas";
-    private static final String FIND_ADDRESS_INSTRUCTION = "Please enter keywords to be searched for (by address), "
-            + "separated only by commas";
-    private static final String FIND_TAGS_INSTRUCTION = "Please enter keywords to be searched for (by tags), "
-            + "separated only by commas";
-
-    private static final String FIND_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
-            + "and must be between %1$s and %2$s";
-
-    public static final String PATIENT_ARG_IDENTIFIER = "patient";
-    public static final String DOCTOR_ARG_IDENTIFIER = "doctor";
+    private static final int FIND_GLOBAL_INDEX = 1;
+    private static final int FIND_NAME_INDEX = 2;
+    private static final int FIND_PHONE_INDEX = 3;
+    private static final int FIND_EMAIL_INDEX = 4;
+    private static final int FIND_ADDRESS_INDEX = 5;
+    private static final int FIND_TAGS_INDEX = 6;
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
@@ -247,6 +247,11 @@ public class IntuitivePromptManager {
             }
             // Fallthrough
 
+        case DeleteCommand.COMMAND_WORD:
+            arguments.add(userInput);
+            currentArgIndex++;
+            break;
+
         case FindCommand.COMMAND_WORD:
             arguments.add(userInput);
 
@@ -281,11 +286,6 @@ public class IntuitivePromptManager {
             }
             String remainingIndexes = firstIndexAndRemainingIndexes[1];
             arguments.add(FIND_SEARCH_FIELDS_INDEX, remainingIndexes);
-            break;
-
-        case DeleteCommand.COMMAND_WORD:
-            arguments.add(userInput);
-            currentArgIndex++;
             break;
 
         case AddCommand.COMMAND_WORD:
@@ -1009,6 +1009,12 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Checks if given input is a valid argument for the "find" command.
+     *
+     * @param input the given input
+     * @return true if the input is a valid argument, false otherwise
+     */
     private boolean isFindArgumentValid(String input) {
         switch (currentArgIndex) {
 
@@ -1026,7 +1032,6 @@ public class IntuitivePromptManager {
 
         }
     }
-
 
 
     /**
@@ -1142,6 +1147,12 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Retrieves message to be thrown with exception when an invalid argument is detected
+     * for the specific case of the "find" command.
+     *
+     * @return string message to be thrown with exception
+     */
     private String retrieveInvalidFindArgumentExceptionMessage() {
         switch (currentArgIndex) {
 

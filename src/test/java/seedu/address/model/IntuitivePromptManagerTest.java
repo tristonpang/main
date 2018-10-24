@@ -16,6 +16,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Role;
 
 public class IntuitivePromptManagerTest {
     @Rule
@@ -92,5 +95,44 @@ public class IntuitivePromptManagerTest {
                 + PREFIX_EMAIL + "doe@gmail.com "
                 + PREFIX_ADDRESS + "Blk 123 Smith Street "
                 + PREFIX_PATIENT_NRIC + "S2345123A");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+    }
+
+    @Test
+    public void addArgument_invalidArgument_throwsCommandException() throws Exception {
+        intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Role.MESSAGE_ROLE_CONSTRAINTS
+                + "\n" + IntuitivePromptManager.ADD_ROLE_INSTRUCTION);
+        intuitivePromptManager.addArgument("!@#$%");
+    }
+
+    @Test
+    public void retrieveArguments_editPerson_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(EditCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("2");
+        intuitivePromptManager.addArgument("1 3"); //edit name and email
+        intuitivePromptManager.addArgument("Jane Watson");
+        intuitivePromptManager.addArgument("watson@gmail.com");
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, "edit 2 n/Jane Watson e/watson@gmail.com");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+    }
+
+    @Test
+    public void retrieveArguments_clearPersonTags_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(EditCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("2");
+        intuitivePromptManager.addArgument("5"); //edit tags
+        intuitivePromptManager.addArgument(IntuitivePromptManager.EDIT_CLEAR_TAGS_COMMAND);
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, "edit 2 t/");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+
     }
 }
