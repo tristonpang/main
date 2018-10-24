@@ -107,11 +107,38 @@ public class IntuitivePromptManager {
     private static final String EDIT_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
             + "and must be between %1$s and %2$s";
 
-    private static final int FIND_MAX_ARGUMENTS = 1;
-    private static final int FIND_KEYWORDS_INDEX = 0;
+    private static final int FIND_MAX_ARGUMENTS = 7;
+    private static final int FIND_SEARCH_FIELDS_INDEX = 0;
+    public static final int FIND_GLOBAL_INDEX = 1;
+    public static final int FIND_NAME_INDEX = 2;
+    public static final int FIND_PHONE_INDEX = 3;
+    public static final int FIND_EMAIL_INDEX = 4;
+    public static final int FIND_ADDRESS_INDEX = 5;
+    public static final int FIND_TAGS_INDEX = 6;
 
-    private static final String FIND_KEYWORDS_INSTRUCTION = "Please enter keywords to be searched for, "
-            + "separated by spaces";
+    private static final String FIND_SEARCH_FIELDS_INSTRUCTION = "Please select what fields to search in, by typing"
+            + "down the corresponding numbers, separated by spaces:\n"
+            + "1. Global Search\n"
+            + "2. Search by Name\n"
+            + "3. Search by Phone\n"
+            + "4. Search by Email\n"
+            + "5. Search by Address\n"
+            + "6. Search by Tags";
+    private static final String FIND_GLOBAL_INSTRUCTION = "Please enter keywords to be searched everywhere, "
+            + "separated only by commas";
+    private static final String FIND_NAME_INSTRUCTION = "Please enter keywords to be searched for (by name), "
+            + "separated only by commas";
+    private static final String FIND_PHONE_INSTRUCTION = "Please enter keywords to be searched for (by phone number), "
+            + "separated only by commas";
+    private static final String FIND_EMAIL_INSTRUCTION = "Please enter keywords to be searched for (by email), "
+            + "separated only by commas";
+    private static final String FIND_ADDRESS_INSTRUCTION = "Please enter keywords to be searched for (by address), "
+            + "separated only by commas";
+    private static final String FIND_TAGS_INSTRUCTION = "Please enter keywords to be searched for (by tags), "
+            + "separated only by commas";
+
+    private static final String FIND_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
+            + "and must be between %1$s and %2$s";
 
     public static final String PATIENT_ARG_IDENTIFIER = "patient";
     public static final String DOCTOR_ARG_IDENTIFIER = "doctor";
@@ -159,6 +186,7 @@ public class IntuitivePromptManager {
         if (currentArgIndex >= getMaximumArguments(commandWord)) {
             exitIntuitiveMode();
         }
+
     }
 
     /**
@@ -220,7 +248,40 @@ public class IntuitivePromptManager {
             // Fallthrough
 
         case FindCommand.COMMAND_WORD:
-            // Fallthrough
+            arguments.add(userInput);
+
+            if (arguments.get(FIND_SEARCH_FIELDS_INDEX).isEmpty()) {
+                //all remaining unselected fields are empty
+                for (int index = currentArgIndex + 1; index < FIND_MAX_ARGUMENTS; index++) {
+                    arguments.add("");
+                }
+                currentArgIndex = FIND_MAX_ARGUMENTS;
+                break;
+
+            }
+
+            //first element is the next edit index, second element is the remaining indexes
+            String[] firstIndexAndRemainingIndexes = arguments.get(FIND_SEARCH_FIELDS_INDEX)
+                    .split(" ", 2);
+            int nextIndex = Integer.valueOf(firstIndexAndRemainingIndexes[0].trim());
+
+            //the unselected indexes in between the current index and the next index are empty
+            for (int index = currentArgIndex + 1; index < nextIndex; index++) {
+                arguments.add("");
+            }
+
+            //assign the argument index to the next in line from the selected edit indexes
+            currentArgIndex = nextIndex;
+
+            //update remaining indexes
+            arguments.remove(FIND_SEARCH_FIELDS_INDEX);
+            if (firstIndexAndRemainingIndexes.length <= 1) {
+                arguments.add(FIND_SEARCH_FIELDS_INDEX, "");
+                break;
+            }
+            String remainingIndexes = firstIndexAndRemainingIndexes[1];
+            arguments.add(FIND_SEARCH_FIELDS_INDEX, remainingIndexes);
+            break;
 
         case DeleteCommand.COMMAND_WORD:
             arguments.add(userInput);
@@ -396,8 +457,26 @@ public class IntuitivePromptManager {
     private String retrieveFindInstruction() {
         switch (currentArgIndex) {
 
-        case FIND_KEYWORDS_INDEX:
-            return FIND_KEYWORDS_INSTRUCTION;
+        case FIND_SEARCH_FIELDS_INDEX:
+            return FIND_SEARCH_FIELDS_INSTRUCTION;
+
+        case FIND_GLOBAL_INDEX:
+            return FIND_GLOBAL_INSTRUCTION;
+
+        case FIND_NAME_INDEX:
+            return FIND_NAME_INSTRUCTION;
+
+        case FIND_PHONE_INDEX:
+            return FIND_PHONE_INSTRUCTION;
+
+        case FIND_EMAIL_INDEX:
+            return FIND_EMAIL_INSTRUCTION;
+
+        case FIND_ADDRESS_INDEX:
+            return FIND_ADDRESS_INSTRUCTION;
+
+        case FIND_TAGS_INDEX:
+            return FIND_TAGS_INSTRUCTION;
 
         case FIND_MAX_ARGUMENTS:
             return COMMAND_COMPLETE_MESSAGE;
@@ -426,6 +505,10 @@ public class IntuitivePromptManager {
             removeArgumentForEdit();
             return;
 
+        case FindCommand.COMMAND_WORD:
+            removeArgumentForFind();
+            return;
+
         default:
             return;
 
@@ -441,7 +524,8 @@ public class IntuitivePromptManager {
     }
 
     /**
-     * Removes the latest stored argument of the currently executing intuitive "edit" command.
+     * Removes the latest stored argument(s) of the currently executing intuitive "edit" command,
+     * depending on the current field.
      */
     private void removeArgumentForEdit() {
         if (currentArgIndex == EDIT_FIELDS_INDEX) {
@@ -454,6 +538,14 @@ public class IntuitivePromptManager {
         arguments.clear();
         arguments.add(targetIndex);
         currentArgIndex = EDIT_FIELDS_INDEX;
+    }
+
+    /**
+     * Removes the latest stored arguments of the currently executing intuitive "find" command.
+     */
+    private void removeArgumentForFind() {
+        arguments.clear();
+        currentArgIndex = FIND_SEARCH_FIELDS_INDEX;
     }
 
     /**
@@ -473,6 +565,9 @@ public class IntuitivePromptManager {
 
         case EditCommand.COMMAND_WORD:
             return EDIT_MAX_ARGUMENTS;
+
+        case FindCommand.COMMAND_WORD:
+            return FIND_MAX_ARGUMENTS;
 
         default:
             return 0;
@@ -611,11 +706,22 @@ public class IntuitivePromptManager {
         String preparedString = "";
         preparedString += FindCommand.COMMAND_WORD + " ";
 
-        String keywords = arguments.get(FIND_KEYWORDS_INDEX);
-        preparedString += keywords.trim();
+        for (int index = MIN_ARGUMENT_INDEX; index < FIND_MAX_ARGUMENTS; index++) {
+            if (index == FIND_SEARCH_FIELDS_INDEX) {
+                continue;
+            }
+
+            String argument = arguments.get(index);
+            if (argument.isEmpty()) {
+                continue;
+            }
+
+            preparedString += prefixFindArgument(index, argument); //TODO: optimise with StringBuilder
+            preparedString += " ";
+        }
 
         resetIntuitiveCache();
-        return preparedString;
+        return preparedString.trim();
     }
 
     /**
@@ -701,6 +807,47 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Given an argument and an index that represents which field this argument belongs to in the 'find' command,
+     * prefix and return the edited argument.
+     *
+     * @param index    the index that represents which field the argument belongs to in the 'find' command
+     * @param argument the specified argument
+     * @return the prefixed argument
+     */
+    private String prefixFindArgument(int index, String argument) {
+        String resultArg;
+        switch (index) {
+
+        case FIND_GLOBAL_INDEX:
+            return argument.replace(",", " ").trim();
+
+        case FIND_NAME_INDEX:
+            resultArg = PREFIX_NAME + argument;
+            return resultArg.replace(",", " " + PREFIX_NAME).trim();
+
+        case FIND_PHONE_INDEX:
+            resultArg = PREFIX_PHONE + argument;
+            return resultArg.replace(",", " " + PREFIX_PHONE).trim();
+
+        case FIND_EMAIL_INDEX:
+            resultArg = PREFIX_EMAIL + argument;
+            return resultArg.replace(",", " " + PREFIX_EMAIL).trim();
+
+        case FIND_ADDRESS_INDEX:
+            resultArg = PREFIX_ADDRESS + argument;
+            return resultArg.replace(",", " " + PREFIX_ADDRESS).trim();
+
+        case FIND_TAGS_INDEX:
+            resultArg = PREFIX_TAG + argument;
+            return resultArg.replace(",", " " + PREFIX_TAG).trim();
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
+    }
+
     private boolean isPatient() {
         return arguments.get(ADD_ROLE_INDEX).equals(PATIENT_ARG_IDENTIFIER);
     }
@@ -748,7 +895,7 @@ public class IntuitivePromptManager {
             return isEditArgumentValid(input);
 
         case FindCommand.COMMAND_WORD:
-            return true;
+            return isFindArgumentValid(input);
 
         default:
             return true;
@@ -862,6 +1009,24 @@ public class IntuitivePromptManager {
         }
     }
 
+    private boolean isFindArgumentValid(String input) {
+        switch (currentArgIndex) {
+
+        case FIND_SEARCH_FIELDS_INDEX:
+            for (String index : input.split(" ")) {
+                if (!StringUtil.isNonZeroUnsignedInteger(index)
+                        || Integer.valueOf(index) >= FIND_TAGS_INDEX) {
+                    return false;
+                }
+            }
+            return true;
+
+        default:
+            return true;
+
+        }
+    }
+
 
 
     /**
@@ -872,14 +1037,17 @@ public class IntuitivePromptManager {
     private String retrieveInvalidArgumentExceptionMessage() {
         switch (commandWord) {
 
-        case (AddCommand.COMMAND_WORD):
+        case AddCommand.COMMAND_WORD:
             return retrieveInvalidAddArgumentExceptionMessage();
 
-        case (DeleteCommand.COMMAND_WORD):
+        case DeleteCommand.COMMAND_WORD:
             return retrieveInvalidDeleteArgumentExceptionMessage();
 
-        case (EditCommand.COMMAND_WORD):
+        case EditCommand.COMMAND_WORD:
             return retrieveInvalidEditArgumentExceptionMessage();
+
+        case FindCommand.COMMAND_WORD:
+            return retrieveInvalidFindArgumentExceptionMessage();
 
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
@@ -967,6 +1135,20 @@ public class IntuitivePromptManager {
 
         case EDIT_TAGS_INDEX:
             return Tag.MESSAGE_TAG_CONSTRAINTS;
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
+    }
+
+    private String retrieveInvalidFindArgumentExceptionMessage() {
+        switch (currentArgIndex) {
+
+        case FIND_SEARCH_FIELDS_INDEX:
+            return String.format(FIND_INVALID_FIELDS_MESSAGE,
+                    FIND_NAME_INDEX,
+                    FIND_TAGS_INDEX);
 
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
