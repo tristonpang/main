@@ -71,6 +71,11 @@ public class Date {
         return result;
     }
 
+    /**
+     *
+     * Checks if the given date is in the past based on current date in Singapore's time zone.
+     * @return whether the given date is in the past.
+     */
     private boolean isInThePast() {
         ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
         String stringZonedDateTime = zonedDateTime.toString();
@@ -88,6 +93,12 @@ public class Date {
         return (isBefore(currentDate));
     }
 
+    /**
+     *
+     * Checks if the given date is strictly before the current date.
+     * @param currentDate
+     * @return whether the given date comes before the current date.
+     */
     private boolean isBefore(String currentDate) {
         List<String> dateParts = Arrays.asList(date.split("\\."));
         int day = Integer.parseInt(dateParts.get(0));
