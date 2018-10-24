@@ -48,7 +48,7 @@ public class IntuitivePromptManager {
     private static final String SKIP_COMMAND = "//";
     private static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
 
-    private static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? "
+    public static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? "
             + "(Please enter patient or doctor)";
     private static final String ADD_NAME_INSTRUCTION = "Please enter person's name";
     private static final String ADD_EMAIL_INSTRUCTION = "Please enter person's email";
@@ -113,13 +113,13 @@ public class IntuitivePromptManager {
     private static final String FIND_KEYWORDS_INSTRUCTION = "Please enter keywords to be searched for, "
             + "separated by spaces";
 
-    private static final String PATIENT_ARG_IDENTIFIER = "patient";
-    private static final String DOCTOR_ARG_IDENTIFIER = "doctor";
+    public static final String PATIENT_ARG_IDENTIFIER = "patient";
+    public static final String DOCTOR_ARG_IDENTIFIER = "doctor";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
     private static final String UNEXPECTED_SCENARIO_MESSAGE = "IntuitivePromptManager: "
-            + "Unexpected scenario has occured in switch-case block";
+            + "Unexpected scenario has occurred in switch-case block";
 
 
     public IntuitivePromptManager() {
