@@ -1,32 +1,24 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.DisplayPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.doctor.Doctor;
-import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
-import seedu.address.model.person.Appointment;
-import seedu.address.model.person.DisplayableAttribute;
 import seedu.address.model.person.Person;
 
-public class PersonProfilePage extends UiPart<Region>{
+/**
+ * A UI component that displays full information of a {@code Person}.
+ */
+public class PersonProfilePage extends UiPart<Region> {
     private static final String FXML = "PersonListCard.fxml";
     private static final String EMPTY_VALUE = "";
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);

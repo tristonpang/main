@@ -1,6 +1,7 @@
 package guitests.guihandles;
 
 import javafx.stage.Stage;
+import seedu.address.ui.PersonProfilePage;
 
 /**
  * Provides a handle for {@code MainWindow}.
