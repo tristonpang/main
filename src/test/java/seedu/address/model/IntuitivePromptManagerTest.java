@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Role;
@@ -123,7 +124,7 @@ public class IntuitivePromptManagerTest {
     }
 
     @Test
-    public void retrieveArguments_clearPersonTags_successfulRetrieval() throws Exception {
+    public void retrieveArguments_editClearPersonTags_successfulRetrieval() throws Exception {
         intuitivePromptManager.addArgument(EditCommand.COMMAND_WORD);
         intuitivePromptManager.addArgument("2");
         intuitivePromptManager.addArgument("5"); //edit tags
@@ -134,5 +135,41 @@ public class IntuitivePromptManagerTest {
         assertEquals(retrievedArguments, "edit 2 t/");
         assertFalse(intuitivePromptManager.areArgsAvailable());
 
+    }
+
+    @Test
+    public void retrieveArguments_deletePerson_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(DeleteCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("3");
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, "delete 3");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+    }
+
+    @Test
+    public void getInstruction_goBackForAddCommand_correctInstruction() throws Exception {
+        intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument(IntuitivePromptManager.DOCTOR_ARG_IDENTIFIER);
+        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.ADD_NAME_INSTRUCTION);
+
+        intuitivePromptManager.removeArgument();
+        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.ADD_ROLE_INSTRUCTION);
+    }
+
+    @Test
+    public void getInstruction_goBackForEditCommand_correctInstruction()  throws Exception {
+        intuitivePromptManager.addArgument(EditCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("2");
+        intuitivePromptManager.addArgument("1 3"); //edit name and email
+        intuitivePromptManager.addArgument("Jane Watson");
+        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.EDIT_EMAIL_INSTRUCTION);
+
+        intuitivePromptManager.removeArgument();
+        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.EDIT_FIELDS_INSTRUCTION);
+
+        intuitivePromptManager.removeArgument();
+        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.EDIT_TARGET_INSTRUCTION);
     }
 }
