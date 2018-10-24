@@ -19,7 +19,7 @@ import seedu.address.model.person.Person;
  * A UI component that displays full information of a {@code Person}.
  */
 public class PersonProfilePage extends UiPart<Region> {
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "PersonProfilePage.fxml";
     private static final String EMPTY_VALUE = "";
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
 
@@ -70,9 +70,6 @@ public class PersonProfilePage extends UiPart<Region> {
             } else {
                 availability.setStyle("-fx-background-color: #ff4d4d");
             }
-        } else if (selectedPerson instanceof Patient) {
-            uniqueField.setText(((Patient) selectedPerson).getMedicalRecord().value);
-            availability.setText(EMPTY_VALUE);
         }
         role.setText(selectedPerson.getClass().getSimpleName());
 
