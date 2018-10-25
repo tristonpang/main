@@ -176,6 +176,11 @@ public class AddCommandTest {
         public String retrieveIntuitiveArguments() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void cancelIntuitiveCommand() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

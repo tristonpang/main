@@ -359,7 +359,7 @@ Checks:
 ** Whether the index of input person is valid.
 ** Whether the nric of the doctor is valid.
 ** Whether the nric of the patient is valid.
-** Whether the start and end times of the appointment are valid
+** Whether the start and end times of the appointment are valid.
 ** Whether there are any timing clashes between this appointment and the appointments currently stored in the appointment list under the person selected.
 
 Step 4. A successful check gives 2 objects, `personToEdit` and `Appointment` object.
