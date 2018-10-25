@@ -102,4 +102,9 @@ public interface Model {
      * @return Concatenated string of all arguments input by the user during intuitive command
      */
     String retrieveIntuitiveArguments();
+
+    /**
+     * Cancels the currently executing intuitive command, if any.
+     */
+    void cancelIntuitiveCommand();
 }

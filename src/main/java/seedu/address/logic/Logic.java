@@ -24,4 +24,12 @@ public interface Logic {
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
+
+    /**
+     * Cancels the current command. If an intuitive command is currently executing, exit from the command.
+     * Otherwise, it clears the command box text field.
+     *
+     * @return a String feedback message that tells the user what has been cancelled
+     */
+    String cancelCommand();
 }
