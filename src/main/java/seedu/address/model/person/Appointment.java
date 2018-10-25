@@ -237,6 +237,18 @@ public class Appointment extends DisplayableAttribute {
         return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidPatientNric();
     }
 
+    public String getInvalidDateReason() {
+        return date.getFailureReason();
+    }
+
+    public String getInvalidStartTimeReason() {
+        return startTime.getFailureReason();
+    }
+
+    public String getInvalidEndTimeReason() {
+        return endTime.getFailureReason();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

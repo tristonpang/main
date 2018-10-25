@@ -61,10 +61,10 @@ public class ScheduleCommand extends Command {
             + "Date entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME =
             "Failed to schedule appointment to Person.\n"
-            + "Date entered is invalid.\n";
+            + "Start time entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME =
             "Failed to schedule appointment to Person.\n"
-            + "Date entered is invalid.\n";
+            + "End time entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_START_AND_END_TIME =
             "Failed to schedule appointment to Person.\n"
             + "Start time should come before end time!\n";
@@ -118,15 +118,18 @@ public class ScheduleCommand extends Command {
         }
 
         if (!appointment.hasValidDate()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_DATE);
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_DATE
+                    + appointment.getInvalidDateReason());
         }
 
         if (!appointment.hasValidStartTime()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME);
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME
+                    + appointment.getInvalidStartTimeReason());
         }
 
         if (!appointment.hasValidEndTime()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME);
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME
+                    + appointment.getInvalidEndTimeReason());
         }
 
         if (!appointment.hasValidStartandEndTime()) {
