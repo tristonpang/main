@@ -614,7 +614,7 @@ If it was invalid, an exception message will be thrown and the `MedicalRecord` w
 
 Step 4. If the checks are successful, all the attributes of all the attributes of the specified person will first be copied, including the existing medical record library of the specified `Patient`.
 
-Step 5. The new `MedicalRecord` will be added into the copied medical record library. The medical record library is an `ArrayList` of `MedicalRecord`. The new `MedicalRecord` is added to the back of the list and the pointer to the latest `MedicalRecord` is updated.
+Step 5. The new `MedicalRecord` will be added into the copied medical record library which is an `ArrayList` of `MedicalRecord`. The new `MedicalRecord` is added to the front of the list and since the pointer for the latest medical record is always pointing to the first element, the latest medical record will be automatically updated.
 
 image::UpdateSequenceDiagramStep5.png[width="800"]
 
