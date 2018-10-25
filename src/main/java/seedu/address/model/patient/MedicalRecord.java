@@ -30,7 +30,6 @@ public class MedicalRecord extends DisplayableAttribute {
      *
      */
     public MedicalRecord(String medicalRecord) {
-        checkArgument(isValidMedicalRecord(medicalRecord), MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
         requireNonNull(medicalRecord);
         this.value = medicalRecord;
         List<String> valueList = Arrays.asList(value.split(","));
@@ -57,8 +56,8 @@ public class MedicalRecord extends DisplayableAttribute {
                 + actualComments;
     }
 
-    public static boolean isValidMedicalRecord(String medicalRecord) {
-        return medicalRecord != null;
+    public boolean isValidMedicalRecord() {
+        return this.value != null;
     }
 
     public String getFailureReason() {

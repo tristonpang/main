@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.patient.MedicalRecord;
@@ -16,20 +17,8 @@ import seedu.address.model.patient.MedicalRecord;
 @XmlRootElement(name = "medicalRecords")
 public class XmlAdaptedMedicalRecord {
 
-    @XmlElement
+    @XmlValue
     private String medicalRecord;
-
-    @XmlElement
-    private String date;
-
-    @XmlElement
-    private String diagnosis;
-
-    @XmlElement
-    private String treatment;
-
-    @XmlElement
-    private String comments;
 
     /**
      * Constructs an XmlAdaptedMedicalRecord.
@@ -41,12 +30,8 @@ public class XmlAdaptedMedicalRecord {
      * Constructs an {@code XmlAdaptedMedicalRecord} with the given medical record details.
      */
     public XmlAdaptedMedicalRecord(String medicalRecord) {
-        this.medicalRecord = medicalRecord;
-        List<String> valueList = Arrays.asList(medicalRecord.split(","));
-        this.date = valueList.get(0);
-        this.diagnosis = valueList.get(1).substring(12);
-        this.treatment = valueList.get(2).substring(12);
-        this.comments = valueList.get(3).substring(11);
+        String value = medicalRecord;
+        this.medicalRecord = value;
     }
 
     /**
@@ -64,10 +49,9 @@ public class XmlAdaptedMedicalRecord {
      * @throws IllegalValueException if there were any data constraints violated in the adapted appointment.
      */
     public String toModelType() throws IllegalValueException {
-        // TODO: checker
-        //if (!new MedicalRecord(medicalRecord).isValidMedicalRecord()) {
-        //    throw new IllegalValueException("Invalid Medical Record");
-        //}
+        if (!new MedicalRecord(medicalRecord).isValidMedicalRecord()) {
+            throw new IllegalValueException("Invalid Medical Record");
+        }
         return medicalRecord;
     }
 
@@ -81,10 +65,6 @@ public class XmlAdaptedMedicalRecord {
             return false;
         }
 
-        XmlAdaptedMedicalRecord otherMedicalRecord = (XmlAdaptedMedicalRecord) other;
-        return Objects.equals(date, otherMedicalRecord.date)
-                && Objects.equals(diagnosis, otherMedicalRecord.diagnosis)
-                && Objects.equals(treatment, otherMedicalRecord.treatment)
-                && Objects.equals(comments, otherMedicalRecord.comments);
+        return medicalRecord.equals(((XmlAdaptedMedicalRecord) other).medicalRecord);
     }
 }
