@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -55,7 +54,7 @@ public class DisplayPanel extends UiPart<Region> {
         if (selectedPerson instanceof Patient) {
             ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) selectedPerson)
                     .getMedicalRecordLibrary();
-            Collections.reverse(selectedPersonMedicalRecordLibrary);
+            //Collections.reverse(selectedPersonMedicalRecordLibrary);
             ArrayList<Appointment> selectedPersonAppointmentList = selectedPerson.getAppointmentList();
             ArrayList<DisplayableAttribute> displayableAttributesList = new ArrayList<>();
             for (MedicalRecord medicalRecord : selectedPersonMedicalRecordLibrary) {
