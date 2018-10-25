@@ -140,7 +140,7 @@ Examples:
 * `find Goh` +
 Displays `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
 * `find n/Tan a/Kang` +
-Displays `Ng Kang Tze` and all `Person` whose `Address` is `Choa Chu Kang`.
+Displays `Nelvin Tan` and all `Person` whose `Address` is `Choa Chu Kang`.
 
 === Deleting a person : `delete`
 
