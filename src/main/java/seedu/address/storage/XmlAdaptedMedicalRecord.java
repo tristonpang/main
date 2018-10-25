@@ -1,10 +1,5 @@
 package seedu.address.storage;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
