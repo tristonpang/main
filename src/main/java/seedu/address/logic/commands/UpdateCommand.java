@@ -78,7 +78,7 @@ public class UpdateCommand extends Command {
         }
         Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
         ArrayList<MedicalRecord> editedMedicalRecordLibrary = new ArrayList<>(personToEdit.getMedicalRecordLibrary());
-        editedMedicalRecordLibrary.add(medicalRecord);
+        editedMedicalRecordLibrary.add(0, medicalRecord);
         Patient editedPerson = new Patient(personToEdit.getName(), personToEdit.getNric(),
                 personToEdit.getPhone(), personToEdit.getEmail(), personToEdit.getAddress(),
                 personToEdit.getTags(), personToEdit.getAppointmentList(), editedMedicalRecordLibrary);
@@ -92,6 +92,10 @@ public class UpdateCommand extends Command {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
+        //Undoing and Redoing unselects a previously selected person.
+        //Doing so updates the display panel after an update. May consider abstracting this into an UnselectCommand.
+        new UndoCommand().execute(model, history);
+        new RedoCommand().execute(model, history);
         SelectCommand selectUpdatedPatient = new SelectCommand(index);
         selectUpdatedPatient.execute(model, history);
         return new CommandResult(generateSuccessMessage(editedPerson));

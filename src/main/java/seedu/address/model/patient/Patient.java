@@ -59,7 +59,7 @@ public class Patient extends Person {
         super(name, nric, phone, email, address, tags, appointmentList);
         this.medicalRecordLibrary = medicalRecordLibrary;
         if (!medicalRecordLibrary.isEmpty()) {
-            latestMedicalRecord = medicalRecordLibrary.get(medicalRecordLibrary.size() - 1);
+            latestMedicalRecord = medicalRecordLibrary.get(0);
         } else {
             // TODO: this is a quick fix for null MR error
             latestMedicalRecord = new MedicalRecord("");
