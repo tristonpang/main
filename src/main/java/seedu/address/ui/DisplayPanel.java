@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -64,6 +65,7 @@ public class DisplayPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person selectedPerson = event.getNewSelection();
+
         if (selectedPerson instanceof Patient) {
             ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) selectedPerson)
                     .getMedicalRecordLibrary();
