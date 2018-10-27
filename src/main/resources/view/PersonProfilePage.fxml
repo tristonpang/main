@@ -4,13 +4,11 @@
 <?import javafx.embed.swing.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.web.*?>
-<?import javafx.scene.chart.*?>
 <?import javafx.scene.text.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="700.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SwingNode />
       <Text fx:id="name" fill="WHITE" layoutX="56.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0">
@@ -28,7 +26,8 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <ImageView fx:id="profileImageDisplay" fitHeight="200.0" fitWidth="200.0" layoutX="103.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="profileImageDisplay" fitHeight="200.0" fitWidth="200.0" layoutX="103.0" layoutY="28.0"
+                 pickOnBounds="true" preserveRatio="true">
          <image>
             <Image fx:id="profileImage" url="@../images/blank_profile.png" />
          </image>
@@ -38,7 +37,8 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="address" fill="WHITE" layoutX="56.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="294.0">
+      <Text fx:id="address" fill="WHITE" layoutX="56.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            wrappingWidth="294.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -49,7 +49,8 @@
          </font>
       </Text>
       <FlowPane fx:id="tags" layoutX="56.0" layoutY="261.0" prefHeight="21.0" prefWidth="283.0" />
-      <Text fx:id="availabilityLabel" fill="WHITE" layoutX="56.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" visible="false">
+      <Text fx:id="availabilityLabel" fill="WHITE" layoutX="56.0" layoutY="510.0" strokeType="OUTSIDE"
+            strokeWidth="0.0" text="Status:" visible="false">
          <font>
             <Font size="18.0" />
          </font>
@@ -62,7 +63,8 @@
             <Insets left="5.0" right="5.0" />
          </padding>
       </Label>
-      <Text fx:id="availCheckTime" fill="WHITE" layoutX="220.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false">
+      <Text fx:id="availCheckTime" fill="WHITE" layoutX="220.0" layoutY="510.0" strokeType="OUTSIDE"
+            strokeWidth="0.0" text="Text" visible="false">
          <font>
             <Font name="System Italic" size="15.0" />
          </font>

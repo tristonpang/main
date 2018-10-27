@@ -54,7 +54,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing One Life Application ]===========================");
+        logger.info("============================[ Initializing One Life Application ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());

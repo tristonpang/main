@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 /**
