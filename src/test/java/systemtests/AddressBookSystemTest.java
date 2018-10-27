@@ -1,6 +1,6 @@
 package systemtests;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
+// import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,7 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-//import guitests.guihandles.BrowserPanelHandle;
+// import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -27,7 +27,7 @@ import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.PersonProfilePageHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
+// import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -38,9 +38,8 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
-import seedu.address.ui.BrowserPanel;
+// import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
-import seedu.address.ui.PersonProfilePage;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -113,9 +112,9 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-//    public BrowserPanelHandle getBrowserPanel() {
-//        return mainWindowHandle.getBrowserPanel();
-//    }
+    //    public BrowserPanelHandle getBrowserPanel() {
+    //        return mainWindowHandle.getBrowserPanel();
+    //    }
 
     public StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();
@@ -216,13 +215,13 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         getPersonListPanel().navigateToCard(getPersonListPanel().getSelectedCardIndex());
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
-//        URL expectedUrl;
-//        try {
-//            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
-//        } catch (MalformedURLException mue) {
-//            throw new AssertionError("URL expected to be valid.", mue);
-//        }
-//        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
+    //        URL expectedUrl;
+    //        try {
+    //            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
+    //        } catch (MalformedURLException mue) {
+    //            throw new AssertionError("URL expected to be valid.", mue);
+    //        }
+    //        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
