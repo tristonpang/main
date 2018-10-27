@@ -66,12 +66,7 @@ public class PersonProfilePage extends UiPart<Region> {
 
     public PersonProfilePage() {
         super(FXML);
-        showDefaultDisplayPanel();
         registerAsAnEventHandler(this);
-    }
-
-    public void showDefaultDisplayPanel() {
-
     }
 
     @Subscribe
