@@ -79,7 +79,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns an Optional<Person> base on the provided {@code nric}.
+     * Returns an {@code Optional<Person>} base on the provided {@code nric}.
      */
     public Optional<Person> getPerson(Nric nric) {
         requireNonNull(nric);

@@ -33,8 +33,7 @@ public interface Model {
     boolean hasSuchPerson(Name name, Nric nric);
 
     /**
-     * Returns an Optional<Person> that matches the given {@code nric}.
-     * Precondition: Database must contain such person with given nric.
+     * Returns an {@code Optional<Person>} that matches the given {@code nric}.
      */
     Optional<Person> getPerson(Nric nric);
 

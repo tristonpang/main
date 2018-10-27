@@ -44,7 +44,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Returns the person with the given {@code nric}.
+     * Returns an {@code Optional<Person>} with the given {@code nric}.
      */
     public Optional<Person> getPerson(Nric nric) {
         requireNonNull(nric);
