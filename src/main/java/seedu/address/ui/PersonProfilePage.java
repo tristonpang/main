@@ -120,6 +120,9 @@ public class PersonProfilePage extends UiPart<Region> {
         profileImageDisplay.setFitHeight(200);
     }
 
+    /**
+     * Sets the availability labels of the doctor.
+     */
     private void setAvailabilityOfDoctor(Person selectedPerson) {
         Doctor doctor = (Doctor) selectedPerson;
         uniqueField.setText(LABEL_DOCTOR_SPECIALISATION + doctor.getMedicalDepartment().deptName);
@@ -136,6 +139,9 @@ public class PersonProfilePage extends UiPart<Region> {
         }
     }
 
+    /**
+     * Sets the visibility of the labels (that are applicable to Doctors only) to false.
+     */
     private void hideDoctorFields() {
         uniqueField.setText(EMPTY_VALUE);
         availability.setVisible(false);

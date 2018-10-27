@@ -69,6 +69,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.contains(person);
     }
 
+    /**
+     * Returns true if there is such a person with the provided {@code name} and {@code nric}.
+     */
     public boolean hasSuchPerson(Name name, Nric nric) {
         requireAllNonNull(name, nric);
         return persons.hasSuchPerson(name, nric);
