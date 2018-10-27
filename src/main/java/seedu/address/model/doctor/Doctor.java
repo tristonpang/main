@@ -23,7 +23,7 @@ import seedu.address.storage.XmlAdaptedPerson;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Doctor extends Person {
-    public static final String IS_AVAILABLE = "FREE";
+    public static final String IS_AVAILABLE = "AVAILABLE";
     public static final String NOT_AVAILABLE = "BUSY";
 
     private final MedicalDepartment dept;

@@ -8,6 +8,7 @@
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <Label text="Appointments" styleClass="Name"></Label>
     <ListView fx:id="displayableAppointmentsListView" VBox.vgrow="ALWAYS" />
+    <Label/>
     <Label text="MedicalRecords" styleClass="Name"></Label>
     <ListView fx:id="displayableMedicalRecordsListView" VBox.vgrow="ALWAYS" />
 </VBox>

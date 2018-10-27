@@ -34,11 +34,6 @@
                     <Label fx:id="role" styleClass="cell_small_label" text="\$role" />
                     <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
                     <Pane HBox.hgrow="ALWAYS" />
-                    <Label fx:id="availability" styleClass="cell_small_label" text="\$availability" textAlignment="RIGHT">
-                           <padding>
-                              <Insets bottom="1.0" left="2.0" right="2.0" top="1.0" />
-                           </padding>
-                        </Label>
                   </children>
                </HBox>
                <FlowPane fx:id="tags" />

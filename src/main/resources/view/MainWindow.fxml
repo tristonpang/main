@@ -51,10 +51,11 @@
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
 
-          <StackPane fx:id="personProfilePagePlaceholder" prefWidth="340" >
+          <StackPane fx:id="personProfilePagePlaceholder" styleClass="pane-with-border"
+                     minHeight="200">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
