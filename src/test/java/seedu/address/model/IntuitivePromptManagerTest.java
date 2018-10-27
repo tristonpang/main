@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -73,7 +73,7 @@ public class IntuitivePromptManagerTest {
                 + PREFIX_ADDRESS + "Blk 123 Smith Street "
                 + PREFIX_TAG + "vegetarian "
                 + PREFIX_TAG + "prefersTablets "
-                + PREFIX_PATIENT_NRIC + "S2345123A"));
+                + PREFIX_NRIC + "S2345123A"));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class IntuitivePromptManagerTest {
                 + PREFIX_PHONE + "95592345 "
                 + PREFIX_EMAIL + "doe@gmail.com "
                 + PREFIX_ADDRESS + "Blk 123 Smith Street "
-                + PREFIX_PATIENT_NRIC + "S2345123A");
+                + PREFIX_NRIC + "S2345123A");
         assertFalse(intuitivePromptManager.areArgsAvailable());
     }
 

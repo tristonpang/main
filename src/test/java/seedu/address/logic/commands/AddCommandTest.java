@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -19,7 +20,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.DoctorBuilder;
 import seedu.address.testutil.PatientBuilder;
 
 public class AddCommandTest {
@@ -62,6 +66,7 @@ public class AddCommandTest {
 
     @Test
     public void equals() {
+        /** Test case for Patient **/
         Person alice = new PatientBuilder().withName("Alice").build();
         Person bob = new PatientBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
@@ -82,6 +87,28 @@ public class AddCommandTest {
 
         // different person -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
+
+        /** Test case for Doctor **/
+        Person jim = new DoctorBuilder().withName("Jim").build();
+        Person brock = new DoctorBuilder().withName("Brock").build();
+        AddCommand addJimCommand = new AddCommand(jim);
+        AddCommand addBrockCommand = new AddCommand(brock);
+
+        // same object -> returns true
+        assertTrue(addAliceCommand.equals(addAliceCommand));
+
+        // same values -> returns true
+        AddCommand addJimCommandCopy = new AddCommand(jim);
+        assertTrue(addJimCommand.equals(addJimCommandCopy));
+
+        // different types -> returns false
+        assertFalse(addJimCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(addJimCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(addJimCommand.equals(addBrockCommand));
     }
 
     /**
@@ -105,6 +132,16 @@ public class AddCommandTest {
 
         @Override
         public boolean hasPerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasSuchPerson(Name name, Nric nric) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Optional<Person> getPerson(Nric nric) {
             throw new AssertionError("This method should not be called.");
         }
 

@@ -1,7 +1,7 @@
-package seedu.address.model.patient;
+package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-// import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Patient's NRIC in the address book.
@@ -21,7 +21,7 @@ public class Nric {
      */
     public Nric(String code) {
         requireNonNull(code);
-        // checkArgument(isValidNric(code), MESSAGE_NRIC_CONSTRAINTS);
+        checkArgument(isValidNric(code), MESSAGE_NRIC_CONSTRAINTS);
         this.code = code;
     }
 

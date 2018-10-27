@@ -3,7 +3,6 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.model.doctor.Doctor;
-import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -189,7 +188,7 @@ public class Appointment extends DisplayableAttribute {
      * @return boolean on whether nric of patient is valid.
      */
     public boolean hasValidPatientNric() {
-        return patientNric.isValidNric(patientNric.toString());
+        return Nric.isValidNric(patientNric.code);
     }
 
     /**
@@ -197,7 +196,7 @@ public class Appointment extends DisplayableAttribute {
      * @return boolean on whether nric of doctor is valid.
      */
     public boolean hasValidDoctorNric() {
-        return patientNric.isValidNric(doctorNric.toString());
+        return Nric.isValidNric(doctorNric.code);
     }
 
     /**

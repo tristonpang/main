@@ -46,8 +46,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label appointment;
     @FXML
-    private Label availability;
-    @FXML
     private Label uniqueField;
     @FXML
     private FlowPane tags;
@@ -63,15 +61,8 @@ public class PersonCard extends UiPart<Region> {
         if (person instanceof Doctor) {
             Doctor doctor = (Doctor) person;
             uniqueField.setText(doctor.getMedicalDepartment().deptName);
-            availability.setText(doctor.currentAvailStatus());
-            if (doctor.currentAvailStatus().equals(doctor.IS_AVAILABLE)) {
-                availability.setStyle("-fx-background-color: #33ff77");
-            } else {
-                availability.setStyle("-fx-background-color: #ff4d4d");
-            }
         } else if (person instanceof Patient) {
             uniqueField.setText(((Patient) person).getMedicalRecord().value);
-            availability.setText(EMPTY_VALUE);
         }
         role.setText(person.getClass().getSimpleName());
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
