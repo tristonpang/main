@@ -20,6 +20,8 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.argumentmanagers.AddArgumentManager;
+import seedu.address.model.argumentmanagers.EditArgumentManager;
 import seedu.address.model.person.Role;
 
 public class IntuitivePromptManagerTest {
@@ -43,13 +45,13 @@ public class IntuitivePromptManagerTest {
     @Test
     public void getInstruction_getNextRequiredAddInstruction_getCorrectInstruction() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
-        assertEquals(IntuitivePromptManager.ADD_ROLE_INSTRUCTION, intuitivePromptManager.getInstruction());
+        assertEquals(AddArgumentManager.ROLE_INSTRUCTION, intuitivePromptManager.getInstruction());
     }
 
     @Test
     public void addArgument_addFirstArgument_addSuccessful() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
-        intuitivePromptManager.addArgument(IntuitivePromptManager.PATIENT_ARG_IDENTIFIER);
+        intuitivePromptManager.addArgument(AddArgumentManager.PATIENT_ARG_IDENTIFIER);
         assertTrue(intuitivePromptManager.areArgsAvailable());
     }
 
@@ -59,7 +61,7 @@ public class IntuitivePromptManagerTest {
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(Role.MESSAGE_ROLE_CONSTRAINTS
-                + "\n" + IntuitivePromptManager.ADD_ROLE_INSTRUCTION);
+                + "\n" + AddArgumentManager.ROLE_INSTRUCTION);
         intuitivePromptManager.addArgument("!@#$%");
     }
 
@@ -70,7 +72,7 @@ public class IntuitivePromptManagerTest {
     @Test
     public void retrieveArguments_addPatientWithoutTags_successfulRetrieval() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
-        intuitivePromptManager.addArgument(IntuitivePromptManager.PATIENT_ARG_IDENTIFIER);
+        intuitivePromptManager.addArgument(AddArgumentManager.PATIENT_ARG_IDENTIFIER);
         intuitivePromptManager.addArgument("John Doe");
         intuitivePromptManager.addArgument("95592345");
         intuitivePromptManager.addArgument("doe@gmail.com");
@@ -93,7 +95,7 @@ public class IntuitivePromptManagerTest {
     @Test
     public void retrieveArguments_addPatientWithTags_successfulRetrieval() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
-        intuitivePromptManager.addArgument(IntuitivePromptManager.PATIENT_ARG_IDENTIFIER);
+        intuitivePromptManager.addArgument(AddArgumentManager.PATIENT_ARG_IDENTIFIER);
         intuitivePromptManager.addArgument("John Doe");
         intuitivePromptManager.addArgument("95592345");
         intuitivePromptManager.addArgument("doe@gmail.com");
@@ -103,7 +105,7 @@ public class IntuitivePromptManagerTest {
 
         assertFalse(intuitivePromptManager.isIntuitiveMode());
         String retrievedArguments = intuitivePromptManager.retrieveArguments();
-        assertTrue(retrievedArguments.equals(AddCommand.COMMAND_WORD + " "
+        assertEquals(retrievedArguments, AddCommand.COMMAND_WORD + " "
                 + PREFIX_ROLE + "patient "
                 + PREFIX_NAME + "John Doe "
                 + PREFIX_PHONE + "95592345 "
@@ -111,7 +113,7 @@ public class IntuitivePromptManagerTest {
                 + PREFIX_ADDRESS + "Blk 123 Smith Street "
                 + PREFIX_TAG + "vegetarian "
                 + PREFIX_TAG + "prefersTablets "
-                + PREFIX_PATIENT_NRIC + "S2345123A"));
+                + PREFIX_PATIENT_NRIC + "S2345123A");
     }
 
     @Test
@@ -133,7 +135,7 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.addArgument(EditCommand.COMMAND_WORD);
         intuitivePromptManager.addArgument("2");
         intuitivePromptManager.addArgument("5"); //edit tags
-        intuitivePromptManager.addArgument(IntuitivePromptManager.EDIT_CLEAR_TAGS_COMMAND);
+        intuitivePromptManager.addArgument(EditArgumentManager.EDIT_CLEAR_TAGS_COMMAND);
 
         assertFalse(intuitivePromptManager.isIntuitiveMode());
         String retrievedArguments = intuitivePromptManager.retrieveArguments();
@@ -182,11 +184,11 @@ public class IntuitivePromptManagerTest {
     @Test
     public void getInstruction_goBackForAddCommand_correctInstruction() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
-        intuitivePromptManager.addArgument(IntuitivePromptManager.DOCTOR_ARG_IDENTIFIER);
-        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.ADD_NAME_INSTRUCTION);
+        intuitivePromptManager.addArgument(AddArgumentManager.DOCTOR_ARG_IDENTIFIER);
+        assertEquals(intuitivePromptManager.getInstruction(), AddArgumentManager.NAME_INSTRUCTION);
 
         intuitivePromptManager.removeArgument();
-        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.ADD_ROLE_INSTRUCTION);
+        assertEquals(intuitivePromptManager.getInstruction(), AddArgumentManager.ROLE_INSTRUCTION);
     }
 
     @Test
@@ -195,13 +197,13 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.addArgument("2");
         intuitivePromptManager.addArgument("1 3"); //edit name and email
         intuitivePromptManager.addArgument("Jane Watson");
-        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.EDIT_EMAIL_INSTRUCTION);
+        assertEquals(intuitivePromptManager.getInstruction(), EditArgumentManager.EDIT_EMAIL_INSTRUCTION);
 
         intuitivePromptManager.removeArgument();
-        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.EDIT_FIELDS_INSTRUCTION);
+        assertEquals(intuitivePromptManager.getInstruction(), EditArgumentManager.EDIT_FIELDS_INSTRUCTION);
 
         intuitivePromptManager.removeArgument();
-        assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.EDIT_TARGET_INSTRUCTION);
+        assertEquals(intuitivePromptManager.getInstruction(), EditArgumentManager.EDIT_TARGET_INSTRUCTION);
     }
 
 
