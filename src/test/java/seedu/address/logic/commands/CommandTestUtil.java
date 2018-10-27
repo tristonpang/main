@@ -77,7 +77,7 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "JB123456A"; // cant start with 2 letters
     public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE + "teacher"; // not a valid role
-    public static final String INVALID_MEDICAL_DEPARTMENT_DESC = " " + PREFIX_NRIC + "HE12RT";
+    public static final String INVALID_MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + "HE12RT";
     // numbers not allowed
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

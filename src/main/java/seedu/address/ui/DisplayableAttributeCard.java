@@ -40,6 +40,10 @@ public class DisplayableAttributeCard extends UiPart<Region> {
             displayableField2.setText("Treatment: " + ((MedicalRecord) displayableAttribute).getTreatment());
             displayableField3.setText("Comments: " + ((MedicalRecord) displayableAttribute).getComments());
         } else if (displayableAttribute instanceof Appointment) {
+            if (((Appointment) displayableAttribute).value.equals("")) {
+                return;
+            }
+
             id.setText("Appointment: ");
             Appointment appointment = (Appointment) displayableAttribute;
             date.setText(appointment.getDateString());

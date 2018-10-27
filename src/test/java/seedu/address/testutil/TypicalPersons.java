@@ -30,19 +30,19 @@ public class TypicalPersons {
     // Set all Persons will empty appointments instead of actual Appointments
     public static final Patient ALICE = new PatientBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("94351253").withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -").withAppointment("")
-            .withNric("S7412345C").withTags("friends").withAppointments("").build();
+            .withPhone("94351253").withMedicalRecord(", Diagnosis: , Treatment: , Comments: -")
+            .withNric("S7412345C").withTags("friends").build();
     public static final Patient BENSON = new PatientBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withNric("S8234567A")
             .withEmail("johnd@example.com").withPhone("98765432")
-            .withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -")
+            .withMedicalRecord(", Diagnosis: , Treatment: , Comments: -")
             .withAppointment("").withAppointments("").withTags("owesMoney", "friends").build();
     public static final Patient CARL = new PatientBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -").withAppointment("").withAppointments("")
+            .withMedicalRecord(", Diagnosis: , Treatment: , Comments: -")
             .withEmail("heinz@example.com")
             .withAddress("wall street").withNric("S9898989B").build();
     public static final Patient DANIEL = new PatientBuilder().withName("Daniel Meier").withPhone("87652599")
-            .withMedicalRecord(" , Diagnosis: , Treatment: , Comments: -").withAppointment("").withAppointments("")
+            .withMedicalRecord(", Diagnosis: , Treatment: , Comments: -")
             .withEmail("cornelia@example.com")
             .withAddress("10th street").withNric("s8234599a").withTags("friends").build();
     public static final Doctor ELLE = new DoctorBuilder().withName("Elle Meyer").withNric("s2234599a")

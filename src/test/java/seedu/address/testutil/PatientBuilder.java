@@ -15,7 +15,7 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class PatientBuilder extends PersonBuilder {
 
-    public static final String DEFAULT_MEDICAL_RECORD = " , Diagnosis: , Treatment: , Comments: -";
+    public static final String DEFAULT_MEDICAL_RECORD = ", Diagnosis: , Treatment: , Comments: -";
 
     private MedicalRecord medicalRecord;
 
