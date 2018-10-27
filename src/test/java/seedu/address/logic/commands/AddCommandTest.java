@@ -19,9 +19,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.doctor.Doctor;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.DoctorBuilder;
 import seedu.address.testutil.PatientBuilder;
 
 public class AddCommandTest {
@@ -64,6 +66,7 @@ public class AddCommandTest {
 
     @Test
     public void equals() {
+        /** Test case for Patient **/
         Person alice = new PatientBuilder().withName("Alice").build();
         Person bob = new PatientBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
@@ -84,6 +87,28 @@ public class AddCommandTest {
 
         // different person -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
+
+        /** Test case for Doctor **/
+        Person Jim = new DoctorBuilder().withName("Jim").build();
+        Person Brock = new DoctorBuilder().withName("Brock").build();
+        AddCommand addJimCommand = new AddCommand(Jim);
+        AddCommand addBrockCommand = new AddCommand(Brock);
+
+        // same object -> returns true
+        assertTrue(addAliceCommand.equals(addAliceCommand));
+
+        // same values -> returns true
+        AddCommand addJimCommandCopy = new AddCommand(Jim);
+        assertTrue(addJimCommand.equals(addJimCommandCopy));
+
+        // different types -> returns false
+        assertFalse(addJimCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(addJimCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(addJimCommand.equals(addBrockCommand));
     }
 
     /**

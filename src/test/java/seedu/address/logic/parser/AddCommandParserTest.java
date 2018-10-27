@@ -20,6 +20,7 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.address.logic.commands.CommandTestUtil.ROLE_DOCTOR_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.ROLE_PATIENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
@@ -28,6 +29,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_PATIENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -83,6 +85,11 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + NRIC_DESC_BOB,
                 new AddCommand(expectedPerson));
 
+        // multiple roles - last role accepted
+        assertParseSuccess(parser, ROLE_DOCTOR_DESC + ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_BOB
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + NRIC_DESC_BOB,
+                new AddCommand(expectedPerson));
+
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PatientBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
@@ -103,29 +110,33 @@ public class AddCommandParserTest {
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_GENERAL_USAGE);
 
+        // missing role prefix
+        assertParseFailure(parser, VALID_ROLE_PATIENT + VALID_NAME_BOB + NRIC_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
+
         // missing name prefix
-        assertParseFailure(parser, VALID_NAME_BOB + NRIC_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, ROLE_PATIENT_DESC + VALID_NAME_BOB+ NRIC_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
 
         // missing nric prefix
-        assertParseFailure(parser, NAME_DESC_BOB + VALID_NRIC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + VALID_NRIC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
 
         // missing phone prefix
-        assertParseFailure(parser, NAME_DESC_BOB + NRIC_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + NRIC_DESC_BOB + VALID_PHONE_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
 
         // missing email prefix
-        assertParseFailure(parser, NAME_DESC_BOB + NRIC_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB
-                + ADDRESS_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + NRIC_DESC_BOB + PHONE_DESC_BOB
+                + VALID_EMAIL_BOB + ADDRESS_DESC_BOB, expectedMessage);
 
         // missing address prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        assertParseFailure(parser, ROLE_PATIENT_DESC + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + VALID_ADDRESS_BOB, expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, VALID_NAME_BOB + NRIC_DESC_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB
-                + VALID_ADDRESS_BOB, expectedMessage);
+        assertParseFailure(parser, VALID_ROLE_PATIENT + VALID_NAME_BOB + NRIC_DESC_BOB + VALID_PHONE_BOB
+                + VALID_EMAIL_BOB + VALID_ADDRESS_BOB, expectedMessage);
     }
 
     @Test
