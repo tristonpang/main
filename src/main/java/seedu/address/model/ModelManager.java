@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -73,6 +74,12 @@ public class ModelManager extends ComponentManager implements Model {
     public boolean hasSuchPerson(Name name, Nric nric) {
         requireAllNonNull(name, nric);
         return versionedAddressBook.hasSuchPerson(name, nric);
+    }
+
+    @Override
+    public Optional<Person> getPerson(Nric nric) {
+        requireNonNull(nric);
+        return versionedAddressBook.getPerson(nric);
     }
 
     @Override

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Name;
@@ -75,6 +76,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean hasSuchPerson(Name name, Nric nric) {
         requireAllNonNull(name, nric);
         return persons.hasSuchPerson(name, nric);
+    }
+
+    /**
+     * Returns an Optional<Person> base on the provided {@code nric}.
+     */
+    public Optional<Person> getPerson(Nric nric) {
+        requireNonNull(nric);
+        return persons.getPerson(nric);
     }
 
     /**

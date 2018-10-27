@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -30,6 +31,12 @@ public interface Model {
      * Returns true if there exist a person with matching {@code nric} and {@code name} in the database
      */
     boolean hasSuchPerson(Name name, Nric nric);
+
+    /**
+     * Returns an Optional<Person> that matches the given {@code nric}.
+     * Precondition: Database must contain such person with given nric.
+     */
+    Optional<Person> getPerson(Nric nric);
 
     /**
      * Deletes the given person.
