@@ -20,6 +20,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 // import guitests.guihandles.BrowserPanelHandle;
+
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -27,7 +28,9 @@ import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.PersonProfilePageHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+
 // import seedu.address.MainApp;
+
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -39,6 +42,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
 // import seedu.address.ui.BrowserPanel;
+
 import seedu.address.ui.CommandBox;
 
 /**
