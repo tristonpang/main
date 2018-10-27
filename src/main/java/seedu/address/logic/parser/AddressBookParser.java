@@ -97,8 +97,7 @@ public class AddressBookParser {
             return new ListCommandParser().parse(arguments);
 
         case ScheduleCommand.COMMAND_WORD:
-        return new ScheduleCommandParser().parse(arguments);
-
+            return new ScheduleCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
