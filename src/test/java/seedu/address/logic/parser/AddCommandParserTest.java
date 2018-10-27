@@ -40,11 +40,11 @@ import static seedu.address.testutil.TypicalPersons.BOB;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.person.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
@@ -115,7 +115,7 @@ public class AddCommandParserTest {
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
 
         // missing name prefix
-        assertParseFailure(parser, ROLE_PATIENT_DESC + VALID_NAME_BOB+ NRIC_DESC_BOB + PHONE_DESC_BOB
+        assertParseFailure(parser, ROLE_PATIENT_DESC + VALID_NAME_BOB + NRIC_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
 
         // missing nric prefix
