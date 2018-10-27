@@ -61,10 +61,10 @@ public class ScheduleCommand extends Command {
             + "Date entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME =
             "Failed to schedule appointment to Person.\n"
-            + "Date entered is invalid.\n";
+            + "Time entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME =
             "Failed to schedule appointment to Person.\n"
-            + "Date entered is invalid.\n";
+            + "Time entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_START_AND_END_TIME =
             "Failed to schedule appointment to Person.\n"
             + "Start time should come before end time!\n";

@@ -18,6 +18,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Role;
 
@@ -53,28 +54,18 @@ public class IntuitivePromptManagerTest {
     }
 
     @Test
-    public void retrieveArguments_addPatientWithTags_successfulRetrieval() throws Exception {
+    public void addArgument_invalidArgument_throwsCommandException() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
-        intuitivePromptManager.addArgument(IntuitivePromptManager.PATIENT_ARG_IDENTIFIER);
-        intuitivePromptManager.addArgument("John Doe");
-        intuitivePromptManager.addArgument("95592345");
-        intuitivePromptManager.addArgument("doe@gmail.com");
-        intuitivePromptManager.addArgument("Blk 123 Smith Street");
-        intuitivePromptManager.addArgument("vegetarian,prefersTablets");
-        intuitivePromptManager.addArgument("S2345123A");
 
-        assertFalse(intuitivePromptManager.isIntuitiveMode());
-        String retrievedArguments = intuitivePromptManager.retrieveArguments();
-        assertTrue(retrievedArguments.equals(AddCommand.COMMAND_WORD + " "
-                + PREFIX_ROLE + "patient "
-                + PREFIX_NAME + "John Doe "
-                + PREFIX_PHONE + "95592345 "
-                + PREFIX_EMAIL + "doe@gmail.com "
-                + PREFIX_ADDRESS + "Blk 123 Smith Street "
-                + PREFIX_TAG + "vegetarian "
-                + PREFIX_TAG + "prefersTablets "
-                + PREFIX_PATIENT_NRIC + "S2345123A"));
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Role.MESSAGE_ROLE_CONSTRAINTS
+                + "\n" + IntuitivePromptManager.ADD_ROLE_INSTRUCTION);
+        intuitivePromptManager.addArgument("!@#$%");
     }
+
+    /*
+    Arguments Retrieval Tests
+     */
 
     @Test
     public void retrieveArguments_addPatientWithoutTags_successfulRetrieval() throws Exception {
@@ -100,13 +91,27 @@ public class IntuitivePromptManagerTest {
     }
 
     @Test
-    public void addArgument_invalidArgument_throwsCommandException() throws Exception {
+    public void retrieveArguments_addPatientWithTags_successfulRetrieval() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument(IntuitivePromptManager.PATIENT_ARG_IDENTIFIER);
+        intuitivePromptManager.addArgument("John Doe");
+        intuitivePromptManager.addArgument("95592345");
+        intuitivePromptManager.addArgument("doe@gmail.com");
+        intuitivePromptManager.addArgument("Blk 123 Smith Street");
+        intuitivePromptManager.addArgument("vegetarian,prefersTablets");
+        intuitivePromptManager.addArgument("S2345123A");
 
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(Role.MESSAGE_ROLE_CONSTRAINTS
-                + "\n" + IntuitivePromptManager.ADD_ROLE_INSTRUCTION);
-        intuitivePromptManager.addArgument("!@#$%");
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertTrue(retrievedArguments.equals(AddCommand.COMMAND_WORD + " "
+                + PREFIX_ROLE + "patient "
+                + PREFIX_NAME + "John Doe "
+                + PREFIX_PHONE + "95592345 "
+                + PREFIX_EMAIL + "doe@gmail.com "
+                + PREFIX_ADDRESS + "Blk 123 Smith Street "
+                + PREFIX_TAG + "vegetarian "
+                + PREFIX_TAG + "prefersTablets "
+                + PREFIX_PATIENT_NRIC + "S2345123A"));
     }
 
     @Test
@@ -149,6 +154,32 @@ public class IntuitivePromptManagerTest {
     }
 
     @Test
+    public void retrieveArguments_scheduleAppointment_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(ScheduleCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("1");
+        intuitivePromptManager.addArgument("12.12.2018");
+        intuitivePromptManager.addArgument("1500");
+        intuitivePromptManager.addArgument("1600");
+        //doctor details
+        intuitivePromptManager.addArgument("Jane Smith");
+        intuitivePromptManager.addArgument("S1231234A");
+        //patient details
+        intuitivePromptManager.addArgument("Bob Carpenter");
+        intuitivePromptManager.addArgument("S1111333X");
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, "schedule 1 d/12.12.2018 st/1500 et/1600 dn/Jane Smith di/S1231234A "
+                + "pn/Bob Carpenter pi/S1111333X");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+    }
+
+
+    /*
+    Instruction Retrieval Tests
+     */
+
+    @Test
     public void getInstruction_goBackForAddCommand_correctInstruction() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
         intuitivePromptManager.addArgument(IntuitivePromptManager.DOCTOR_ARG_IDENTIFIER);
@@ -172,4 +203,6 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.removeArgument();
         assertEquals(intuitivePromptManager.getInstruction(), IntuitivePromptManager.EDIT_TARGET_INSTRUCTION);
     }
+
+
 }

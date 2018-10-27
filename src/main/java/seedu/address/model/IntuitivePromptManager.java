@@ -1,12 +1,17 @@
 package seedu.address.model;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -19,14 +24,17 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Date;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
+import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 import seedu.address.ui.UiManager;
 
@@ -38,6 +46,8 @@ import seedu.address.ui.UiManager;
 public class IntuitivePromptManager {
     public static final String SKIP_COMMAND = "//";
     public static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
+
+    public static final String INVALID_INDEX_MESSAGE = "Index must be a non-zero positive integer";
 
     public static final String ADD_ROLE_INSTRUCTION = "Is this a patient or a doctor? "
             + "(Please enter patient or doctor)";
@@ -70,7 +80,6 @@ public class IntuitivePromptManager {
     public static final String EDIT_TAGS_INSTRUCTION = "Please enter person's new tags, "
             + "separated by commas (with no spaces after a comma) (Type %1$s to clear tags)";
 
-    public static final String EDIT_INVALID_INDEX_MESSAGE = "Index must be a non-zero positive integer";
     public static final String EDIT_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
             + "and must be between %1$s and %2$s";
 
@@ -97,6 +106,23 @@ public class IntuitivePromptManager {
 
     public static final String FIND_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
             + "and must be between %1$s and %2$s";
+
+    public static final String SCHEDULE_TARGET_INSTRUCTION = "Please the enter the index of the person to "
+            + "schedule an appointment for (can be patient or doctor)";
+    public static final String SCHEDULE_DATE_INSTRUCTION = "Please enter the date of the appointment to be scheduled";
+    public static final String SCHEDULE_START_TIME_INSTRUCTION = "Please enter the start time of the appointment";
+    public static final String SCHEDULE_END_TIME_INSTRUCTION = "Please enter the end time of the appointment";
+    public static final String SCHEDULE_DOCTOR_NAME_INSTRUCTION = "Please enter the doctor's name";
+    public static final String SCHEDULE_DOCTOR_NRIC_INSTRUCTION = "Please enter the doctor's NRIC";
+    public static final String SCHEDULE_PATIENT_NAME_INSTRUCTION = "Please enter the patient's name";
+    public static final String SCHEDULE_PATIENT_NRIC_INSTRUCTION = "Please enter the patient's NRIC";
+
+    public static final String SCHEDULE_INVALID_DATE_MESSAGE = "Invalid date. Please enter an existing date "
+            + "in the format DD.MM.YYYY";
+    public static final String SCHEDULE_INVALID_START_TIME_MESSAGE = "Invalid time. Please enter a valid "
+            + "24-hour clock time (e.g. 1500)";
+    public static final String SCHEDULE_INVALID_END_TIME_MESSAGE = "Invalid time. Please enter a valid "
+            + "24-hour clock time and ensure that it is after %1$s";
 
     public static final String PATIENT_ARG_IDENTIFIER = "patient";
     public static final String DOCTOR_ARG_IDENTIFIER = "doctor";
@@ -142,6 +168,16 @@ public class IntuitivePromptManager {
     private static final int FIND_EMAIL_INDEX = 4;
     private static final int FIND_ADDRESS_INDEX = 5;
     private static final int FIND_TAGS_INDEX = 6;
+
+    private static final int SCHEDULE_MAX_ARGUMENTS = 8;
+    private static final int SCHEDULE_TARGET_INDEX = 0;
+    private static final int SCHEDULE_DATE_INDEX = 1;
+    private static final int SCHEDULE_START_TIME_INDEX = 2;
+    private static final int SCHEDULE_END_TIME_INDEX = 3;
+    private static final int SCHEDULE_DOCTOR_NAME_INDEX = 4;
+    private static final int SCHEDULE_DOCTOR_NRIC_INDEX = 5;
+    private static final int SCHEDULE_PATIENT_NAME_INDEX = 6;
+    private static final int SCHEDULE_PATIENT_NRIC_INDEX = 7;
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
@@ -247,6 +283,9 @@ public class IntuitivePromptManager {
             }
             // Fallthrough
 
+        case ScheduleCommand.COMMAND_WORD:
+            // Fallthrough
+
         case DeleteCommand.COMMAND_WORD:
             arguments.add(userInput);
             currentArgIndex++;
@@ -334,6 +373,9 @@ public class IntuitivePromptManager {
 
         case FindCommand.COMMAND_WORD:
             return retrieveFindInstruction();
+
+        case ScheduleCommand.COMMAND_WORD:
+            return retrieveScheduleInstruction();
 
         default:
             return "Invalid";
@@ -488,6 +530,48 @@ public class IntuitivePromptManager {
     }
 
     /**
+     * Retrieves corresponding instruction for a field (specified by the current argument index) for the intuitive
+     * 'schedule' command.
+     *
+     * @return the corresponding string instruction for the specified field
+     */
+    private String retrieveScheduleInstruction() {
+        switch (currentArgIndex) {
+
+        case SCHEDULE_TARGET_INDEX:
+            return SCHEDULE_TARGET_INSTRUCTION;
+
+        case SCHEDULE_DATE_INDEX:
+            return SCHEDULE_DATE_INSTRUCTION;
+
+        case SCHEDULE_START_TIME_INDEX:
+            return SCHEDULE_START_TIME_INSTRUCTION;
+
+        case SCHEDULE_END_TIME_INDEX:
+            return SCHEDULE_END_TIME_INSTRUCTION;
+
+        case SCHEDULE_DOCTOR_NAME_INDEX:
+            return SCHEDULE_DOCTOR_NAME_INSTRUCTION;
+
+        case SCHEDULE_DOCTOR_NRIC_INDEX:
+            return SCHEDULE_DOCTOR_NRIC_INSTRUCTION;
+
+        case SCHEDULE_PATIENT_NAME_INDEX:
+            return SCHEDULE_PATIENT_NAME_INSTRUCTION;
+
+        case SCHEDULE_PATIENT_NRIC_INDEX:
+            return SCHEDULE_PATIENT_NRIC_INSTRUCTION;
+
+        case SCHEDULE_MAX_ARGUMENTS:
+            return COMMAND_COMPLETE_MESSAGE;
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
+    }
+
+    /**
      * Removes the latest stored argument of the currently executing intuitive command.
      */
     public void removeArgument() {
@@ -509,8 +593,12 @@ public class IntuitivePromptManager {
             removeArgumentForFind();
             return;
 
-        default:
+        case ScheduleCommand.COMMAND_WORD:
+            removeArgumentForSchedule();
             return;
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
 
         }
     }
@@ -548,6 +636,11 @@ public class IntuitivePromptManager {
         currentArgIndex = FIND_SEARCH_FIELDS_INDEX;
     }
 
+    private void removeArgumentForSchedule() {
+        arguments.remove(currentArgIndex - 1);
+        currentArgIndex--;
+    }
+
     /**
      * Given a command, retrieves the maximum number of arguments that the specified command takes in.
      *
@@ -568,6 +661,9 @@ public class IntuitivePromptManager {
 
         case FindCommand.COMMAND_WORD:
             return FIND_MAX_ARGUMENTS;
+
+        case ScheduleCommand.COMMAND_WORD:
+            return SCHEDULE_MAX_ARGUMENTS;
 
         default:
             return 0;
@@ -608,8 +704,11 @@ public class IntuitivePromptManager {
         case FindCommand.COMMAND_WORD:
             return prepareArgumentsForFind();
 
+        case ScheduleCommand.COMMAND_WORD:
+            return prepareArgumentsForSchedule();
+
         default:
-            return "Invalid";
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
         }
     }
 
@@ -718,6 +817,32 @@ public class IntuitivePromptManager {
 
             preparedString += prefixFindArgument(index, argument); //TODO: optimise with StringBuilder
             preparedString += " ";
+        }
+
+        resetIntuitiveCache();
+        return preparedString.trim();
+    }
+
+    /**
+     * Prepares a string that is a single line 'schedule' command (i.e. non-intuitive 'schedule') based on all
+     * the past arguments entered by the user during the execution of an intuitive 'schedule' command.
+     *
+     * @return a string that is the non-intuitive 'schedule' command input, containing entered arguments of the
+     * past executed intuitive 'schedule'
+     */
+    private String prepareArgumentsForSchedule() {
+        String preparedString = "";
+        preparedString += ScheduleCommand.COMMAND_WORD + " ";
+
+        int index = MIN_ARGUMENT_INDEX;
+        for (String argument : arguments) {
+            if (argument.isEmpty()) {
+                index++;
+                continue;
+            }
+            preparedString += prefixScheduleArgument(index, argument); //TODO: optimise with StringBuilder
+            preparedString += " ";
+            index++;
         }
 
         resetIntuitiveCache();
@@ -848,6 +973,47 @@ public class IntuitivePromptManager {
         }
     }
 
+    /**
+     * Given an argument and an index that represents which field this argument belongs to in the 'schedule' command,
+     * prefix and return the edited argument.
+     *
+     * @param index    the index that represents which field the argument belongs to in the 'schedule' command
+     * @param argument the specified argument
+     * @return the prefixed argument
+     */
+    private String prefixScheduleArgument(int index, String argument) {
+        switch (index) {
+
+        case SCHEDULE_TARGET_INDEX:
+            return argument;
+
+        case SCHEDULE_DATE_INDEX:
+            return PREFIX_DATE + argument;
+
+        case SCHEDULE_START_TIME_INDEX:
+            return PREFIX_START_TIME + argument;
+
+        case SCHEDULE_END_TIME_INDEX:
+            return PREFIX_END_TIME + argument;
+
+        case SCHEDULE_DOCTOR_NAME_INDEX:
+            return PREFIX_DOCTOR_NAME + argument;
+
+        case SCHEDULE_DOCTOR_NRIC_INDEX:
+            return PREFIX_DOCTOR_NRIC + argument;
+
+        case SCHEDULE_PATIENT_NAME_INDEX:
+            return PREFIX_PATIENT_NAME + argument;
+
+        case SCHEDULE_PATIENT_NRIC_INDEX:
+            return PREFIX_PATIENT_NRIC + argument;
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
+    }
+
     private boolean isPatient() {
         return arguments.get(ADD_ROLE_INDEX).equals(PATIENT_ARG_IDENTIFIER);
     }
@@ -896,6 +1062,9 @@ public class IntuitivePromptManager {
 
         case FindCommand.COMMAND_WORD:
             return isFindArgumentValid(input);
+
+        case ScheduleCommand.COMMAND_WORD:
+            return isScheduleArgumentValid(input);
 
         default:
             return true;
@@ -1028,7 +1197,49 @@ public class IntuitivePromptManager {
             return true;
 
         default:
-            return true;
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
+    }
+
+    /**
+     * Checks if given input is a valid argument for the "schedule" command.
+     *
+     * @param input the given input
+     * @return true if the input is a valid argument, false otherwise
+     */
+    private boolean isScheduleArgumentValid(String input) {
+        switch (currentArgIndex) {
+
+        case SCHEDULE_TARGET_INDEX:
+            return StringUtil.isNonZeroUnsignedInteger(input);
+
+        case SCHEDULE_DATE_INDEX:
+            return new Date(input).isValid();
+
+        case SCHEDULE_START_TIME_INDEX:
+            Time time = new Time(input);
+            return time.isValid();
+
+        case SCHEDULE_END_TIME_INDEX:
+            Time startTime = new Time(arguments.get(SCHEDULE_START_TIME_INDEX));
+            Time endTime = new Time(input);
+            return endTime.isValid() && startTime.comesBeforeStrictly(endTime);
+
+        case SCHEDULE_DOCTOR_NAME_INDEX:
+            // Fallthrough
+
+        case SCHEDULE_PATIENT_NAME_INDEX:
+            return Name.isValidName(input);
+
+        case SCHEDULE_DOCTOR_NRIC_INDEX:
+            // Fallthrough
+
+        case SCHEDULE_PATIENT_NRIC_INDEX:
+            return Nric.isValidNric(input);
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
 
         }
     }
@@ -1054,6 +1265,9 @@ public class IntuitivePromptManager {
         case FindCommand.COMMAND_WORD:
             return retrieveInvalidFindArgumentExceptionMessage();
 
+        case ScheduleCommand.COMMAND_WORD:
+            return retrieveInvalidScheduleArgumentExceptionMessage();
+
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
 
@@ -1069,28 +1283,28 @@ public class IntuitivePromptManager {
     private String retrieveInvalidAddArgumentExceptionMessage() {
         switch (currentArgIndex) {
 
-        case (ADD_ROLE_INDEX):
+        case ADD_ROLE_INDEX:
             return Role.MESSAGE_ROLE_CONSTRAINTS;
 
-        case (ADD_NAME_INDEX):
+        case ADD_NAME_INDEX:
             return Name.MESSAGE_NAME_CONSTRAINTS;
 
-        case (ADD_PHONE_INDEX):
+        case ADD_PHONE_INDEX:
             return Phone.MESSAGE_PHONE_CONSTRAINTS;
 
-        case (ADD_EMAIL_INDEX):
+        case ADD_EMAIL_INDEX:
             return Email.MESSAGE_EMAIL_CONSTRAINTS;
 
-        case (ADD_ADDRESS_INDEX):
+        case ADD_ADDRESS_INDEX:
             return Address.MESSAGE_ADDRESS_CONSTRAINTS;
 
-        case (ADD_TAGS_INDEX):
+        case ADD_TAGS_INDEX:
             return Tag.MESSAGE_TAG_CONSTRAINTS;
 
-        case (ADD_NRIC_INDEX):
+        case ADD_NRIC_INDEX:
             return Nric.MESSAGE_NRIC_CONSTRAINTS;
 
-        case (ADD_DEPT_INDEX):
+        case ADD_DEPT_INDEX:
             return MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS;
 
         default:
@@ -1119,7 +1333,7 @@ public class IntuitivePromptManager {
         switch (currentArgIndex) {
 
         case EDIT_TARGET_INDEX:
-            return EDIT_INVALID_INDEX_MESSAGE;
+            return INVALID_INDEX_MESSAGE;
 
         case EDIT_FIELDS_INDEX:
             return String.format(EDIT_INVALID_FIELDS_MESSAGE,
@@ -1160,6 +1374,45 @@ public class IntuitivePromptManager {
             return String.format(FIND_INVALID_FIELDS_MESSAGE,
                     FIND_NAME_INDEX,
                     FIND_TAGS_INDEX);
+
+        default:
+            throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
+
+        }
+    }
+
+    /**
+     * Retrieves message to be thrown with exception when an invalid argument is detected
+     * for the specific case of the "schedule" command.
+     *
+     * @return string message to be thrown with exception
+     */
+    private String retrieveInvalidScheduleArgumentExceptionMessage() {
+        switch (currentArgIndex) {
+
+        case SCHEDULE_TARGET_INDEX:
+            return INVALID_INDEX_MESSAGE;
+
+        case SCHEDULE_DATE_INDEX:
+            return SCHEDULE_INVALID_DATE_MESSAGE;
+
+        case SCHEDULE_START_TIME_INDEX:
+            return SCHEDULE_INVALID_START_TIME_MESSAGE;
+
+        case SCHEDULE_END_TIME_INDEX:
+            return String.format(SCHEDULE_INVALID_END_TIME_MESSAGE, arguments.get(SCHEDULE_START_TIME_INDEX));
+
+        case SCHEDULE_DOCTOR_NAME_INDEX:
+            // Fallthrough
+
+        case SCHEDULE_PATIENT_NAME_INDEX:
+            return Name.MESSAGE_NAME_CONSTRAINTS;
+
+        case SCHEDULE_DOCTOR_NRIC_INDEX:
+            // Fallthrough
+
+        case SCHEDULE_PATIENT_NRIC_INDEX:
+            return Nric.MESSAGE_NRIC_CONSTRAINTS;
 
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
