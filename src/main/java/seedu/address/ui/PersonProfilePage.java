@@ -1,9 +1,7 @@
 package seedu.address.ui;
 
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
@@ -32,6 +30,15 @@ public class PersonProfilePage extends UiPart<Region> {
     private static final String DEFAULT_IMAGE_URL = "blank_profile";
     private static final String EMPTY_VALUE = "";
     private static final String FXML = "PersonProfilePage.fxml";
+
+    private static final String LABEL_NAME = "Name: ";
+    private static final String LABEL_NRIC = "Nric: ";
+    private static final String LABEL_PHONE = "Contact No.: ";
+    private static final String LABEL_EMAIL = "Email: ";
+    private static final String LABEL_ADDRESS = "Address: ";
+    private static final String LABEL_DOCTOR_SPECIALISATION = "Specialisation: ";
+    private static final String LABEL_DOCTOR_Status = "Status: ";
+
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
 
     @FXML
@@ -70,20 +77,20 @@ public class PersonProfilePage extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IOException {
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         Person selectedPerson = event.getNewSelection();
-        name.setText(selectedPerson.getName().fullName);
-        nric.setText(selectedPerson.getNric().code);
-        phone.setText(selectedPerson.getPhone().value);
-        address.setText(selectedPerson.getAddress().value);
-        email.setText(selectedPerson.getEmail().value);
+        name.setText(LABEL_NAME + selectedPerson.getName().fullName);
+        nric.setText(LABEL_NRIC + selectedPerson.getNric().code);
+        phone.setText(LABEL_PHONE + selectedPerson.getPhone().value);
+        address.setText(LABEL_ADDRESS + selectedPerson.getAddress().value);
+        email.setText(LABEL_EMAIL + selectedPerson.getEmail().value);
         if (selectedPerson instanceof Doctor) {
             Doctor doctor = (Doctor) selectedPerson;
-            uniqueField.setText(doctor.getMedicalDepartment().deptName);
+            uniqueField.setText(LABEL_DOCTOR_SPECIALISATION + doctor.getMedicalDepartment().deptName);
             availability.setVisible(true);
-            availability.setText(doctor.currentAvailStatus());
+            availability.setText(LABEL_DOCTOR_Status + doctor.currentAvailStatus());
             if (doctor.currentAvailStatus().equals(doctor.IS_AVAILABLE)) {
                 availability.setStyle("-fx-background-color: #33ff77");
             } else {
