@@ -102,26 +102,6 @@ public class AppointmentManager {
      * @return a String containing the current date and time that aligns with the same format as Appointment.
      */
     private static String getCurrentDateAndTime() {
-        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
-        String stringZonedDateTime = zonedDateTime.toString();
-        // Splitting output from API into a date part and a time part.
-        String[] dateAndTimeParts = stringZonedDateTime.split("T");
-
-        // Reformatting the order of the date.
-        String currentDate = dateAndTimeParts[0];
-        String[] dateParts = currentDate.split("-");
-        String year = dateParts[0];
-        String month = dateParts[1];
-        String day = dateParts[2];
-        currentDate = day + "." + month + "." + year;
-
-        // Reformatting the oder of the time.
-        String currentTime = dateAndTimeParts[1];
-        String[] currentTimeParts = currentTime.split(":");
-        String hour = currentTimeParts[0];
-        String minute = currentTimeParts[1];
-        currentTime = hour + minute;
-
-        return currentDate + "," + currentTime;
+        return Date.getCurrentDate().toString() + "," + Time.getCurrentTime().toString();
     }
 }
