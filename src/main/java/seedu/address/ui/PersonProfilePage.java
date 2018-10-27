@@ -43,8 +43,6 @@ public class PersonProfilePage extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
 
     @FXML
-    private HBox cardPane;
-    @FXML
     private Text name;
     @FXML
     private Text nric;
@@ -64,10 +62,6 @@ public class PersonProfilePage extends UiPart<Region> {
     private Text uniqueField;
     @FXML
     private FlowPane tags;
-    @FXML
-    private BufferedImage profileImageUrl;
-    @FXML
-    private Image profileImage;
     @FXML
     private ImageView profileImageDisplay;
 
@@ -106,15 +100,17 @@ public class PersonProfilePage extends UiPart<Region> {
 
     private void setProfileImage(String imageCode) {
         String imagePath = "/images/" + imageCode + ".png";
+        BufferedImage profileImageUrl;
+
         try {
             profileImageUrl = ImageIO.read(PersonProfilePage.class.getResource(imagePath));
+            Image profileImage = SwingFXUtils.toFXImage(profileImageUrl, null);
+            profileImageDisplay.setImage(profileImage);
         } catch (IOException | IllegalArgumentException e) {
             logger.info("INVALID PROFILE IMAGE PATH: " + e.getLocalizedMessage());
             setProfileImage(DEFAULT_IMAGE_URL);
         }
 
-        profileImage = SwingFXUtils.toFXImage(profileImageUrl, null);
-        profileImageDisplay.setImage(profileImage);
         profileImageDisplay.setPreserveRatio(false);
         profileImageDisplay.setFitWidth(200);
         profileImageDisplay.setFitHeight(200);
@@ -131,7 +127,6 @@ public class PersonProfilePage extends UiPart<Region> {
         availCheckTime.setVisible(true);
         availability.setText(doctor.currentAvailStatus());
         availCheckTime.setText("last updated:  " + Date.getCurrentDate() + "," + Time.getCurrentTime());
-        logger.info(doctor.currentAvailStatus());
         if (doctor.currentAvailStatus().equals(doctor.IS_AVAILABLE)) {
             availability.setStyle("-fx-background-color: #33ff77");
         } else {

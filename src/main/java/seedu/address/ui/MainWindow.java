@@ -36,7 +36,6 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private DisplayPanel displayPanel;
     private PersonListPanel personListPanel;
-    private PersonProfilePage personProfilePage;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
@@ -129,7 +128,7 @@ public class MainWindow extends UiPart<Stage> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        personProfilePage = new PersonProfilePage();
+        PersonProfilePage personProfilePage = new PersonProfilePage();
         personProfilePagePlaceholder.getChildren().add(personProfilePage.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
