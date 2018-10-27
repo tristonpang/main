@@ -41,10 +41,11 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_MEDICAL_RECORD_AMY = "Diagnosed with flu. Tamiflu prescribed.";
-    public static final String VALID_MEDICAL_RECORD_BOB = "Diagnosed with cough. Dextromethorphan prescribed.";
-    public static final String VALID_SCHEDULE_AMY = "22.11.2018,1300,1400,Alice,Heart,Amy,S1234567A";
-    public static final String VALID_SCHEDULE_BOB = "22.11.2018,1300,1400,Jack,Heart,Bob,S1234567B";
+    public static final String VALID_MEDICAL_RECORD_AMY = "12.12.2018, Diagnosis: cough, "
+            + "Treatment: dextromethorphan, Comments: -";
+    public static final String VALID_MEDICAL_RECORD_BOB = "12.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -";
+    public static final String VALID_SCHEDULE_AMY = "22.11.2018,1300,1400,Alice,S1234567B,Amy,S1234567A";
+    public static final String VALID_SCHEDULE_BOB = "22.11.2018,1300,1400,Jack,S1234567J,Bob,S1234567B";
     public static final String VALID_ROLE_DOCTOR = "doctor";
     public static final String VALID_ROLE_PATIENT = "patient";
     public static final String VALID_MEDICAL_DEPARTMENT = "Dermatology";
@@ -74,9 +75,9 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "JB123456A"; // cannot start with 2 letters
+    public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "JB123456A"; // cant start with 2 letters
     public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE + "teacher"; // not a valid role
-    public static final String INVALID_MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + "HE12RT";
+    public static final String INVALID_MEDICAL_DEPARTMENT_DESC = " " + PREFIX_NRIC + "HE12RT";
     // numbers not allowed
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
