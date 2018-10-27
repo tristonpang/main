@@ -35,6 +35,14 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Returns true if the list contains a person with such parameters.
+     */
+    public boolean hasSuchPerson(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return internalList.stream().anyMatch(person -> person.getName().equals(name) && person.getNric().equals(nric));
+    }
+
+    /**
      * Adds a person to the list.
      * The person must not already exist in the list.
      */

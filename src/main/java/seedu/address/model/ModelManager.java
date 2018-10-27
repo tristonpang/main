@@ -13,6 +13,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
 /**
@@ -65,6 +67,12 @@ public class ModelManager extends ComponentManager implements Model {
     public boolean hasPerson(Person person) {
         requireNonNull(person);
         return versionedAddressBook.hasPerson(person);
+    }
+
+    @Override
+    public boolean hasSuchPerson(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return versionedAddressBook.hasSuchPerson(name, nric);
     }
 
     @Override
