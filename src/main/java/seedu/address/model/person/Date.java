@@ -142,6 +142,24 @@ public class Date {
         }
         return reason;
     }
+
+    public static Date getCurrentDate() {
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
+        String stringZonedDateTime = zonedDateTime.toString();
+        // Splitting output from API into a date part and a time part.
+        String[] dateAndTimeParts = stringZonedDateTime.split("T");
+
+        // Reformatting the order of the date.
+        String currentDate = dateAndTimeParts[0];
+        String[] dateParts = currentDate.split("-");
+        String year = dateParts[0];
+        String month = dateParts[1];
+        String day = dateParts[2];
+        currentDate = day + "." + month + "." + year;
+
+        return new Date(currentDate);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

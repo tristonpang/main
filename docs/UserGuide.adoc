@@ -116,27 +116,31 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Locating person by any attribute: `find`
 
-Finds people with the keyword specified by the user. Specified keyword can belong to any part of any attribute of the
-person (i.e. name, phone number, address, tags etc).
- +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds people with the keywords specified by the user within specific fields
+(i.e. `Name`, `Phone`, `Address`, `Tag` etc). +
+Format: `find [PREFIX] KEYWORDS [NEXT_PREFIX] [MORE_KEYWORDS]`
+
+[NOTE]
+If no `Prefix` is given, the search will be performed on all attributes. This means that the user can perform both
+a global search and a specific search by entering keywords directly after `find` but before the first `Prefix`.
 
 ****
 * The search is case-insensitive. e.g. `nelvin` will match `Nelvin`.
-* The search is a global search. e.g. `Kang` will return people whose name includes `Kang` and patients with street
-address `Choa Chu Kang`.
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched. e.g. `Tris` will not return `Tristan`.
-* People with at least one keyword will be returned. e.g. `Goh` will return `Gary Goh Yipeng` and `Kenneth Goh Jun
-Teck`.
+* When performing a global search, keywords are seperated by whitespace and any `Person` whose attributes contain any
+keyword will be returned. e.g. `find kang ken` will display `Kang Tze`, `Kenneth` and all `Person` with `Address` `Choa Chu Kang`.
+* When performing specific search, `Person` must contain the searched keywords exactly in order to be displayed.
+e.g `find n/Gary Goh` will display `Gary Goh Yipeng` but not `Kenneth Goh Jun Teck`.
+* When performing the `find` command with more than one search field, all `Person` matching at least one search field
+will be displayed. e.g. `find n/Gary a/Kang` will display `Gary Goh Yipeng` and all `Person` whose `Address` is
+`Choa Chu Kang`.
 ****
 
 Examples:
 
 * `find Goh` +
-Returns `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
-* `find Ng Tan` +
-Returns any person having names `Ng Kang Tze` and `Tan Thong Cai, Nelvin`.
+Displays `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
+* `find n/Tan a/Kang` +
+Displays `Nelvin Tan` and all `Person` whose `Address` is `Choa Chu Kang`.
 
 === Deleting a person : `delete`
 
@@ -332,7 +336,8 @@ Format: `COMMAND`
 
 [TIP]
 Type `/bk` to re-enter previous field. +
-Type `//` if the field is to be left blank.
+Type `//` if the field is to be left blank. +
+Press `ESC` to cancel the currently executing command.
 
 Example of the intuitive add command prompting:
 ```

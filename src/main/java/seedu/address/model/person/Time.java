@@ -1,5 +1,8 @@
 package seedu.address.model.person;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 /**
  * Represents a time in the address book.
  */
@@ -119,6 +122,22 @@ public class Time {
             reason = MESSAGE_TIME_INVALID_DOES_NOT_EXIST + this.time;
         }
         return reason;
+    }
+
+    public static Time getCurrentTime() {
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
+        String stringZonedDateTime = zonedDateTime.toString();
+        // Splitting output from API into a date part and a time part.
+        String[] dateAndTimeParts = stringZonedDateTime.split("T");
+
+        // Reformatting the oder of the time.
+        String currentTime = dateAndTimeParts[1];
+        String[] currentTimeParts = currentTime.split(":");
+        String hour = currentTimeParts[0];
+        String minute = currentTimeParts[1];
+        currentTime = hour + minute;
+
+        return new Time(currentTime);
     }
 
     @Override

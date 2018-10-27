@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import seedu.address.model.patient.Nric;
 import seedu.address.testutil.Assert;
 
 public class NricTest {
@@ -15,11 +14,11 @@ public class NricTest {
         Assert.assertThrows(NullPointerException.class, () -> new Nric(null));
     }
 
-    // @Test
-    // public void constructor_invalidNric_throwsIllegalArgumentException() {
-    //String invalidNric = "";
-    //    Assert.assertThrows(IllegalArgumentException.class, () -> new Nric(invalidNric));
-    // }
+    @Test
+    public void constructor_invalidNric_throwsIllegalArgumentException() {
+        String invalidNric = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Nric(invalidNric));
+    }
 
     @Test
     public void isValidNric() {

@@ -33,21 +33,26 @@ public class DisplayableAttributeCard extends UiPart<Region> {
     public DisplayableAttributeCard(DisplayableAttribute displayableAttribute, int displayedIndex) {
         super(FXML);
         this.displayableAttribute = displayableAttribute;
-        id.setText(displayedIndex + ". ");
         if (displayableAttribute instanceof MedicalRecord) {
+            id.setText("Medical Record: ");
             date.setText(((MedicalRecord) displayableAttribute).getDate());
             displayableField1.setText("Diagnosis: " + ((MedicalRecord) displayableAttribute).getDiagnosis());
             displayableField2.setText("Treatment: " + ((MedicalRecord) displayableAttribute).getTreatment());
             displayableField3.setText("Comments: " + ((MedicalRecord) displayableAttribute).getComments());
         } else if (displayableAttribute instanceof Appointment) {
+            if (((Appointment) displayableAttribute).value.equals("")) {
+                return;
+            }
+
+            id.setText("Appointment: ");
             Appointment appointment = (Appointment) displayableAttribute;
             date.setText(appointment.getDateString());
             displayableField1.setText("Start Time: " + appointment.getStartTimeString()
-                    + ", End Time: " + appointment.getEndTimeString());
+                    + "\t\tEnd Time: " + appointment.getEndTimeString());
             displayableField2.setText("Doctor Name: " + appointment.getDoctorNameString()
-                    + ", Doctor NRIC: " + appointment.getDoctorNricString());
+                    + "\t\tDoctor NRIC: " + appointment.getDoctorNricString());
             displayableField3.setText("Patient Name: " + appointment.getPatientNameString()
-                    + ", Patient NRIC " + appointment.getPatientNricString());
+                    + "\t\tPatient NRIC " + appointment.getPatientNricString());
         }
     }
 
