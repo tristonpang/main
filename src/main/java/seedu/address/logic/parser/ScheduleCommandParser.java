@@ -17,6 +17,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appointment;
+import seedu.address.model.person.Date;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
+import seedu.address.model.person.Time;
 
 /**
  * Parses input arguments and creates a new {@code ScheduleCommand} object
@@ -48,17 +52,16 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
         }
 
+        Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+        Time startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_START_TIME).get());
+        Time endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_END_TIME).get());
+        Name doctorName = ParserUtil.parseName(argMultimap.getValue(PREFIX_DOCTOR_NAME).get());
+        Nric doctorNric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_DOCTOR_NRIC).get());
+        Name patientName = ParserUtil.parseName(argMultimap.getValue(PREFIX_PATIENT_NAME).get());
+        Nric patientNric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_PATIENT_NRIC).get());
 
-        String date = argMultimap.getValue(PREFIX_DATE).get();
-        String startTime = argMultimap.getValue(PREFIX_START_TIME).get();
-        String endTime = argMultimap.getValue(PREFIX_END_TIME).get();
-        String doctorName = argMultimap.getValue(PREFIX_DOCTOR_NAME).get();
-        String department = argMultimap.getValue(PREFIX_DOCTOR_NRIC).get();
-        String patientName = argMultimap.getValue(PREFIX_PATIENT_NAME).get();
-        String nric = argMultimap.getValue(PREFIX_PATIENT_NRIC).get();
-
-        return new ScheduleCommand(index, new Appointment(date, startTime, endTime, doctorName, department,
-                patientName, nric));
+        return new ScheduleCommand(index, new Appointment(date, startTime, endTime, doctorName, doctorNric,
+                patientName, patientNric));
     }
 
     /**

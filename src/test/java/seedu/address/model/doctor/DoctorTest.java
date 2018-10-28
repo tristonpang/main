@@ -24,9 +24,9 @@ public class DoctorTest {
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        Doctor patient = new DoctorBuilder().build();
+        Doctor doctor = new DoctorBuilder().build();
         thrown.expect(UnsupportedOperationException.class);
-        patient.getTags().remove(0);
+        doctor.getTags().remove(0);
     }
 
     @Test

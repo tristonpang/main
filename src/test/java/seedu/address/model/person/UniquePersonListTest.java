@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_NRIC_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -79,11 +80,11 @@ public class UniquePersonListTest {
         uniquePersonList.hasSuchPerson(new Name(INVALID_NAME_DESC), AMY.getNric());
     }
 
-    // @Test
-    // public void hasSuchPerson_invalidNric_throwsIllegalArgumentException() {
-    //     thrown.expect(IllegalArgumentException.class);
-    //     uniquePersonList.hasSuchPerson(AMY.getName(), new Nric(INVALID_NRIC_DESC));
-    // }
+    @Test
+    public void hasSuchPerson_invalidNric_throwsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        uniquePersonList.hasSuchPerson(AMY.getName(), new Nric(INVALID_NRIC_DESC));
+    }
 
     @Test
     public void hasSuchPerson_personExists_returnsTrue() {
