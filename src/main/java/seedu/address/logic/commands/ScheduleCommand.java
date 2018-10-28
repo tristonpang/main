@@ -56,15 +56,6 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER =
             "Failed to schedule appointment to Person.\n"
             + "Number of parts of the appointment is wrong.\n";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_DATE =
-            "Failed to schedule appointment to Person.\n"
-            + "Date entered is invalid.\n";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME =
-            "Failed to schedule appointment to Person.\n"
-            + "Start time entered is invalid.\n";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME =
-            "Failed to schedule appointment to Person.\n"
-            + "End time entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_START_AND_END_TIME =
             "Failed to schedule appointment to Person.\n"
             + "Start time should come before end time!\n";
@@ -77,12 +68,6 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH = "There is a clash of appointments. "
             + "Please choose another slot.\n";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT_NRIC =
-            "Patient NRIC format is wrong. "
-            + "NRIC should contain only alphanumeric characters and should not be left blank.\n";
-    public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR_NRIC =
-            "Doctor NRIC format is wrong. "
-            + "NRIC should contain only alphanumeric characters and should not be left blank.\n";
 
     private final Index index;
     private final Appointment appointment;
@@ -109,35 +94,12 @@ public class ScheduleCommand extends Command {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER);
         }
 
-        if (!appointment.hasValidPatientNric()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT_NRIC);
-        }
-
-        if (!appointment.hasValidDoctorNric()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR_NRIC);
-        }
-
         if (!model.hasSuchPatient(appointment.getPatientName(), appointment.getPatientNric())) {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT);
         }
 
         if (!model.hasSuchDoctor(appointment.getDoctorName(), appointment.getDoctorNric())) {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR);
-        }
-
-        if (!appointment.hasValidDate()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_DATE
-                    + appointment.getInvalidDateReason());
-        }
-
-        if (!appointment.hasValidStartTime()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME
-                    + appointment.getInvalidStartTimeReason());
-        }
-
-        if (!appointment.hasValidEndTime()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME
-                    + appointment.getInvalidEndTimeReason());
         }
 
         if (!appointment.hasValidStartandEndTime()) {
