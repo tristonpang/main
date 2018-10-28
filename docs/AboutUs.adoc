@@ -22,7 +22,7 @@ Role: Supervisor
 
 === Tan Thong Cai Nelvin
 image::nelvintan.png[width="150", align="left"]
-{empty}[https://github.com/nelvintan[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/nelvintan[github]] [<<nelvintan#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: Deliverables & deadlines, Scheduling & tracking

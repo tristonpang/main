@@ -168,7 +168,7 @@ Selects the person identified by the index number used in the displayed person l
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the details of the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -247,20 +247,33 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the database. +
 Format: `clear`
 
-=== Displaying medical appointments : `display`
+// tag::displayappt[]
+=== Displaying medical appointments : `select`
 
 Displays a list of medical appointments that are currently scheduled for the specified person. +
-Format: `display INDEX`
+Format: `select INDEX`
 
 ****
+* Selects the person and loads the appointment list of the person at the specified `INDEX`.
 * Index is the position of the person selected from the person card list.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* Appointment List will be displayed on the top right of the screen as shown in figure below.
 ****
 
 Examples:
 
-* `display 1` +
-Displays the list of appointments of the person in the person card list.
+* `list` +
+`select 2` +
+Selects the 2nd person in the database and display the appointments.
 
+.Display appointment diagram
+image::DisplayAppointment.png[width="600"]
+* `find Betsy` +
+`select 1` +
+Selects the 1st patient in the results of the `find` command and display the appointments.
+// end::displayappt[]
+
+// tag::schedule[]
 === Scheduling medical appointments : `schedule`
 
 Schedules a patient/doctor for a medical appointment at a specific date and time. +
@@ -280,6 +293,15 @@ Examples:
 * `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/John Doe pi/S1234567A` +
 Schedules `John Doe` for an appointment with doctor `Jack` on the 23nd of November 2018 from
  1pm to 2pm.
+* An example of a successful schedule is shown below.
+
+.Successful schedule diagram
+image::ScheduleSuccess.png[width="600"]
+* An example of an unsuccessful schedule is shown below.
+
+.Unsuccessful schedule diagram
+image::ScheduleFailure.png[width="600"]
+// end::schedule[]
 
 === Viewing medical records of patients : `records`
 

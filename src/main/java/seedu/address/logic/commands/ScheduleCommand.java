@@ -61,10 +61,10 @@ public class ScheduleCommand extends Command {
             + "Start time should come before end time!\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR =
             "Failed to schedule appointment to Person.\n"
-            + "Doctor details entered is wrong.\n";
+            + "Doctor details entered are wrong.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT = "Failed to schedule "
             + "appointment to Person.\n"
-            + "Patient details entered is wrong.\n";
+            + "Patient details entered are wrong.\n";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH = "There is a clash of appointments. "
             + "Please choose another slot.\n";
@@ -85,6 +85,7 @@ public class ScheduleCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
+<<<<<<< HEAD
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -105,20 +106,26 @@ public class ScheduleCommand extends Command {
         if (!appointment.hasValidStartandEndTime()) {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_START_AND_END_TIME);
         }
+=======
+        conductPreliminaryChecks(model, lastShownList);
+>>>>>>> master
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson;
         Person secondPersonToEdit;
         Person secondEditedPerson;
 
+        // check if current person selected matches the details entered from command prompt
         if (personToEdit instanceof Doctor && !appointment.hasValidDoctor(personToEdit)) {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR);
         }
 
+        // check if current person selected matches the details entered from command prompt
         if (personToEdit instanceof Patient && !appointment.hasValidPatient(personToEdit)) {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT);
         }
 
+        // check for clash of appointments for selected person
         if (personToEdit.hasClash(appointment)) {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH);
         }
@@ -133,13 +140,17 @@ public class ScheduleCommand extends Command {
                     appointmentList, ((Doctor) personToEdit).getMedicalDepartment());
 
             secondPersonToEdit = model.getPerson(appointment.getPatientNric()).get();
+
+            // check for clash of appointments for other person
             if (secondPersonToEdit.hasClash(appointment)) {
                 throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH);
             }
+
             ArrayList<Appointment> secondAppointmentList = new ArrayList<>(secondPersonToEdit.getAppointmentList());
             secondAppointmentList.add(appointment);
             ArrayList<MedicalRecord> newMedicalRecordLibrary =
                     new ArrayList<>(((Patient) secondPersonToEdit).getMedicalRecordLibrary());
+
             secondEditedPerson = new Patient(secondPersonToEdit.getName(), secondPersonToEdit.getNric(),
                     secondPersonToEdit.getPhone(), secondPersonToEdit.getEmail(),
                     secondPersonToEdit.getAddress(), secondPersonToEdit.getTags(),
@@ -156,9 +167,12 @@ public class ScheduleCommand extends Command {
                     personToEdit.getTags(), appointmentList, newMedicalRecordLibrary);
 
             secondPersonToEdit = model.getPerson(appointment.getDoctorNric()).get();
+
+            // check for clash of appointments for other person
             if (secondPersonToEdit.hasClash(appointment)) {
                 throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH);
             }
+
             ArrayList<Appointment> secondAppointmentList = new ArrayList<>(secondPersonToEdit.getAppointmentList());
             secondAppointmentList.add(appointment);
 
@@ -168,12 +182,75 @@ public class ScheduleCommand extends Command {
                     secondAppointmentList, ((Doctor) secondPersonToEdit).getMedicalDepartment());
         }
 
+        // update both of the affected persons
         model.updatePerson(personToEdit, editedPerson);
         model.updatePerson(secondEditedPerson, secondEditedPerson);
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
 
         return new CommandResult(generateSuccessMessage(editedPerson));
+    }
+
+    /**
+     * Helper method for execute to conduct the initial checks for scheduling an appointment.
+     *
+     * @param model which the command should operate on.
+     * @param lastShownList where indexed person will be drawn from.
+     * @throws CommandException If an error occurs during command execution.
+     */
+    private void conductPreliminaryChecks(Model model, List<Person> lastShownList) throws CommandException {
+        // check if the index is correct
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        if (!appointment.isOfCorrectNumberOfParts()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PARTS_NUMBER);
+        }
+
+        // check if patient's nric is of valid format
+        if (!appointment.hasValidPatientNric()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT_NRIC);
+        }
+
+        // check if doctors's nric is of valid format
+        if (!appointment.hasValidDoctorNric()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR_NRIC);
+        }
+
+        // check if such a patient exists in the datebase using the patient's name and nric
+        if (!model.hasSuchPatient(appointment.getPatientName(), appointment.getPatientNric())) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT);
+        }
+
+        // check if such a doctor exists in the database using the doctor's name and nric
+        if (!model.hasSuchDoctor(appointment.getDoctorName(), appointment.getDoctorNric())) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR);
+        }
+
+        // check if the date format and content entered is valid
+        if (!appointment.hasValidDate()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_DATE
+                    + appointment.getInvalidDateReason());
+        }
+
+        // check if the start time format and content entered are valid
+        if (!appointment.hasValidStartTime()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME
+                    + appointment.getInvalidStartTimeReason());
+        }
+
+        // check if the end time format and content entered are valid
+        if (!appointment.hasValidEndTime()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME
+                    + appointment.getInvalidEndTimeReason());
+        }
+
+        // check if the start time comes before the end time
+        if (!appointment.hasValidStartandEndTime()) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_START_AND_END_TIME);
+        }
     }
 
     /**
