@@ -70,10 +70,10 @@ public class ScheduleCommand extends Command {
             + "Start time should come before end time!\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR =
             "Failed to schedule appointment to Person.\n"
-            + "Doctor details entered is wrong.\n";
+            + "Doctor details entered are wrong.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT = "Failed to schedule "
             + "appointment to Person.\n"
-            + "Patient details entered is wrong.\n";
+            + "Patient details entered are wrong.\n";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Removed appointment from Person: %1$s";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH = "There is a clash of appointments. "
             + "Please choose another slot.\n";
@@ -100,7 +100,7 @@ public class ScheduleCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
-        conductPreliminaryChecks(model,  lastShownList);
+        conductPreliminaryChecks(model, lastShownList);
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson;
@@ -184,6 +184,13 @@ public class ScheduleCommand extends Command {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     * Helper method for execute to conduct the initial checks for scheduling an appointment.
+     *
+     * @param model which the command should operate on.
+     * @param lastShownList where indexed person will be drawn from.
+     * @throws CommandException If an error occurs during command execution.
+     */
     private void conductPreliminaryChecks(Model model, List<Person> lastShownList) throws CommandException {
         // check if the index is correct
         if (index.getZeroBased() >= lastShownList.size()) {

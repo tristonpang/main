@@ -381,7 +381,7 @@ For example: `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/Jo
 * **Alternative 2:** Use a comma-separated long string in the command prompt to schedule an appointment.
 For example: `schedule 1 s/23.11.2018,1300,1400,Jack,S1234567B,John Doe,S1234567A`
 ** Pros: The user has to type less when scheduling a command.
-The user is not required to type all the prefixes, he just has to type 1.
+The user is not required to type all the prefixes, he just has to type one prefix, `s/`.
 ** Cons: The design would not be consistent with the other commands.
 This might confuse the user.
 
