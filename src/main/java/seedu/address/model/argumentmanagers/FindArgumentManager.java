@@ -11,6 +11,9 @@ import java.util.List;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.FindCommand;
 
+/**
+ * ArgumentManager that handles management and recording of arguments for an intuitive 'find' command.
+ */
 public class FindArgumentManager extends ArgumentManager {
     public static final String FIND_SEARCH_FIELDS_INSTRUCTION = "Please select what fields to search in, by typing"
             + "down the corresponding numbers, separated by spaces:\n"

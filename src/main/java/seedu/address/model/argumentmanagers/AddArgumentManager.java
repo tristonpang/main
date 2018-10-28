@@ -23,6 +23,9 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
 
+/**
+ * ArgumentManager that handles management and recording of arguments for an intuitive 'add' command.
+ */
 public class AddArgumentManager extends ArgumentManager {
     public static final String ROLE_INSTRUCTION = "Is this a patient or a doctor? "
             + "(Please enter patient or doctor)";

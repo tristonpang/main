@@ -16,6 +16,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
+/**
+ * ArgumentManager that handles management and recording of arguments for an intuitive 'edit' command.
+ */
 public class EditArgumentManager extends ArgumentManager {
     public static final String EDIT_CLEAR_TAGS_COMMAND = "--";
 

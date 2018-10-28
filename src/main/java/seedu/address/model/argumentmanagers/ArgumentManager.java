@@ -6,10 +6,10 @@ import java.util.List;
  * Class that determines how arguments are stored and keeps track of respective instructions.
  */
 public abstract class ArgumentManager {
+    public static final int MIN_ARGUMENT_INDEX = 0;
     protected static final String COMMAND_COMPLETE_MESSAGE = "All required inputs received, processing...";
     protected static final String UNEXPECTED_SCENARIO_MESSAGE = "ArgumentManager: "
             + "Unexpected scenario has occurred in switch-case block";
-    public static final int MIN_ARGUMENT_INDEX = 0;
 
     /**
      * Handles the adding of the user's input as an argument, depending on

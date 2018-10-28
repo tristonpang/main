@@ -5,6 +5,9 @@ import java.util.List;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.DeleteCommand;
 
+/**
+ * ArgumentManager that handles management and recording of arguments for an intuitive 'delete' command.
+ */
 public class DeleteArgumentManager extends ArgumentManager {
     public static final String DELETE_TARGET_INSTRUCTION = "Please enter the index of the person to be deleted";
     public static final String DELETE_INVALID_ARGUMENT_MESSAGE = "Index must be a non-zero positive integer";

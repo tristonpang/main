@@ -12,11 +12,14 @@ import java.util.List;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.ScheduleCommand;
-import seedu.address.model.person.Nric;
 import seedu.address.model.person.Date;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Time;
 
+/**
+ * ArgumentManager that handles management and recording of arguments for an intuitive 'schedule' command.
+ */
 public class ScheduleArgumentManager extends ArgumentManager {
     public static final String SCHEDULE_TARGET_INSTRUCTION = "Please the enter the index of the person to "
             + "schedule an appointment for (can be patient or doctor)";
