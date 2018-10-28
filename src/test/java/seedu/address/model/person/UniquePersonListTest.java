@@ -80,11 +80,11 @@ public class UniquePersonListTest {
         uniquePersonList.hasSuchPerson(new Name(INVALID_NAME_DESC), AMY.getNric());
     }
 
-    @Test
-    public void hasSuchPerson_invalidNric_throwsIllegalArgumentException() {
-        thrown.expect(IllegalArgumentException.class);
-        uniquePersonList.hasSuchPerson(AMY.getName(), new Nric(INVALID_NRIC_DESC));
-    }
+    // @Test
+    // public void hasSuchPerson_invalidNric_throwsIllegalArgumentException() {
+    //     thrown.expect(IllegalArgumentException.class);
+    //     uniquePersonList.hasSuchPerson(AMY.getName(), new Nric(INVALID_NRIC_DESC));
+    // }
 
     @Test
     public void hasSuchPerson_personExists_returnsTrue() {
