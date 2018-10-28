@@ -81,8 +81,24 @@ public class Appointment extends DisplayableAttribute {
         return doctorNric.toString();
     }
 
+    public Name getDoctorName() {
+        return doctorName;
+    }
+
+    public Nric getDoctorNric() {
+        return doctorNric;
+    }
+
     public String getPatientNameString() {
         return patientName.toString();
+    }
+
+    public Name getPatientName() {
+        return patientName;
+    }
+
+    public Nric getPatientNric() {
+        return patientNric;
     }
 
     public String getPatientNricString() {
@@ -97,11 +113,6 @@ public class Appointment extends DisplayableAttribute {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
-        // different or doctor means definitely no clash
-        if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
-            return false;
-        }
-
         Time otherStartTime = otherAppointment.startTime;
         Time otherEndTime = otherAppointment.endTime;
 

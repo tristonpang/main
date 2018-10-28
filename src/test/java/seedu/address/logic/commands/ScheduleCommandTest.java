@@ -35,7 +35,7 @@ public class ScheduleCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_addRemarkUnfilteredList_success() {
+    public void execute_addScheduleUnfilteredList_success() {
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         firstPerson.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient editedPerson = new PatientBuilder(firstPerson).withAppointment(SCHEDULE_STUB).build();
@@ -52,7 +52,7 @@ public class ScheduleCommandTest {
         assertCommandSuccess(scheduleCommand, model, commandHistory, expectedMessage, expectedModel);
     }
     @Test
-    public void execute_deleteRemarkUnfilteredList_success() {
+    public void execute_deleteScheduleUnfilteredList_success() {
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         firstPerson.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient editedPerson = new PatientBuilder(firstPerson)
@@ -159,7 +159,7 @@ public class ScheduleCommandTest {
     }
 
     /**
-     * 1. Modifies {@code Person#remark} from a filtered list.
+     * 1. Modifies {@code Person#Appointment} from a filtered list.
      * 2. Undo the modification.
      * 3. The unfiltered list should be shown now. Verify that the index of the previously modified person in the
      * unfiltered list is different from the index at the filtered list.
@@ -184,7 +184,7 @@ public class ScheduleCommandTest {
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
 
-        // remark -> modifies second person in unfiltered person list / first person in filtered person list
+        // schedule -> modifies second person in unfiltered person list / first person in filtered person list
 
         scheduleCommand.execute(model, commandHistory);
 
@@ -219,7 +219,7 @@ public class ScheduleCommandTest {
         assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_SECOND_PERSON,
                 new Appointment(VALID_SCHEDULE_AMY))));
 
-        // different remark -> returns false
+        // different appointment -> returns false
         assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_FIRST_PERSON,
                 new Appointment(VALID_SCHEDULE_BOB))));
     }

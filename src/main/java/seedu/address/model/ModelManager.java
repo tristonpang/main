@@ -77,6 +77,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean hasSuchPatient(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return versionedAddressBook.hasSuchPatient(name, nric);
+    }
+
+    @Override
+    public boolean hasSuchDoctor(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return versionedAddressBook.hasSuchDoctor(name, nric);
+    }
+
+    @Override
     public Optional<Person> getPerson(Nric nric) {
         requireNonNull(nric);
         return versionedAddressBook.getPerson(nric);
