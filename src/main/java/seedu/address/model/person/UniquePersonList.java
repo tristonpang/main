@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -41,6 +43,24 @@ public class UniquePersonList implements Iterable<Person> {
     public boolean hasSuchPerson(Name name, Nric nric) {
         requireAllNonNull(name, nric);
         return internalList.stream().anyMatch(person -> person.getName().equals(name) && person.getNric().equals(nric));
+    }
+
+    /**
+     * Returns true if the list contains a Patient with such parameters.
+     */
+    public boolean hasSuchPatient(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return internalList.stream().anyMatch(person -> person.getName().equals(name)
+                && person.getNric().equals(nric) && (person instanceof Patient));
+    }
+
+    /**
+     * Returns true if the list contains a Doctor with such parameters.
+     */
+    public boolean hasSuchDoctor(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return internalList.stream().anyMatch(person -> person.getName().equals(name)
+                && person.getNric().equals(nric) && (person instanceof Doctor));
     }
 
     /**

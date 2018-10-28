@@ -112,6 +112,7 @@ public class PersonBuilder {
      */
     public PersonBuilder withAppointment(String appointment) {
         this.appointment = new Appointment(appointment);
+        appointmentList = SampleDataUtil.getAppointmentsList(appointment);
         return this;
     }
 
@@ -124,7 +125,14 @@ public class PersonBuilder {
     }
 
 
+    /**
+     *
+     * @return a new Person with the relevant details.
+     */
     public Person build() {
+        if (appointmentList != null) {
+            return new Person(name, nric, phone, email, address, tags, appointmentList);
+        }
         return new Person(name, nric, phone, email, address, tags);
     }
 }

@@ -33,6 +33,18 @@ public interface Model {
     boolean hasSuchPerson(Name name, Nric nric);
 
     /**
+     * Returns true if there exist a patient with matching {@code nric} and {@code name} in the database
+     */
+    boolean hasSuchPatient(Name name, Nric nric);
+
+
+    /**
+     * Returns true if there exist a doctor with matching {@code nric} and {@code name} in the database
+     */
+    boolean hasSuchDoctor(Name name, Nric nric);
+
+
+    /**
      * Returns an {@code Optional<Person>} that matches the given {@code nric}.
      */
     Optional<Person> getPerson(Nric nric);

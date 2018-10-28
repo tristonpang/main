@@ -71,6 +71,7 @@ public class PatientBuilder extends PersonBuilder {
     @Override
     public PatientBuilder withAppointment(String appointment) {
         this.appointment = new Appointment(appointment);
+        appointmentList = SampleDataUtil.getAppointmentsList(appointment);
         return this;
     }
 
@@ -90,6 +91,9 @@ public class PatientBuilder extends PersonBuilder {
 
     @Override
     public Patient build() {
-        return new Patient(name, nric, phone, email, address, tags, appointment, medicalRecord);
+        if (appointmentList != null) {
+            return new Patient(name, nric, phone, email, address, tags, appointmentList, medicalRecord);
+        }
+        return new Patient(name, nric, phone, email, address, tags, medicalRecord);
     }
 }

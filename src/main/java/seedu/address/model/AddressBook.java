@@ -79,6 +79,22 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Returns true if there is such a patient with the provided {@code name} and {@code nric}.
+     */
+    public boolean hasSuchPatient(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return persons.hasSuchPatient(name, nric);
+    }
+
+    /**
+     * Returns true if there is such a doctor with the provided {@code name} and {@code nric}.
+     */
+    public boolean hasSuchDoctor(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return persons.hasSuchDoctor(name, nric);
+    }
+
+    /**
      * Returns an {@code Optional<Person>} base on the provided {@code nric}.
      */
     public Optional<Person> getPerson(Nric nric) {

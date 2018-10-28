@@ -81,8 +81,24 @@ public class Appointment extends DisplayableAttribute {
         return doctorNric.toString();
     }
 
+    public Name getDoctorName() {
+        return doctorName;
+    }
+
+    public Nric getDoctorNric() {
+        return doctorNric;
+    }
+
     public String getPatientNameString() {
         return patientName.toString();
+    }
+
+    public Name getPatientName() {
+        return patientName;
+    }
+
+    public Nric getPatientNric() {
+        return patientNric;
     }
 
     public String getPatientNricString() {
@@ -97,8 +113,8 @@ public class Appointment extends DisplayableAttribute {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
-        // different or doctor means definitely no clash
-        if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
+        // different date means definitely no clash
+        if (!date.equals(otherAppointment.date)) {
             return false;
         }
 
@@ -130,7 +146,7 @@ public class Appointment extends DisplayableAttribute {
      */
     public boolean isOngoing(String date, String time) {
         // If different date, we know for sure Appointment is not ongoing.
-        if (!this.date.equals(date)) {
+        if (!this.date.equals(new Date(date))) {
             return false;
         }
         Time givenTime = new Time(time);
@@ -234,6 +250,18 @@ public class Appointment extends DisplayableAttribute {
             return true;
         }
         return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidPatientNric();
+    }
+
+    public String getInvalidDateReason() {
+        return date.getFailureReason();
+    }
+
+    public String getInvalidStartTimeReason() {
+        return startTime.getFailureReason();
+    }
+
+    public String getInvalidEndTimeReason() {
+        return endTime.getFailureReason();
     }
 
     @Override

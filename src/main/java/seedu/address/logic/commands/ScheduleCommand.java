@@ -61,10 +61,10 @@ public class ScheduleCommand extends Command {
             + "Date entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME =
             "Failed to schedule appointment to Person.\n"
-            + "Date entered is invalid.\n";
+            + "Start time entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME =
             "Failed to schedule appointment to Person.\n"
-            + "Date entered is invalid.\n";
+            + "End time entered is invalid.\n";
     public static final String MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_START_AND_END_TIME =
             "Failed to schedule appointment to Person.\n"
             + "Start time should come before end time!\n";
@@ -117,16 +117,27 @@ public class ScheduleCommand extends Command {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR_NRIC);
         }
 
+        if (!model.hasSuchPatient(appointment.getPatientName(), appointment.getPatientNric())) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_PATIENT);
+        }
+
+        if (!model.hasSuchDoctor(appointment.getDoctorName(), appointment.getDoctorNric())) {
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR);
+        }
+
         if (!appointment.hasValidDate()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_DATE);
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_DATE
+                    + appointment.getInvalidDateReason());
         }
 
         if (!appointment.hasValidStartTime()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME);
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_START_TIME
+                    + appointment.getInvalidStartTimeReason());
         }
 
         if (!appointment.hasValidEndTime()) {
-            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME);
+            throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_INCORRECT_END_TIME
+                    + appointment.getInvalidEndTimeReason());
         }
 
         if (!appointment.hasValidStartandEndTime()) {
@@ -135,6 +146,8 @@ public class ScheduleCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson;
+        Person secondPersonToEdit;
+        Person secondEditedPerson;
 
         if (personToEdit instanceof Doctor && !appointment.hasValidDoctor(personToEdit)) {
             throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_INCORRECT_DOCTOR);
@@ -156,6 +169,19 @@ public class ScheduleCommand extends Command {
                     personToEdit.getPhone(), personToEdit.getEmail(),
                     personToEdit.getAddress(), personToEdit.getTags(),
                     appointmentList, ((Doctor) personToEdit).getMedicalDepartment());
+
+            secondPersonToEdit = model.getPerson(appointment.getPatientNric()).get();
+            if (secondPersonToEdit.hasClash(appointment)) {
+                throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH);
+            }
+            ArrayList<Appointment> secondAppointmentList = new ArrayList<>(secondPersonToEdit.getAppointmentList());
+            secondAppointmentList.add(appointment);
+            ArrayList<MedicalRecord> newMedicalRecordLibrary =
+                    new ArrayList<>(((Patient) secondPersonToEdit).getMedicalRecordLibrary());
+            secondEditedPerson = new Patient(secondPersonToEdit.getName(), secondPersonToEdit.getNric(),
+                    secondPersonToEdit.getPhone(), secondPersonToEdit.getEmail(),
+                    secondPersonToEdit.getAddress(), secondPersonToEdit.getTags(),
+                    secondAppointmentList, newMedicalRecordLibrary);
         } else {
             assert personToEdit instanceof Patient;
 
@@ -166,9 +192,22 @@ public class ScheduleCommand extends Command {
                     personToEdit.getNric(), personToEdit.getPhone(),
                     personToEdit.getEmail(), personToEdit.getAddress(),
                     personToEdit.getTags(), appointmentList, newMedicalRecordLibrary);
+
+            secondPersonToEdit = model.getPerson(appointment.getDoctorNric()).get();
+            if (secondPersonToEdit.hasClash(appointment)) {
+                throw new CommandException(MESSAGE_SCHEDULE_APPOINTMENT_FAILURE_CLASH);
+            }
+            ArrayList<Appointment> secondAppointmentList = new ArrayList<>(secondPersonToEdit.getAppointmentList());
+            secondAppointmentList.add(appointment);
+
+            secondEditedPerson = new Doctor(secondPersonToEdit.getName(), secondPersonToEdit.getNric(),
+                    secondPersonToEdit.getPhone(), secondPersonToEdit.getEmail(),
+                    secondPersonToEdit.getAddress(), secondPersonToEdit.getTags(),
+                    secondAppointmentList, ((Doctor) secondPersonToEdit).getMedicalDepartment());
         }
 
         model.updatePerson(personToEdit, editedPerson);
+        model.updatePerson(secondEditedPerson, secondEditedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
 

@@ -13,6 +13,10 @@ public class Time {
      */
     public static final String TIME_VALIDATION_REGEX = "^\\d{4}";
 
+    public static final String MESSAGE_TIME_INVALID_FORMAT_CONSTRAINTS = "Time should be entered in 24 hr clock format."
+            + " e.g. 1330 represents 1:30 pm. ";
+    public static final String MESSAGE_TIME_INVALID_DOES_NOT_EXIST = "This time does not exist: ";
+
     /** String representation of the time **/
     private String time;
 
@@ -105,6 +109,19 @@ public class Time {
             result = false;
         }
         return result;
+    }
+
+    public String getFailureReason() {
+        if (isValid()) {
+            return "Time is valid.";
+        }
+        String reason;
+        if (!isCorrectFormat()) {
+            reason = MESSAGE_TIME_INVALID_FORMAT_CONSTRAINTS;
+        } else {
+            reason = MESSAGE_TIME_INVALID_DOES_NOT_EXIST + this.time;
+        }
+        return reason;
     }
 
     public static Time getCurrentTime() {

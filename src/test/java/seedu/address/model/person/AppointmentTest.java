@@ -68,7 +68,7 @@ public class AppointmentTest {
                 "Priscilia", "S1234567H", "Elaine", "S1234567A");
 
         // appointment 8 and 9 have different timings that do not clash
-        Appointment appt8 = new Appointment("22.11.2018", "1300", "1400",
+        Appointment appt8 = new Appointment("22.11.2018", "1430", "1445",
                 "Priscilia", "S1234567H", "Elaine", "S1234567A");
         Appointment appt9 = new Appointment("22.11.2018", "1500", "1600",
                 "Priscilia", "S1234567H", "Elaine", "S1234567A");
@@ -77,7 +77,7 @@ public class AppointmentTest {
         appointmentList = AppointmentManager.add(appointmentList, appt6);
         appointmentList = AppointmentManager.add(appointmentList, appt8);
 
-        assertFalse(AppointmentManager.isClash(appointmentList, appt5));
+        assertTrue(AppointmentManager.isClash(appointmentList, appt5));
         assertFalse(AppointmentManager.isClash(appointmentList, appt7));
         assertFalse(AppointmentManager.isClash(appointmentList, appt9));
     }
@@ -141,7 +141,7 @@ public class AppointmentTest {
     public void testForAnyOngoingAppointmentAtCurrentTime() {
         Appointment appt1 = new Appointment("13.10.2018", "1300", "1400",
                 "Alice", "S1234567H", "Bob", "S1234567A");
-        Appointment appt2 = new Appointment("13.10.2018", "1401", "1405",
+        Appointment appt2 = new Appointment("13.10.2018", "0600", "0700",
                 "Alice", "S1234567H", "Bob", "S1234567A");
         ArrayList<Appointment> appointments = new ArrayList<>();
         appointments.add(appt1);
