@@ -29,13 +29,13 @@ import seedu.address.testutil.PatientBuilder;
  */
 public class ScheduleCommandTest {
 
-    private static final String SCHEDULE_STUB = "23.11.2018,1300,1400,Priscilia,S1234567B,Alice Pauline,S7412345C";
+    private static final String SCHEDULE_STUB = "23.11.2018,1300,1400,Elle Meyer,S2234599A,Alice Pauline,S7412345C";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_addRemarkUnfilteredList_success() {
+    public void execute_addScheduleUnfilteredList_success() {
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         firstPerson.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient editedPerson = new PatientBuilder(firstPerson).withAppointment(SCHEDULE_STUB).build();
@@ -52,11 +52,11 @@ public class ScheduleCommandTest {
         assertCommandSuccess(scheduleCommand, model, commandHistory, expectedMessage, expectedModel);
     }
     @Test
-    public void execute_deleteRemarkUnfilteredList_success() {
+    public void execute_deleteScheduleUnfilteredList_success() {
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         firstPerson.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient editedPerson = new PatientBuilder(firstPerson)
-                .withAppointment("22.11.2018,1300,1400,Alice,S1234567B,"
+                .withAppointment("22.11.2018,1300,1400,Elle Meyer,S2234599A,"
                         + firstPerson.getName().toString()
                         + "," + firstPerson.getNric().toString()).build();
 
@@ -159,7 +159,7 @@ public class ScheduleCommandTest {
     }
 
     /**
-     * 1. Modifies {@code Person#remark} from a filtered list.
+     * 1. Modifies {@code Person#Appointment} from a filtered list.
      * 2. Undo the modification.
      * 3. The unfiltered list should be shown now. Verify that the index of the previously modified person in the
      * unfiltered list is different from the index at the filtered list.
@@ -168,7 +168,7 @@ public class ScheduleCommandTest {
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
-                new Appointment("22.11.2018,1300,1400,Alice,S1234567B,"
+                new Appointment("22.11.2018,1300,1400,Elle Meyer,S2234599A,"
                         + "Benson Meier"
                         + "," + "S8234567A"));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -177,14 +177,14 @@ public class ScheduleCommandTest {
         Patient personToModify = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         personToModify.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient modifiedPerson = new PatientBuilder(personToModify)
-                .withAppointment("22.11.2018,1300,1400,Alice,S1234567B,"
+                .withAppointment("22.11.2018,1300,1400,Elle Meyer,S2234599A,"
                         + personToModify.getName().toString() + ","
                         + personToModify.getNric().toString())
                 .build();
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
 
-        // remark -> modifies second person in unfiltered person list / first person in filtered person list
+        // schedule -> modifies second person in unfiltered person list / first person in filtered person list
 
         scheduleCommand.execute(model, commandHistory);
 
@@ -219,7 +219,7 @@ public class ScheduleCommandTest {
         assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_SECOND_PERSON,
                 new Appointment(VALID_SCHEDULE_AMY))));
 
-        // different remark -> returns false
+        // different appointment -> returns false
         assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_FIRST_PERSON,
                 new Appointment(VALID_SCHEDULE_BOB))));
     }

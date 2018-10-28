@@ -1,10 +1,14 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -64,6 +68,38 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean hasPerson(Person person) {
         requireNonNull(person);
         return persons.contains(person);
+    }
+
+    /**
+     * Returns true if there is such a person with the provided {@code name} and {@code nric}.
+     */
+    public boolean hasSuchPerson(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return persons.hasSuchPerson(name, nric);
+    }
+
+    /**
+     * Returns true if there is such a patient with the provided {@code name} and {@code nric}.
+     */
+    public boolean hasSuchPatient(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return persons.hasSuchPatient(name, nric);
+    }
+
+    /**
+     * Returns true if there is such a doctor with the provided {@code name} and {@code nric}.
+     */
+    public boolean hasSuchDoctor(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return persons.hasSuchDoctor(name, nric);
+    }
+
+    /**
+     * Returns an {@code Optional<Person>} base on the provided {@code nric}.
+     */
+    public Optional<Person> getPerson(Nric nric) {
+        requireNonNull(nric);
+        return persons.getPerson(nric);
     }
 
     /**

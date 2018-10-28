@@ -12,7 +12,7 @@ import java.util.List;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.ScheduleCommand;
-import seedu.address.model.patient.Nric;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Date;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Time;
@@ -167,16 +167,15 @@ public class ScheduleArgumentManager extends ArgumentManager {
             return StringUtil.isNonZeroUnsignedInteger(userInput);
 
         case SCHEDULE_DATE_INDEX:
-            return new Date(userInput).isValid();
+            return Date.isValidDate(userInput);
 
         case SCHEDULE_START_TIME_INDEX:
-            Time time = new Time(userInput);
-            return time.isValid();
+            return Time.isValidTime(userInput);
 
         case SCHEDULE_END_TIME_INDEX:
             Time startTime = new Time(arguments.get(SCHEDULE_START_TIME_INDEX));
             Time endTime = new Time(userInput);
-            return endTime.isValid() && startTime.comesBeforeStrictly(endTime);
+            return Time.isValidTime(userInput) && startTime.comesBeforeStrictly(endTime);
 
         case SCHEDULE_DOCTOR_NAME_INDEX:
             // Fallthrough

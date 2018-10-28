@@ -2,11 +2,11 @@ package seedu.address.testutil;
 
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.doctor.MedicalDepartment;
-import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Phone;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -80,6 +80,7 @@ public class DoctorBuilder extends PersonBuilder {
     @Override
     public DoctorBuilder withAppointment(String appointment) {
         this.appointment = new Appointment(appointment);
+        appointmentList = SampleDataUtil.getAppointmentsList(appointment);
         return this;
     }
 
@@ -91,7 +92,10 @@ public class DoctorBuilder extends PersonBuilder {
 
     @Override
     public Doctor build() {
-        return new Doctor(name, nric, phone, email, address, tags, appointment, medicalDepartment);
+        if (appointmentList != null) {
+            return new Doctor(name, nric, phone, email, address, tags, appointmentList, medicalDepartment);
+        }
+        return new Doctor(name, nric, phone, email, address, tags, medicalDepartment);
     }
 
 }

@@ -1,13 +1,12 @@
 package seedu.address.model.person;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DOCTOR_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GLOBAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -34,7 +33,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         final StringBuilder builder = new StringBuilder();
+
         builder.append(person.getName()).append(" ")
+                .append(person.getNric()).append(" ")
                 .append(person.getPhone()).append(" ")
                 .append(person.getEmail()).append(" ")
                 .append(person.getAddress()).append(" ")
@@ -88,15 +89,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                         StringUtil.containsWordIgnoreCase(((Doctor) person).getMedicalDepartment().toString(),
                                 medicalDepartment));
 
-        boolean isAnyDoctorNricMatch = person instanceof Doctor
-                && personSearchKeywords.get(PREFIX_DOCTOR_NRIC) != null
-                && personSearchKeywords.get(PREFIX_DOCTOR_NRIC).stream()
-                .anyMatch(doctorNric -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), doctorNric));
-
-        boolean isAnyPatientNricMatch = person instanceof Patient
-                && personSearchKeywords.get(PREFIX_PATIENT_NRIC) != null
-                && personSearchKeywords.get(PREFIX_PATIENT_NRIC).stream()
-                .anyMatch(patientNric -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), patientNric));
+        boolean isAnyNricMatch = personSearchKeywords.get(PREFIX_NRIC) != null
+                && personSearchKeywords.get(PREFIX_NRIC).stream()
+                .anyMatch(nric -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), nric));
 
         boolean isAnyMedicalRecordMatch = person instanceof Patient
                 && personSearchKeywords.get(PREFIX_MEDICAL_RECORD) != null
@@ -113,8 +108,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                 || isAnyRoleMatch
                 || isAnyTagMatch
                 || isAnyMedicalDepartmentMatch
-                || isAnyDoctorNricMatch
-                || isAnyPatientNricMatch
+                || isAnyNricMatch
                 || isAnyMedicalRecordMatch;
     }
 

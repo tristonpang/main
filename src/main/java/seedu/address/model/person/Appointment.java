@@ -3,7 +3,6 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.model.doctor.Doctor;
-import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -48,6 +47,21 @@ public class Appointment extends DisplayableAttribute {
         }
     }
 
+    public Appointment(Date date, Time startTime, Time endTime, Name doctorName, Nric doctorNric, Name patientName,
+                       Nric patientNric) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.doctorName = doctorName;
+        this.doctorNric = doctorNric;
+        this.patientName = patientName;
+        this.patientNric = patientNric;
+
+        value = date.toString() + "," + startTime.toString() + "," + endTime.toString()
+                + "," + doctorName.toString() + "," + doctorNric.toString() + "," + patientName.toString()
+                + "," + patientNric.toString();
+    }
+
     // Constructor used when taking in inputs from parser.
     public Appointment(String date, String startTime, String endTime,
                        String doctorName, String doctorNric, String patientName, String patientNric) {
@@ -82,8 +96,24 @@ public class Appointment extends DisplayableAttribute {
         return doctorNric.toString();
     }
 
+    public Name getDoctorName() {
+        return doctorName;
+    }
+
+    public Nric getDoctorNric() {
+        return doctorNric;
+    }
+
     public String getPatientNameString() {
         return patientName.toString();
+    }
+
+    public Name getPatientName() {
+        return patientName;
+    }
+
+    public Nric getPatientNric() {
+        return patientNric;
     }
 
     public String getPatientNricString() {
@@ -98,8 +128,8 @@ public class Appointment extends DisplayableAttribute {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
-        // different or doctor means definitely no clash
-        if (!date.equals(otherAppointment.date) || !doctorName.equals(otherAppointment.doctorName)) {
+        // different date means definitely no clash
+        if (!date.equals(otherAppointment.date)) {
             return false;
         }
 
@@ -131,7 +161,7 @@ public class Appointment extends DisplayableAttribute {
      */
     public boolean isOngoing(String date, String time) {
         // If different date, we know for sure Appointment is not ongoing.
-        if (!this.date.equals(date)) {
+        if (!this.date.equals(new Date(date))) {
             return false;
         }
         Time givenTime = new Time(time);
@@ -185,46 +215,6 @@ public class Appointment extends DisplayableAttribute {
     }
 
     /**
-     *
-     * @return boolean on whether nric of patient is valid.
-     */
-    public boolean hasValidPatientNric() {
-        return patientNric.isValidNric(patientNric.toString());
-    }
-
-    /**
-     *
-     * @return boolean on whether nric of doctor is valid.
-     */
-    public boolean hasValidDoctorNric() {
-        return patientNric.isValidNric(doctorNric.toString());
-    }
-
-    /**
-     *
-     * @return boolean on whether date of appointment is valid.
-     */
-    public boolean hasValidDate() {
-        return date.isValid();
-    }
-
-    /**
-     *
-     * @return boolean on whether start time of appointment is valid.
-     */
-    public boolean hasValidStartTime() {
-        return startTime.isValid();
-    }
-
-    /**
-     *
-     * @return boolean on whether end time of appointment is valid.
-     */
-    public boolean hasValidEndTime() {
-        return endTime.isValid();
-    }
-
-    /**
      * Test only used in junit testing.
      *
      * @return whether an appointment is valid or not.
@@ -234,7 +224,7 @@ public class Appointment extends DisplayableAttribute {
             // For junit testing.
             return true;
         }
-        return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidPatientNric();
+        return isOfCorrectNumberOfParts() && hasValidStartandEndTime();
     }
 
     @Override

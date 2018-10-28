@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -112,6 +112,7 @@ public class PersonBuilder {
      */
     public PersonBuilder withAppointment(String appointment) {
         this.appointment = new Appointment(appointment);
+        appointmentList = SampleDataUtil.getAppointmentsList(appointment);
         return this;
     }
 
@@ -124,7 +125,14 @@ public class PersonBuilder {
     }
 
 
+    /**
+     *
+     * @return a new Person with the relevant details.
+     */
     public Person build() {
+        if (appointmentList != null) {
+            return new Person(name, nric, phone, email, address, tags, appointmentList);
+        }
         return new Person(name, nric, phone, email, address, tags);
     }
 }

@@ -1,12 +1,12 @@
 package seedu.address.testutil;
 
 import seedu.address.model.patient.MedicalRecord;
-import seedu.address.model.patient.Nric;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Phone;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -15,7 +15,7 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class PatientBuilder extends PersonBuilder {
 
-    public static final String DEFAULT_MEDICAL_RECORD = " , Diagnosis: , Treatment: , Comments: -";
+    public static final String DEFAULT_MEDICAL_RECORD = ", Diagnosis: , Treatment: , Comments: -";
 
     private MedicalRecord medicalRecord;
 
@@ -71,6 +71,7 @@ public class PatientBuilder extends PersonBuilder {
     @Override
     public PatientBuilder withAppointment(String appointment) {
         this.appointment = new Appointment(appointment);
+        appointmentList = SampleDataUtil.getAppointmentsList(appointment);
         return this;
     }
 
@@ -90,6 +91,9 @@ public class PatientBuilder extends PersonBuilder {
 
     @Override
     public Patient build() {
-        return new Patient(name, nric, phone, email, address, tags, appointment, medicalRecord);
+        if (appointmentList != null) {
+            return new Patient(name, nric, phone, email, address, tags, appointmentList, medicalRecord);
+        }
+        return new Patient(name, nric, phone, email, address, tags, medicalRecord);
     }
 }

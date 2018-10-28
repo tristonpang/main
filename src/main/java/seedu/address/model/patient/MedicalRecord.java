@@ -63,7 +63,7 @@ public class MedicalRecord extends DisplayableAttribute {
         assert(!isValid());
         String reason;
         if (!hasValidDate()) {
-            reason = date.getFailureReason();
+            reason = Date.getFailureReason(date.toString());
         } else if (!hasValidDiagnosis()) {
             reason = diagnosis.getFailureReason();
         } else {
@@ -71,15 +71,15 @@ public class MedicalRecord extends DisplayableAttribute {
         }
         return reason;
     }
+
     public boolean isValid() {
         return hasValidDate()
                 && hasValidDiagnosis()
                 && hasValidTreatment();
     }
 
-
     public boolean hasValidDate() {
-        return this.date.isValid();
+        return Date.isValidDate(this.date.toString());
     }
 
     public boolean hasValidDiagnosis() {

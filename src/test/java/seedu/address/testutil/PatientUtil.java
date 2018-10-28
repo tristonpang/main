@@ -3,7 +3,7 @@ package seedu.address.testutil;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT_NRIC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -34,7 +34,7 @@ public class PatientUtil extends PersonUtil {
         sb.append(PREFIX_EMAIL + source.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + source.getAddress().value + " ");
         source.getTags().stream().forEach(s -> sb.append(PREFIX_TAG + s.tagName + " "));
-        sb.append(PREFIX_PATIENT_NRIC + source.getNric().code + " ");
+        sb.append(PREFIX_NRIC + source.getNric().code + " ");
         return sb.toString();
     }
 
@@ -52,8 +52,7 @@ public class PatientUtil extends PersonUtil {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
-        descriptor.getNric().ifPresent(nric -> sb.append(" ")
-                .append(PREFIX_PATIENT_NRIC).append(nric.code).append(" "));
+        descriptor.getNric().ifPresent(nric -> sb.append(" ").append(PREFIX_NRIC).append(nric.code).append(" "));
         return sb.toString();
     }
 }

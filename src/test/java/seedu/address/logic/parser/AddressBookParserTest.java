@@ -95,12 +95,12 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_schedule() throws Exception {
-        final Appointment appointment = new Appointment("22.11.2018,1300,1400,Alice,Heart,Betty,S1234567A");
+        final Appointment appointment = new Appointment("22.11.2018,1300,1400,Alice,S1234567B,Betty,S1234567A");
         final String testAppointment = PREFIX_DATE + "22.11.2018 "
                 + PREFIX_START_TIME + "1300 "
                 + PREFIX_END_TIME + "1400 "
                 + PREFIX_DOCTOR_NAME + "Alice "
-                + PREFIX_DOCTOR_NRIC + "Heart "
+                + PREFIX_DOCTOR_NRIC + "S1234567B "
                 + PREFIX_PATIENT_NAME + "Betty "
                 + PREFIX_PATIENT_NRIC + "S1234567A ";
         ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleCommand.COMMAND_WORD + " "

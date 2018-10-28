@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.patient.Nric;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.AppointmentManager;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -23,7 +23,7 @@ import seedu.address.storage.XmlAdaptedPerson;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Doctor extends Person {
-    public static final String IS_AVAILABLE = "FREE";
+    public static final String IS_AVAILABLE = "AVAILABLE";
     public static final String NOT_AVAILABLE = "BUSY";
 
     private final MedicalDepartment dept;
