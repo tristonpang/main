@@ -113,6 +113,11 @@ public class Appointment extends DisplayableAttribute {
      * @return Boolean if there is any clash.
      */
     public boolean isClash(Appointment otherAppointment) {
+        // different date means definitely no clash
+        if (!date.equals(otherAppointment.date)) {
+            return false;
+        }
+
         Time otherStartTime = otherAppointment.startTime;
         Time otherEndTime = otherAppointment.endTime;
 

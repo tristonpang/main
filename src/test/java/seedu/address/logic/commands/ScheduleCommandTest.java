@@ -29,7 +29,7 @@ import seedu.address.testutil.PatientBuilder;
  */
 public class ScheduleCommandTest {
 
-    private static final String SCHEDULE_STUB = "23.11.2018,1300,1400,Priscilia,S1234567B,Alice Pauline,S7412345C";
+    private static final String SCHEDULE_STUB = "23.11.2018,1300,1400,Elle Meyer,S2234599A,Alice Pauline,S7412345C";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
@@ -56,7 +56,7 @@ public class ScheduleCommandTest {
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         firstPerson.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient editedPerson = new PatientBuilder(firstPerson)
-                .withAppointment("22.11.2018,1300,1400,Alice,S1234567B,"
+                .withAppointment("22.11.2018,1300,1400,Elle Meyer,S2234599A,"
                         + firstPerson.getName().toString()
                         + "," + firstPerson.getNric().toString()).build();
 
@@ -168,7 +168,7 @@ public class ScheduleCommandTest {
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
-                new Appointment("22.11.2018,1300,1400,Alice,S1234567B,"
+                new Appointment("22.11.2018,1300,1400,Elle Meyer,S2234599A,"
                         + "Benson Meier"
                         + "," + "S8234567A"));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -177,7 +177,7 @@ public class ScheduleCommandTest {
         Patient personToModify = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         personToModify.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient modifiedPerson = new PatientBuilder(personToModify)
-                .withAppointment("22.11.2018,1300,1400,Alice,S1234567B,"
+                .withAppointment("22.11.2018,1300,1400,Elle Meyer,S2234599A,"
                         + personToModify.getName().toString() + ","
                         + personToModify.getNric().toString())
                 .build();
