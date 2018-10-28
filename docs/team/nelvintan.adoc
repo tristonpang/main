@@ -17,8 +17,9 @@ It is written in Java, and has about 10 kLoC.
 === Summary of contributions
 
 * *Major enhancement*: added *the ability to schedule and display medical appointments*
-** What it does: allows the user to schedule appointments at a time.
+** What it does: allows the user to schedule appointments at a specified time.
 ** Justification: This feature improves the product significantly because a user is able to display current appointments and schedule appointments.
+This is a key part of medical operations in a hospital.
 Further checks are available to inform the user if they keyed in incorrect appointment details.
 ** Highlights: This enhancement drastically improved the ability of the application to assist medical processes, specifically in the area of scheduling appointment.
 The implementation too was challenging as it required a brand new command to be created.
@@ -38,9 +39,7 @@ The implementation too was challenging as it required a brand new command to be 
 *** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
 
 == Contributions to the User Guide
 
