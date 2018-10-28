@@ -57,15 +57,16 @@ public class Date {
         int date = Integer.parseInt(valueList.get(0));
         int month = Integer.parseInt(valueList.get(1));
         int year = Integer.parseInt(valueList.get(2));
+        System.out.println(monthsWithThirtyOneDays.contains(month));
         if (date < 1) {
             result = false;
         } else if (monthsWithThirtyDays.contains(month) && (date > 30)) {
             result = false;
         } else if (monthsWithThirtyOneDays.contains(month) && (date > 31)) {
             result = false;
-        } else if (isLeapYear(year) && (date > 29)) {
+        } else if (month == 2 && isLeapYear(year) && (date > 29)) {
             result = false;
-        } else if (!isLeapYear(year) && (date > 28)) {
+        } else if (month == 2 && !isLeapYear(year) && (date > 28)) {
             result = false;
         }
         return result;
