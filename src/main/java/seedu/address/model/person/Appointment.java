@@ -47,6 +47,21 @@ public class Appointment extends DisplayableAttribute {
         }
     }
 
+    public Appointment(Date date, Time startTime, Time endTime, Name doctorName, Nric doctorNric, Name patientName,
+                       Nric patientNric) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.doctorName = doctorName;
+        this.doctorNric = doctorNric;
+        this.patientName = patientName;
+        this.patientNric = patientNric;
+
+        value = date.toString() + "," + startTime.toString() + "," + endTime.toString()
+                + "," + doctorName.toString() + "," + doctorNric.toString() + "," + patientName.toString()
+                + "," + patientNric.toString();
+    }
+
     // Constructor used when taking in inputs from parser.
     public Appointment(String date, String startTime, String endTime,
                        String doctorName, String doctorNric, String patientName, String patientNric) {
@@ -200,46 +215,6 @@ public class Appointment extends DisplayableAttribute {
     }
 
     /**
-     *
-     * @return boolean on whether nric of patient is valid.
-     */
-    public boolean hasValidPatientNric() {
-        return Nric.isValidNric(patientNric.code);
-    }
-
-    /**
-     *
-     * @return boolean on whether nric of doctor is valid.
-     */
-    public boolean hasValidDoctorNric() {
-        return Nric.isValidNric(doctorNric.code);
-    }
-
-    /**
-     *
-     * @return boolean on whether date of appointment is valid.
-     */
-    public boolean hasValidDate() {
-        return date.isValid();
-    }
-
-    /**
-     *
-     * @return boolean on whether start time of appointment is valid.
-     */
-    public boolean hasValidStartTime() {
-        return startTime.isValid();
-    }
-
-    /**
-     *
-     * @return boolean on whether end time of appointment is valid.
-     */
-    public boolean hasValidEndTime() {
-        return endTime.isValid();
-    }
-
-    /**
      * Test only used in junit testing.
      *
      * @return whether an appointment is valid or not.
@@ -249,19 +224,7 @@ public class Appointment extends DisplayableAttribute {
             // For junit testing.
             return true;
         }
-        return isOfCorrectNumberOfParts() && hasValidStartandEndTime() && hasValidPatientNric();
-    }
-
-    public String getInvalidDateReason() {
-        return date.getFailureReason();
-    }
-
-    public String getInvalidStartTimeReason() {
-        return startTime.getFailureReason();
-    }
-
-    public String getInvalidEndTimeReason() {
-        return endTime.getFailureReason();
+        return isOfCorrectNumberOfParts() && hasValidStartandEndTime();
     }
 
     @Override
