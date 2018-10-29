@@ -14,7 +14,7 @@
     <children>
         <GridPane HBox.hgrow="ALWAYS">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="550" maxWidth="-Infinity"/>
             </columnConstraints>
             <children>
                 <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">

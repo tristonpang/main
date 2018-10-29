@@ -84,25 +84,25 @@ public class Time {
      *
      * @return whether this time is a valid time.
      */
-    public boolean isValid() {
-        return isCorrectFormat() && doesExist();
+    public static boolean isValidTime(String time) {
+        return isCorrectFormat(time) && doesExist(time);
     }
 
-    private boolean isCorrectFormat() {
-        return this.time.matches(TIME_VALIDATION_REGEX);
+    private static boolean isCorrectFormat(String time) {
+        return time.matches(TIME_VALIDATION_REGEX);
     }
 
     /**
      * Checks if a given time in the correct format exists.
      * @return whether the given time exists.
      */
-    private boolean doesExist() {
-        if (!isCorrectFormat()) {
+    private static boolean doesExist(String time) {
+        if (!isCorrectFormat(time)) {
             return false;
         }
         boolean result = true;
-        int hour = Integer.parseInt(this.time.substring(0, 2));
-        int minute = Integer.parseInt(this.time.substring(2));
+        int hour = Integer.parseInt(time.substring(0, 2));
+        int minute = Integer.parseInt(time.substring(2));
         if (hour < 0 || minute < 0) {
             result = false;
         } else if (hour > 23 || minute > 59) {
@@ -111,15 +111,15 @@ public class Time {
         return result;
     }
 
-    public String getFailureReason() {
-        if (isValid()) {
+    public static String getFailureReason(String time) {
+        if (isValidTime(time)) {
             return "Time is valid.";
         }
         String reason;
-        if (!isCorrectFormat()) {
+        if (!isCorrectFormat(time)) {
             reason = MESSAGE_TIME_INVALID_FORMAT_CONSTRAINTS;
         } else {
-            reason = MESSAGE_TIME_INVALID_DOES_NOT_EXIST + this.time;
+            reason = MESSAGE_TIME_INVALID_DOES_NOT_EXIST + time;
         }
         return reason;
     }

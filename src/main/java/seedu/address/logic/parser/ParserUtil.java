@@ -11,11 +11,13 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.doctor.MedicalDepartment;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Date;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Role;
+import seedu.address.model.person.Time;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -141,6 +143,36 @@ public class ParserUtil {
             throw new ParseException(Role.MESSAGE_ROLE_CONSTRAINTS);
         }
         return Role.valueOf(trimmedRole);
+    }
+
+    /**
+     * Parses a {@code String date} into an {@code Date}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code date} is invalid.
+     */
+    public static Date parseDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!Date.isValidDate(trimmedDate)) {
+            throw new ParseException(Date.getFailureReason(trimmedDate));
+        }
+        return new Date(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code String time} into an {@code Time}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code time} is invalid.
+     */
+    public static Time parseTime(String time) throws ParseException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        if (!Time.isValidTime(trimmedTime)) {
+            throw new ParseException(Time.getFailureReason(trimmedTime));
+        }
+        return new Time(trimmedTime);
     }
 
     /**

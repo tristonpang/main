@@ -349,18 +349,12 @@ Step 2. The user executes the `ScheduleCommand` which calls the `ScheduleCommand
 `ScheduleCommandParser` will parse the inputs and return a `ScheduleCommand`.
 
 Step 3. `ScheduleCommand` then executes.
-`ScheduleCommand` then conducts various checks to ensure that the appointment scheduled is valid.
+`ScheduleCommand` then conducts various checks sequentially to ensure that the appointment scheduled is valid.
 If it is invalid, an exception message will be thrown.
 The `Appointment` will not be scheduled.
-The various checks are displayed below.
+The order of checks conducted are displayed in the image below.
 
-Checks:
-
-** Whether the index of input person is valid.
-** Whether the nric of the doctor is valid.
-** Whether the nric of the patient is valid.
-** Whether the start and end times of the appointment are valid.
-** Whether there are any timing clashes between this appointment and the appointments currently stored in the appointment list under the person selected.
+image::AppointmentCheckingFlow.png[width="800"]
 
 Step 4. A successful check gives 2 objects, `personToEdit` and `Appointment` object.
 Program creates another `Person` object called `editedPerson` that is equal to `personToEdit`.
@@ -376,20 +370,35 @@ The following sequence diagram shows how the schedule appointment operation work
 image::ScheduleSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
+This section describes the pros and cons of the current and other alternate implementations of schedule.
 
 ===== Aspect: Command for schedule command
+* **Alternative 1 (current choice):** Take in the inputs for schedule appointment command using one prefix for each detail.
+For example: `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/John Doe pi/S1234567A`
+** Pros: Design is consistent with the other commands in the application.
+** Cons: Requires the user to type more when scheduling an appointment.
 
-An alternative considered is to use a comma-separated long string in the command prompt to schedule an appointment.
-In our current implementation, we split up the various parts of an appointment into their respective prefixes.
-
-For example:
-
-`schedule 1 s/23.11.2018,1300,1400,Jack,S1234567B,John Doe,S1234567A`
-
+* **Alternative 2:** Use a comma-separated long string in the command prompt to schedule an appointment.
+For example: `schedule 1 s/23.11.2018,1300,1400,Jack,S1234567B,John Doe,S1234567A`
 ** Pros: The user has to type less when scheduling a command.
-The user is not required to type all the prefixes, he just has to type 1.
+The user is not required to type all the prefixes, he just has to type one prefix, `s/`.
 ** Cons: The design would not be consistent with the other commands.
 This might confuse the user.
+
+===== Aspect: Sorting of appointments
+* **Alternative 1 (current choice):** Do not sort the appointments in the ArrayList of appointments.
+A new appointment is added to the back of the ArrayList.
+** Pros: Simple to check for appointment clashes.
+To check for appointment clashes, just loop through the ArrayList and check the new appointment against every other appointment.
+** Cons: Might not be the most efficient way.
+
+* **Alternative 2:** Sort the appointments in the ArrayList of appointments.
+Maintain a sorted list of appointments based on the date and time of appointments.
+** Pros: Might be more efficient when checking for appointment clashes.
+We do not need to check our new appointment against all the appointments in the ArrayList.
+For example we can check from the last (latest) appointment down the list until a point where the next appointment comes before this appointment.
+At that point we can stop checking as we know that there will be no more clashes.
+** Cons: Efficiency gain when checking for clashes might be lost due to efficiency lost due to sorting being required.
 // end::schedulecommand[]
 
 // tag::intuitivecommandprompt[]
