@@ -74,6 +74,12 @@ public class PersonProfilePage extends UiPart<Region> {
     public PersonProfilePage() {
         super(FXML);
         registerAsAnEventHandler(this);
+        animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                setAvailabilityOfDoctor();
+            }
+        };
     }
 
     @Subscribe
@@ -117,12 +123,7 @@ public class PersonProfilePage extends UiPart<Region> {
         setProfileImage(person.getNric().code);
         // Updates availability badge of doctor every minute to reflect real time status.
         if (person instanceof Doctor) {
-            animationTimer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    setAvailabilityOfDoctor(person);
-                }
-            };
+            setAvailabilityOfDoctor();
             animationTimer.start();
         } else {
             assert person instanceof Patient;
@@ -141,9 +142,9 @@ public class PersonProfilePage extends UiPart<Region> {
         phone.setText(EMPTY_VALUE);
         address.setText(EMPTY_VALUE);
         email.setText(EMPTY_VALUE);
-        hideDoctorFields();
         tags.getChildren().clear();
         profileImageDisplay.setVisible(false);
+        hideDoctorFields();
     }
 
     /**
@@ -172,8 +173,8 @@ public class PersonProfilePage extends UiPart<Region> {
     /**
      * Helper method that sets the availability labels of the doctor.
      */
-    private void setAvailabilityOfDoctor(Person person) {
-        Doctor doctor = (Doctor) person;
+    private void setAvailabilityOfDoctor() {
+        Doctor doctor = (Doctor) personOnDisplay;
         uniqueField.setText(LABEL_DOCTOR_SPECIALISATION + doctor.getMedicalDepartment().deptName);
         availability.setVisible(true);
         availabilityLabel.setVisible(true);
@@ -191,6 +192,7 @@ public class PersonProfilePage extends UiPart<Region> {
      * Helper method that sets the visibility of the labels (that are applicable to Doctors only) to false.
      */
     private void hideDoctorFields() {
+        animationTimer.stop();
         uniqueField.setText(EMPTY_VALUE);
         availability.setVisible(false);
         availCheckTime.setVisible(false);
