@@ -142,7 +142,7 @@ public class DisplayPanel extends UiPart<Region> {
     class DisplayableListViewCell extends ListCell<DisplayableAttribute> {
         @Override
         protected void updateItem(DisplayableAttribute displayableAttribute, boolean empty) {
-            Platform.runLater(()->{
+            Platform.runLater(()-> {
                 super.updateItem(displayableAttribute, empty);
 
                 if (empty || displayableAttribute == null) {
