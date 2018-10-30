@@ -52,64 +52,64 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                     .append(((Patient) person).getMedicalRecord()).append(" ");
         }
 
-        boolean isAnyKeywordMatch = personSearchKeywords.get(PREFIX_GLOBAL) != null
-                && personSearchKeywords.get(PREFIX_GLOBAL).stream().anyMatch(keyword -> {
-                    return StringUtil.containsWordIgnoreCase(builder.toString().replaceAll(",", " "),
+        System.out.println(builder.toString());
+
+        boolean isAnyKeywordMatch = personSearchKeywords.get(PREFIX_GLOBAL) == null
+                || personSearchKeywords.get(PREFIX_GLOBAL).stream().anyMatch(keyword -> {
+                    return StringUtil.containsQueryIgnoreCase(builder.toString().replaceAll(",", " "),
                             keyword);
                 });
 
-        boolean isAnyNameMatch = personSearchKeywords.get(PREFIX_NAME) != null
-                && personSearchKeywords.get(PREFIX_NAME).stream()
-                .anyMatch(name -> StringUtil.containsWordIgnoreCase(person.getName().toString(), name));
+        boolean isAnyNameMatch = personSearchKeywords.get(PREFIX_NAME) == null
+                || personSearchKeywords.get(PREFIX_NAME).stream()
+                .anyMatch(name -> StringUtil.containsQueryIgnoreCase(person.getName().toString(), name));
 
-        boolean isAnyPhoneMatch = personSearchKeywords.get(PREFIX_PHONE) != null
-                && personSearchKeywords.get(PREFIX_PHONE).stream()
-                .anyMatch(phone -> StringUtil.containsWordIgnoreCase(person.getPhone().toString(), phone));
+        boolean isAnyPhoneMatch = personSearchKeywords.get(PREFIX_PHONE) == null
+                || personSearchKeywords.get(PREFIX_PHONE).stream()
+                .anyMatch(phone -> StringUtil.containsQueryIgnoreCase(person.getPhone().toString(), phone));
 
-        boolean isAnyEmailMatch = personSearchKeywords.get(PREFIX_EMAIL) != null
-                && personSearchKeywords.get(PREFIX_EMAIL).stream()
-                .anyMatch(email -> StringUtil.containsWordIgnoreCase(person.getEmail().toString(), email));
+        boolean isAnyEmailMatch = personSearchKeywords.get(PREFIX_EMAIL) == null
+                || personSearchKeywords.get(PREFIX_EMAIL).stream()
+                .anyMatch(email -> StringUtil.containsQueryIgnoreCase(person.getEmail().toString(), email));
 
-        boolean isAnyAddressMatch = personSearchKeywords.get(PREFIX_ADDRESS) != null
-                && personSearchKeywords.get(PREFIX_ADDRESS).stream()
-                .anyMatch(address -> StringUtil.containsWordIgnoreCase(person.getAddress().toString(), address));
+        boolean isAnyAddressMatch = personSearchKeywords.get(PREFIX_ADDRESS) == null
+                || personSearchKeywords.get(PREFIX_ADDRESS).stream()
+                .anyMatch(address -> StringUtil.containsQueryIgnoreCase(person.getAddress().toString(), address));
 
-        boolean isAnyRoleMatch = personSearchKeywords.get(PREFIX_ROLE) != null
-                && personSearchKeywords.get(PREFIX_ROLE).stream()
-                .anyMatch(role -> StringUtil.containsWordIgnoreCase(person.getClass().getSimpleName(), role));
+        boolean isAnyRoleMatch = personSearchKeywords.get(PREFIX_ROLE) == null
+                || personSearchKeywords.get(PREFIX_ROLE).stream()
+                .anyMatch(role -> StringUtil.containsQueryIgnoreCase(person.getClass().getSimpleName(), role));
 
-        boolean isAnyTagMatch = personSearchKeywords.get(PREFIX_TAG) != null
-                && personSearchKeywords.get(PREFIX_TAG).stream()
-                .anyMatch(tag -> StringUtil.containsWordIgnoreCase(person.getTags().toString(), tag));
+        boolean isAnyTagMatch = personSearchKeywords.get(PREFIX_TAG) == null
+                || personSearchKeywords.get(PREFIX_TAG).stream()
+                .anyMatch(tag -> StringUtil.containsQueryIgnoreCase(person.getTags().toString(), tag));
 
-        boolean isAnyMedicalDepartmentMatch = person instanceof Doctor
-                && personSearchKeywords.get(PREFIX_MEDICAL_DEPARTMENT) != null
-                && personSearchKeywords.get(PREFIX_MEDICAL_DEPARTMENT).stream()
+        boolean isAnyMedicalDepartmentMatch = personSearchKeywords.get(PREFIX_MEDICAL_DEPARTMENT) == null
+                || person instanceof Doctor && personSearchKeywords.get(PREFIX_MEDICAL_DEPARTMENT).stream()
                 .anyMatch(medicalDepartment ->
-                        StringUtil.containsWordIgnoreCase(((Doctor) person).getMedicalDepartment().toString(),
+                        StringUtil.containsQueryIgnoreCase(((Doctor) person).getMedicalDepartment().toString(),
                                 medicalDepartment));
 
-        boolean isAnyNricMatch = personSearchKeywords.get(PREFIX_NRIC) != null
-                && personSearchKeywords.get(PREFIX_NRIC).stream()
-                .anyMatch(nric -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), nric));
+        boolean isAnyNricMatch = personSearchKeywords.get(PREFIX_NRIC) == null
+                || personSearchKeywords.get(PREFIX_NRIC).stream()
+                .anyMatch(nric -> StringUtil.containsQueryIgnoreCase(person.getNric().toString(), nric));
 
-        boolean isAnyMedicalRecordMatch = person instanceof Patient
-                && personSearchKeywords.get(PREFIX_MEDICAL_RECORD) != null
-                && personSearchKeywords.get(PREFIX_MEDICAL_RECORD).stream()
+        boolean isAnyMedicalRecordMatch = personSearchKeywords.get(PREFIX_MEDICAL_RECORD) == null
+                || person instanceof Patient && personSearchKeywords.get(PREFIX_MEDICAL_RECORD).stream()
                 .anyMatch(medicalRecord ->
-                        StringUtil.containsWordIgnoreCase(((Patient) person).getMedicalRecord().toString(),
+                        StringUtil.containsQueryIgnoreCase(((Patient) person).getMedicalRecord().toString(),
                                 medicalRecord));
 
         return isAnyKeywordMatch
-                || isAnyNameMatch
-                || isAnyPhoneMatch
-                || isAnyEmailMatch
-                || isAnyAddressMatch
-                || isAnyRoleMatch
-                || isAnyTagMatch
-                || isAnyMedicalDepartmentMatch
-                || isAnyNricMatch
-                || isAnyMedicalRecordMatch;
+                && isAnyNameMatch
+                && isAnyPhoneMatch
+                && isAnyEmailMatch
+                && isAnyAddressMatch
+                && isAnyRoleMatch
+                && isAnyTagMatch
+                && isAnyMedicalDepartmentMatch
+                && isAnyNricMatch
+                && isAnyMedicalRecordMatch;
     }
 
     @Override
