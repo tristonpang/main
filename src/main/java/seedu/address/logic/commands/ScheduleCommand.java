@@ -167,6 +167,13 @@ public class ScheduleCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
 
+        //Undoing and Redoing unselects a previously selected person.
+        //Doing so updates the display panel after an update. May consider abstracting this into an UnselectCommand.
+        new UndoCommand().execute(model, history);
+        new RedoCommand().execute(model, history);
+        SelectCommand selectUpdatedPatient = new SelectCommand(index);
+        selectUpdatedPatient.execute(model, history);
+
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
