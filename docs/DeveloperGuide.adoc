@@ -534,6 +534,9 @@ as accordingly.
 Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
 `IntuitivePromptManager`. Execution continues normally as described in the above sections.
 
+.High level sequence diagram showing going back ability
+image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
+
 ==== Supported Commands
 The following commands are supported by the Intuitive Command Prompt feature, and thus have an intuitive version:
 

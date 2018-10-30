@@ -360,7 +360,7 @@ Format: `COMMAND`
 [TIP]
 Type `/bk` to re-enter previous field. +
 Type `//` if the field is to be left blank. +
-Press `ESC` to cancel the currently executing command. 
+Press `ESC` to cancel the currently executing command.
 
 Example of the intuitive add command prompting:
 ```
