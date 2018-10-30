@@ -49,9 +49,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
             builder.append(((Doctor) person).getMedicalDepartment()).append(" ");
         } else if (person instanceof Patient) {
             builder.append(person.getNric()).append(" ");
-            ((Patient) person).getMedicalRecordKeywords().stream()
-                    .map(x -> x + " ")
-                    .forEach(builder::append);
+            for (String s : ((Patient) person).getMedicalRecordKeywords()) {
+                builder.append(s + " ");
+            }
         }
 
         boolean isAnyKeywordMatch = personSearchKeywords.get(PREFIX_GLOBAL) == null
