@@ -39,7 +39,7 @@ public class StringUtil {
     }
 
     /**
-     * Returns true if the {@code sentence} contains the {@code query
+     * Returns true if the {@code sentence} contains the {@code query}.
      *   Ignores case, will match as long as the argument is contained within the {@code Person} parameters.
      *   <br>examples:<pre>
      *       containsWordIgnoreCase("ABc def", "abc") == true
