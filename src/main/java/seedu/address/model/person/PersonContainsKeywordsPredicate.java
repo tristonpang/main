@@ -52,8 +52,6 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                     .append(((Patient) person).getMedicalRecord()).append(" ");
         }
 
-        System.out.println(builder.toString());
-
         boolean isAnyKeywordMatch = personSearchKeywords.get(PREFIX_GLOBAL) == null
                 || personSearchKeywords.get(PREFIX_GLOBAL).stream().anyMatch(keyword -> {
                     return StringUtil.containsQueryIgnoreCase(builder.toString().replaceAll(",", " "),
