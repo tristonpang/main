@@ -2,6 +2,7 @@ package seedu.address.model.patient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -102,6 +103,22 @@ public class Patient extends Person {
 
     public ArrayList<MedicalRecord> getMedicalRecordLibrary() {
         return this.medicalRecordLibrary;
+    }
+
+    /**
+     * Creates a keyword array for the {@code Patient}'s {@code MedicalRecord} that lists all the relevant details.
+     * For use in {@code PersonContainsKeywordPredicate}.
+     */
+
+    public ArrayList<String> getMedicalRecordKeywords() {
+        ArrayList<String> keywordsList = new ArrayList<>();
+        for (MedicalRecord record : this.medicalRecordLibrary) {
+            keywordsList.add(record.getDate());
+            keywordsList.add(record.getDiagnosis());
+            keywordsList.add(record.getTreatment());
+            keywordsList.add(record.getComments());
+        }
+        return keywordsList;
     }
 
     /**

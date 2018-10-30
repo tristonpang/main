@@ -32,6 +32,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_TREATMENT = new Prefix("tr/");
     public static final Prefix PREFIX_COMMENT = new Prefix("c/");
 
-
     public static final Prefix PREFIX_GLOBAL = new Prefix("gl/");
 }

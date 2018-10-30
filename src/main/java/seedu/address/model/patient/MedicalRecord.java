@@ -105,6 +105,7 @@ public class MedicalRecord extends DisplayableAttribute {
     public String getComments() {
         return this.comments;
     }
+
     @Override
     public String toString() {
         return value;

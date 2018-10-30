@@ -18,6 +18,7 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -38,7 +39,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                 .append(person.getNric()).append(" ")
                 .append(person.getPhone()).append(" ")
                 .append(person.getEmail()).append(" ")
-                .append(person.getAddress()).append(" ")
+                .append(person.getAddress().toString().replaceAll(",", "")).append(" ")
                 .append(person.getClass().getSimpleName()).append(" ");
         person.getTags().stream()
                 .map(x -> x.toString().replaceAll("[\\[\\]]", ""))
@@ -48,8 +49,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
         if (person instanceof Doctor) {
             builder.append(((Doctor) person).getMedicalDepartment()).append(" ");
         } else if (person instanceof Patient) {
-            builder.append(person.getNric()).append(" ")
-                    .append(((Patient) person).getMedicalRecord()).append(" ");
+            builder.append(person.getNric()).append(" ");
+            ((Patient) person).getMedicalRecordKeywords().stream()
+                    .map(x -> x + " ")
+                    .forEach(builder::append);
         }
 
         boolean isAnyKeywordMatch = personSearchKeywords.get(PREFIX_GLOBAL) == null
@@ -61,6 +64,10 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
         boolean isAnyNameMatch = personSearchKeywords.get(PREFIX_NAME) == null
                 || personSearchKeywords.get(PREFIX_NAME).stream()
                 .anyMatch(name -> StringUtil.containsQueryIgnoreCase(person.getName().toString(), name));
+
+        boolean isAnyNricMatch = personSearchKeywords.get(PREFIX_NRIC) == null
+                || personSearchKeywords.get(PREFIX_NRIC).stream()
+                .anyMatch(nric -> StringUtil.containsQueryIgnoreCase(person.getNric().toString(), nric));
 
         boolean isAnyPhoneMatch = personSearchKeywords.get(PREFIX_PHONE) == null
                 || personSearchKeywords.get(PREFIX_PHONE).stream()
@@ -88,25 +95,25 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
                         StringUtil.containsQueryIgnoreCase(((Doctor) person).getMedicalDepartment().toString(),
                                 medicalDepartment));
 
-        boolean isAnyNricMatch = personSearchKeywords.get(PREFIX_NRIC) == null
-                || personSearchKeywords.get(PREFIX_NRIC).stream()
-                .anyMatch(nric -> StringUtil.containsQueryIgnoreCase(person.getNric().toString(), nric));
-
-        boolean isAnyMedicalRecordMatch = personSearchKeywords.get(PREFIX_MEDICAL_RECORD) == null
-                || person instanceof Patient && personSearchKeywords.get(PREFIX_MEDICAL_RECORD).stream()
-                .anyMatch(medicalRecord ->
-                        StringUtil.containsQueryIgnoreCase(((Patient) person).getMedicalRecord().toString(),
-                                medicalRecord));
+        boolean isAnyMedicalRecordMatch = personSearchKeywords.get(PREFIX_MEDICAL_RECORD) == null;
+        if (person instanceof Patient && personSearchKeywords.get(PREFIX_MEDICAL_RECORD) != null) {
+            for (String keywords : personSearchKeywords.get(PREFIX_MEDICAL_RECORD)) {
+                for (String medicalRecord : ((Patient) person).getMedicalRecordKeywords()) {
+                    isAnyMedicalRecordMatch = isAnyMedicalRecordMatch
+                            || StringUtil.containsQueryIgnoreCase(medicalRecord, keywords);
+                }
+            }
+        }
 
         return isAnyKeywordMatch
                 && isAnyNameMatch
+                && isAnyNricMatch
                 && isAnyPhoneMatch
                 && isAnyEmailMatch
                 && isAnyAddressMatch
                 && isAnyRoleMatch
                 && isAnyTagMatch
                 && isAnyMedicalDepartmentMatch
-                && isAnyNricMatch
                 && isAnyMedicalRecordMatch;
     }
 
