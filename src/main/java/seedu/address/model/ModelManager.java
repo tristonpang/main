@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
@@ -52,6 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyAddressBook newData) {
         versionedAddressBook.resetData(newData);
         indicateAddressBookChanged();
+        indicatePersonChanged();
     }
 
     @Override
@@ -62,6 +64,16 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(versionedAddressBook));
+    }
+
+    /** Raises an event to indicate the person data has changed */
+    private void indicatePersonChanged(Person original, Person editedPerson) {
+        raise(new PersonChangedEvent(original, editedPerson));
+    }
+
+    /** Raise an event to indicate the person has been removed or reset to previous version*/
+    private void indicatePersonChanged() {
+        raise(new PersonChangedEvent(null, null));
     }
 
     @Override
@@ -98,6 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void deletePerson(Person target) {
         versionedAddressBook.removePerson(target);
         indicateAddressBookChanged();
+        indicatePersonChanged();
     }
 
     @Override
@@ -113,6 +126,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+        indicatePersonChanged(target, editedPerson);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -148,12 +162,14 @@ public class ModelManager extends ComponentManager implements Model {
     public void undoAddressBook() {
         versionedAddressBook.undo();
         indicateAddressBookChanged();
+        indicatePersonChanged();
     }
 
     @Override
     public void redoAddressBook() {
         versionedAddressBook.redo();
         indicateAddressBookChanged();
+        indicatePersonChanged();
     }
 
     @Override

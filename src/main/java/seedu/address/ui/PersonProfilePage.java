@@ -18,6 +18,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.patient.Patient;
@@ -41,6 +42,8 @@ public class PersonProfilePage extends UiPart<Region> {
     private static final String LABEL_DOCTOR_SPECIALISATION = "Specialisation:  ";
 
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
+
+    private static Person personOnDisplay;
 
     @FXML
     private Text name;
@@ -71,33 +74,57 @@ public class PersonProfilePage extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handlePersonChangedEvent(PersonChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
+        if (event.editedPerson == null) {
+            showDefaultProfilePage();   // if person is deleted of database is cleared, display the default scene.
+        } else if (!event.originalPerson.equals(personOnDisplay)) {
+            return; // if the person updated is not the person that is being displayed on the UI.
+        }
+
+        Person updatedPerson = event.editedPerson;
+        updateScene(updatedPerson);
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person selectedPerson = event.getNewSelection();
-        name.setText(LABEL_NAME + selectedPerson.getName().fullName);
-        nric.setText(LABEL_NRIC + selectedPerson.getNric().code);
-        phone.setText(LABEL_PHONE + selectedPerson.getPhone().value);
-        address.setText(LABEL_ADDRESS + selectedPerson.getAddress().value);
-        email.setText(LABEL_EMAIL + selectedPerson.getEmail().value);
-        if (selectedPerson instanceof Doctor) {
-            setAvailabilityOfDoctor(selectedPerson);
+        updateScene(selectedPerson);
+    }
+
+    /**
+     * Helper method to update the contents of the profile ui base on the details of the {@code person}.
+     */
+    private void updateScene(Person person) {
+        personOnDisplay = person;
+        name.setText(LABEL_NAME + person.getName().fullName);
+        nric.setText(LABEL_NRIC + person.getNric().code);
+        phone.setText(LABEL_PHONE + person.getPhone().value);
+        address.setText(LABEL_ADDRESS + person.getAddress().value);
+        email.setText(LABEL_EMAIL + person.getEmail().value);
+        if (person instanceof Doctor) {
+            setAvailabilityOfDoctor(person);
         } else {
-            assert selectedPerson instanceof Patient;
+            assert person instanceof Patient;
             hideDoctorFields();
         }
 
         tags.getChildren().clear();
-        selectedPerson.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
-        setProfileImage(selectedPerson.getNric().code);
+        setProfileImage(person.getNric().code);
 
         // Updates availability badge of doctor every minute to reflect real time status.
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (selectedPerson instanceof Doctor) {
-                    setAvailabilityOfDoctor(selectedPerson);
+                if (person instanceof Doctor) {
+                    setAvailabilityOfDoctor(person);
+                } else {
+                    assert person instanceof Patient;
+                    hideDoctorFields();
                 }
             }
         };
@@ -105,6 +132,25 @@ public class PersonProfilePage extends UiPart<Region> {
         animationTimer.start();
     }
 
+    /**
+     * Updates the contents of the ui to be empty
+     */
+    private void showDefaultProfilePage() {
+        personOnDisplay = null;
+        name.setText(EMPTY_VALUE);
+        nric.setText(EMPTY_VALUE);
+        phone.setText(EMPTY_VALUE);
+        address.setText(EMPTY_VALUE);
+        email.setText(EMPTY_VALUE);
+        hideDoctorFields();
+        tags.getChildren().clear();
+        profileImageDisplay.setVisible(false);
+    }
+
+    /**
+     * Helper method to set the profile image of the person. Uses the default profile image if no other images
+     * could be found in the database.
+     */
     private void setProfileImage(String imageCode) {
         String imagePath = "/images/" + imageCode + ".png";
         BufferedImage profileImageUrl;
@@ -121,6 +167,7 @@ public class PersonProfilePage extends UiPart<Region> {
         profileImageDisplay.setPreserveRatio(false);
         profileImageDisplay.setFitWidth(200);
         profileImageDisplay.setFitHeight(200);
+        profileImageDisplay.setVisible(true);
     }
 
     /**

@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.commons.events.ui.DisplayPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.doctor.Doctor;
@@ -28,6 +29,7 @@ import seedu.address.model.person.Person;
 public class DisplayPanel extends UiPart<Region> {
     private static final String FXML = "DisplayPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
+    private static Person personOnDisplay;
 
     @FXML
     private ListView<DisplayableAttribute> displayableAppointmentsListView;
@@ -56,20 +58,38 @@ public class DisplayPanel extends UiPart<Region> {
      * Default setting for display panel upon start up of application.
      */
     public void showDefaultDisplayPanel() {
+        personOnDisplay = null;
         displayableAppointmentsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
         displayableMedicalRecordsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Person selectedPerson = event.getNewSelection();
+    private void handlePersonChangedEvent(PersonChangedEvent event) {
+        if (event.editedPerson == null) {
+            showDefaultDisplayPanel();  // if person is deleted or database has been cleared, show the default scene
+        } else if (!event.originalPerson.equals(personOnDisplay)) {
+            return; // if person updated in the event is not related to this person being displayed on the UI
+        }
+        updateScene(event.editedPerson);
+    }
 
-        if (selectedPerson instanceof Patient) {
-            ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) selectedPerson)
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        Person selectedPerson = event.getNewSelection();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        personOnDisplay = selectedPerson;
+        updateScene(selectedPerson);
+    }
+
+    /**
+     * Helper method to update the UI display base on the details of the {@person}.
+     */
+    private void updateScene(Person updatedPerson) {
+        if (updatedPerson instanceof Patient) {
+            ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) updatedPerson)
                     .getMedicalRecordLibrary();
             //Collections.reverse(selectedPersonMedicalRecordLibrary);
-            ArrayList<Appointment> selectedPersonAppointmentList = selectedPerson.getAppointmentList();
+            ArrayList<Appointment> selectedPersonAppointmentList = updatedPerson.getAppointmentList();
             ArrayList<DisplayableAttribute> displayableMedicalRecordsList = new ArrayList<>();
             ArrayList<DisplayableAttribute> displayableAppointmentsList = new ArrayList<>();
             for (MedicalRecord medicalRecord : selectedPersonMedicalRecordLibrary) {
@@ -84,8 +104,8 @@ public class DisplayPanel extends UiPart<Region> {
             setMedicalRecordsConnections(
                     new FilteredList<>(FXCollections.observableArrayList(displayableMedicalRecordsList)));
         } else {
-            assert selectedPerson instanceof Doctor;
-            ArrayList<Appointment> selectedPersonAppointmentList = selectedPerson.getAppointmentList();
+            assert updatedPerson instanceof Doctor;
+            ArrayList<Appointment> selectedPersonAppointmentList = updatedPerson.getAppointmentList();
             setAppointmentsConnections(
                     new FilteredList<>(FXCollections.observableArrayList(selectedPersonAppointmentList)));
             setMedicalRecordsConnections(
