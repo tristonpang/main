@@ -93,11 +93,14 @@ public class AddressBookParser {
             }
             return new FindCommandParser().parse(arguments);
 
+        case ScheduleCommand.COMMAND_WORD:
+            if (arguments.isEmpty()) {
+                return triggerIntuitiveMode(userInput);
+            }
+            return new ScheduleCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
-
-        case ScheduleCommand.COMMAND_WORD:
-            return new ScheduleCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
