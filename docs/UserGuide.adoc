@@ -262,9 +262,12 @@ Format: `select INDEX`
 
 Examples:
 
-* `list` +
-`select 2` +
+* `list` (result shown in Figure 1) +
+`select 2` (result shown in Figure 2) +
 Selects the 2nd person in the database and display the appointments.
+
+.Display list diagram
+image::ListCommand.png[width="600"]
 
 .Display appointment diagram
 image::DisplayAppointment.png[width="600"]
