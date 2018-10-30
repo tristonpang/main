@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.animation.AnimationTimer;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -90,6 +91,18 @@ public class PersonProfilePage extends UiPart<Region> {
         selectedPerson.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         setProfileImage(selectedPerson.getNric().code);
+
+        // Updates availability badge of doctor every minute to reflect real time status.
+        AnimationTimer animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (selectedPerson instanceof Doctor) {
+                    setAvailabilityOfDoctor(selectedPerson);
+                }
+            }
+        };
+
+        animationTimer.start();
     }
 
     private void setProfileImage(String imageCode) {
@@ -111,7 +124,7 @@ public class PersonProfilePage extends UiPart<Region> {
     }
 
     /**
-     * Sets the availability labels of the doctor.
+     * Helper method that sets the availability labels of the doctor.
      */
     private void setAvailabilityOfDoctor(Person selectedPerson) {
         Doctor doctor = (Doctor) selectedPerson;
@@ -129,7 +142,7 @@ public class PersonProfilePage extends UiPart<Region> {
     }
 
     /**
-     * Sets the visibility of the labels (that are applicable to Doctors only) to false.
+     * Helper method that sets the visibility of the labels (that are applicable to Doctors only) to false.
      */
     private void hideDoctorFields() {
         uniqueField.setText(EMPTY_VALUE);
