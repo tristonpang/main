@@ -34,7 +34,7 @@ public class DisplayableAttributeCard extends UiPart<Region> {
         super(FXML);
         this.displayableAttribute = displayableAttribute;
         if (displayableAttribute instanceof MedicalRecord) {
-            id.setText("Medical Record: ");
+            id.setText(displayedIndex + ". ");
             date.setText(((MedicalRecord) displayableAttribute).getDate());
             displayableField1.setText("Diagnosis: " + ((MedicalRecord) displayableAttribute).getDiagnosis());
             displayableField2.setText("Treatment: " + ((MedicalRecord) displayableAttribute).getTreatment());
@@ -44,15 +44,15 @@ public class DisplayableAttributeCard extends UiPart<Region> {
                 return;
             }
 
-            id.setText("Appointment: ");
+            id.setText(displayedIndex + ". ");
             Appointment appointment = (Appointment) displayableAttribute;
             date.setText(appointment.getDateString());
             displayableField1.setText("Start Time: " + appointment.getStartTimeString()
                     + "\t\tEnd Time: " + appointment.getEndTimeString());
             displayableField2.setText("Doctor Name: " + appointment.getDoctorNameString()
-                    + "\t\tDoctor NRIC: " + appointment.getDoctorNricString());
+                    + " (" + appointment.getDoctorNricString() + ")");
             displayableField3.setText("Patient Name: " + appointment.getPatientNameString()
-                    + "\t\tPatient NRIC " + appointment.getPatientNricString());
+                    + " (" + appointment.getPatientNricString() + ")");
         }
     }
 
