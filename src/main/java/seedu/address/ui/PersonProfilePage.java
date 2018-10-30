@@ -30,6 +30,7 @@ import seedu.address.model.person.Time;
  * A UI component that displays full information of a {@code Person}.
  */
 public class PersonProfilePage extends UiPart<Region> {
+    private static AnimationTimer animationTimer;
     private static Person personOnDisplay;
 
     private static final String DEFAULT_IMAGE_URL = "blank_profile";
@@ -72,6 +73,12 @@ public class PersonProfilePage extends UiPart<Region> {
     public PersonProfilePage() {
         super(FXML);
         registerAsAnEventHandler(this);
+        animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                setAvailabilityOfDoctor();
+            }
+        };
     }
 
     @Subscribe
@@ -107,7 +114,7 @@ public class PersonProfilePage extends UiPart<Region> {
         address.setText(LABEL_ADDRESS + person.getAddress().value);
         email.setText(LABEL_EMAIL + person.getEmail().value);
         if (person instanceof Doctor) {
-            setAvailabilityOfDoctor(person);
+            setAvailabilityOfDoctor();
         } else {
             assert person instanceof Patient;
             hideDoctorFields();
@@ -119,14 +126,10 @@ public class PersonProfilePage extends UiPart<Region> {
         setProfileImage(person.getNric().code);
         // Updates availability badge of doctor every minute to reflect real time status.
         if (person instanceof Doctor) {
-            AnimationTimer animationTimer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    setAvailabilityOfDoctor(person);
-                }
-            };
             animationTimer.start();
         } else {
+            assert person instanceof Patient;
+            animationTimer.stop();
             hideDoctorFields();
         }
     }
@@ -172,8 +175,8 @@ public class PersonProfilePage extends UiPart<Region> {
     /**
      * Helper method that sets the availability labels of the doctor.
      */
-    private void setAvailabilityOfDoctor(Person selectedPerson) {
-        Doctor doctor = (Doctor) selectedPerson;
+    private void setAvailabilityOfDoctor() {
+        Doctor doctor = (Doctor) personOnDisplay;
         uniqueField.setText(LABEL_DOCTOR_SPECIALISATION + doctor.getMedicalDepartment().deptName);
         availability.setVisible(true);
         availabilityLabel.setVisible(true);
