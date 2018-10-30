@@ -6,7 +6,6 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane maxHeight="700.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0"
       prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -26,7 +25,7 @@
          </font>
       </Text>
       <ImageView fx:id="profileImageDisplay" fitHeight="200.0" fitWidth="200.0" layoutX="103.0" layoutY="1.0"
-                 pickOnBounds="true" preserveRatio="true">
+                 pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/blank_profile.png" />
          </image>

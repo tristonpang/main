@@ -80,6 +80,7 @@ public class PersonProfilePage extends UiPart<Region> {
 
         if (event.editedPerson == null) {
             showDefaultProfilePage(); // if person is deleted of database is cleared, display the default scene.
+            return;
         } else if (!event.originalPerson.equals(personOnDisplay)) {
             return; // if the person updated is not the person that is being displayed on the UI.
         }
@@ -116,21 +117,18 @@ public class PersonProfilePage extends UiPart<Region> {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         setProfileImage(person.getNric().code);
-
         // Updates availability badge of doctor every minute to reflect real time status.
-        AnimationTimer animationTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (person instanceof Doctor) {
+        if (person instanceof Doctor) {
+            AnimationTimer animationTimer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
                     setAvailabilityOfDoctor(person);
-                } else {
-                    assert person instanceof Patient;
-                    hideDoctorFields();
                 }
-            }
-        };
-
-        animationTimer.start();
+            };
+            animationTimer.start();
+        } else {
+            hideDoctorFields();
+        }
     }
 
     /**
