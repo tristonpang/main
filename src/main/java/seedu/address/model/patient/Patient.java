@@ -105,6 +105,22 @@ public class Patient extends Person {
     }
 
     /**
+     * Creates a keyword array for the {@code Patient}'s {@code MedicalRecord} that lists all the relevant details.
+     * For use in {@code PersonContainsKeywordPredicate}.
+     */
+
+    public ArrayList<String> getMedicalRecordKeywords() {
+        ArrayList<String> keywordsList = new ArrayList<>();
+        for (MedicalRecord record : this.medicalRecordLibrary) {
+            keywordsList.add(record.getDate());
+            keywordsList.add(record.getDiagnosis());
+            keywordsList.add(record.getTreatment());
+            keywordsList.add(record.getComments());
+        }
+        return keywordsList;
+    }
+
+    /**
      * Check if the patient is the same as other patient.
      * @param otherPatient The other patient to compare to.
      * @return True if the two patient are the same.
