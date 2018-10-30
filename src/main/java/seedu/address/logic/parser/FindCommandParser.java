@@ -39,11 +39,9 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         // TODO: Detect when invalid prefixes are given as arguments and throw an error.
-        ArrayList<Prefix> prefixList = new ArrayList<>(Arrays.asList(PREFIX_NAME, PREFIX_NRIC, PREFIX_PHONE, PREFIX_EMAIL,
-                PREFIX_ADDRESS, PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT, PREFIX_MEDICAL_RECORD));
-
+        ArrayList<Prefix> prefixList = new ArrayList<>(Arrays.asList(PREFIX_NAME, PREFIX_NRIC, PREFIX_PHONE,
+                PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT, PREFIX_MEDICAL_RECORD));
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixList.toArray(new Prefix[0]));
-        
         Map<Prefix, List<String>> personSearchKeywords = new HashMap<>();
 
         if (!argMultimap.getPreamble().equals("")) {

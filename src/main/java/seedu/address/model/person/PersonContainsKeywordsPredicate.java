@@ -18,7 +18,6 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.doctor.Doctor;
-import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
 
 /**
