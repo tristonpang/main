@@ -30,6 +30,8 @@ import seedu.address.model.person.Time;
  * A UI component that displays full information of a {@code Person}.
  */
 public class PersonProfilePage extends UiPart<Region> {
+    private static Person personOnDisplay;
+
     private static final String DEFAULT_IMAGE_URL = "blank_profile";
     private static final String EMPTY_VALUE = "";
     private static final String FXML = "PersonProfilePage.fxml";
@@ -43,7 +45,6 @@ public class PersonProfilePage extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
 
-    private static Person personOnDisplay;
 
     @FXML
     private Text name;
@@ -78,7 +79,7 @@ public class PersonProfilePage extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         if (event.editedPerson == null) {
-            showDefaultProfilePage();   // if person is deleted of database is cleared, display the default scene.
+            showDefaultProfilePage(); // if person is deleted of database is cleared, display the default scene.
         } else if (!event.originalPerson.equals(personOnDisplay)) {
             return; // if the person updated is not the person that is being displayed on the UI.
         }

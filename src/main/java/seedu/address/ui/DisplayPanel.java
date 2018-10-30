@@ -27,9 +27,9 @@ import seedu.address.model.person.Person;
  * Panel containing the list of displayable attributes.
  */
 public class DisplayPanel extends UiPart<Region> {
+    private static Person personOnDisplay;
     private static final String FXML = "DisplayPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
-    private static Person personOnDisplay;
 
     @FXML
     private ListView<DisplayableAttribute> displayableAppointmentsListView;
@@ -54,6 +54,16 @@ public class DisplayPanel extends UiPart<Region> {
         setEventHandlerForSelectionChangeEvent();
     }
 
+    @Subscribe
+    private void handlePersonChangedEvent(PersonChangedEvent event) {
+        if (event.editedPerson == null) {
+            showDefaultDisplayPanel(); // if person is deleted or database has been cleared, show the default scene
+        } else if (!event.originalPerson.equals(personOnDisplay)) {
+            return; // if person updated in the event is not related to this person being displayed on the UI
+        }
+        updateScene(event.editedPerson);
+    }
+
     /**
      * Default setting for display panel upon start up of application.
      */
@@ -61,16 +71,6 @@ public class DisplayPanel extends UiPart<Region> {
         personOnDisplay = null;
         displayableAppointmentsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
         displayableMedicalRecordsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
-    }
-
-    @Subscribe
-    private void handlePersonChangedEvent(PersonChangedEvent event) {
-        if (event.editedPerson == null) {
-            showDefaultDisplayPanel();  // if person is deleted or database has been cleared, show the default scene
-        } else if (!event.originalPerson.equals(personOnDisplay)) {
-            return; // if person updated in the event is not related to this person being displayed on the UI
-        }
-        updateScene(event.editedPerson);
     }
 
     @Subscribe
