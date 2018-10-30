@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -73,12 +74,6 @@ public class PersonProfilePage extends UiPart<Region> {
     public PersonProfilePage() {
         super(FXML);
         registerAsAnEventHandler(this);
-        animationTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                setAvailabilityOfDoctor();
-            }
-        };
     }
 
     @Subscribe
@@ -86,7 +81,9 @@ public class PersonProfilePage extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         if (event.editedPerson == null) {
-            showDefaultProfilePage(); // if person is deleted of database is cleared, display the default scene.
+            Platform.runLater(()-> {
+                showDefaultProfilePage(); // if person is deleted of database is cleared, display the default scene.
+            });
             return;
         } else if (!event.originalPerson.equals(personOnDisplay)) {
             return; // if the person updated is not the person that is being displayed on the UI.
@@ -113,12 +110,6 @@ public class PersonProfilePage extends UiPart<Region> {
         phone.setText(LABEL_PHONE + person.getPhone().value);
         address.setText(LABEL_ADDRESS + person.getAddress().value);
         email.setText(LABEL_EMAIL + person.getEmail().value);
-        if (person instanceof Doctor) {
-            setAvailabilityOfDoctor();
-        } else {
-            assert person instanceof Patient;
-            hideDoctorFields();
-        }
 
         tags.getChildren().clear();
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
@@ -126,6 +117,12 @@ public class PersonProfilePage extends UiPart<Region> {
         setProfileImage(person.getNric().code);
         // Updates availability badge of doctor every minute to reflect real time status.
         if (person instanceof Doctor) {
+            animationTimer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    setAvailabilityOfDoctor(person);
+                }
+            };
             animationTimer.start();
         } else {
             assert person instanceof Patient;
@@ -175,8 +172,8 @@ public class PersonProfilePage extends UiPart<Region> {
     /**
      * Helper method that sets the availability labels of the doctor.
      */
-    private void setAvailabilityOfDoctor() {
-        Doctor doctor = (Doctor) personOnDisplay;
+    private void setAvailabilityOfDoctor(Person person) {
+        Doctor doctor = (Doctor) person;
         uniqueField.setText(LABEL_DOCTOR_SPECIALISATION + doctor.getMedicalDepartment().deptName);
         availability.setVisible(true);
         availabilityLabel.setVisible(true);
