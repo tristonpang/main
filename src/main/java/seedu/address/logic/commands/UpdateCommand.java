@@ -92,11 +92,7 @@ public class UpdateCommand extends Command {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        //Undoing and Redoing unselects a previously selected person.
-        //Doing so updates the display panel after an update. May consider abstracting this into an UnselectCommand.
-        new UndoCommand().execute(model, history);
-        new RedoCommand().execute(model, history);
-        new SelectCommand(index).execute(model, history);
+
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
