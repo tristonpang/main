@@ -283,12 +283,12 @@ Schedules a patient/doctor for a medical appointment at a specific date and time
 Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME di/DOCTOR_NRIC pn/PATIENT_NAME pi/PATIENT_NRIC`
 
 ****
-* Date is formatted as DD.MM.YYYY and is dot separated e.g.  `7.11.1996` is the 7th of November 1996
-* Time uses the 24-hour clock time e.g. `1300` is 1pm
-* Doctor name is the doctor's full name e.g. `John Doe`
-* Doctor nric is the doctor's nric e.g. `S1234567B`
-* Patient name is the patient's full name e.g. `Kim Tan`
-* Patient nric is the patient's nric e.g. `S1234567A`
+* Date is formatted as DD.MM.YYYY and is dot separated. e.g.  `7.11.1996` is the 7th of November 1996
+* Time uses the 24-hour clock time. e.g. `1300` is 1pm
+* Doctor name is the doctor's full name. e.g. `John Doe`
+* Doctor nric is the doctor's nric. e.g. `S1234567B`
+* Patient name is the patient's full name. e.g. `Kim Tan`
+* Patient nric is the patient's nric. e.g. `S1234567A`
 ****
 
 Examples:
