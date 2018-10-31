@@ -25,7 +25,7 @@ Further checks are available to inform the user if they keyed in incorrect appoi
 ** Highlights: This enhancement drastically improved the ability of the application to assist medical processes, specifically in the area of scheduling appointment.
 The implementation too was challenging as it required a brand new command to be created.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=nelvintan[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
 
 * *Other contributions*:
 
