@@ -417,9 +417,13 @@ intuitive command, and once all prompts or fields of the intuitive command have 
 to prepare a String that represents a non-intuitive command (e.g. `add n/NAME p/PHONE ...`) back to the
 AddressBookParser in order to execute this command.
 
+The `IntuitivePromptManager` also has an `ArgumentManager`
+that determines how to keep track of the arguments for its respective intuitive command.
+
 `IntuitivePromptManager` has six public-access methods that allow the `Model` to communicate with it.
 They are the following:
 
+****
 * `IntuitivePromptManager#addArgument(input)`: takes in a string input and stores it as an argument
 * `IntuitivePromptManager#removeArgument()`: removes the latest stored argument(s)
 * `IntuitivePromptManager#getInstruction()`: retrieves the instruction or prompt to be shown to the user
@@ -429,6 +433,7 @@ command, called when all fields have been filled
 * `IntuitivePromptManager#isIntuitiveMode()`: checks if One Life is currently executing an intuitive command
 * `IntuitivePromptManager#areArgsAvailable()`: checks if there are any arguments still being stored in the
 `IntuitivePromptManager`
+****
 
 With the above operations in mind, below is an example usage scenario of how an intuitive command works at each step.
 We will be using the example of an intuitive `add` command.
@@ -446,11 +451,12 @@ Step 3. `LogicManager` executes the `IntuitiveEntryCommand`.
 in the `IntuitivePromptManager`.
 
 Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. Since the user's
-input is the `add` command word, the user's input is stored as a `commandWord` and the `IntuitivePromptManager`
-triggers it's intuitive mode.
+input is the `add` command word, the `IntuitivePromptManager` triggers it's intuitive mode - it creates the respective
+`ArgumentManager` (in this case it is an `AddArgumentManager`) and stores it in a variable called `argumentManager`.
 
 Step 5. `Model` then calls the `IntuitivePromptManager` to retrieve the next prompt to be shown to the user.
-A String instruction representing the prompt to be shown is returned by `IntuitivePromptManager` and `Model` then
+`IntuitivePromptManager` asks `argumentManager` to retrieve the correct instruction.
+This String instruction representing the prompt to be shown is then returned by `IntuitivePromptManager` and `Model` then
 proceeds to return this String instruction to the executing `IntuitiveEntryCommand`.
 
 Step 6. `IntuitiveEntryCommand` uses the String instruction to create a new `CommandResult`, which is then returned
@@ -458,7 +464,11 @@ to the `LogicManager` to be displayed to the user.
 
 The following sequence diagram describes the above process:
 
+.High level sequence diagram detailing interactions between `Logic` and `Model`
 image::IntuitiveCommandWordSequenceDiagram.png[width="800"]
+
+.Internal sequence diagram showing how `IntuitivePromptManager` interacts with `argumentManager`
+image::ArgumentManagerStartSequenceDiagram.png[width="800"]
 
 ===== Middle of Intuitive Command
 
@@ -475,14 +485,15 @@ command is already executing, the user's input is stored as an argument in the `
 The `currentArgIndex`, which allows the `IntuitivePromptManager` to determine the what field it should prompt for next
 is incremented accordingly.
 
+.How the `arguments` list in `IntuitivePromptManager` records arguments with `currentArgIndex`
 image::IntuitiveInternalDiagram.png[width="800"]
 
-Step 5-6. Remains the same.
+Step 5-6. Remains the same as above.
 
 ===== End of Intuitive Command
 Once all fields have been filled by the user, the system will exit intuitive mode as follows:
 
-Step 1-3. Remains the same. Take note that this is the last field that the user has to fill.
+Step 1-3. Remains the same as above. Take note that this is the last field that the user has to fill.
 
 Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. The input is
 stored as an argument in the `arguments` list. The `IntuitivePromptManager` detects that this is the last
@@ -502,6 +513,7 @@ the same as if the user entered the non-intuitive version of the command.
 
 The following sequence diagram describes Step 6 and onwards.
 
+.High level sequence diagram showing how arguments are retrieved at the end of the intuitive command
 image::IntuitiveEndSequenceDiagram.png[width="800"]
 
 ===== Going Back
@@ -522,6 +534,12 @@ as accordingly.
 Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
 `IntuitivePromptManager`. Execution continues normally as described in the above sections.
 
+.High level sequence diagram showing going back ability
+image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
+
+.Internal sequence digram showing going back ability
+image::ArgumentManagerBackSequenceDiagram.png[width="800"]
+
 ==== Supported Commands
 The following commands are supported by the Intuitive Command Prompt feature, and thus have an intuitive version:
 
@@ -529,6 +547,7 @@ The following commands are supported by the Intuitive Command Prompt feature, an
 * `delete`
 * `find`
 * `edit`
+* `schedule`
 
 
 // end::intuitivecommandprompt[]
