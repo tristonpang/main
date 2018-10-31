@@ -657,7 +657,7 @@ The key operation implemented is `FindCommand#execute`.
 
 Given below is an example usage scenario and how the find command mechanism behaves at each step.
 
-Step 1. The user wants to find all `Person` with `Name` Alex by executing `find Alex`.
+Step 1. The user wants to find all `Person` with `Name` Alex by executing `find n/Alex`.
 
 Step 2. `FindCommandParser` will parse the input and verify that is it valid before returning a `PersonContainsKeywordsPredicate`, which is passed into `FindCommand`.
 
@@ -676,12 +676,12 @@ image::FindSequenceDiagram.png[width="800"]
 
 ===== Aspect: How to input search fields
 
-* **Alternative 1 (current choice):** Allow users to perform global search using any keywords.
-** Pros: Allows for a powerful search function by allowing the user to search through all `Person` attributes.
-** Cons: Users will not be able to filter the unwanted results.
-* **Alternative 2:** Allow the use of tags to specify certain fields if needed.
-** Pros: Allows for a more precise search.
-** Cons: Increased inconvenience of having to tag search fields.
+* **Alternative 1 (current choice):** Allow users to perform searches by specifying certain keywords of interest. (For example: `Name` : `n/`, `Phone`: `p/`)
+** Pros: Allows for a powerful and precise search function by providing the user the option to specify exactly which `Person` attributes are of interest.
+** Cons: It may be difficult for newer users to remember the shortcuts that represent the attributes of interest.
+* **Alternative 2:** Generalise the search function by searching through all fields and providing the most relevant information through predictive search.
+** Pros: An extremely powerful search function that is both simple to use and accurate.
+** Cons: It is incredibly difficult to implement such an algorithm without the use of machine-learning algorithms or an internet connection.
 // end::findcommand[]
 
 // tag::dataencryption[]
