@@ -537,6 +537,9 @@ Step 5. `Model` retrieves the instruction of the field indicated by the `current
 .High level sequence diagram showing going back ability
 image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
 
+.Internal sequence digram showing going back ability
+image::ArgumentManagerBackSequenceDiagram.png[width="800"]
+
 ==== Supported Commands
 The following commands are supported by the Intuitive Command Prompt feature, and thus have an intuitive version:
 
