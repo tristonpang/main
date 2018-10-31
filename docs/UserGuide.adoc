@@ -114,6 +114,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::find[]
 === Locating person by any attribute: `find`
 
 Finds people with the keywords specified by the user within specific fields
@@ -141,6 +142,7 @@ Examples:
 Displays `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
 * `find n/Tan a/Kang` +
 Displays `Nelvin Tan` and all `Person` whose `Address` is `Choa Chu Kang`.
+// end::find[]
 
 === Deleting a person : `delete`
 
