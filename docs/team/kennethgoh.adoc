@@ -1,0 +1,86 @@
+= Kenneth Goh Jun Teck - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:sectnums:
+
+== PROJECT: One Life
+
+---
+
+== Overview
+
+One Life is a desktop hospital management application used for efficient storing and retrieving of data related to
+the doctors and patients (e.g. personal particulars, medical records, appointments, etc). It makes use of a Command
+Line Interface (CLI), and it uses a Graphical User Interface (GUI) created via JavaFX. The program is written in Java,
+and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to display each doctor's profile and their current availability status.*
+** What it does: allows the user to view the details of each doctor (e.g. phone number, medical specialization, etc),
+ as well as the current availability status of each doctor.
+** Justification: This feature improves the product significantly because a user can easily retrieve the data of each
+doctor, and more importantly the current availability status of each doctor. Since this is a hospital management
+application that will be used by nurses or medical administrative staff, in cases of a medical emergency or when a
+doctor is required, the user can easily know which doctors are available at the moment to help/address the medical
+situation.
+** Highlights: This enhancement improves this application's ability to serve as a hospital management application as
+it provides real time update of the availability status of each doctor. The implementation too was challenging as
+ it required addition of new event handlers to facilitate propagation of information stored in the backend, to the
+ frontend i.e. GUI where the information is processed and displayed to the user.
+
+* *Minor enhancement*: changed the existing `add` and `list` commands such that it facilitates adding and viewing of
+doctors and patients separately (refer to _4.Contributions to the User Guide_ for more information).
+
+* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the GUI layout (Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/54[#54],
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/116[#116],
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/124[#124])
+*** Wrote additional tests for existing features to increase coverage (Pull requests
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/116[#116],
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/129[#129])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+** Community:
+*** Reviewed Pull Requests (PRs) of other team members (with non-trivial review comments):
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/53[#53], https://github.com/CS2103-AY1819S1-W16-3/main/pull/71[#71],
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/119[#119]
+*** Reported bugs and suggestions for other members in the team (Pull Requests:
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/119[#119])
+*** Updated team member's code to remove errors/bugs detected when running tests against the program (Pull requests
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/34[#34],
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/76[#76])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=add]
+
+include::../UserGuide.adoc[tag=list]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=displaydoctoravailability]
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_

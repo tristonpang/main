@@ -534,7 +534,7 @@ The following commands are supported by the Intuitive Command Prompt feature, an
 // end::intuitivecommandprompt[]
 
 
-// tag::display doctor's availability
+// tag::displaydoctoravailability[]
 === Display doctor's current availability feature
 ==== Current implementation
 
@@ -590,7 +590,7 @@ change in doctor's appointment.
 * **Alternative 2:** A function that will refresh the badge every few minutes.
 ** Pros: Provides accurate information on the doctor's availability.
 ** Cons: Affects the performance of the application due to this function continuously running in the background.
-// end::display doctor's availability
+// end::displaydoctoravailability[]
 
 // tag::updatecommand[]
 === Update command feature

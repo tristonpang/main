@@ -58,6 +58,7 @@ Some example commands you can try:
 Opens user guide. +
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 Adds a patient or doctor to the database. +
 
@@ -78,7 +79,9 @@ t/Hokkien-speaker`
 
 [NOTE]
 When adding a new doctor you are required to specify his/her medical department.
+// end::add[]
 
+// tag::list[]
 === Listing all relevant personnel : `list`
 
 Shows a list of all of the people in the database. +
@@ -92,6 +95,7 @@ Lists all doctors and patients in the database.
 Lists all patients in the database.
 * `list r/doctor` +
 Lists all the doctors in the database.
+// end::list[]
 
 === Editing a person : `edit`
 
