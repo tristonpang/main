@@ -37,10 +37,10 @@ behaviours depending of the type of command to be executed.
 *** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub
 *** Tagged releases, compiled binary (JAR) files and published releases on GitHub
 ** Documentation:
-*** Updated class diagram for Logic component:
+*** Updated class diagram for Model component: https://github.com/CS2103-AY1819S1-W16-3/main/pull/144/commits/2b05e6cb5a4e3b9cf8164184bb474b79fc6d3531[#144]
 
 ** Community:
-*** Reviewed PRs of other team members: https://github.com/CS2103-AY1819S1-W16-3/main/pull/54#issuecomment-428477267
+*** Reviewed PRs of other team members: https://github.com/CS2103-AY1819S1-W16-3/main/pull/54#issuecomment-428477267[#54]
 
 == Contributions to the User Guide
 
