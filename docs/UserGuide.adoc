@@ -303,31 +303,54 @@ image::ScheduleSuccess.png[width="600"]
 image::ScheduleFailure.png[width="600"]
 // end::schedule[]
 
-=== Viewing medical records of patients : `records`
-
-Displays the most updated medical records of a given patient if no date is specified. Else, displays the most recent medical record before the specified date. +
-Format: `records n/name [d/DATE]`
+// tag::displaymr[]
+=== Viewing medical records of patients : `select`
+Displays all the medical records of the specified person. +
+Format: `select INDEX`
 
 ****
-* Date is formatted as DD.MM.YYYY and is dot separated. e.g.  `7.11.1996` is the 7th of November 1996
+* Index is the position of the person selected from the person card list.
+* The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
 Examples:
 
-* `records n/Jack d/22.11.2018` +
-Displays the most recent medical record of `Jack` before 22nd November 2018.
-* `records n/Jack` +
-Displays the most recent medical records of `Jack`.
+* `select 1` +
+Displays the medical records of the first person on the displayed list as shown by the figure below.
 
+.Displaying medical records
+image::DisplayMedicalRecords.png[width="600"]
+
+// end::displaymr[]
+
+// tag::update[]
 === Updating medical records of patients : `update`
 
 Adds a new medical record for the patient as the most updated record using the current date as date of record. +
 Format: `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT [c/COMMENTS]`
 
+****
+* Date is formatted as DD.MM.YYYY and is dot separated e.g.  `7.11.1996` is the 7th of November 1996.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* Comments are optional.
+****
+[NOTE]
+If no comments are specified, "-" will be displayed on the medical record.
+
 Examples:
 
-* `update 1 d/22.11.2018 dg/flu tr/tamiflu` +
-Updates the patient at index 1 medical records with the given description.
+* `update 1 d/31.10.2018 dg/flu tr/tamiflu` +
+Updates the medical records of the patient at index 1 with the given date, diagnosis and treatment without any comments as shown by the figure below.
+
+.Updating records without comments
+image::UpdateCommandWithoutCommentSuccess.png[width="600"]
+
+* `update 1 d/31.10.2018 dg/flu tr/tamiflu c/To be taken thrice a day after meals.` +
+Updates the medical records of the patient at index 1 with the given date, diagnosis, treatment and comments as shown by the figure below.
+
+.Updating records with comments
+image::UpdateCommandWithCommentSuccess.png[width="600"]
+// end::update[]
 
 === Exiting the program : `exit`
 
