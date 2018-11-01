@@ -1,4 +1,4 @@
-= OneLife - Developer Guide
+= One Life - Developer Guide
 :site-section: DeveloperGuide
 :toc:
 :toc-title:
@@ -555,33 +555,34 @@ The following commands are supported by the Intuitive Command Prompt feature, an
 // end::intuitivecommandprompt[]
 
 
-// tag::display doctor's availability
+// tag::displaydoctoravailability[]
 === Display doctor's current availability feature
 ==== Current implementation
 
-The display of each doctor's current availability is facilitated by `PersonCard`, `Doctor`, `AppointmentManager`.
+The display of each doctor's current availability is facilitated by `PersonProfilePage`, `Doctor`, `AppointmentManager`.
 Given below is an example usage scenario and how the information is generated and propagated to be displayed in the
-`PersonCard` at the final stage.
+`PersonProfilePage` at the final stage.
 
-Step 1. The user launches the application for the first time. The `MainWindow` will be initialized and construct a
-`PersonListPanel`.
+Step 1. The user launches the application for the first time. The `MainWindow` will be initialized.
 
-Step 2. The `PersonListPanel` will then construct a list of `PersonCard`.
+Step 2. The user then selects one of the doctors to view his/her profile via the `PersonProfilePage`.
 
-Step 3. Each `PersonCard` is associated with a person's particulars, be it a doctor or patient. In the event that
- this `PersonCard` belongs to a doctor, it will call the method `Doctor#currentAvailStatus` to get information on
- the doctor's current availability.
+Step 3. This then loads the `PersonProfilePage` that displays all of the person's particulars, be it a doctor or
+patient. In the event that this `PersonProfilePage` belongs to a doctor, it calls the method
+`Doctor#currentAvailStatus` to retrieve information on the doctor's current availability.
 
-Step 4. Upon calling the method `Doctor#currentAvailStatus`, a helper method in `AppointmentManager`, called
-`AppointmentManager#isAnyAppointmentOngoing` will be executed.
+Step 4. Next, upon calling the method `Doctor#currentAvailStatus`, a helper method in `AppointmentManager`, called
+`AppointmentManager#isAnyAppointmentOngoing` executes.
 
-Step 5. `AppointmentManager` will then get the current locale time from Java's `ZoneDateTime` class and compare the
+Step 5. `AppointmentManager` retrieves the current locale date and time from our `Date` and `Time` class and compare the
 current time with all the scheduled appointments that the doctor has, and determines if the doctor is currently
 available.
 
-Step 6. The status information generated in `AppointmentManager` will then be propagated back up to the `PersonCard`
-which then sets a badge to reflect the availability status of that doctor.
+Step 6. The status information generated in `AppointmentManager` is propagated back up to the
+`PersonProfilePage` which then sets a badge (available/busy) to reflect the availability status of that doctor.
 
+Step 7. As long as the user remains on the same `PersonProfilePage`, this method continues to run in the background,
+providing real time update of the doctor's availability at that point in time.
 
 The following activity diagram summarizes what happens when a user launches the application:
 
@@ -592,26 +593,27 @@ This section describes the pros and cons of the current and other alternate impl
 
 ===== Aspect: How to display each doctor's availability
 
-* **Alternative 1 (current choice):** A badge on each doctor's card display that shows his/her current availability.
+* **Alternative 1 (current choice):** A badge in each doctor's `PersonProfilePage` display that shows his/her current
+availability.
 ** Pros: Convenient for the user to refer to since the badge is always on the display.
-** Cons: Does not integrate any form of auto-updating nor is there any dedicated command to allow the user to refresh
-the information, thus the information provided can be outdated.
-* **Alternative 2:** A separate command that the user can call upon to look up the current availability of each doctor.
+** Cons: Limited to only checking and viewing the availability status of one doctor at a time, thus will not be able
+ to get a consolidated list/view of all doctors who are available or busy at the moment.
+* **Alternative 2:** A separate command that the user can call upon to look up the current availability of all doctors.
 ** Pros: Able to call this method repeatedly/when needed and will be provided with the latest information.
-** Cons: Have a separate command dedicated to this feature which may not be necessary and not as convenient as compared
- to having a badge that is on the display at all times. Also this adds on to the list of commands
- that the user has to get familiar with.
+** Cons: Need to have a separate command dedicated to this feature which may not be necessary and not as convenient as
+compared to having a badge that is on the display at all times. Also this adds on to the list of commands that the
+user has to get familiar with.
 
 ===== Aspect: How to update the status of each doctor's availability
 
-* **Alternative 1 (current choice):** Updates the status/badge only on launch of application and when there is a
-change in doctor's appointment.
-** Pros: Easy to implement.
-** Cons: Information is outdated aas it does not truly reflect the doctor's current availability.
-* **Alternative 2:** A function that will refresh the badge every few minutes.
-** Pros: Provides accurate information on the doctor's availability.
+* **Alternative 1 (current choice):** A function that will refresh the badge every few seconds.
+** Pros: Provides accurate information and real time update on the doctor's availability.
 ** Cons: Affects the performance of the application due to this function continuously running in the background.
-// end::display doctor's availability
+* **Alternative 2:** Updates the status/badge only on launch of application and only when there is a
+change in information stored in the database.
+** Pros: Implementation is easy.
+** Cons: Information is outdated as it does not truly reflect the doctor's current availability.
+// end::displaydoctoravailability[]
 
 // tag::updatecommand[]
 === Update command feature
@@ -691,6 +693,7 @@ Step 4. `Model#updateFilteredPersonList()` will be called, which will update `Mo
 
 The following activity diagram summarises what happens when a user launches the application:
 
+.FindCommand Sequence Diagram
 image::FindSequenceDiagram.png[width="800"]
 
 ==== Design considerations
@@ -698,11 +701,11 @@ image::FindSequenceDiagram.png[width="800"]
 ===== Aspect: How to input search fields
 
 * **Alternative 1 (current choice):** Allow users to perform searches by specifying certain keywords of interest. (For example: `Name` : `n/`, `Phone`: `p/`)
-** Pros: Allows for a powerful and precise search function by providing the user the option to specify exactly which `Person` attributes are of interest.
+** Pros: It results in a powerful and precise search function by providing the user the option to specify exactly which `Person` attributes are of interest.
 ** Cons: It may be difficult for newer users to remember the shortcuts that represent the attributes of interest.
 * **Alternative 2:** Generalise the search function by searching through all fields and providing the most relevant information through predictive search.
-** Pros: An extremely powerful search function that is both simple to use and accurate.
-** Cons: It is incredibly difficult to implement such an algorithm without the use of machine-learning algorithms or an internet connection.
+** Pros: It provides an even more powerful search function that is both simple to use and accurate.
+** Cons: It is incredibly difficult to implement such an search function without the use of machine-learning algorithms or an internet connection.
 // end::findcommand[]
 
 // tag::dataencryption[]

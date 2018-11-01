@@ -1,4 +1,4 @@
-= OneLife - User Guide
+= One Life - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -58,6 +58,7 @@ Some example commands you can try:
 Opens user guide. +
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 Adds a patient or doctor to the database. +
 
@@ -72,13 +73,24 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add r/patient n/John Doe Xiao Huang ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01
-t/Hokkien-speaker`
-* `add r/doctor n/Betsy Crowe ic/S8234567F e/betsycrowe@example.com a/Newgate Estates p/1234567 md/dentistry`
+t/Hokkien` +
+(Adds a new patient, refer to Figure 1 and 2 below for illustrations)
+
+image::addbefore.png[width="600"]
+image::addAfter.png[width="600"]
+
+* `add r/doctor n/Betsy Crowe ic/S8234567F e/betsycrowe@example.com a/Newgate Estates p/1234567 md/dentistry` +
+(Adds a new doctor, refer to Figure 3 and 4 below for illustrations)
+
+image::addDocBefore.png[width="600"]
+image::addDocAfter.png[width="600"]
 
 
 [NOTE]
-When adding a new doctor you are required to specify his/her medical department.
+When adding a new doctor you have to to specify his/her medical department.
+// end::add[]
 
+// tag::list[]
 === Listing all relevant personnel : `list`
 
 Shows a list of all of the people in the database. +
@@ -87,11 +99,20 @@ Format: `list [r/ROLE]`
 Examples:
 
 * `list` +
-Lists all doctors and patients in the database.
-* `list r/patient` +
-Lists all patients in the database.
+Lists all doctors and patients in the database. (Refer to Figure 5 for illustration)
+
+image::listAll.png[width="600"]
+
 * `list r/doctor` +
-Lists all the doctors in the database.
+Lists all the doctors in the database. (Refer to Figure 6 for illustration)
+
+image::listDoc.png[width="600"]
+
+* `list r/patient` +
+Lists all patients in the database. (Refer to Figure 7 for illustration)
+
+image::listPatient.png[width="600"]
+// end::list[]
 
 === Editing a person : `edit`
 
@@ -136,12 +157,25 @@ will be displayed. e.g. `find n/Gary a/Kang` will display `Gary Goh Yipeng` and 
 `Choa Chu Kang`.
 ****
 
+[WARNING]
+Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in the input. A command like `find n/[BLANK]` is not a valid input.
+
 Examples:
 
-* `find Goh` +
-Displays `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
-* `find n/Tan a/Kang` +
-Displays `Nelvin Tan` and all `Person` whose `Address` is `Choa Chu Kang`.
+* `find t/friends` +
+Displays all `Person` with `Tag`: `friends`.
+* `find t/friends r/doctor` +
+Displays all `Person` whom have a `Tag` labelled `friends` and whose `Role` is `Doctor`.
+* The images below illustrate the above-mentioned examples.
+
+.Find command example
+image::FindCommandStep1.png[width="600"]
+
+.More specific find command example
+image::FindCommandStep2.png[width="600"]
+
+.Error in input when trying to initialise find command
+image::FindCommandError.png[width="600"]
 // end::find[]
 
 === Deleting a person : `delete`
