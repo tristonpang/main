@@ -31,7 +31,7 @@ Responsibilities: Deliverables & deadlines, Scheduling & tracking
 
 === Triston Pang Erh Syen
 image::tristonpang.png[width="150", align="left"]
-{empty}[https://github.com/tristonpang[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/tristonpang[github]] [<<tristonpang#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Integration
