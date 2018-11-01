@@ -18,8 +18,8 @@ and has about 10 kLoC.
 == Summary of contributions
 
 * *Major enhancement*: added *the ability to display each doctor's profile and their current availability status.*
-** What it does: allows the user to view the details of each doctor (e.g. phone number, medical specialization, etc),
- as well as the current availability status of each doctor.
+** What it does: This allows the user to view the details of each doctor (e.g. phone number, medical specialization,
+etc), as well as the current availability status of each doctor.
 ** Justification: This feature improves the product significantly because a user can easily retrieve the data of each
 doctor, and more importantly the current availability status of each doctor. Since this is a hospital management
 application that will be used by nurses or medical administrative staff, in cases of a medical emergency or when a
