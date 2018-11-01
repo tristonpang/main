@@ -76,7 +76,7 @@ Examples:
 t/Hokkien` +
 (Adds a new patient, refer to Figure 1 and 2 below for illustrations)
 
-image::addBefore.png[width="600"]
+image::addbefore.png[width="600"]
 image::addAfter.png[width="600"]
 
 * `add r/doctor n/Betsy Crowe ic/S8234567F e/betsycrowe@example.com a/Newgate Estates p/1234567 md/dentistry` +
