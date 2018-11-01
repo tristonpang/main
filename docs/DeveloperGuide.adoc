@@ -691,6 +691,7 @@ Step 4. `Model#updateFilteredPersonList()` will be called, which will update `Mo
 
 The following activity diagram summarises what happens when a user launches the application:
 
+.FindCommand Sequence Diagram
 image::FindSequenceDiagram.png[width="800"]
 
 ==== Design considerations
@@ -698,11 +699,11 @@ image::FindSequenceDiagram.png[width="800"]
 ===== Aspect: How to input search fields
 
 * **Alternative 1 (current choice):** Allow users to perform searches by specifying certain keywords of interest. (For example: `Name` : `n/`, `Phone`: `p/`)
-** Pros: Allows for a powerful and precise search function by providing the user the option to specify exactly which `Person` attributes are of interest.
+** Pros: It results in a powerful and precise search function by providing the user the option to specify exactly which `Person` attributes are of interest.
 ** Cons: It may be difficult for newer users to remember the shortcuts that represent the attributes of interest.
 * **Alternative 2:** Generalise the search function by searching through all fields and providing the most relevant information through predictive search.
-** Pros: An extremely powerful search function that is both simple to use and accurate.
-** Cons: It is incredibly difficult to implement such an algorithm without the use of machine-learning algorithms or an internet connection.
+** Pros: It provides an even more powerful search function that is both simple to use and accurate.
+** Cons: It is incredibly difficult to implement such an search function without the use of machine-learning algorithms or an internet connection.
 // end::findcommand[]
 
 // tag::dataencryption[]
