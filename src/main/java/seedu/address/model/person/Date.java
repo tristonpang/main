@@ -41,7 +41,7 @@ public class Date {
      * @return whether this date is a valid date.
      */
     public static boolean isValidDate(String date) {
-        return isCorrectFormat(date) && !isInThePast(date) && doesExist(date);
+        return isCorrectFormat(date) && doesExist(date) && !isInThePast(date);
     }
 
     private static boolean isCorrectFormat(String date) {
