@@ -10,10 +10,20 @@
 
 === Overview
 
-One Life is a desktop medical management application used for storing and displaying data related to patients and doctors.
-One Life aims to improve the efficiency for administrative processes in medical institutes.
-The user interacts with it using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX.
+This project portfolio details my key contributions to Project One Life.
+
+One Life is a desktop medical management application designed by me and my groups mates for a software engineering module in National University of Singapore (NUS).
+It aims to improve the efficiency of administrative processes in medical institutes.
+The project was created under the constraint of the fact that the user only interacts with the application through a Command Line Interface (CLI).
 It is written in Java, and has about 10 kLoC.
+
+The main features of the project are:
+
+* The ability to display and schedule medical appointments.
+* The ability to display and update medical records.
+* The ability to display doctor and patient details.
+* The ability to find persons by specifying related keywords.
+* The ability to enter commands using intuitive command prompts instead of CLI for new users.
 
 === Summary of contributions
 
