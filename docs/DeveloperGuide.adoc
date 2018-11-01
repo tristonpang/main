@@ -563,22 +563,24 @@ Given below is an example usage scenario and how the information is generated an
 
 Step 1. The user launches the application for the first time. The `MainWindow` will be initialized.
 
-Step 2. The user then select one of the doctors to view his/her profile via the `PersonProfilePage`.
+Step 2. The user then selects one of the doctors to view his/her profile via the `PersonProfilePage`.
 
-Step 3. This then loads the `PersonProfilePage` that will display all of the person's particulars, be it a doctor or
-patient. In the event that this `PersonProfilePage` belongs to a doctor, it will call the method
+Step 3. This then loads the `PersonProfilePage` that displays all of the person's particulars, be it a doctor or
+patient. In the event that this `PersonProfilePage` belongs to a doctor, it calls the method
 `Doctor#currentAvailStatus` to retrieve information on the doctor's current availability.
 
-Step 4. Then, upon calling the method `Doctor#currentAvailStatus`, a helper method in `AppointmentManager`, called
-`AppointmentManager#isAnyAppointmentOngoing` will be executed.
+Step 4. Next, upon calling the method `Doctor#currentAvailStatus`, a helper method in `AppointmentManager`, called
+`AppointmentManager#isAnyAppointmentOngoing` executes.
 
-Step 5. `AppointmentManager` will then get the current locale time from our `Date` and `Time` class and compare the
+Step 5. `AppointmentManager` retrieves the current locale date and time from our `Date` and `Time` class and compare the
 current time with all the scheduled appointments that the doctor has, and determines if the doctor is currently
 available.
 
-Step 6. The status information generated in `AppointmentManager` will then be propagated back up to the
-`PersonProfilePage` which then sets a badge to reflect the availability status of that doctor.
+Step 6. The status information generated in `AppointmentManager` is propagated back up to the
+`PersonProfilePage` which then sets a badge (available/busy) to reflect the availability status of that doctor.
 
+Step 7. As long as the user remains on the same `PersonProfilePage`, this method continues to run in the background,
+providing real time update of the doctor's availability at that point in time.
 
 The following activity diagram summarizes what happens when a user launches the application:
 
@@ -592,22 +594,22 @@ This section describes the pros and cons of the current and other alternate impl
 * **Alternative 1 (current choice):** A badge in each doctor's `PersonProfilePage` display that shows his/her current
 availability.
 ** Pros: Convenient for the user to refer to since the badge is always on the display.
-** Cons: User can only check and view the availability status of one doctor at a time and not is able to get a
-complete list/view of all doctors who are available or busy at the moment.
+** Cons: Limited to only checking and viewing the availability status of one doctor at a time, thus will not be able
+ to get a consolidated list/view of all doctors who are available or busy at the moment.
 * **Alternative 2:** A separate command that the user can call upon to look up the current availability of all doctors.
 ** Pros: Able to call this method repeatedly/when needed and will be provided with the latest information.
-** Cons: Have a separate command dedicated to this feature which may not be necessary and not as convenient as compared
- to having a badge that is on the display at all times. Also this adds on to the list of commands that the user has
- to get familiar with.
+** Cons: Need to have a separate command dedicated to this feature which may not be necessary and not as convenient as
+compared to having a badge that is on the display at all times. Also this adds on to the list of commands that the
+user has to get familiar with.
 
 ===== Aspect: How to update the status of each doctor's availability
 
 * **Alternative 1 (current choice):** A function that will refresh the badge every few seconds.
-** Pros: Provides accurate information on the doctor's availability.
+** Pros: Provides accurate information and real time update on the doctor's availability.
 ** Cons: Affects the performance of the application due to this function continuously running in the background.
 * **Alternative 2:** Updates the status/badge only on launch of application and only when there is a
 change in information stored in the database.
-** Pros: Easy to implement.
+** Pros: Implementation is easy.
 ** Cons: Information is outdated as it does not truly reflect the doctor's current availability.
 // end::displaydoctoravailability[]
 
