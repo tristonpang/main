@@ -462,7 +462,7 @@ proceeds to return this String instruction to the executing `IntuitiveEntryComma
 Step 6. `IntuitiveEntryCommand` uses the String instruction to create a new `CommandResult`, which is then returned
 to the `LogicManager` to be displayed to the user.
 
-The following sequence diagram describes the above process:
+The following two sequence diagrams (Figures 10 & 11) describes the above process:
 
 .High level sequence diagram detailing interactions between `Logic` and `Model`
 image::IntuitiveCommandWordSequenceDiagram.png[width="800"]
@@ -483,7 +483,7 @@ Step 2-3. Remains the same as before with `patient` as the user's input.
 Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. Since the intuitive
 command is already executing, the user's input is stored as an argument in the `arguments` list.
 The `currentArgIndex`, which allows the `IntuitivePromptManager` to determine the what field it should prompt for next
-is incremented accordingly.
+is incremented accordingly:
 
 .How the `arguments` list in `IntuitivePromptManager` records arguments with `currentArgIndex`
 image::IntuitiveInternalDiagram.png[width="800"]
@@ -533,6 +533,8 @@ as accordingly.
 
 Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
 `IntuitivePromptManager`. Execution continues normally as described in the above sections.
+
+The following two sequence diagrams (Figures 14 & 15) describe the above process:
 
 .High level sequence diagram showing going back ability
 image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
