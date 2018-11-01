@@ -157,12 +157,25 @@ will be displayed. e.g. `find n/Gary a/Kang` will display `Gary Goh Yipeng` and 
 `Choa Chu Kang`.
 ****
 
+[WARNING]
+Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in the input. A command like `find n/[BLANK]` is not a valid input.
+
 Examples:
 
-* `find Goh` +
-Displays `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
-* `find n/Tan a/Kang` +
-Displays `Nelvin Tan` and all `Person` whose `Address` is `Choa Chu Kang`.
+* `find t/friends` +
+Displays all `Person` with `Tag`: `friends`.
+* `find t/friends r/doctor` +
+Displays all `Person` whom have a `Tag` labelled `friends` and whose `Role` is `Doctor`.
+* The images below illustrate the above-mentioned examples.
+
+.Find command example
+image::FindCommandStep1.png[width="600"]
+
+.More specific find command example
+image::FindCommandStep2.png[width="600"]
+
+.Error in input when trying to initialise find command
+image::FindCommandError.png[width="600"]
 // end::find[]
 
 === Deleting a person : `delete`
