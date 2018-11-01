@@ -1,4 +1,4 @@
-= OneLife - User Guide
+= One Life - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
