@@ -367,6 +367,7 @@ Step 5. `XmlAdaptedPerson` updates storage of `appointmentList`.
 
 The following sequence diagram shows how the schedule appointment operation works:
 
+.Sequence diagram for scheduling appointments
 image::ScheduleSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
@@ -375,8 +376,8 @@ This section describes the pros and cons of the current and other alternate impl
 ===== Aspect: Command for schedule command
 * **Alternative 1 (current choice):** Take in the inputs for schedule appointment command using one prefix for each detail.
 For example: `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/John Doe pi/S1234567A`
-** Pros: Design is consistent with the other commands in the application.
-** Cons: Requires the user to type more when scheduling an appointment.
+** Pros: The design is consistent with the other commands in the application.
+** Cons: It requires the user to type more when scheduling an appointment.
 
 * **Alternative 2:** Use a comma-separated long string in the command prompt to schedule an appointment.
 For example: `schedule 1 s/23.11.2018,1300,1400,Jack,S1234567B,John Doe,S1234567A`
@@ -388,17 +389,17 @@ This might confuse the user.
 ===== Aspect: Sorting of appointments
 * **Alternative 1 (current choice):** Do not sort the appointments in the ArrayList of appointments.
 A new appointment is added to the back of the ArrayList.
-** Pros: Simple to check for appointment clashes.
+** Pros: It is simple to check for appointment clashes.
 To check for appointment clashes, just loop through the ArrayList and check the new appointment against every other appointment.
-** Cons: Might not be the most efficient way.
+** Cons: It might not be the most efficient way.
 
 * **Alternative 2:** Sort the appointments in the ArrayList of appointments.
 Maintain a sorted list of appointments based on the date and time of appointments.
-** Pros: Might be more efficient when checking for appointment clashes.
+** Pros: It might be more efficient when checking for appointment clashes.
 We do not need to check our new appointment against all the appointments in the ArrayList.
 For example we can check from the last (latest) appointment down the list until a point where the next appointment comes before this appointment.
 At that point we can stop checking as we know that there will be no more clashes.
-** Cons: Efficiency gain when checking for clashes might be lost due to efficiency lost due to sorting being required.
+** Cons: The efficiency gain when checking for clashes might be lost due to efficiency lost due to sorting being required.
 // end::schedulecommand[]
 
 // tag::intuitivecommandprompt[]
