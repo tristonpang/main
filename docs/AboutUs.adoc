@@ -31,7 +31,7 @@ Responsibilities: Deliverables & deadlines, Scheduling & tracking
 
 === Triston Pang Erh Syen
 image::tristonpang.png[width="150", align="left"]
-{empty}[https://github.com/tristonpang[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/tristonpang[github]] [<<tristonpang#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Integration
@@ -40,7 +40,7 @@ Responsibilities: Integration
 
 === Ng Kang Tze
 image::ngkangtze.png[width="150", align="left"]
-{empty}[https://github.com/ngkangtze[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/ngkangtze[github]] [<<ngkangtze#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Code Quality, JavaFX expert
@@ -58,7 +58,7 @@ Responsibilities: Documentation
 
 === Kenneth Goh Jun Teck
 image::guestuser0123.png[width="150", align="left"]
-{empty}[https://github.com/guestuser0123[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/guestuser0123[github]] [<<kennethgoh#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Testing

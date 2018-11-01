@@ -417,9 +417,13 @@ intuitive command, and once all prompts or fields of the intuitive command have 
 to prepare a String that represents a non-intuitive command (e.g. `add n/NAME p/PHONE ...`) back to the
 AddressBookParser in order to execute this command.
 
+The `IntuitivePromptManager` also has an `ArgumentManager`
+that determines how to keep track of the arguments for its respective intuitive command.
+
 `IntuitivePromptManager` has six public-access methods that allow the `Model` to communicate with it.
 They are the following:
 
+****
 * `IntuitivePromptManager#addArgument(input)`: takes in a string input and stores it as an argument
 * `IntuitivePromptManager#removeArgument()`: removes the latest stored argument(s)
 * `IntuitivePromptManager#getInstruction()`: retrieves the instruction or prompt to be shown to the user
@@ -429,6 +433,7 @@ command, called when all fields have been filled
 * `IntuitivePromptManager#isIntuitiveMode()`: checks if One Life is currently executing an intuitive command
 * `IntuitivePromptManager#areArgsAvailable()`: checks if there are any arguments still being stored in the
 `IntuitivePromptManager`
+****
 
 With the above operations in mind, below is an example usage scenario of how an intuitive command works at each step.
 We will be using the example of an intuitive `add` command.
@@ -446,11 +451,12 @@ Step 3. `LogicManager` executes the `IntuitiveEntryCommand`.
 in the `IntuitivePromptManager`.
 
 Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. Since the user's
-input is the `add` command word, the user's input is stored as a `commandWord` and the `IntuitivePromptManager`
-triggers it's intuitive mode.
+input is the `add` command word, the `IntuitivePromptManager` triggers it's intuitive mode - it creates the respective
+`ArgumentManager` (in this case it is an `AddArgumentManager`) and stores it in a variable called `argumentManager`.
 
 Step 5. `Model` then calls the `IntuitivePromptManager` to retrieve the next prompt to be shown to the user.
-A String instruction representing the prompt to be shown is returned by `IntuitivePromptManager` and `Model` then
+`IntuitivePromptManager` asks `argumentManager` to retrieve the correct instruction.
+This String instruction representing the prompt to be shown is then returned by `IntuitivePromptManager` and `Model` then
 proceeds to return this String instruction to the executing `IntuitiveEntryCommand`.
 
 Step 6. `IntuitiveEntryCommand` uses the String instruction to create a new `CommandResult`, which is then returned
@@ -458,7 +464,11 @@ to the `LogicManager` to be displayed to the user.
 
 The following sequence diagram describes the above process:
 
+.High level sequence diagram detailing interactions between `Logic` and `Model`
 image::IntuitiveCommandWordSequenceDiagram.png[width="800"]
+
+.Internal sequence diagram showing how `IntuitivePromptManager` interacts with `argumentManager`
+image::ArgumentManagerStartSequenceDiagram.png[width="800"]
 
 ===== Middle of Intuitive Command
 
@@ -475,14 +485,15 @@ command is already executing, the user's input is stored as an argument in the `
 The `currentArgIndex`, which allows the `IntuitivePromptManager` to determine the what field it should prompt for next
 is incremented accordingly.
 
+.How the `arguments` list in `IntuitivePromptManager` records arguments with `currentArgIndex`
 image::IntuitiveInternalDiagram.png[width="800"]
 
-Step 5-6. Remains the same.
+Step 5-6. Remains the same as above.
 
 ===== End of Intuitive Command
 Once all fields have been filled by the user, the system will exit intuitive mode as follows:
 
-Step 1-3. Remains the same. Take note that this is the last field that the user has to fill.
+Step 1-3. Remains the same as above. Take note that this is the last field that the user has to fill.
 
 Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. The input is
 stored as an argument in the `arguments` list. The `IntuitivePromptManager` detects that this is the last
@@ -502,6 +513,7 @@ the same as if the user entered the non-intuitive version of the command.
 
 The following sequence diagram describes Step 6 and onwards.
 
+.High level sequence diagram showing how arguments are retrieved at the end of the intuitive command
 image::IntuitiveEndSequenceDiagram.png[width="800"]
 
 ===== Going Back
@@ -522,6 +534,12 @@ as accordingly.
 Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
 `IntuitivePromptManager`. Execution continues normally as described in the above sections.
 
+.High level sequence diagram showing going back ability
+image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
+
+.Internal sequence digram showing going back ability
+image::ArgumentManagerBackSequenceDiagram.png[width="800"]
+
 ==== Supported Commands
 The following commands are supported by the Intuitive Command Prompt feature, and thus have an intuitive version:
 
@@ -529,38 +547,40 @@ The following commands are supported by the Intuitive Command Prompt feature, an
 * `delete`
 * `find`
 * `edit`
+* `schedule`
 
 
 // end::intuitivecommandprompt[]
 
 
-// tag::display doctor's availability
+// tag::displaydoctoravailability[]
 === Display doctor's current availability feature
 ==== Current implementation
 
-The display of each doctor's current availability is facilitated by `PersonCard`, `Doctor`, `AppointmentManager`.
+The display of each doctor's current availability is facilitated by `PersonProfilePage`, `Doctor`, `AppointmentManager`.
 Given below is an example usage scenario and how the information is generated and propagated to be displayed in the
-`PersonCard` at the final stage.
+`PersonProfilePage` at the final stage.
 
-Step 1. The user launches the application for the first time. The `MainWindow` will be initialized and construct a
-`PersonListPanel`.
+Step 1. The user launches the application for the first time. The `MainWindow` will be initialized.
 
-Step 2. The `PersonListPanel` will then construct a list of `PersonCard`.
+Step 2. The user then selects one of the doctors to view his/her profile via the `PersonProfilePage`.
 
-Step 3. Each `PersonCard` is associated with a person's particulars, be it a doctor or patient. In the event that
- this `PersonCard` belongs to a doctor, it will call the method `Doctor#currentAvailStatus` to get information on
- the doctor's current availability.
+Step 3. This then loads the `PersonProfilePage` that displays all of the person's particulars, be it a doctor or
+patient. In the event that this `PersonProfilePage` belongs to a doctor, it calls the method
+`Doctor#currentAvailStatus` to retrieve information on the doctor's current availability.
 
-Step 4. Upon calling the method `Doctor#currentAvailStatus`, a helper method in `AppointmentManager`, called
-`AppointmentManager#isAnyAppointmentOngoing` will be executed.
+Step 4. Next, upon calling the method `Doctor#currentAvailStatus`, a helper method in `AppointmentManager`, called
+`AppointmentManager#isAnyAppointmentOngoing` executes.
 
-Step 5. `AppointmentManager` will then get the current locale time from Java's `ZoneDateTime` class and compare the
+Step 5. `AppointmentManager` retrieves the current locale date and time from our `Date` and `Time` class and compare the
 current time with all the scheduled appointments that the doctor has, and determines if the doctor is currently
 available.
 
-Step 6. The status information generated in `AppointmentManager` will then be propagated back up to the `PersonCard`
-which then sets a badge to reflect the availability status of that doctor.
+Step 6. The status information generated in `AppointmentManager` is propagated back up to the
+`PersonProfilePage` which then sets a badge (available/busy) to reflect the availability status of that doctor.
 
+Step 7. As long as the user remains on the same `PersonProfilePage`, this method continues to run in the background,
+providing real time update of the doctor's availability at that point in time.
 
 The following activity diagram summarizes what happens when a user launches the application:
 
@@ -571,26 +591,27 @@ This section describes the pros and cons of the current and other alternate impl
 
 ===== Aspect: How to display each doctor's availability
 
-* **Alternative 1 (current choice):** A badge on each doctor's card display that shows his/her current availability.
+* **Alternative 1 (current choice):** A badge in each doctor's `PersonProfilePage` display that shows his/her current
+availability.
 ** Pros: Convenient for the user to refer to since the badge is always on the display.
-** Cons: Does not integrate any form of auto-updating nor is there any dedicated command to allow the user to refresh
-the information, thus the information provided can be outdated.
-* **Alternative 2:** A separate command that the user can call upon to look up the current availability of each doctor.
+** Cons: Limited to only checking and viewing the availability status of one doctor at a time, thus will not be able
+ to get a consolidated list/view of all doctors who are available or busy at the moment.
+* **Alternative 2:** A separate command that the user can call upon to look up the current availability of all doctors.
 ** Pros: Able to call this method repeatedly/when needed and will be provided with the latest information.
-** Cons: Have a separate command dedicated to this feature which may not be necessary and not as convenient as compared
- to having a badge that is on the display at all times. Also this adds on to the list of commands
- that the user has to get familiar with.
+** Cons: Need to have a separate command dedicated to this feature which may not be necessary and not as convenient as
+compared to having a badge that is on the display at all times. Also this adds on to the list of commands that the
+user has to get familiar with.
 
 ===== Aspect: How to update the status of each doctor's availability
 
-* **Alternative 1 (current choice):** Updates the status/badge only on launch of application and when there is a
-change in doctor's appointment.
-** Pros: Easy to implement.
-** Cons: Information is outdated aas it does not truly reflect the doctor's current availability.
-* **Alternative 2:** A function that will refresh the badge every few minutes.
-** Pros: Provides accurate information on the doctor's availability.
+* **Alternative 1 (current choice):** A function that will refresh the badge every few seconds.
+** Pros: Provides accurate information and real time update on the doctor's availability.
 ** Cons: Affects the performance of the application due to this function continuously running in the background.
-// end::display doctor's availability
+* **Alternative 2:** Updates the status/badge only on launch of application and only when there is a
+change in information stored in the database.
+** Pros: Implementation is easy.
+** Cons: Information is outdated as it does not truly reflect the doctor's current availability.
+// end::displaydoctoravailability[]
 
 // tag::updatecommand[]
 === Update command feature
@@ -658,7 +679,7 @@ The key operation implemented is `FindCommand#execute`.
 
 Given below is an example usage scenario and how the find command mechanism behaves at each step.
 
-Step 1. The user wants to find all `Person` with `Name` Alex by executing `find Alex`.
+Step 1. The user wants to find all `Person` with `Name` Alex by executing `find n/Alex`.
 
 Step 2. `FindCommandParser` will parse the input and verify that is it valid before returning a `PersonContainsKeywordsPredicate`, which is passed into `FindCommand`.
 
@@ -677,12 +698,12 @@ image::FindSequenceDiagram.png[width="800"]
 
 ===== Aspect: How to input search fields
 
-* **Alternative 1 (current choice):** Allow users to perform global search using any keywords.
-** Pros: Allows for a powerful search function by allowing the user to search through all `Person` attributes.
-** Cons: Users will not be able to filter the unwanted results.
-* **Alternative 2:** Allow the use of tags to specify certain fields if needed.
-** Pros: Allows for a more precise search.
-** Cons: Increased inconvenience of having to tag search fields.
+* **Alternative 1 (current choice):** Allow users to perform searches by specifying certain keywords of interest. (For example: `Name` : `n/`, `Phone`: `p/`)
+** Pros: Allows for a powerful and precise search function by providing the user the option to specify exactly which `Person` attributes are of interest.
+** Cons: It may be difficult for newer users to remember the shortcuts that represent the attributes of interest.
+* **Alternative 2:** Generalise the search function by searching through all fields and providing the most relevant information through predictive search.
+** Pros: An extremely powerful search function that is both simple to use and accurate.
+** Cons: It is incredibly difficult to implement such an algorithm without the use of machine-learning algorithms or an internet connection.
 // end::findcommand[]
 
 // tag::dataencryption[]

@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -13,6 +14,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.commons.events.ui.DisplayPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.doctor.Doctor;
@@ -26,6 +28,7 @@ import seedu.address.model.person.Person;
  * Panel containing the list of displayable attributes.
  */
 public class DisplayPanel extends UiPart<Region> {
+    private static Person personOnDisplay;
     private static final String FXML = "DisplayPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(DisplayPanel.class);
 
@@ -52,24 +55,43 @@ public class DisplayPanel extends UiPart<Region> {
         setEventHandlerForSelectionChangeEvent();
     }
 
-    /**
-     * Default setting for display panel upon start up of application.
-     */
-    public void showDefaultDisplayPanel() {
-        displayableAppointmentsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
-        displayableMedicalRecordsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
+    @Subscribe
+    private void handlePersonChangedEvent(PersonChangedEvent event) {
+        if (event.editedPerson == null) {
+            showDefaultDisplayPanel(); // if person is deleted or database has been cleared, show the default scene
+            return;
+        } else if (!event.originalPerson.equals(personOnDisplay)) {
+            return; // if person updated in the event is not related to this person being displayed on the UI
+        }
+        updateScene(event.editedPerson);
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person selectedPerson = event.getNewSelection();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        updateScene(selectedPerson);
+    }
 
-        if (selectedPerson instanceof Patient) {
-            ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) selectedPerson)
+    /**
+     * Default setting for display panel upon start up of application.
+     */
+    public void showDefaultDisplayPanel() {
+        personOnDisplay = null;
+        displayableAppointmentsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
+        displayableMedicalRecordsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
+    }
+
+    /**
+     * Helper method to update the UI display base on the details of the {@person}.
+     */
+    private void updateScene(Person updatedPerson) {
+        personOnDisplay = updatedPerson;
+        if (updatedPerson instanceof Patient) {
+            ArrayList<MedicalRecord> selectedPersonMedicalRecordLibrary = ((Patient) updatedPerson)
                     .getMedicalRecordLibrary();
             //Collections.reverse(selectedPersonMedicalRecordLibrary);
-            ArrayList<Appointment> selectedPersonAppointmentList = selectedPerson.getAppointmentList();
+            ArrayList<Appointment> selectedPersonAppointmentList = updatedPerson.getAppointmentList();
             ArrayList<DisplayableAttribute> displayableMedicalRecordsList = new ArrayList<>();
             ArrayList<DisplayableAttribute> displayableAppointmentsList = new ArrayList<>();
             for (MedicalRecord medicalRecord : selectedPersonMedicalRecordLibrary) {
@@ -84,8 +106,8 @@ public class DisplayPanel extends UiPart<Region> {
             setMedicalRecordsConnections(
                     new FilteredList<>(FXCollections.observableArrayList(displayableMedicalRecordsList)));
         } else {
-            assert selectedPerson instanceof Doctor;
-            ArrayList<Appointment> selectedPersonAppointmentList = selectedPerson.getAppointmentList();
+            assert updatedPerson instanceof Doctor;
+            ArrayList<Appointment> selectedPersonAppointmentList = updatedPerson.getAppointmentList();
             setAppointmentsConnections(
                     new FilteredList<>(FXCollections.observableArrayList(selectedPersonAppointmentList)));
             setMedicalRecordsConnections(
@@ -120,14 +142,16 @@ public class DisplayPanel extends UiPart<Region> {
     class DisplayableListViewCell extends ListCell<DisplayableAttribute> {
         @Override
         protected void updateItem(DisplayableAttribute displayableAttribute, boolean empty) {
-            super.updateItem(displayableAttribute, empty);
+            Platform.runLater(()-> {
+                super.updateItem(displayableAttribute, empty);
 
-            if (empty || displayableAttribute == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(new DisplayableAttributeCard(displayableAttribute, getIndex() + 1).getRoot());
-            }
+                if (empty || displayableAttribute == null) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    setGraphic(new DisplayableAttributeCard(displayableAttribute, getIndex() + 1).getRoot());
+                }
+            });
         }
     }
 }
