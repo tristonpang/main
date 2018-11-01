@@ -8,15 +8,17 @@
 
 ---
 
-=== Overview
+=== Introduction
 
-One Life is a desktop medical management application used for storing and displaying data related to patients and doctors.
-The user interacts with it using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX.
-It is written in Java, and has about 10 kLoC.
+This project portfolio details my key contributions to the project One Life and serves to document the key features I implemented.
 
-=== Summary of contributions
+One Life is a desktop application designed by me and other students from the National University of Singapore (NUS) as part of a requirement for our software engineering module under the given constraints that the user must interact with it using a Command Line Interface(CLI).
 
-* *Major enhancement*: added *the ability to update and display medical records*
+One life is used for storing, updating, and displaying data related to patients and doctors. The user interacts with it using a CLI, and it has a Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+=== Summary of Contributions
+
+* *Major enhancement*: added *the ability to update and display medical records.*
 ** _What it does:_
 *** Enables the user to update the current medical record history of a specified patient on a specified date.
 *** Checks if the given information such as the date, diagnosis or treatment are valid.
@@ -60,10 +62,3 @@ include::../UserGuide.adoc[tag=update]
 |===
 
 include::../DeveloperGuide.adoc[tag=updatecommand]
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

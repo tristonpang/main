@@ -633,6 +633,7 @@ Step 7. The existing `Patient` that was specified is updated to the newly create
 
 The following sequence diagram shows how the update medical record operation works:
 
+.Sequence diagram for an update command
 image::UpdateSequenceDiagram.png[width="800"]
 
 ==== Design considerations
@@ -641,11 +642,11 @@ This section describes the pros and cons of the current and other alternate impl
 ===== Aspect: How to store a patient's medical record library
 
 * **Alternative 1 (current choice):** Use an ArrayList of `MedicalRecord` as the patient's medical record library.
-** Pros: Easy to access the most recent record by retrieving the first `MedicalRecord` in the ArrayList.
-** Cons: Takes longer to retrieve the latest `MedicalRecord` before a specified date as each `MedicalRecord` has to be checked sequentially until the last `MedicalRecord` before the specified date is found.
+** Pros: Accessing the most recent record by retrieving the first `MedicalRecord` in the ArrayList is easy.
+** Cons: Retrieving the latest `MedicalRecord` before a specified date takes longer as each `MedicalRecord` has to be checked sequentially until the last `MedicalRecord` before the specified date is found.
 * **Alternative 2:** Use a different data structure like a TreeMap of `MedicalRecord` as the value and date for the key as the patient's medical record library.
 ** Pros: Retrieving the latest `MedicalRecord` before a specified date is made convenient by  just using the floor function already defined in the TreeMap API.
-** Cons: May be difficult to maintain the TreeSet for more complicated tasks like editing `MedicalRecord` since a new `MedicalRecord` has to be created and reinserted into the same location in the TreeSet.
+** Cons: Maintaining the TreeSet for more complicated tasks like editing `MedicalRecord` may be difficult since a new `MedicalRecord` has to be created and reinserted into the same location in the TreeSet.
 // end::updatecommand[]
 
 // tag::findcommand[]
