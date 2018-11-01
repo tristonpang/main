@@ -417,7 +417,7 @@ Example of the intuitive add command prompting:
 image::IntuitiveCommandPromptStartUserScreenshot.png[width="600"]
 
 .Entering an input
-image::IntuitiveCommandPromptInputUserScreenshot.png[width="600"]
+image::IntuitiveNextInputUserScreenshot.png[width="600"]
 
 //end::intuitivecommandprompt[]
 
