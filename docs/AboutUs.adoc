@@ -40,7 +40,7 @@ Responsibilities: Integration
 
 === Ng Kang Tze
 image::ngkangtze.png[width="150", align="left"]
-{empty}[https://github.com/ngkangtze[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/ngkangtze[github]] [<<ngkangtze#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Code Quality, JavaFX expert

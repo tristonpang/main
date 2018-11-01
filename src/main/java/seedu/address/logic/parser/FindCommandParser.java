@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         // TODO: Detect when invalid prefixes are given as arguments and throw an error.
         ArrayList<Prefix> prefixList = new ArrayList<>(Arrays.asList(PREFIX_NAME, PREFIX_NRIC, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT, PREFIX_MEDICAL_RECORD));
+                PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_ROLE, PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT,
+                PREFIX_MEDICAL_RECORD));
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixList.toArray(new Prefix[0]));
         Map<Prefix, List<String>> personSearchKeywords = new HashMap<>();
 

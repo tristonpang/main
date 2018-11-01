@@ -114,6 +114,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::find[]
 === Locating person by any attribute: `find`
 
 Finds people with the keywords specified by the user within specific fields
@@ -141,6 +142,7 @@ Examples:
 Displays `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
 * `find n/Tan a/Kang` +
 Displays `Nelvin Tan` and all `Person` whose `Address` is `Choa Chu Kang`.
+// end::find[]
 
 === Deleting a person : `delete`
 
@@ -283,12 +285,12 @@ Schedules a patient/doctor for a medical appointment at a specific date and time
 Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME di/DOCTOR_NRIC pn/PATIENT_NAME pi/PATIENT_NRIC`
 
 ****
-* Date is formatted as DD.MM.YYYY and is dot separated e.g.  `7.11.1996` is the 7th of November 1996
-* Time uses the 24-hour clock time e.g. `1300` is 1pm
-* Doctor name is the doctor's full name e.g. `John Doe`
-* Doctor nric is the doctor's nric e.g. `S1234567B`
-* Patient name is the patient's full name e.g. `Kim Tan`
-* Patient nric is the patient's nric e.g. `S1234567A`
+* Date is formatted as DD.MM.YYYY and is dot separated. e.g.  `7.11.1996` is the 7th of November 1996
+* Time uses the 24-hour clock time. e.g. `1300` is 1pm
+* Doctor name is the doctor's full name. e.g. `John Doe`
+* Doctor nric is the doctor's nric. e.g. `S1234567B`
+* Patient name is the patient's full name. e.g. `Kim Tan`
+* Patient nric is the patient's nric. e.g. `S1234567A`
 ****
 
 Examples:
@@ -365,8 +367,8 @@ Format: `exit`
 OneLife data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
 
+// tag::intuitivecommandprompt[]
 === Intuitive command prompting
 
 Provides a more natural way of entering commands into OneLife. OneLife will prompt the user for the next required
@@ -378,6 +380,7 @@ Commands that support intuitive prompting:
 * `delete`
 * `edit`
 * `find`
+* `schedule`
 ****
 
 Format: `COMMAND`
@@ -388,20 +391,16 @@ Type `//` if the field is to be left blank. +
 Press `ESC` to cancel the currently executing command.
 
 Example of the intuitive add command prompting:
-```
-add
 
-You entered: add
-Is this a patient or a doctor? (Please enter patient or doctor)
+.Triggering the intuitive command prompt
+image::IntuitiveCommandPromptStartUserScreenshot.png[width="600"]
 
-patient
+.Entering an input
+image::IntuitiveCommandPromptInputUserScreenshot.png[width="600"]
 
-You entered: patient
-Please enter person's name
+//end::intuitivecommandprompt[]
 
-...
-```
-
+// tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
