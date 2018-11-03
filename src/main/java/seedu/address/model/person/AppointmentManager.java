@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -91,6 +92,42 @@ public class AppointmentManager {
             }
         }
         return false;
+    }
+
+    /**
+     *
+     * @param patientNric Nric of patient.
+     * @param appointmentList Appointment List to be processed.
+     * @return a new appointment list where all the appointments
+     * with a patient that has the same Nric as input will be removed.
+     */
+    public static ArrayList<Appointment> removeAppointmentsOfPatient(Nric patientNric,
+                                                                     ArrayList<Appointment> appointmentList) {
+        ArrayList<Appointment> resultList = new ArrayList<>();
+        for (Appointment appt : appointmentList) {
+            if (!appt.getPatientNric().equals(patientNric)) {
+                resultList.add(appt);
+            }
+        }
+        return resultList;
+    }
+
+    /**
+     *
+     * @param doctorNric Nric of doctor.
+     * @param appointmentList Appointment List to be processed.
+     * @return a new appointment list where all the appointments
+     * with a doctor that has the same Nric as input will be removed.
+     */
+    public static ArrayList<Appointment> removeAppointmentsOfDoctor(Nric doctorNric,
+                                                                    ArrayList<Appointment> appointmentList) {
+        ArrayList<Appointment> resultList = new ArrayList<>();
+        for (Appointment appt : appointmentList) {
+            if (!appt.getDoctorNric().equals(doctorNric)) {
+                resultList.add(appt);
+            }
+        }
+        return resultList;
     }
 
     /**

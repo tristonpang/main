@@ -149,4 +149,44 @@ public class AppointmentTest {
         // Those appointments are in all in the past.
         assertFalse(AppointmentManager.isAnyAppointmentOngoing(appointments));
     }
+
+    @Test
+    public void removingAppointmentByDoctorNricTest() {
+        Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt3 = new Appointment("22.11.2018", "1300", "1330",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt4 = new Appointment("22.11.2018", "1330", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        appointments.add(appt1);
+        appointments.add(appt2);
+        appointments.add(appt3);
+        appointments.add(appt4);
+        ArrayList<Appointment> resultAppointments =
+                AppointmentManager.removeAppointmentsOfDoctor(new Nric("S1234567H"), appointments);
+        assertTrue(resultAppointments.isEmpty());
+    }
+
+    @Test
+    public void removingAppointmentByPatientNricTest() {
+        Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt3 = new Appointment("22.11.2018", "1300", "1330",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt4 = new Appointment("22.11.2018", "1330", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        appointments.add(appt1);
+        appointments.add(appt2);
+        appointments.add(appt3);
+        appointments.add(appt4);
+        ArrayList<Appointment> resultAppointments =
+                AppointmentManager.removeAppointmentsOfPatient(new Nric("S1234567A"), appointments);
+        assertTrue(resultAppointments.isEmpty());
+    }
 }
