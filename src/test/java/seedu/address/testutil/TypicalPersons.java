@@ -53,9 +53,9 @@ public class TypicalPersons {
             .withAddress("little tokyo").build();
     public static final Doctor GEORGE = new DoctorBuilder().withName("George Best").withNric("s5234599a")
             .withPhone("9482442").withMedicalDepartment("Neurology").withEmail("anna@example.com")
-            .withAddress("4th street")
-            .withAppointment("23.11.2018,1300,1400,Priscilia,S1234567B,George Best,s5234599a")
-            .withAppointments("23.11.2018,1300,1400,Priscilia,S1234567B,George Best,s5234599a").build();
+            .withAddress("4th street").build();
+//            .withAppointment("23.11.2018,1300,1400,Priscilia,S1234567B,George Best,s5234599a")
+//            .withAppointments("23.11.2018,1300,1400,Priscilia,S1234567B,George Best,s5234599a").build();
 
     // Manually added
     public static final Patient HOON = new PatientBuilder().withName("Hoon Meier").withPhone("8482424")
