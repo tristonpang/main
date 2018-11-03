@@ -53,8 +53,8 @@ public class DeleteCommand extends Command {
             for (Appointment appointment : personToDelete.getAppointmentList()) {
                 Nric doctorNric = appointment.getDoctorNric();
                 Person affectedPersonToEdit = model.getPerson(doctorNric).get();
-                ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit.
-                        getAppointmentList());
+                ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit
+                        .getAppointmentList());
                 affectedAppointmentList = AppointmentManager
                         .removeAppointmentsOfPatient(personToDelete.getNric(), affectedAppointmentList);
                 Person affectedEditedPerson = new Doctor(
@@ -68,12 +68,12 @@ public class DeleteCommand extends Command {
             for (Appointment appointment : personToDelete.getAppointmentList()) {
                 Nric patientNric = appointment.getPatientNric();
                 Person affectedPersonToEdit = model.getPerson(patientNric).get();
-                ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit.
-                        getAppointmentList());
+                ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit
+                        .getAppointmentList());
                 ArrayList<MedicalRecord> newMedicalRecordLibrary =
                         new ArrayList<>(((Patient) affectedPersonToEdit).getMedicalRecordLibrary());
-                affectedAppointmentList = AppointmentManager.
-                        removeAppointmentsOfDoctor(personToDelete.getNric(), affectedAppointmentList);
+                affectedAppointmentList = AppointmentManager
+                        .removeAppointmentsOfDoctor(personToDelete.getNric(), affectedAppointmentList);
                 Person affectedEditedPerson = new Patient(
                         affectedPersonToEdit.getName(), affectedPersonToEdit.getNric(),
                         affectedPersonToEdit.getPhone(), affectedPersonToEdit.getEmail(),

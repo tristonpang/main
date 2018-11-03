@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
