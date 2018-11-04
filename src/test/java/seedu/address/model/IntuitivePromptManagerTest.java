@@ -16,12 +16,15 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.argumentmanagers.AddArgumentManager;
 import seedu.address.model.argumentmanagers.EditArgumentManager;
+import seedu.address.model.argumentmanagers.FindArgumentManager;
 import seedu.address.model.person.Role;
 
 public class IntuitivePromptManagerTest {
@@ -63,6 +66,17 @@ public class IntuitivePromptManagerTest {
         thrown.expectMessage(Role.MESSAGE_ROLE_CONSTRAINTS
                 + "\n" + AddArgumentManager.ROLE_INSTRUCTION);
         intuitivePromptManager.addArgument("!@#$%");
+    }
+
+    @Test
+    public void addArgument_findCommandWithDuplicateIndex_throwsCommandException() throws Exception {
+        intuitivePromptManager.addArgument(FindCommand.COMMAND_WORD);
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(String.format(FindArgumentManager.FIND_INVALID_FIELDS_MESSAGE, 1, 6)
+                + "\n" + FindArgumentManager.FIND_SEARCH_FIELDS_INSTRUCTION);
+        intuitivePromptManager.addArgument("3 3");
+
     }
 
     /*
@@ -177,6 +191,34 @@ public class IntuitivePromptManagerTest {
         assertFalse(intuitivePromptManager.areArgsAvailable());
     }
 
+    @Test
+    public void retrieveArguments_findPerson_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(FindCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("1 2");
+        intuitivePromptManager.addArgument("ang");
+        intuitivePromptManager.addArgument("Bob,Charlotte");
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, "find ang n/Bob n/Charlotte");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+    }
+
+    @Test
+    public void retrieveArguments_findWithNonAscendingIndexFields_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(FindCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("5 6 2");
+        intuitivePromptManager.addArgument("Bob,Charlotte");
+        intuitivePromptManager.addArgument("ang");
+        intuitivePromptManager.addArgument("friend,family");
+
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, "find n/Bob n/Charlotte a/ang t/friend t/family");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+    }
+
 
     /*
     Instruction Retrieval Tests
@@ -206,6 +248,8 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.removeArgument();
         assertEquals(intuitivePromptManager.getInstruction(), EditArgumentManager.EDIT_TARGET_INSTRUCTION);
     }
+
+
 
 
 }

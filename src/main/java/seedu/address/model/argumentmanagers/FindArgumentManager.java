@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.util.StringUtil;
@@ -37,7 +39,7 @@ public class FindArgumentManager extends ArgumentManager {
             + "separated only by commas";
 
     public static final String FIND_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
-            + "from %1$s to %2$s";
+            + "from %1$s to %2$s, and cannot be repeated";
 
     private static final int FIND_MAX_ARGUMENTS = 7;
     private static final int FIND_SEARCH_FIELDS_INDEX = 0;
@@ -51,10 +53,23 @@ public class FindArgumentManager extends ArgumentManager {
 
     @Override
     public int addArgumentForCommand(List<String> arguments, int argumentIndex, String userInput) {
-        arguments.add(userInput);
+        //sort the selected indexes
+        if (argumentIndex == FIND_SEARCH_FIELDS_INDEX) {
+            String[] rawIndexes = userInput.split(" ");
+            Arrays.sort(rawIndexes);
+            String sortedIndexes = "";
+            for (String index : rawIndexes) {
+                sortedIndexes += index;
+                sortedIndexes += " ";
+            }
+            sortedIndexes = sortedIndexes.trim();
+            arguments.add(sortedIndexes);
+        } else {
+            arguments.add(userInput);
+        }
 
+        //all remaining unselected fields are empty
         if (arguments.get(FIND_SEARCH_FIELDS_INDEX).isEmpty()) {
-            //all remaining unselected fields are empty
             for (int index = argumentIndex + 1; index < FIND_MAX_ARGUMENTS; index++) {
                 arguments.add("");
             }
@@ -195,11 +210,16 @@ public class FindArgumentManager extends ArgumentManager {
         switch (argumentIndex) {
 
         case FIND_SEARCH_FIELDS_INDEX:
+            String appearedValues = "";
             for (String index : userInput.split(" ")) {
                 if (!StringUtil.isNonZeroUnsignedInteger(index)
                         || Integer.valueOf(index) > FIND_TAGS_INDEX) {
                     return false;
                 }
+                if (appearedValues.contains(index)) {
+                    return false;
+                }
+                appearedValues += index;
             }
             // Fallthrough
 
