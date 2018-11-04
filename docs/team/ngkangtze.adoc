@@ -20,7 +20,7 @@ It is written in Java, and has about 10 kLoC.
 
 * *Major enhancement*: Enhanced *the ability to find `Person` with selected attributes* instead of only with their `Name`.
 ** What it does: This feature allows the user to find all `Person` containing specified keywords. Users may combine multiple keywords from different fields to increase the search accuracy.
-** Justification: This feature improves the product significantly because it reduces the amount of time needed to find `Person` and perform other operations on their information fields.
+** Justification: This feature improves the product significantly because it reduces the amount of time needed to find all relevant `Person` and perform other operations on their information fields.
 ** Highlights: This enhancement was deceptively challenging. Even though it builds upon existing procedures, a large amount of modification was necessary to ensure that users are able to enter the arguments in any preferred order.
 
 * *Minor enhancement*: Modified the `find` command to reject invalid input and prompt the user for proper input using a format guide.
