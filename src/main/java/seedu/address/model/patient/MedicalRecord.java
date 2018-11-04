@@ -18,6 +18,8 @@ public class MedicalRecord extends DisplayableAttribute {
     public static final String MESSAGE_MEDICAL_RECORD_CONSTRAINTS =
             "Person medical record can take any values, and it should not be blank";
 
+    public static final MedicalRecord DEFAULT_MEDICAL_RECORD = new MedicalRecord("", "", "", "");
+
     public final String value;
     public final Date date;
     public final Diagnosis diagnosis;
