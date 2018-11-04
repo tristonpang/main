@@ -352,11 +352,12 @@ image::DisplayMedicalRecords.png[width="600"]
 // tag::update[]
 === Updating medical records of patients : `update`
 
-Adds a new medical record for the patient as the most updated record using the current date as date of record. +
+Adds a new medical record for the patient as the most updated record using the specified date as date of record. +
 Format: `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT [c/COMMENTS]`
 
 ****
-* The date is formatted as DD.MM.YYYY and is dot separated e.g.  `7.11.1996` is the 7th of November 1996.
+* The date is formatted as DD.MM.YYYY and is dot separated e.g.  `11.1.2019` is the 11th of January 2019.
+* The date cannot be in the past.
 * The index *must be a positive integer* `1, 2, 3, ...`
 * Comments are optional.
 ****
