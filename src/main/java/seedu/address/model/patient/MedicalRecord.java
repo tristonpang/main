@@ -64,6 +64,11 @@ public class MedicalRecord extends DisplayableAttribute {
         return this.value != null;
     }
 
+    /**
+     * Checks if the user has input invalid prefix as a value for a field.
+     * @param value the value of a field.
+     * @return true if an invalid prefix is used in a value for a field. Otherwise return false.
+     */
     public static boolean hasInvalidPrefix(String value) {
         return value.contains("Diagnosis:")
                 || value.contains("Treatment:")
@@ -75,7 +80,7 @@ public class MedicalRecord extends DisplayableAttribute {
             return Date.getFailureReason(date.toString());
         } else if (!hasValidDiagnosis()) {
             return diagnosis.getFailureReason();
-        } else if (!hasValidTreatment()){
+        } else if (!hasValidTreatment()) {
             return treatment.getFailureReason();
         } else if (!hasValidComments()) {
             return MESSAGE_INVALID_PREFIX_USED;
