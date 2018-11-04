@@ -30,8 +30,11 @@ public class Diagnosis {
     }
 
     public String getFailureReason() {
-        assert(!isValid());
-        return MESSAGE_DIAGNOSIS_CONSTRAINTS;
+        if (!isValid()) {
+            return MESSAGE_DIAGNOSIS_CONSTRAINTS;
+        } else {
+            return "Diagnosis is valid";
+        }
     }
 
     @Override
