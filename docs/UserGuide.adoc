@@ -528,16 +528,36 @@ Format: `COMMAND`
 
 [TIP]
 Type `/bk` to re-enter previous field. +
-Type `//` if the field is to be left blank. +
+Type `//` if the field is to be left blank (only available for optional fields). +
 Press `ESC` to cancel the currently executing command.
 
-Example of the intuitive add command prompting:
+Examples:
 
-.Triggering the intuitive command prompt
-image::IntuitiveCommandPromptStartUserScreenshot.png[width="600"]
+* `add` +
+Starts an intuitive `add` command.
+This triggers the intuitive command prompt, and One Life will begin to guide you through the command with instructions, as shown in the figure below:
+
+.Starting the intuitive `add` command
+image::StartIntuitiveCommand.png[width="600"]
+
+* `patient` +
+Specifies that a patient is to be added to the intuitive command prompt. The intuitive command prompt then asks for the next input,
+in this case the patient's name, as shown in the figure below:
 
 .Entering an input
-image::IntuitiveNextInputUserScreenshot.png[width="600"]
+image::NextIntuitiveInput.png[width="600"]
+
+* `/bk` +
+Goes back to the previous field. A new input can be reentered for this field, as shown in the figure below:
+
+.Going back to the previous field
+image::BackIntuitive.png[width="600"]
+
+* `ESC` +
+Cancels the intuitive command. This clears the command box and exits the intuitive command, allowing for normal operation again, as shown in the figure below:
+
+.Cancelling an intuitive command
+image::ExitIntuitive.png[width="600"]
 
 //end::intuitivecommandprompt[]
 
