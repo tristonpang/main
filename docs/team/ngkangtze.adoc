@@ -32,12 +32,15 @@ It is written in Java, and has about 10 kLoC.
 ** Project management:
 *** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub
 *** Set up Travis and AppVeyor badge for tracking of project build. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/commit/e5ee2bc09478cd85f5d867e9c4b1f6fc1a5a710d[#49])
+** Enhancements to existing features:
+*** Fixed bugs arising from modification of the GUI. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/183[#183])
 ** Documentation:
 *** Modified README, AboutUs and ContactUs to match project specifications and team information. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/36[#36])
 *** Modified build.gradle to reflect our project and removed elements of AddressBook-Level4 from the documentation website. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/150[#150], https://github.com/CS2103-AY1819S1-W16-3/main/pull/153/commits[#153])
 ** Community:
-*** Reviewed pull requests (with non-trivial review comments):
+*** Reviewed pull requests (with non-trivial review comments).
 (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/128[#128])
+*** Reviewed and addressed raised issues. (Issue https://github.com/CS2103-AY1819S1-W16-3/main/issues/170[#170], https://github.com/CS2103-AY1819S1-W16-3/main/issues/174[#174])
 
 == Contributions to the User Guide
 
