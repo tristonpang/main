@@ -150,11 +150,11 @@ Global Find is a search on all attributes of all `Person` in the database. +
 
 It is performed when:
 
-* no `Prefix` is included in the input.
+* no `Prefix` is included in the input, or when
 * keywords are included before the first valid `Prefix`.
 
 [NOTE]
-When performing Global Find with more than one separate keyword, users can simply separate them using a space. The Find Command will interpret the input as separate words to be searched globally.
+When performing Global Find with more than one separate keyword, users can simply separate them using a `[SPACE]`. The Find Command will interpret the input as separate words to be searched globally.
 
 Examples:
 
@@ -182,16 +182,17 @@ Specific Find is a search on attributes specified by the user. (i.e. `Name`, `Ph
 It is performed when a `Prefix` is specified in the input field. +
 Below is a list of all searchable attributes and their corresponding `Prefix`:
 
-| Attribute          | Prefix |
-|--------------------|--------|
-| Name               | n/     |
-| NRIC               | ic/    |
-| Phone              | p/     |
-| Address            | a/     |
-| Role               | r/     |
-| Tag                | t/     |
-| Medical Department | md/    |
-| Medical Record     | mr/    |
+|===
+| *Attribute*        | *Prefix*
+| Name               | `n/`
+| NRIC               | `ic/`
+| Phone              | `p/`
+| Address            | `a/`
+| Role               | `r/`
+| Tag                | `t/`
+| Medical Department | `md/`
+| Medical Record     | `mr/`
+|===
 
 [WARNING]
 Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in the input. A command like `find n/[BLANK]` is not a valid input.
@@ -220,7 +221,7 @@ e.g. `find doctor nelvin` will cause all `Doctor` and `Nelvin Tan` to be display
 * In Specific Find, the specified attribute of the `Person` must contain the searched keyword to be displayed.
 e.g. `find n/Gary Goh` will display `Gary Goh` but not `Kenneth Goh`
 * In the event that the user wants to specify more than one keyword to be seperately searched in a specified attribute,
-for example if the user wants to find all `Person` with `Name` `Kang Tze` or `Triston`, he must seperate the names using two
+for example if the user wants to find all `Person` with `Name` `Kang Tze` or `Triston`, he must separate the names using two
 `Name` `Prefix`. e.g. `find n/Kang Tze n/Triston` displays `Ng Kang Tze` and `Triston Pang`.
 * An illustration of a more complicated `find` command is `find friends n/Kang Tze n/Triston r/doctor`, which displays
 all `Person` with `friends` in their attributes, has `name` containing either `Kang Tze` or `Triston`, and whom is a `Doctor`.
@@ -232,27 +233,28 @@ ICP mode provides a more natural way of entering commands into OneLife. More inf
 
 The Find Command is supported by ICP in the following way:
 
-* when the command word `find` is given without any other input, ICP mode is triggered.
+* When the command word `find` is given without any other input, ICP mode is triggered.
 
-After entering into ICP Mode, the user will be prompted to select the attributes to be searched by entering the indexes
+After entering ICP Mode, the user will be prompted to select the attributes to be searched by entering the indexes
 corresponding to the attributes. +
 Below is a list of all searchable attributes and their corresponding indexes.
 
-| Attribute                           | Prefix |
-|-------------------------------------|--------|
-| Global                              | 1      |
-| Name                                | 2      |
-| NRIC                                | 3      |
-| Phone                               | 4      |
-| Address                             | 5      |
-| Role                                | 6      |
-| Tag                                 | 7      |
-| Medical Department (coming in v1.4) | 8      |
-| Medical Record (coming in v1.4)     | 9      |
+|===
+| *Attribute*                         | *Index*
+| Global                              | `1`
+| Name                                | `2`
+| NRIC                                | `3`
+| Phone                               | `4`
+| Address                             | `5`
+| Role                                | `6`
+| Tag                                 | `7`
+| Medical Department (coming in v1.4) | `8`
+| Medical Record (coming in v1.4)     | `9`
+|===
 
-Lastly, the user will keywords to be searched under the attributes, in increasing numerical order.
+Lastly, the user will enter the corresponding keywords to be searched under each attribute, in increasing order of their indexes.
 
-The images below illustrate the utilisation of Find Command to execute the command `find doctor n/bernice` which means
+The images below illustrate the utilisation of Find Command to execute the command `find doctor n/bernice`, which means
 `find` all `Person` with `doctor` in their attributes and whose name contains `bernice`, under ICP mode:
 
 .ICP Mode for Find Command Step 1
