@@ -138,24 +138,60 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 // tag::find[]
 === Locating person by any attribute: `find`
 
-Finds people with the keywords specified by the user within specific fields
-(i.e. `Name`, `Phone`, `Address`, `Tag` etc). +
+There are two types of Find Commands: Global Find and Specific Find, which can be used in conjunction with one another. +
 Format: `find [PREFIX] KEYWORDS [NEXT_PREFIX] [MORE_KEYWORDS]`
 
 [NOTE]
-If no `Prefix` is given, the search will be performed on all attributes. This means that the user can perform both
-a global search and a specific search by entering keywords directly after `find` but before the first `Prefix`.
+In order for a `Person` to show up on a `find`, the `Person` must match all attributes in the input. +
+(i.e. `find n/alex r/doctor` will show all `Doctor` named `Alex`. If another `Alex` is not a `Doctor`, he will not be shown.)
 
-****
-* The search is case-insensitive. e.g. `nelvin` will match `Nelvin`.
-* When performing a global search, keywords are seperated by whitespace and any `Person` whose attributes contain any
-keyword will be returned. e.g. `find kang ken` will display `Kang Tze`, `Kenneth` and all `Person` with `Address` `Choa Chu Kang`.
-* When performing specific search, `Person` must contain the searched keywords exactly in order to be displayed.
-e.g `find n/Gary Goh` will display `Gary Goh Yipeng` but not `Kenneth Goh Jun Teck`.
-* When performing the `find` command with more than one search field, all `Person` matching at least one search field
-will be displayed. e.g. `find n/Gary a/Kang` will display `Gary Goh Yipeng` and all `Person` whose `Address` is
-`Choa Chu Kang`.
-****
+==== Global Find
+Global Find is a search on all attributes of all `Person` in the database. +
+
+It is performed when:
+
+* no `Prefix` is included in the input.
+* keywords are included before the first valid `Prefix`.
+
+[NOTE]
+When performing Global Find with more than one separate keyword, users can simply separate them using a space. The Find Command will interpret the input as separate words to be searched globally.
+
+Examples:
+
+* `find kang` +
+Displays all `Person` with `kang` in any of their attributes.
+* `find kang r/doctor` +
+Displays all `Person` with `kang` in any of their attributes and whom is a `Doctor`.
+* `find alex doctor` +
+Displays all `Person` with `alex` or `doctor` in any of their attributes.
+
+The images below illustrate the utilisation of Global Find:
+
+.Global Find Command
+image::FindCommandUserGuideGlobal1.png[width="600"]
+
+.Global Find Command with Specified Find Command
+image::FindCommandUserGuideGlobal2.png[width="600"]
+
+.Global Find Command with Multiple Keywords
+image::FindCommandUserGuideGlobal3.png[width="600"]
+
+==== Specific Find
+Specific Find is a search on attributes specified by the user. (i.e. `Name`, `Phone` etc).
+
+It is performed when a `Prefix` is specified in the input field. +
+Below is a list of all searchable attributes and their corresponding `Prefix`:
+
+| Attribute          | Prefix |
+|--------------------|--------|
+| Name               | n/     |
+| NRIC               | ic/    |
+| Phone              | p/     |
+| Address            | a/     |
+| Role               | r/     |
+| Tag                | t/     |
+| Medical Department | md/    |
+| Medical Record     | mr/    |
 
 [WARNING]
 Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in the input. A command like `find n/[BLANK]` is not a valid input.
@@ -163,19 +199,79 @@ Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in
 Examples:
 
 * `find t/friends` +
-Displays all `Person` with `Tag`: `friends`.
+Displays all `Person` with the `Tag` labelled `friends`.
 * `find t/friends r/doctor` +
-Displays all `Person` whom have a `Tag` labelled `friends` and whose `Role` is `Doctor`.
-* The images below illustrate the above-mentioned examples.
+Displays all `Person` with the `Tag` labelled `friends` and whose `Role` is `Doctor`.
+* The images below illustrate the utilisation of Specific Find.
 
-.Find command example
-image::FindCommandStep1.png[width="600"]
+.Specific Find Command
+image::FindCommandUserGuideSpecific1.png[width="600"]
 
-.More specific find command example
-image::FindCommandStep2.png[width="600"]
+.Specific Find Command with Additional Prefixes
+image::FindCommandUserGuideSpecific2.png[width="600"]
 
-.Error in input when trying to initialise find command
-image::FindCommandError.png[width="600"]
+.Invalid Input for Specific Find Command
+image::FindCommandUserGuideError.png[width="600"]
+
+****
+* Find is case-insensitive. e.g. `nelvin` will match `Nelvin`.
+* In Global Find, `Person` containing any of the given keywords in any of his/her attributes will be displayed.
+e.g. `find doctor nelvin` will cause all `Doctor` and `Nelvin Tan` to be displayed.
+* In Specific Find, the specified attribute of the `Person` must contain the searched keyword to be displayed.
+e.g. `find n/Gary Goh` will display `Gary Goh` but not `Kenneth Goh`
+* In the event that the user wants to specify more than one keyword to be seperately searched in a specified attribute,
+for example if the user wants to find all `Person` with `Name` `Kang Tze` or `Triston`, he must seperate the names using two
+`Name` `Prefix`. e.g. `find n/Kang Tze n/Triston` displays `Ng Kang Tze` and `Triston Pang`.
+* An illustration of a more complicated `find` command is `find friends n/Kang Tze n/Triston r/doctor`, which displays
+all `Person` with `friends` in their attributes, has `name` containing either `Kang Tze` or `Triston`, and whom is a `Doctor`.
+****
+
+==== Intuitive Command Prompt (ICP) Support
+
+ICP mode provides a more natural way of entering commands into OneLife. More information can be found under 3.18: Intuitive command prompting.
+
+The Find Command is supported by ICP in the following way:
+
+* when the command word `find` is given without any other input, ICP mode is triggered.
+
+After entering into ICP Mode, the user will be prompted to select the attributes to be searched by entering the indexes
+corresponding to the attributes. +
+Below is a list of all searchable attributes and their corresponding indexes.
+
+| Attribute                           | Prefix |
+|-------------------------------------|--------|
+| Global                              | 1      |
+| Name                                | 2      |
+| NRIC                                | 3      |
+| Phone                               | 4      |
+| Address                             | 5      |
+| Role                                | 6      |
+| Tag                                 | 7      |
+| Medical Department (coming in v1.4) | 8      |
+| Medical Record (coming in v1.4)     | 9      |
+
+Lastly, the user will keywords to be searched under the attributes, in increasing numerical order.
+
+The images below illustrate the utilisation of Find Command to execute the command `find doctor n/bernice` which means
+`find` all `Person` with `doctor` in their attributes and whose name contains `bernice`, under ICP mode:
+
+.ICP Mode for Find Command Step 1
+image::FindCommandUserGuideIcp1.png[width="600"]
+
+.ICP Mode for Find Command Step 2
+image::FindCommandUserGuideIcp2.png[width="600"]
+
+.ICP Mode for Find Command Step 3
+image::FindCommandUserGuideIcp3.png[width="600"]
+
+.ICP Mode for Find Command Step 4
+image::FindCommandUserGuideIcp4.png[width="600"]
+
+[NOTE]
+Under ICP Mode, for Specific Find, keywords separated by a comma are considered to be under multiple identical `Prefix`.
+For example, entering `find n/alex n/bernice` under Normal Mode is identical to entering `alex, bernice` when prompted
+for `Name` keywords under ICP Mode.
+
 // end::find[]
 
 === Deleting a person : `delete`
