@@ -391,6 +391,14 @@ This might confuse the user.
 A new appointment is added to the back of the ArrayList.
 ** Pros: It is simple to check for appointment clashes.
 To check for appointment clashes, just loop through the ArrayList and check the new appointment against every other appointment.
+The simplicity is shown in code below.
+[source,java]
+public static boolean isClash(Appointment appointment, Appointment otherAppointment) {
+    if (appointment.isClash(otherAppointment)) {
+        return true;
+    }
+    return false;
+}
 ** Cons: It might not be the most efficient way.
 
 * **Alternative 2:** Sort the appointments in the ArrayList of appointments.

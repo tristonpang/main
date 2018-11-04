@@ -35,7 +35,7 @@ Further checks are available to inform the user if they keyed in incorrect appoi
 ** Highlights: This enhancement drastically improved the ability of the application to assist medical processes, specifically in the area of scheduling appointment.
 The implementation too was challenging as it required a brand new command to be created.
 
-* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=nelvintan[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=nelvintan[Functional code]] [https://github.com[Test code]]
 
 * *Other contributions*:
 
@@ -44,7 +44,6 @@ The implementation too was challenging as it required a brand new command to be 
 *** Set up travis for running tests for the code base
 *** Set up auto publishing of docs for travis
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 *** Wrote additional tests for existing features to increase coverage%
 (Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/11/commits/7203d4a630e46fdf724c76170e3589de7704687d[#36],
 https://github.com/CS2103-AY1819S1-W16-3/main/pull/68/commits/ad0a044af6a04de2a7c5d456c4bc5753c60aacd4[#38])
@@ -54,10 +53,7 @@ https://github.com/CS2103-AY1819S1-W16-3/main/pull/123/commits/a8d665e38c5f07a50
 ** Community:
 *** PRs reviewed (with non-trivial review comments):
 https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[#12],
-https://github.com[#32],
-https://github.com[#19],
-https://github.com[#42]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[1], https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[2])
 
 == Contributions to the User Guide
 
