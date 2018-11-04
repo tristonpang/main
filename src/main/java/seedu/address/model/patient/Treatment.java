@@ -26,12 +26,17 @@ public class Treatment {
      * @return whether this treatment is a valid treatment.
      */
     public boolean isValid() {
-        return this.treatment.matches(TREATMENT_VALIDATION_REGEX);
+        return this.treatment.matches(TREATMENT_VALIDATION_REGEX) && !MedicalRecord.hasInvalidPrefix(this.treatment);
     }
 
     public String getFailureReason() {
-        assert(!isValid());
-        return MESSAGE_TREATMENT_CONSTRAINTS;
+        if (!this.treatment.matches(TREATMENT_VALIDATION_REGEX)) {
+            return MESSAGE_TREATMENT_CONSTRAINTS;
+        } else if (MedicalRecord.hasInvalidPrefix(this.treatment)) {
+            return MedicalRecord.MESSAGE_INVALID_PREFIX_USED;
+        } else {
+            return "Treatment is valid.";
+        }
     }
 
     @Override
