@@ -31,7 +31,7 @@ public class Patient extends Person {
      */
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(name, nric, phone, email, address, tags);
-        this.latestMedicalRecord = new MedicalRecord("", "", "", "");
+        this.latestMedicalRecord = MedicalRecord.DEFAULT_MEDICAL_RECORD;
         this.medicalRecordLibrary = new ArrayList<>();
     }
 
@@ -43,14 +43,18 @@ public class Patient extends Person {
                    ArrayList<Appointment> appointmentList, MedicalRecord medicalRecord) {
         super(name, nric, phone, email, address, tags, appointmentList);
         this.latestMedicalRecord = medicalRecord;
-        this.medicalRecordLibrary.add(medicalRecord);
+        if (!latestMedicalRecord.equals(MedicalRecord.DEFAULT_MEDICAL_RECORD)) {
+            this.medicalRecordLibrary.add(medicalRecord);
+        }
     }
 
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
                    MedicalRecord medicalRecord) {
         super(name, nric, phone, email, address, tags);
         this.latestMedicalRecord = medicalRecord;
-        this.medicalRecordLibrary.add(medicalRecord);
+        if (!latestMedicalRecord.equals(MedicalRecord.DEFAULT_MEDICAL_RECORD)) {
+            this.medicalRecordLibrary.add(medicalRecord);
+        }
     }
 
     public Patient(Name name, Nric nric, Phone phone, Email email, Address address, Set<Tag> tags,
@@ -68,8 +72,7 @@ public class Patient extends Person {
         if (!medicalRecordLibrary.isEmpty()) {
             latestMedicalRecord = medicalRecordLibrary.get(0);
         } else {
-            // TODO: this is a quick fix for null MR error
-            latestMedicalRecord = new MedicalRecord("");
+            latestMedicalRecord = MedicalRecord.DEFAULT_MEDICAL_RECORD;
         }
     }
 
