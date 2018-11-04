@@ -31,11 +31,11 @@ public class MedicalRecord extends DisplayableAttribute {
     public MedicalRecord(String medicalRecord) {
         requireNonNull(medicalRecord);
         this.value = medicalRecord;
-        List<String> valueList = Arrays.asList(value.split(","));
+        List<String> valueList = Arrays.asList(value.split("(, Diagnosis: |, Treatment: |, Comments: )"));
         this.date = new Date(valueList.get(0));
-        this.diagnosis = new Diagnosis(valueList.get(1).substring(12));
-        this.treatment = new Treatment(valueList.get(2).substring(12));
-        this.comments = valueList.get(3).substring(11);
+        this.diagnosis = new Diagnosis(valueList.get(1));
+        this.treatment = new Treatment(valueList.get(2));
+        this.comments = valueList.get(3);
     }
 
     /**
