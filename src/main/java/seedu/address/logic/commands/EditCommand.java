@@ -127,7 +127,8 @@ public class EditCommand extends Command {
 
             // reflecting the change in appointments of patient
             ArrayList<Appointment> appointmentList = new ArrayList<>(personToEdit.getAppointmentList());
-            ArrayList<Appointment> updatedAppointmentList = AppointmentManager.changePatientNameAndNric(personToEdit.getName(),
+            ArrayList<Appointment> updatedAppointmentList = AppointmentManager
+                    .changePatientNameAndNric(personToEdit.getName(),
                     personToEdit.getNric(), updatedName, updatedNric, appointmentList);
             // reflecting the change in appointments of doctors who have an appointment with the patient
             for (Appointment appt : updatedAppointmentList) {
@@ -137,7 +138,8 @@ public class EditCommand extends Command {
                 ArrayList<Appointment> updatedDoctorAppointmentList =
                         AppointmentManager.changePatientNameAndNric(personToEdit.getName(),
                         personToEdit.getNric(), updatedName, updatedNric, doctorAppointmentList);
-                Person editedDoctor = new Doctor(doctorToEdit.getName(), doctorToEdit.getNric(), doctorToEdit.getPhone(),
+                Person editedDoctor = new Doctor(doctorToEdit.getName(),
+                        doctorToEdit.getNric(), doctorToEdit.getPhone(),
                         doctorToEdit.getEmail(), doctorToEdit.getAddress(), doctorToEdit.getTags(),
                         updatedDoctorAppointmentList, ((Doctor) doctorToEdit).getMedicalDepartment());
                 model.updatePerson(doctorToEdit, editedDoctor);
@@ -152,7 +154,8 @@ public class EditCommand extends Command {
 
             // reflecting the change in appointments of doctor
             ArrayList<Appointment> appointmentList = new ArrayList<>(personToEdit.getAppointmentList());
-            ArrayList<Appointment> updatedAppointmentList = AppointmentManager.changeDoctorNameAndNric(personToEdit.getName(),
+            ArrayList<Appointment> updatedAppointmentList = AppointmentManager
+                    .changeDoctorNameAndNric(personToEdit.getName(),
                     personToEdit.getNric(), updatedName, updatedNric, appointmentList);
             // reflecting the change in appointments of patients who have an appointment with the doctor
             for (Appointment appt : updatedAppointmentList) {
@@ -162,7 +165,8 @@ public class EditCommand extends Command {
                 ArrayList<Appointment> updatedDoctorAppointmentList =
                         AppointmentManager.changeDoctorNameAndNric(personToEdit.getName(),
                                 personToEdit.getNric(), updatedName, updatedNric, patientAppointmentList);
-                Person editedPatient = new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),
+                Person editedPatient = new Patient(patientToEdit.getName(),
+                        patientToEdit.getNric(), patientToEdit.getPhone(),
                         patientToEdit.getEmail(), patientToEdit.getAddress(), patientToEdit.getTags(),
                         updatedDoctorAppointmentList, ((Patient) patientToEdit).getMedicalRecordLibrary());
                 model.updatePerson(patientToEdit, editedPatient);
