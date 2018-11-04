@@ -298,12 +298,12 @@ Format: `select INDEX`
 
 Examples:
 
-* `list` displays the list of persons as shown in Figure 1.
+* `list` displays the list of persons as shown in the figure below.
 +
 .Display list diagram
 image::ListCommand.png[width="600"]
 +
-`select 2` selects the 2nd person in the database and display the appointments of that person as shown in Figure 2.
+`select 2` selects the 2nd person in the database and display the appointments of that person as shown in the figure below.
 +
 .Display appointment diagram
 image::DisplayAppointment.png[width="600"]
@@ -326,6 +326,9 @@ Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME di/DOCTO
 * Patient name is the patient's full name. e.g. `Kim Tan`
 * Patient nric is the patient's nric. e.g. `S1234567A`
 ****
+[NOTE]
+Overlapping of timing with existing appointments is considered a clash.
+E.g. 1300-1301 and 1301-1302 is a clash due to 1301.
 
 Examples:
 
@@ -333,12 +336,17 @@ Examples:
 Schedules `John Doe` for an appointment with doctor `Jack` on the 23nd of November 2018 from
  1pm to 2pm.
 +
-An example of a successful schedule is shown below in Figure 3.
+An example of a successful schedule is shown in the figure below.
 +
 .Successful schedule diagram
 image::ScheduleSuccess.png[width="600"]
 +
-An example of an unsuccessful schedule is shown below in Figure 4.
+After an appointment is successfully scheduled, the appointment list as shown below will be updated.
++
+.Change in appointment list
+image::AppointmentListChange.png[width="600"]
++
+An example of an unsuccessful schedule is shown in the figure below.
 +
 .Unsuccessful schedule diagram
 image::ScheduleFailure.png[width="600"]
