@@ -61,7 +61,6 @@ public class Date {
         int date = Integer.parseInt(valueList.get(0));
         int month = Integer.parseInt(valueList.get(1));
         int year = Integer.parseInt(valueList.get(2));
-        System.out.println(monthsWithThirtyOneDays.contains(month));
         if (date < 1) {
             result = false;
         } else if (monthsWithThirtyDays.contains(month) && (date > 30)) {
@@ -72,6 +71,8 @@ public class Date {
             result = false;
         } else if (month == 2 && !isLeapYear(year) && (date > 28)) {
             result = false;
+        } else if (month > 12) {
+            return false;
         }
         return result;
     }
@@ -106,25 +107,26 @@ public class Date {
      */
     private static boolean isBefore(String currentDate, String givenDate) {
         List<String> dateParts = Arrays.asList(givenDate.split("\\."));
-        int day = Integer.parseInt(dateParts.get(0));
-        int month = Integer.parseInt(dateParts.get(1));
-        int year = Integer.parseInt(dateParts.get(2));
+        int givenDay = Integer.parseInt(dateParts.get(0));
+        int givenMonth = Integer.parseInt(dateParts.get(1));
+        int givenYear = Integer.parseInt(dateParts.get(2));
 
         List<String> currentDateParts = Arrays.asList(currentDate.split("\\."));
         int currentDay = Integer.parseInt(currentDateParts.get(0));
         int currentMonth = Integer.parseInt(currentDateParts.get(1));
         int currentYear = Integer.parseInt(currentDateParts.get(2));
 
-        if (year < currentYear) {
+        if (givenYear < currentYear) {
             return true;
-        } else if (month < currentMonth) {
-            return true;
-        } else if (month > currentMonth) {
+        } else if (givenYear > currentYear) {
             return false;
-        } else if (day < currentDay) {
+        } else if (givenMonth < currentMonth) {
+            return true;
+        } else if (givenMonth > currentMonth) {
+            return false;
+        } else if (givenDay < currentDay) {
             return true;
         } else {
-
             return false;
         }
     }

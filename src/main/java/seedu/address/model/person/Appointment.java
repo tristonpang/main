@@ -96,6 +96,18 @@ public class Appointment extends DisplayableAttribute {
         return doctorNric.toString();
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
     public Name getDoctorName() {
         return doctorName;
     }

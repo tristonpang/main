@@ -33,7 +33,7 @@ public class UpdateCommandTest {
     public void execute_updateMedicalRecord_success() throws Exception {
         Patient editedPatient =
                 new PatientBuilder((Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                        .withMedicalRecord("13.13.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -")
+                        .withMedicalRecord("13.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -")
                         .build();
 
         UpdateCommand updateCommand = new UpdateCommand(INDEX_FIRST_PERSON, editedPatient.getMedicalRecord());

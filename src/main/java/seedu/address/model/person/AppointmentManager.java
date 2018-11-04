@@ -94,6 +94,94 @@ public class AppointmentManager {
     }
 
     /**
+     *
+     * @param patientNric Nric of patient.
+     * @param appointmentList Appointment List to be processed.
+     * @return a new appointment list where all the appointments
+     * with a patient that has the same Nric as input will be removed.
+     */
+    public static ArrayList<Appointment> removeAppointmentsOfPatient(Nric patientNric,
+                                                                     ArrayList<Appointment> appointmentList) {
+        ArrayList<Appointment> resultList = new ArrayList<>();
+        for (Appointment appt : appointmentList) {
+            if (!appt.getPatientNric().equals(patientNric)) {
+                resultList.add(appt);
+            }
+        }
+        return resultList;
+    }
+
+    /**
+     *
+     * @param doctorNric Nric of doctor.
+     * @param appointmentList Appointment List to be processed.
+     * @return a new appointment list where all the appointments
+     * with a doctor that has the same Nric as input will be removed.
+     */
+    public static ArrayList<Appointment> removeAppointmentsOfDoctor(Nric doctorNric,
+                                                                    ArrayList<Appointment> appointmentList) {
+        ArrayList<Appointment> resultList = new ArrayList<>();
+        for (Appointment appt : appointmentList) {
+            if (!appt.getDoctorNric().equals(doctorNric)) {
+                resultList.add(appt);
+            }
+        }
+        return resultList;
+    }
+
+    /**
+     *
+     * @param oldPatientName Name of patient before change.
+     * @param oldPatientNric Nric of patient before change.
+     * @param newPatientName Name of patient after change.
+     * @param newPatientNric Nric of patient after change.
+     * @param appointmentList Appointment List of the patient.
+     * @return a new Appointment List where the appointments with the previous
+     * patient's name and nric will be updated to reflect the new change.
+     */
+    public static ArrayList<Appointment> changePatientNameAndNric(Name oldPatientName, Nric oldPatientNric,
+                                                                  Name newPatientName, Nric newPatientNric,
+                                                                  ArrayList<Appointment> appointmentList) {
+        ArrayList<Appointment> newAppointmentList = new ArrayList<>();
+        for (Appointment appt : appointmentList) {
+            if (appt.getPatientName().equals(oldPatientName) && appt.getPatientNric().equals(oldPatientNric)) {
+                Appointment newAppt = new Appointment(appt.getDate(), appt.getStartTime(), appt.getEndTime(),
+                        appt.getDoctorName(), appt.getDoctorNric(), newPatientName, newPatientNric);
+                newAppointmentList.add(newAppt);
+            } else {
+                newAppointmentList.add(appt);
+            }
+        }
+        return newAppointmentList;
+    }
+
+    /**
+     *
+     * @param oldDoctorName Name of doctor before change.
+     * @param oldDoctorNric Nric of doctor before change.
+     * @param newDoctorName Name of doctor after change.
+     * @param newDoctorNric Nric of doctor after change.
+     * @param appointmentList Appointment List of the doctor.
+     * @return a new Appointment List where the appointments with the previous
+     * doctor's name and nric will be updated to reflect the new change.
+     */
+    public static ArrayList<Appointment> changeDoctorNameAndNric(Name oldDoctorName, Nric oldDoctorNric,
+                                                                  Name newDoctorName, Nric newDoctorNric,
+                                                                  ArrayList<Appointment> appointmentList) {
+        ArrayList<Appointment> newAppointmentList = new ArrayList<>();
+        for (Appointment appt : appointmentList) {
+            if (appt.getDoctorName().equals(oldDoctorName) && appt.getDoctorNric().equals(oldDoctorNric)) {
+                Appointment newAppt = new Appointment(appt.getDate(), appt.getStartTime(), appt.getEndTime(),
+                        newDoctorName, newDoctorNric, appt.getPatientName(), appt.getPatientNric());
+                newAppointmentList.add(newAppt);
+            } else {
+                newAppointmentList.add(appt);
+            }
+        }
+        return newAppointmentList;
+    }
+
+    /**
      * Extracts the current date and time from the java API for Singapore's timezone.
      * Afterwards, format of date and time will be changed to that of Appointment's for easy comparison.
      *
