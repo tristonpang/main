@@ -18,6 +18,11 @@ public class MedicalRecord extends DisplayableAttribute {
     public static final String MESSAGE_MEDICAL_RECORD_CONSTRAINTS =
             "Person medical record can take any values, and it should not be blank";
 
+    public static final String MESSAGE_INVALID_PREFIX_USED = "Only prefixes dg/, tr/ and c/ should be used for "
+            + "diagnosis, treatment, and comments respectively. Diagnosis:, Treatment: and Comments: are invalid.";
+
+    public static final MedicalRecord DEFAULT_MEDICAL_RECORD = new MedicalRecord("", "", "", "");
+
     public final String value;
     public final Date date;
     public final Diagnosis diagnosis;
@@ -31,11 +36,11 @@ public class MedicalRecord extends DisplayableAttribute {
     public MedicalRecord(String medicalRecord) {
         requireNonNull(medicalRecord);
         this.value = medicalRecord;
-        List<String> valueList = Arrays.asList(value.split(","));
+        List<String> valueList = Arrays.asList(value.split("(, Diagnosis: |, Treatment: |, Comments: )"));
         this.date = new Date(valueList.get(0));
-        this.diagnosis = new Diagnosis(valueList.get(1).substring(12));
-        this.treatment = new Treatment(valueList.get(2).substring(12));
-        this.comments = valueList.get(3).substring(11);
+        this.diagnosis = new Diagnosis(valueList.get(1));
+        this.treatment = new Treatment(valueList.get(2));
+        this.comments = valueList.get(3);
     }
 
     /**
@@ -59,24 +64,38 @@ public class MedicalRecord extends DisplayableAttribute {
         return this.value != null;
     }
 
+    /**
+     * Checks if the user has input invalid prefix as a value for a field.
+     * @param value the value of a field.
+     * @return true if an invalid prefix is used in a value for a field. Otherwise return false.
+     */
+    public static boolean hasInvalidPrefix(String value) {
+        return value.contains("Diagnosis:")
+                || value.contains("Treatment:")
+                || value.contains("Comments:");
+    }
+
     public String getFailureReason() {
-        assert(!isValid());
-        String reason;
         if (!hasValidDate()) {
-            reason = Date.getFailureReason(date.toString());
+            return Date.getFailureReason(date.toString());
         } else if (!hasValidDiagnosis()) {
-            reason = diagnosis.getFailureReason();
+            return diagnosis.getFailureReason();
+        } else if (!hasValidTreatment()) {
+            return treatment.getFailureReason();
+        } else if (!hasValidComments()) {
+            return MESSAGE_INVALID_PREFIX_USED;
         } else {
-            reason = treatment.getFailureReason();
+            return "Medical record is valid.";
         }
-        return reason;
     }
 
     public boolean isValid() {
         return hasValidDate()
                 && hasValidDiagnosis()
-                && hasValidTreatment();
+                && hasValidTreatment()
+                && hasValidComments();
     }
+
 
     public boolean hasValidDate() {
         return Date.isValidDate(this.date.toString());
@@ -88,6 +107,10 @@ public class MedicalRecord extends DisplayableAttribute {
 
     public boolean hasValidTreatment() {
         return this.treatment.isValid();
+    }
+
+    public boolean hasValidComments() {
+        return !hasInvalidPrefix(comments);
     }
 
     public String getDate() {

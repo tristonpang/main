@@ -26,12 +26,17 @@ public class Diagnosis {
      * @return whether this diagnosis is a valid diagnosis.
      */
     public boolean isValid() {
-        return this.diagnosis.matches(DIAGNOSIS_VALIDATION_REGEX);
+        return this.diagnosis.matches(DIAGNOSIS_VALIDATION_REGEX) && !MedicalRecord.hasInvalidPrefix(this.diagnosis);
     }
 
     public String getFailureReason() {
-        assert(!isValid());
-        return MESSAGE_DIAGNOSIS_CONSTRAINTS;
+        if (!this.diagnosis.matches(DIAGNOSIS_VALIDATION_REGEX)) {
+            return MESSAGE_DIAGNOSIS_CONSTRAINTS;
+        } else if (MedicalRecord.hasInvalidPrefix(this.diagnosis)) {
+            return MedicalRecord.MESSAGE_INVALID_PREFIX_USED;
+        } else {
+            return "Diagnosis is valid";
+        }
     }
 
     @Override

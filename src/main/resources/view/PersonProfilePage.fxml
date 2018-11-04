@@ -9,17 +9,17 @@
 <Pane maxHeight="700.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0"
       prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text fx:id="name" fill="WHITE" layoutX="56.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="name" fill="black" layoutX="56.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="nric" fill="WHITE" layoutX="56.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="nric" fill="black" layoutX="56.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="phone" fill="WHITE" layoutX="56.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="phone" fill="black" layoutX="56.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -30,30 +30,30 @@
             <Image url="@../images/blank_profile.png" />
          </image>
       </ImageView>
-      <Text fx:id="email" fill="WHITE" layoutX="56.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="email" fill="black" layoutX="56.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="address" fill="WHITE" layoutX="56.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0"
+      <Text fx:id="address" fill="black" layoutX="56.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0"
             wrappingWidth="294.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="uniqueField" fill="WHITE" layoutX="56.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="uniqueField" fill="black" layoutX="56.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
       <FlowPane fx:id="tags" layoutX="56.0" layoutY="261.0" prefHeight="21.0" prefWidth="283.0" />
-      <Text fx:id="availabilityLabel" fill="WHITE" layoutX="56.0" layoutY="510.0" strokeType="OUTSIDE"
+      <Text fx:id="availabilityLabel" fill="black" layoutX="56.0" layoutY="510.0" strokeType="OUTSIDE"
             strokeWidth="0.0" text="Status:" visible="false">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Label fx:id="availability" layoutX="124.0" layoutY="493.0" text="Label" textFill="WHITE" visible="false">
+      <Label fx:id="availability" layoutX="124.0" layoutY="493.0" text="Label" textFill="black" visible="false">
          <font>
             <Font size="20.0" />
          </font>
@@ -61,7 +61,7 @@
             <Insets left="5.0" right="5.0" />
          </padding>
       </Label>
-      <Text fx:id="availCheckTime" fill="WHITE" layoutX="220.0" layoutY="510.0" strokeType="OUTSIDE"
+      <Text fx:id="availCheckTime" fill="black" layoutX="220.0" layoutY="510.0" strokeType="OUTSIDE"
             strokeWidth="0.0" text="Text" visible="false">
          <font>
             <Font name="System Italic" size="15.0" />

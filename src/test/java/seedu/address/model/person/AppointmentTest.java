@@ -149,4 +149,112 @@ public class AppointmentTest {
         // Those appointments are in all in the past.
         assertFalse(AppointmentManager.isAnyAppointmentOngoing(appointments));
     }
+
+    @Test
+    public void removingAppointmentByDoctorNricTest() {
+        Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt3 = new Appointment("22.11.2018", "1300", "1330",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt4 = new Appointment("22.11.2018", "1330", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        appointments.add(appt1);
+        appointments.add(appt2);
+        appointments.add(appt3);
+        appointments.add(appt4);
+        ArrayList<Appointment> resultAppointments =
+                AppointmentManager.removeAppointmentsOfDoctor(new Nric("S1234567H"), appointments);
+        assertTrue(resultAppointments.isEmpty());
+    }
+
+    @Test
+    public void removingAppointmentByPatientNricTest() {
+        Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt3 = new Appointment("22.11.2018", "1300", "1330",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt4 = new Appointment("22.11.2018", "1330", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        appointments.add(appt1);
+        appointments.add(appt2);
+        appointments.add(appt3);
+        appointments.add(appt4);
+        ArrayList<Appointment> resultAppointments =
+                AppointmentManager.removeAppointmentsOfPatient(new Nric("S1234567A"), appointments);
+        assertTrue(resultAppointments.isEmpty());
+    }
+
+    @Test
+    public void changePatientNameAndNricOfAppointmentListTest() {
+        Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt3 = new Appointment("22.11.2018", "1300", "1330",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt4 = new Appointment("22.11.2018", "1330", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        appointments.add(appt1);
+        appointments.add(appt2);
+        appointments.add(appt3);
+        appointments.add(appt4);
+        Appointment appt5 = new Appointment("22.11.2018", "1300", "1400",
+                "Alice", "S1234567H", "Elaine", "S6969696F");
+        Appointment appt6 = new Appointment("22.11.2018", "1401", "1405",
+                "Alice", "S1234567H", "Elaine", "S6969696F");
+        Appointment appt7 = new Appointment("22.11.2018", "1300", "1330",
+                "Alice", "S1234567H", "Elaine", "S6969696F");
+        Appointment appt8 = new Appointment("22.11.2018", "1330", "1400",
+                "Alice", "S1234567H", "Elaine", "S6969696F");
+        ArrayList<Appointment> testAppointments = new ArrayList<>();
+        testAppointments.add(appt5);
+        testAppointments.add(appt6);
+        testAppointments.add(appt7);
+        testAppointments.add(appt8);
+        ArrayList<Appointment> resultAppointments =
+                AppointmentManager.changePatientNameAndNric(new Name("Bob"), new Nric("S1234567A"),
+                        new Name("Elaine"), new Nric("S6969696F"), appointments);
+        assertTrue(resultAppointments.equals(testAppointments));
+    }
+
+    @Test
+    public void changeDoctorNameAndNricOfAppointmentListTest() {
+        Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt3 = new Appointment("22.11.2018", "1300", "1330",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        Appointment appt4 = new Appointment("22.11.2018", "1330", "1400",
+                "Alice", "S1234567H", "Bob", "S1234567A");
+        ArrayList<Appointment> appointments = new ArrayList<>();
+        appointments.add(appt1);
+        appointments.add(appt2);
+        appointments.add(appt3);
+        appointments.add(appt4);
+        Appointment appt5 = new Appointment("22.11.2018", "1300", "1400",
+                "Elaine", "S6969696F", "Bob", "S1234567A");
+        Appointment appt6 = new Appointment("22.11.2018", "1401", "1405",
+                "Elaine", "S6969696F", "Bob", "S1234567A");
+        Appointment appt7 = new Appointment("22.11.2018", "1300", "1330",
+                "Elaine", "S6969696F", "Bob", "S1234567A");
+        Appointment appt8 = new Appointment("22.11.2018", "1330", "1400",
+                "Elaine", "S6969696F", "Bob", "S1234567A");
+        ArrayList<Appointment> testAppointments = new ArrayList<>();
+        testAppointments.add(appt5);
+        testAppointments.add(appt6);
+        testAppointments.add(appt7);
+        testAppointments.add(appt8);
+        ArrayList<Appointment> resultAppointments =
+                AppointmentManager.changeDoctorNameAndNric(new Name("Alice"), new Nric("S1234567H"),
+                        new Name("Elaine"), new Nric("S6969696F"), appointments);
+        assertTrue(resultAppointments.equals(testAppointments));
+    }
 }

@@ -291,20 +291,20 @@ Format: `select INDEX`
 
 ****
 * Selects the person and loads the appointment list of the person at the specified `INDEX`.
-* Index is the position of the person selected from the person card list.
+* The index is the position of the person selected from the person card list.
 * The index *must be a positive integer* `1, 2, 3, ...`
-* Appointment List will be displayed on the top right of the screen as shown in figure below.
+* The appointment list will be displayed on the top right of the screen as shown in figure below.
 ****
 
 Examples:
 
-* `list` (result shown in Figure 1) +
-`select 2` (result shown in Figure 2) +
-Selects the 2nd person in the database and display the appointments.
-
+* `list` displays the list of persons as shown in the figure below.
++
 .Display list diagram
 image::ListCommand.png[width="600"]
-
++
+`select 2` selects the 2nd person in the database and display the appointments of that person as shown in the figure below.
++
 .Display appointment diagram
 image::DisplayAppointment.png[width="600"]
 * `find Betsy` +
@@ -326,18 +326,28 @@ Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME di/DOCTO
 * Patient name is the patient's full name. e.g. `Kim Tan`
 * Patient nric is the patient's nric. e.g. `S1234567A`
 ****
+[NOTE]
+Overlapping of timing with existing appointments is considered a clash.
+E.g. 1300-1301 and 1301-1302 is a clash due to 1301.
 
 Examples:
 
 * `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/John Doe pi/S1234567A` +
 Schedules `John Doe` for an appointment with doctor `Jack` on the 23nd of November 2018 from
  1pm to 2pm.
-* An example of a successful schedule is shown below.
-
++
+An example of a successful schedule is shown in the figure below.
++
 .Successful schedule diagram
 image::ScheduleSuccess.png[width="600"]
-* An example of an unsuccessful schedule is shown below.
-
++
+After an appointment is successfully scheduled, the appointment list as shown below will be updated.
++
+.Change in appointment list
+image::AppointmentListChange.png[width="600"]
++
+An example of an unsuccessful schedule is shown in the figure below.
++
 .Unsuccessful schedule diagram
 image::ScheduleFailure.png[width="600"]
 // end::schedule[]
@@ -348,14 +358,14 @@ Displays all the medical records of the specified person. +
 Format: `select INDEX`
 
 ****
-* Index is the position of the person selected from the person card list.
+* The index is the position of the person selected from the person card list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
 Examples:
 
 * `select 1` +
-Displays the medical records of the first person on the displayed list as shown by the figure below.
+Displays the medical records of the first person on the displayed list as shown in the figure below.
 
 .Displaying medical records
 image::DisplayMedicalRecords.png[width="600"]
@@ -365,11 +375,12 @@ image::DisplayMedicalRecords.png[width="600"]
 // tag::update[]
 === Updating medical records of patients : `update`
 
-Adds a new medical record for the patient as the most updated record using the current date as date of record. +
+Adds a new medical record for the patient as the most updated record using the specified date as date of record. +
 Format: `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT [c/COMMENTS]`
 
 ****
-* Date is formatted as DD.MM.YYYY and is dot separated e.g.  `7.11.1996` is the 7th of November 1996.
+* The date is formatted as DD.MM.YYYY and is dot separated e.g.  `11.1.2019` is the 11th of January 2019.
+* The date cannot be in the past.
 * The index *must be a positive integer* `1, 2, 3, ...`
 * Comments are optional.
 ****
@@ -379,13 +390,13 @@ If no comments are specified, "-" will be displayed on the medical record.
 Examples:
 
 * `update 1 d/31.10.2018 dg/flu tr/tamiflu` +
-Updates the medical records of the patient at index 1 with the given date, diagnosis and treatment without any comments as shown by the figure below.
+Updates the medical records of the patient at index 1 with the given date, diagnosis and treatment without any comments as shown in the figure below.
 
 .Updating records without comments
 image::UpdateCommandWithoutCommentSuccess.png[width="600"]
 
 * `update 1 d/31.10.2018 dg/flu tr/tamiflu c/To be taken thrice a day after meals.` +
-Updates the medical records of the patient at index 1 with the given date, diagnosis, treatment and comments as shown by the figure below.
+Updates the medical records of the patient at index 1 with the given date, diagnosis, treatment and comments as shown in the figure below.
 
 .Updating records with comments
 image::UpdateCommandWithCommentSuccess.png[width="600"]
