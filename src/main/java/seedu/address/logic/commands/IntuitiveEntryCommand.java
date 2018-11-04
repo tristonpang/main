@@ -14,6 +14,7 @@ public class IntuitiveEntryCommand extends Command {
     private static final String INPUT_ECHO = "You entered: %1$s \n";
 
     private String input;
+    private boolean isFirstInput;
 
     public IntuitiveEntryCommand(String userInput) {
         this.input = userInput;
@@ -21,6 +22,7 @@ public class IntuitiveEntryCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory commandHistory) throws CommandException {
+        isFirstInput = !model.areIntuitiveArgsAvailable();
         String nextInstruction = null;
         if (input.equals(GO_BACK_COMMAND)) {
             nextInstruction = model.removeIntuitiveEntry();
@@ -34,8 +36,11 @@ public class IntuitiveEntryCommand extends Command {
             return new CommandResult(nextInstruction);
         }
 
-
         //return correct instruction to display in CommandResult
+        if (isFirstInput) {
+            return new CommandResult(String.format(INPUT_ECHO, this.input) + nextInstruction);
+        }
+
         return new CommandResult(String.format(INPUT_ECHO, this.input) + nextInstruction
                 + String.format(GO_BACK_INSTRUCTION, GO_BACK_COMMAND));
     }
