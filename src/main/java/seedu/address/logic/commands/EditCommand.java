@@ -27,6 +27,7 @@ import seedu.address.model.patient.MedicalRecord;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentManager;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
@@ -91,7 +92,7 @@ public class EditCommand extends Command {
             throw new CommandException(MESSAGE_ROLE_CONFLICT + personToEdit.getClass().getSimpleName().toUpperCase());
         }
 
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor, model);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -108,7 +109,8 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor,
+                                             Model model) {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -117,18 +119,54 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         // edit command does not allow editing remarks
-        ArrayList<Appointment> updatedAppointmentList = personToEdit.getAppointmentList();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         if (personToEdit instanceof Patient) {
             // edit command does not allow editing medical records
             MedicalRecord updatedMedicalRecord = ((Patient) personToEdit).getMedicalRecord();
+
+            // reflecting the change in appointments of patient
+            ArrayList<Appointment> appointmentList = new ArrayList<>(personToEdit.getAppointmentList());
+            ArrayList<Appointment> updatedAppointmentList = AppointmentManager.changePatientNameAndNric(personToEdit.getName(),
+                    personToEdit.getNric(), updatedName, updatedNric, appointmentList);
+            // reflecting the change in appointments of doctors who have an appointment with the patient
+            for (Appointment appt : updatedAppointmentList) {
+                Person doctorToEdit = model.getPerson(appt.getDoctorNric()).get();
+                ArrayList<Appointment> doctorAppointmentList =
+                        new ArrayList<>(doctorToEdit.getAppointmentList());
+                ArrayList<Appointment> updatedDoctorAppointmentList =
+                        AppointmentManager.changePatientNameAndNric(personToEdit.getName(),
+                        personToEdit.getNric(), updatedName, updatedNric, doctorAppointmentList);
+                Person editedDoctor = new Doctor(doctorToEdit.getName(), doctorToEdit.getNric(), doctorToEdit.getPhone(),
+                        doctorToEdit.getEmail(), doctorToEdit.getAddress(), doctorToEdit.getTags(),
+                        updatedDoctorAppointmentList, ((Doctor) doctorToEdit).getMedicalDepartment());
+                model.updatePerson(doctorToEdit, editedDoctor);
+            }
             return new Patient(updatedName, updatedNric, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                     updatedAppointmentList, updatedMedicalRecord);
         } else {
+            // Person must be either Patient or Doctor.
             assert personToEdit instanceof Doctor; // Person must be either Patient or Doctor.
             MedicalDepartment updateMedicalDepartment =
                     editPersonDescriptor.getMedicalDepartment().orElse(((Doctor) personToEdit).getMedicalDepartment());
+
+            // reflecting the change in appointments of doctor
+            ArrayList<Appointment> appointmentList = new ArrayList<>(personToEdit.getAppointmentList());
+            ArrayList<Appointment> updatedAppointmentList = AppointmentManager.changeDoctorNameAndNric(personToEdit.getName(),
+                    personToEdit.getNric(), updatedName, updatedNric, appointmentList);
+            // reflecting the change in appointments of patients who have an appointment with the doctor
+            for (Appointment appt : updatedAppointmentList) {
+                Person patientToEdit = model.getPerson(appt.getPatientNric()).get();
+                ArrayList<Appointment> patientAppointmentList =
+                        new ArrayList<>(patientToEdit.getAppointmentList());
+                ArrayList<Appointment> updatedDoctorAppointmentList =
+                        AppointmentManager.changeDoctorNameAndNric(personToEdit.getName(),
+                                personToEdit.getNric(), updatedName, updatedNric, patientAppointmentList);
+                Person editedPatient = new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),
+                        patientToEdit.getEmail(), patientToEdit.getAddress(), patientToEdit.getTags(),
+                        updatedDoctorAppointmentList, ((Patient) patientToEdit).getMedicalRecordLibrary());
+                model.updatePerson(patientToEdit, editedPatient);
+            }
             return new Doctor(updatedName, updatedNric, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                     updatedAppointmentList, updateMedicalDepartment);
         }
