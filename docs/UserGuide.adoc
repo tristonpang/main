@@ -142,7 +142,7 @@ There are two types of Find Commands: Global Find and Specific Find, which can b
 Format: `find [PREFIX] KEYWORDS [NEXT_PREFIX] [MORE_KEYWORDS]`
 
 [NOTE]
-In order for a `Person` to show up on a `find`, the `Person` must match all attributes in the input. +
+In order for a `Person` to show up on `find`, the `Person` must match all attributes in the input. +
 (i.e. `find n/alex r/doctor` will show all `Doctor` named `Alex`. If another `Alex` is not a `Doctor`, he will not be shown.)
 
 ==== Global Find
