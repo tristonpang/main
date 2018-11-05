@@ -690,21 +690,42 @@ The key operation implemented is `FindCommand#execute`.
 
 Given below is an example usage scenario and how the find command mechanism behaves at each step.
 
-Step 1. The user wants to find all `Person` with `Name` Alex by executing `find n/Alex`.
+Step 1. The user wants to find all `Person` who have a `friends` `Tag`, with `Name` either `Alex` or `Bernice` by
+executing `find n/Alex n/Bernice t/friends`.
 
-Step 2. `FindCommandParser` will parse the input and verify that is it valid before returning a `PersonContainsKeywordsPredicate`, which is passed into `FindCommand`.
+Step 2. `FindCommandParser` will parse the input and verify that is it valid before creating a
+`PersonContainsKeywordsPredicate`, which is passed into `FindCommand`. Then, `FindCommand` is returned.
+
+* `PersonContainsKeywordPredicate` takes in a `HashMap` of `Prefix` mapped to an `ArrayList` of search parameters.
+The image below illustrates how the mapping is done for the user input `find n/Alex n/Bernice t/friends`.
+
+.PersonContainsKeywordPredicate HashMap
+image::FindCommandDeveloperGuideHashMap.png[width="600"]
+
+* `PersonContainsKeywordPredicate` tests if a `Person` should appear when searched by iterating through each of the keys
+in the `HashMap` and returning `true` if all of the `Person` 's attributes match at least 1 of the entries in each key's
+`ArrayList`. The image below illustrates the list of `Person` that return `true` for `PersonContainsKeywordPredicate#test`
+after the user input `find n/Alex n/Bernice t/friends`.
+
+.PersonContainsKeywordPredicate Test Result
+image::FindCommandDeveloperGuidePredicate.png[width="600"]
+
+* As can be seen in the image above, `Person` at index 0 and index 2 are have at least 1 entry in `Name` and `Tag` that
+match the required search parameters. Therefore, they will be shown in the result list. Even though `Person` at index 1
+has a match in the `Name` attribute, he does not have a `friends` `Tag` and is therefore not shown.
 
 [NOTE]
 If there is no input after the "find" keyword, `IntuitiveEntryCommand` will be triggered, which will prompt the user to input search parameters.
 
 Step 3. `FindCommand` will then be executed.
 
-Step 4. `Model#updateFilteredPersonList()` will be called, which will update `Model` to show all `Person` that contains the searched parameter.
+Step 4. `Model#updateFilteredPersonList()` will be called, which uses `PersonContainsKeywordPredicate` to  update
+`Model` to show all `Person` that contains the searched parameters.
 
 The following activity diagram summarises what happens when a user launches the application:
 
-.FindCommand Sequence Diagram
-image::FindSequenceDiagram.png[width="800"]
+.Find Command Sequence Diagram
+image::FindCommandDeveloperGuideSequenceDiagram.png[width="800"]
 
 ==== Design considerations
 
