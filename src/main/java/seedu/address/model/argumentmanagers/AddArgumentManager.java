@@ -261,4 +261,9 @@ public class AddArgumentManager extends ArgumentManager {
         return argumentIndex == ADD_TAGS_INDEX;
     }
 
+    @Override
+    public String getArgumentManagerType() {
+        return AddCommand.COMMAND_WORD;
+    }
+
 }
