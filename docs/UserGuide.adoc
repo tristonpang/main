@@ -138,12 +138,14 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 // tag::find[]
 === Locating person by any attribute: `find`
 
-There are two types of Find Commands: Global Find and Specific Find, which can be used in conjunction with one another. +
+There are two types of Find Commands: Global Find and Specific Find, which can be used in conjunction with one
+another. +
 Format: `find [PREFIX] KEYWORDS [NEXT_PREFIX] [MORE_KEYWORDS]`
 
 [NOTE]
 In order for a `Person` to show up on `find`, the `Person` must match all attributes in the input. +
-(i.e. `find n/alex r/doctor` will show all `Doctor` named `Alex`. If another `Alex` is not a `Doctor`, he will not be shown.)
+(i.e. `find n/alex r/doctor` will show all `Doctor` named `Alex`. If another `Alex` is not a `Doctor`, he will not be
+shown.)
 
 ==== Global Find
 Global Find is a search on all attributes of all `Person` in the database. +
@@ -154,14 +156,16 @@ It is performed when:
 * keywords are included before the first valid `Prefix`.
 
 [NOTE]
-When performing Global Find with more than one separate keyword, users can simply separate them using a `[SPACE]`. The Find Command will interpret the input as separate words to be searched globally.
+When performing Global Find with more than one separate keyword, users can simply separate them using a `[SPACE]`.
+The Find Command will interpret the input as separate words to be searched globally.
 
 Examples:
 
 * `find kang` +
 Displays all `Person` with `kang` in any of their attributes.
 * `find kang r/doctor` +
-Displays all `Person` with `kang` in any of their attributes and whom is a `Doctor`.
+Displays all `Person` with `kang` in any of their attributes and whom is a `Doctor`. This is an example of Global Find
+used in conjunction with Specific Find.
 * `find alex doctor` +
 Displays all `Person` with `alex` or `doctor` in any of their attributes.
 
@@ -170,7 +174,7 @@ The images below illustrate the utilisation of Global Find:
 .Global Find Command
 image::FindCommandUserGuideGlobal1.png[width="600"]
 
-.Global Find Command with Specified Find Command
+.Global Find Command with Specific Find Command
 image::FindCommandUserGuideGlobal2.png[width="600"]
 
 .Global Find Command with Multiple Keywords
@@ -195,7 +199,8 @@ Below is a list of all searchable attributes and their corresponding `Prefix`:
 |===
 
 [WARNING]
-Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in the input. A command like `find n/[BLANK]` is not a valid input.
+Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in the input. A command like
+`find n/[BLANK]` is not a valid input.
 
 Examples:
 
@@ -221,15 +226,17 @@ e.g. `find doctor nelvin` will cause all `Doctor` and `Nelvin Tan` to be display
 * In Specific Find, the specified attribute of the `Person` must contain the searched keyword to be displayed.
 e.g. `find n/Gary Goh` will display `Gary Goh` but not `Kenneth Goh`
 * In the event that the user wants to specify more than one keyword to be seperately searched in a specified attribute,
-for example if the user wants to find all `Person` with `Name` `Kang Tze` or `Triston`, he must separate the names using two
-`Name` `Prefix`. e.g. `find n/Kang Tze n/Triston` displays `Ng Kang Tze` and `Triston Pang`.
+for example if the user wants to find all `Person` with `Name` `Kang Tze` or `Triston`, he must separate the names
+using two `Name` `Prefix`. e.g. `find n/Kang Tze n/Triston` displays `Ng Kang Tze` and `Triston Pang`.
 * An illustration of a more complicated `find` command is `find friends n/Kang Tze n/Triston r/doctor`, which displays
-all `Person` with `friends` in their attributes, has `name` containing either `Kang Tze` or `Triston`, and whom is a `Doctor`.
+all `Person` with `friends` in their attributes, has `name` containing either `Kang Tze` or `Triston`, and whom is a
+`Doctor`.
 ****
 
 ==== Intuitive Command Prompt (ICP) Support
 
-ICP mode provides a more natural way of entering commands into OneLife. More information can be found under 3.18: Intuitive command prompting.
+ICP mode provides a more natural way of entering commands into OneLife. More information can be found under 3.18:
+Intuitive command prompting.
 
 The Find Command is supported by ICP in the following way:
 
@@ -252,10 +259,12 @@ Below is a list of all searchable attributes and their corresponding indexes.
 | Medical Record (coming in v1.4)     | `9`
 |===
 
-Lastly, the user will enter the corresponding keywords to be searched under each attribute, in increasing order of their indexes.
+Lastly, the user will enter the corresponding keywords to be searched under each attribute, in increasing order of
+their indexes.
 
-The images below illustrate the utilisation of Find Command to execute the command `find doctor n/bernice`, which means
-`find` all `Person` with `doctor` in their attributes and whose name contains `bernice`, under ICP mode:
+The images below illustrate the utilisation of Find Command to execute the command `find doctor n/bernice` under ICP
+mode: (Under Normal Mode, this command means `find` all `Person` with `doctor` in their attributes and whose name
+contains `bernice`.)
 
 .ICP Mode for Find Command Step 1
 image::FindCommandUserGuideIcp1.png[width="600"]
