@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -8,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -139,6 +142,14 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        commandBoxPlaceholder.requestFocus();
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyCode.TAB.getCode());
+            robot.keyRelease(KeyCode.TAB.getCode());
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
     }
 
     void hide() {

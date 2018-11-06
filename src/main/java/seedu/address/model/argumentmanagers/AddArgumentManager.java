@@ -66,11 +66,11 @@ public class AddArgumentManager extends ArgumentManager {
     }
 
     private boolean isPatient(List<String> arguments) {
-        return arguments.get(ADD_ROLE_INDEX).equals(PATIENT_ARG_IDENTIFIER);
+        return arguments.get(ADD_ROLE_INDEX).equalsIgnoreCase(PATIENT_ARG_IDENTIFIER);
     }
 
     private boolean isDoctor(List<String> arguments) {
-        return arguments.get(ADD_ROLE_INDEX).equals(DOCTOR_ARG_IDENTIFIER);
+        return arguments.get(ADD_ROLE_INDEX).equalsIgnoreCase(DOCTOR_ARG_IDENTIFIER);
     }
 
     @Override
