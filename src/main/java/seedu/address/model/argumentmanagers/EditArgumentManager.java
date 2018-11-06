@@ -285,4 +285,9 @@ public class EditArgumentManager extends ArgumentManager {
     public boolean isCurrentFieldSkippable(int argumentIndex) {
         return false;
     }
+
+    @Override
+    public String getArgumentManagerType() {
+        return EditCommand.COMMAND_WORD;
+    }
 }

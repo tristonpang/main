@@ -79,4 +79,11 @@ public abstract class ArgumentManager {
 
     public abstract boolean isCurrentFieldSkippable(int argumentIndex);
 
+    /**
+     * Returns a String representing the command that the ArgumentManager is for.
+     *
+     * @return the String representing the command
+     */
+    public abstract String getArgumentManagerType();
+
 }

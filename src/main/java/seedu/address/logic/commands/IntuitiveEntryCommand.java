@@ -12,6 +12,7 @@ public class IntuitiveEntryCommand extends Command {
     private static final String GO_BACK_COMMAND = "/bk";
     private static final String GO_BACK_INSTRUCTION = "\n(Type %1$s to go back)";
     private static final String INPUT_ECHO = "You entered: %1$s \n";
+    private static final String INTUITIVE_MODE_MESSAGE = "You are currently in the intuitive %1$s command. ";
 
     private String input;
 
@@ -37,10 +38,12 @@ public class IntuitiveEntryCommand extends Command {
 
         //return correct instruction to display in CommandResult
         if (isFirstInput) {
-            return new CommandResult(String.format(INPUT_ECHO, this.input) + nextInstruction);
+            return new CommandResult(String.format(INTUITIVE_MODE_MESSAGE, model.getCurrentIntuitiveCommandType())
+                    + String.format(INPUT_ECHO, this.input) + nextInstruction);
         }
 
-        return new CommandResult(String.format(INPUT_ECHO, this.input) + nextInstruction
+        return new CommandResult(String.format(INTUITIVE_MODE_MESSAGE, model.getCurrentIntuitiveCommandType())
+                + String.format(INPUT_ECHO, this.input) + nextInstruction
                 + String.format(GO_BACK_INSTRUCTION, GO_BACK_COMMAND));
     }
 }

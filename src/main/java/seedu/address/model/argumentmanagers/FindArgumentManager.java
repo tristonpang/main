@@ -248,4 +248,9 @@ public class FindArgumentManager extends ArgumentManager {
     public boolean isCurrentFieldSkippable(int argumentIndex) {
         return false;
     }
+
+    @Override
+    public String getArgumentManagerType() {
+        return FindCommand.COMMAND_WORD;
+    }
 }
