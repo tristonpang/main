@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import seedu.address.commons.util.StringUtil;
@@ -23,7 +25,7 @@ public class EditArgumentManager extends ArgumentManager {
     public static final String EDIT_CLEAR_TAGS_COMMAND = "--";
 
     public static final String EDIT_TARGET_INSTRUCTION = "Please enter the index of the person to be edited";
-    public static final String EDIT_FIELDS_INSTRUCTION = "Please indicate which fields you want to edit, by typing"
+    public static final String EDIT_FIELDS_INSTRUCTION = "Please indicate which fields you want to edit, by typing "
             + "down the corresponding numbers, separated by spaces:\n"
             + "1. Name\n"
             + "2. Phone\n"
@@ -37,8 +39,8 @@ public class EditArgumentManager extends ArgumentManager {
     public static final String EDIT_TAGS_INSTRUCTION = "Please enter person's new tags, "
             + "separated by commas (with no spaces after a comma) (Type %1$s to clear tags)";
 
-    public static final String EDIT_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
-            + "and must be between %1$s and %2$s";
+    public static final String EDIT_INVALID_FIELDS_MESSAGE = "Indexes must be non-zero positive integers "
+            + "from %1$s to %2$s, and cannot be repeated";
     public static final String EDIT_INVALID_INDEX_MESSAGE = "Index must be a non-zero positive integer";
 
     private static final int EDIT_MAX_ARGUMENTS = 7;
@@ -55,39 +57,52 @@ public class EditArgumentManager extends ArgumentManager {
 
     @Override
     public int addArgumentForCommand(List<String> arguments, int argumentIndex, String userInput) {
-        if (argumentIndex >= EDIT_FIELDS_INDEX) {
-            arguments.add(userInput);
-
-            if (arguments.get(EDIT_FIELDS_INDEX).isEmpty()) { //no more edit indexes
-                //all remaining unselected fields are empty
-                for (int index = argumentIndex + 1; index < EDIT_MAX_ARGUMENTS; index++) {
-                    arguments.add("");
-                }
-                return EDIT_MAX_ARGUMENTS;
+        //sort the selected indexes
+        if (argumentIndex == EDIT_FIELDS_INDEX) {
+            List<String> rawIndexes = Arrays.asList(userInput.split(" "));
+            rawIndexes.sort((o1, o2) -> Integer.valueOf(o1) - Integer.valueOf(o2));
+            String sortedIndexes = "";
+            for (String index : rawIndexes) {
+                sortedIndexes += index;
+                sortedIndexes += " ";
             }
+            sortedIndexes = sortedIndexes.trim();
+            arguments.add(sortedIndexes);
+        } else {
+            arguments.add(userInput);
+        }
 
-            //first element is the next edit index, second element is the remaining indexes
-            String[] firstIndexAndRemainingIndexes = arguments.get(EDIT_FIELDS_INDEX)
-                    .split(" ", 2);
-            int nextIndex = Integer.valueOf(firstIndexAndRemainingIndexes[0].trim());
-            nextIndex += EDIT_INDEX_OFFSET;
-            //the unselected indexes in between the current index and the next index are empty
-            for (int index = argumentIndex + 1; index < nextIndex; index++) {
+        if (argumentIndex == EDIT_TARGET_INDEX) {
+            return argumentIndex + 1;
+        }
+
+        if (arguments.get(EDIT_FIELDS_INDEX).isEmpty()) { //no more edit indexes
+            //all remaining unselected fields are empty
+            for (int index = argumentIndex + 1; index < EDIT_MAX_ARGUMENTS; index++) {
                 arguments.add("");
             }
+            return EDIT_MAX_ARGUMENTS;
+        }
 
-            //update remaining indexes
-            arguments.remove(EDIT_FIELDS_INDEX);
-            if (firstIndexAndRemainingIndexes.length <= 1) {
-                arguments.add(EDIT_FIELDS_INDEX, "");
-                return nextIndex;
-            }
-            String remainingIndexes = firstIndexAndRemainingIndexes[1];
-            arguments.add(EDIT_FIELDS_INDEX, remainingIndexes);
+        //first element is the next edit index, second element is the remaining indexes
+        String[] firstIndexAndRemainingIndexes = arguments.get(EDIT_FIELDS_INDEX)
+                .split(" ", 2);
+        int nextIndex = Integer.valueOf(firstIndexAndRemainingIndexes[0].trim());
+        nextIndex += EDIT_INDEX_OFFSET;
+        //the unselected indexes in between the current index and the next index are empty
+        for (int index = argumentIndex + 1; index < nextIndex; index++) {
+            arguments.add("");
+        }
+
+        //update remaining indexes
+        arguments.remove(EDIT_FIELDS_INDEX);
+        if (firstIndexAndRemainingIndexes.length <= 1) {
+            arguments.add(EDIT_FIELDS_INDEX, "");
             return nextIndex;
         }
-        arguments.add(userInput);
-        return argumentIndex + 1;
+        String remainingIndexes = firstIndexAndRemainingIndexes[1];
+        arguments.add(EDIT_FIELDS_INDEX, remainingIndexes);
+        return nextIndex;
     }
 
     @Override
@@ -210,11 +225,16 @@ public class EditArgumentManager extends ArgumentManager {
             return StringUtil.isNonZeroUnsignedInteger(userInput);
 
         case EDIT_FIELDS_INDEX:
+            String appearedValues = "";
             for (String index : userInput.split(" ")) {
                 if (!StringUtil.isNonZeroUnsignedInteger(index)
-                        || Integer.valueOf(index) >= EDIT_TAGS_INDEX) {
+                        || Integer.valueOf(index) >= EDIT_MAX_ARGUMENTS) {
                     return false;
                 }
+                if (appearedValues.contains(index)) {
+                    return false;
+                }
+                appearedValues += index;
             }
             return true;
 

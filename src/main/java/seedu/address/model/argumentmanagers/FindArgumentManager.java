@@ -2,12 +2,17 @@ package seedu.address.model.argumentmanagers;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import seedu.address.commons.util.StringUtil;
@@ -17,17 +22,23 @@ import seedu.address.logic.commands.FindCommand;
  * ArgumentManager that handles management and recording of arguments for an intuitive 'find' command.
  */
 public class FindArgumentManager extends ArgumentManager {
-    public static final String FIND_SEARCH_FIELDS_INSTRUCTION = "Please select what fields to search in, by typing"
+    public static final String FIND_SEARCH_FIELDS_INSTRUCTION = "Please select what fields to search in, by typing "
             + "down the corresponding numbers, separated by spaces:\n"
             + "1. Global Search\n"
             + "2. Search by Name\n"
-            + "3. Search by Phone\n"
-            + "4. Search by Email\n"
-            + "5. Search by Address\n"
-            + "6. Search by Tags";
+            + "3. Search by NRIC\n"
+            + "4. Search by Phone\n"
+            + "5. Search by Email\n"
+            + "6. Search by Address\n"
+            + "7. Search by Role\n"
+            + "8. Search by Tags\n"
+            + "9. Search by Medical Department\n"
+            + "10. Search by Medical Record";
     public static final String FIND_GLOBAL_INSTRUCTION = "Please enter keywords to be searched everywhere, "
             + "separated only by commas";
     public static final String FIND_NAME_INSTRUCTION = "Please enter keywords to be searched for (by name), "
+            + "separated only by commas";
+    public static final String FIND_NRIC_INSTRUCTION = "Please enter keywords to be searched for (by NRIC), "
             + "separated only by commas";
     public static final String FIND_PHONE_INSTRUCTION = "Please enter keywords to be searched for (by phone number), "
             + "separated only by commas";
@@ -35,28 +46,38 @@ public class FindArgumentManager extends ArgumentManager {
             + "separated only by commas";
     public static final String FIND_ADDRESS_INSTRUCTION = "Please enter keywords to be searched for (by address), "
             + "separated only by commas";
+    public static final String FIND_ROLE_INSTRUCTION = "Please enter keywords to be searched for (by role), "
+            + "separated only by commas";
     public static final String FIND_TAGS_INSTRUCTION = "Please enter keywords to be searched for (by tags), "
             + "separated only by commas";
+    public static final String FIND_MEDICAL_DEPT_INSTRUCTION = "Please enter keywords to be searched for "
+            + "(by medical department), separated only by commas";
+    public static final String FIND_MEDICAL_RECORD_INSTRUCTION = "Please enter keywords to be searched for "
+            + "(by medical record), separated only by commas";
 
-    public static final String FIND_INVALID_FIELDS_MESSAGE = "Index must be a non-zero positive integer "
+    public static final String FIND_INVALID_FIELDS_MESSAGE = "Indexes must be non-zero positive integers "
             + "from %1$s to %2$s, and cannot be repeated";
 
-    private static final int FIND_MAX_ARGUMENTS = 7;
+    private static final int FIND_MAX_ARGUMENTS = 11;
     private static final int FIND_SEARCH_FIELDS_INDEX = 0;
     private static final int FIND_GLOBAL_INDEX = 1;
     private static final int FIND_NAME_INDEX = 2;
-    private static final int FIND_PHONE_INDEX = 3;
-    private static final int FIND_EMAIL_INDEX = 4;
-    private static final int FIND_ADDRESS_INDEX = 5;
-    private static final int FIND_TAGS_INDEX = 6;
+    private static final int FIND_NRIC_INDEX = 3;
+    private static final int FIND_PHONE_INDEX = 4;
+    private static final int FIND_EMAIL_INDEX = 5;
+    private static final int FIND_ADDRESS_INDEX = 6;
+    private static final int FIND_ROLE_INDEX = 7;
+    private static final int FIND_TAGS_INDEX = 8;
+    private static final int FIND_MEDICAL_DEPT_INDEX = 9;
+    private static final int FIND_MEDICAL_RECORD_INDEX = 10;
 
 
     @Override
     public int addArgumentForCommand(List<String> arguments, int argumentIndex, String userInput) {
         //sort the selected indexes
         if (argumentIndex == FIND_SEARCH_FIELDS_INDEX) {
-            String[] rawIndexes = userInput.split(" ");
-            Arrays.sort(rawIndexes);
+            List<String> rawIndexes = Arrays.asList(userInput.split(" "));
+            rawIndexes.sort((o1, o2) -> Integer.valueOf(o1) - Integer.valueOf(o2));
             String sortedIndexes = "";
             for (String index : rawIndexes) {
                 sortedIndexes += index;
@@ -110,6 +131,9 @@ public class FindArgumentManager extends ArgumentManager {
         case FIND_NAME_INDEX:
             return FIND_NAME_INSTRUCTION;
 
+        case FIND_NRIC_INDEX:
+            return FIND_NRIC_INSTRUCTION;
+
         case FIND_PHONE_INDEX:
             return FIND_PHONE_INSTRUCTION;
 
@@ -119,8 +143,17 @@ public class FindArgumentManager extends ArgumentManager {
         case FIND_ADDRESS_INDEX:
             return FIND_ADDRESS_INSTRUCTION;
 
+        case FIND_ROLE_INDEX:
+            return FIND_ROLE_INSTRUCTION;
+
         case FIND_TAGS_INDEX:
             return FIND_TAGS_INSTRUCTION;
+
+        case FIND_MEDICAL_DEPT_INDEX:
+            return FIND_MEDICAL_DEPT_INSTRUCTION;
+
+        case FIND_MEDICAL_RECORD_INDEX:
+            return FIND_MEDICAL_RECORD_INSTRUCTION;
 
         case FIND_MAX_ARGUMENTS:
             return COMMAND_COMPLETE_MESSAGE;
@@ -183,6 +216,10 @@ public class FindArgumentManager extends ArgumentManager {
             resultArg = PREFIX_NAME + argument;
             return resultArg.replace(",", " " + PREFIX_NAME).trim();
 
+        case FIND_NRIC_INDEX:
+            resultArg = PREFIX_NRIC + argument;
+            return resultArg.replace(",", " " + PREFIX_NRIC).trim();
+
         case FIND_PHONE_INDEX:
             resultArg = PREFIX_PHONE + argument;
             return resultArg.replace(",", " " + PREFIX_PHONE).trim();
@@ -195,9 +232,21 @@ public class FindArgumentManager extends ArgumentManager {
             resultArg = PREFIX_ADDRESS + argument;
             return resultArg.replace(",", " " + PREFIX_ADDRESS).trim();
 
+        case FIND_ROLE_INDEX:
+            resultArg = PREFIX_ROLE + argument;
+            return resultArg.replace(",", " " + PREFIX_ROLE).trim();
+
         case FIND_TAGS_INDEX:
             resultArg = PREFIX_TAG + argument;
             return resultArg.replace(",", " " + PREFIX_TAG).trim();
+
+        case FIND_MEDICAL_DEPT_INDEX:
+            resultArg = PREFIX_MEDICAL_DEPARTMENT + argument;
+            return resultArg.replace(",", " " + PREFIX_MEDICAL_DEPARTMENT).trim();
+
+        case FIND_MEDICAL_RECORD_INDEX:
+            resultArg = PREFIX_MEDICAL_RECORD + argument;
+            return resultArg.replace(",", " " + PREFIX_MEDICAL_RECORD).trim();
 
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
@@ -213,7 +262,7 @@ public class FindArgumentManager extends ArgumentManager {
             String appearedValues = "";
             for (String index : userInput.split(" ")) {
                 if (!StringUtil.isNonZeroUnsignedInteger(index)
-                        || Integer.valueOf(index) > FIND_TAGS_INDEX) {
+                        || Integer.valueOf(index) >= FIND_MAX_ARGUMENTS) {
                     return false;
                 }
                 if (appearedValues.contains(index)) {
@@ -236,7 +285,7 @@ public class FindArgumentManager extends ArgumentManager {
         case FIND_SEARCH_FIELDS_INDEX:
             return String.format(FIND_INVALID_FIELDS_MESSAGE,
                     FIND_GLOBAL_INDEX,
-                    FIND_TAGS_INDEX);
+                    FIND_MEDICAL_RECORD_INDEX);
 
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
