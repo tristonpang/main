@@ -3,9 +3,12 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +30,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
+    private final Predicate<Person> PREDICATE_MATCH_PATIENTS =
+            p -> p.getClass().getSimpleName().equalsIgnoreCase(
+                    "Patient");
+    private Predicate<Person> PREDICATE_SHOW_RELEVANT_PERSONS;
 
     private final IntuitivePromptManager intuitivePromptManager;
 
@@ -39,14 +46,31 @@ public class ModelManager extends ComponentManager implements Model {
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
+        // starts the application with the all patient and doctor's database by default.
+        PREDICATE_SHOW_RELEVANT_PERSONS = PREDICATE_SHOW_ALL_PERSONS;
+
         versionedAddressBook = new VersionedAddressBook(addressBook);
-        filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        filteredPersons =
+                new FilteredList<>(versionedAddressBook.getPersonList()).filtered(this.PREDICATE_SHOW_RELEVANT_PERSONS);
 
         intuitivePromptManager = new IntuitivePromptManager();
     }
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
+    }
+
+    @Override
+    public void changeDatabase(Predicate<Person> filer) {
+        this.PREDICATE_SHOW_RELEVANT_PERSONS = filer;
+        this.indicateAddressBookChanged();
+    }
+
+    @Override
+    public void clearActiveDatabase() {
+        List<Person> toDelete = versionedAddressBook.getPersonList().stream()
+                .filter(this.PREDICATE_SHOW_RELEVANT_PERSONS).collect(Collectors.toList());
+        toDelete.stream().forEach(person -> deletePerson(person));
     }
 
     @Override
@@ -143,7 +167,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredPersons.setPredicate(this.PREDICATE_SHOW_RELEVANT_PERSONS.and(predicate));
     }
 
     //=========== Undo/Redo =================================================================================

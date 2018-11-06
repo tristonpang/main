@@ -16,6 +16,11 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** Switches the database base on the predicate */
+    void changeDatabase(Predicate<Person> filer);
+
+    void clearActiveDatabase();
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
