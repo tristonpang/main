@@ -75,4 +75,9 @@ public class DeleteArgumentManager extends ArgumentManager {
         return false;
     }
 
+    @Override
+    public String getArgumentManagerType() {
+        return DeleteCommand.COMMAND_WORD;
+    }
+
 }
