@@ -10,6 +10,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ScheduleCommand;
+import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.argumentmanagers.AddArgumentManager;
 import seedu.address.model.argumentmanagers.ArgumentManager;
@@ -17,6 +18,7 @@ import seedu.address.model.argumentmanagers.DeleteArgumentManager;
 import seedu.address.model.argumentmanagers.EditArgumentManager;
 import seedu.address.model.argumentmanagers.FindArgumentManager;
 import seedu.address.model.argumentmanagers.ScheduleArgumentManager;
+import seedu.address.model.argumentmanagers.UpdateArgumentManager;
 import seedu.address.ui.UiManager;
 
 
@@ -107,6 +109,10 @@ public class IntuitivePromptManager {
 
         case ScheduleCommand.COMMAND_WORD:
             argumentManager = new ScheduleArgumentManager();
+            break;
+
+        case UpdateCommand.COMMAND_WORD:
+            argumentManager = new UpdateArgumentManager();
             break;
 
         default:

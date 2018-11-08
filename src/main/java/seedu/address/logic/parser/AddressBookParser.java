@@ -118,6 +118,9 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case UpdateCommand.COMMAND_WORD:
+            if (arguments.isEmpty()) {
+                return triggerIntuitiveMode(userInput);
+            }
             return new UpdateCommandParser().parse(arguments);
 
         default:
