@@ -13,6 +13,9 @@ import seedu.address.model.patient.Diagnosis;
 import seedu.address.model.patient.Treatment;
 import seedu.address.model.person.Date;
 
+/**
+ * ArgumentManager that handles management and recording of arguments for an intuitive 'update' command.
+ */
 public class UpdateArgumentManager extends ArgumentManager {
     public static final String UPDATE_TARGET_INSTRUCTION = "Please enter the index of the patient whose medical record "
             + "will be updated";
@@ -102,6 +105,14 @@ public class UpdateArgumentManager extends ArgumentManager {
         return preparedString.trim();
     }
 
+    /**
+     * Given an argument and an index that represents which field this argument belongs to in the 'schedule' command,
+     * prefix and return the edited argument.
+     *
+     * @param index    the index that represents which field the argument belongs to in the 'schedule' command
+     * @param argument the specified argument
+     * @return the prefixed argument
+     */
     private String prefixUpdateArgument(int index, String argument) {
         switch (index) {
 
