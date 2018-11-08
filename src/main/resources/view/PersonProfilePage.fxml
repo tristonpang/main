@@ -24,7 +24,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <ImageView fx:id="profileImageDisplay" fitHeight="200.0" fitWidth="200.0" layoutX="103.0" layoutY="1.0"
+      <ImageView fx:id="profileImageDisplay" fitHeight="150.0" fitWidth="165.0" layoutX="122.0" layoutY="1.0"
                  pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/blank_profile.png" />

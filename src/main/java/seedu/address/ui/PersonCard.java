@@ -5,8 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.doctor.Doctor;
-import seedu.address.model.patient.Patient;
 import seedu.address.model.person.Person;
 
 /**
@@ -15,7 +13,6 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static final String EMPTY_VALUE = ""; // empty value to set for the availability of patients.
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -36,17 +33,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label nric;
+    @FXML
     private Label phone;
     @FXML
     private Label address;
-    @FXML
-    private Label email;
-    @FXML
-    private Label medicalRecord;
-    @FXML
-    private Label appointment;
-    @FXML
-    private Label uniqueField;
     @FXML
     private FlowPane tags;
 
@@ -54,19 +45,12 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        nric.setText(person.getNric().code);
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        if (person instanceof Doctor) {
-            Doctor doctor = (Doctor) person;
-            uniqueField.setText(doctor.getMedicalDepartment().deptName);
-        } else if (person instanceof Patient) {
-            uniqueField.setText(((Patient) person).getMedicalRecord().value);
-        }
         role.setText(person.getClass().getSimpleName());
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        appointment.setText(person.getAppointment().value);
     }
 
     @Override
