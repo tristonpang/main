@@ -32,7 +32,8 @@ public class Nric {
     }
 
     public static boolean isValidNric(String code) throws IllegalArgumentException{
-        return hasValidLength(code) && hasValidFormat(code) && passCheckSumAlgo(code);
+        String checkCode = code.toUpperCase();
+        return hasValidLength(checkCode) && hasValidFormat(checkCode) && passCheckSumAlgo(checkCode);
     }
 
     private static boolean hasValidLength(String code) throws IllegalArgumentException {
@@ -137,6 +138,69 @@ public class Nric {
             }
         }
         return false;
+    }
+
+    /**
+     *
+     * Helper method to generate a valid NRIC code base on the given {@code codeNumber}. Returns a valid NRIC.
+     * Prerequisites: Only used for generating NRIC beginning with char 'S'.
+     * Used only for JUnit Tests.
+     */
+    public static String generateCode(int codeNumber) {
+        char lastChar = 'A';
+
+        String code = Integer.toString(codeNumber);
+        int firstDigit = code.charAt(0) - '0';
+        int secondDigit = code.charAt(1) - '0';
+        int thirdDigit = code.charAt(2) - '0';
+        int fourthDigit = code.charAt(3) - '0';
+        int fifthDigit = code.charAt(4) - '0';
+        int sixthDigit = code.charAt(5) - '0';
+        int seventhDigit = code.charAt(6) - '0';
+
+        int sum = firstDigit * 2 + secondDigit * 7 + thirdDigit * 6 + fourthDigit * 5 + fifthDigit * 4
+                + sixthDigit * 3 + seventhDigit * 2;
+
+        int remainder = sum % 11;
+
+        // 0=J, 1=Z, 2=I, 3=H, 4=G, 5=F, 6=E, 7=D, 8=C, 9=B, 10=A
+        switch (remainder) {
+        case 0:
+            lastChar = 'J';
+            break;
+        case 1:
+            lastChar = 'Z';
+            break;
+        case 2:
+            lastChar = 'I';
+            break;
+        case 3:
+            lastChar = 'H';
+            break;
+        case 4:
+            lastChar = 'G';
+            break;
+        case 5:
+            lastChar = 'F';
+            break;
+        case 6:
+            lastChar = 'E';
+            break;
+        case 7:
+            lastChar = 'D';
+            break;
+        case 8:
+            lastChar = 'C';
+            break;
+        case 9:
+            lastChar = 'B';
+            break;
+        case 10:
+            lastChar = 'A';
+            break;
+        default:
+        }
+        return codeNumber + "" + lastChar;
     }
 
     @Override
