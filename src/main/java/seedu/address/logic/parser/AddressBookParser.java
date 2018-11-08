@@ -18,8 +18,10 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.IntuitiveEntryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ResetCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateCommand;
 
@@ -87,6 +89,9 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
+        case ResetCommand.COMMAND_WORD:
+            return new ResetCommand();
+
         case FindCommand.COMMAND_WORD:
             if (arguments.isEmpty()) {
                 return triggerIntuitiveMode(userInput);
@@ -99,8 +104,11 @@ public class AddressBookParser {
             }
             return new ScheduleCommandParser().parse(arguments);
 
+        case SwitchCommand.COMMAND_WORD:
+            return new SwitchCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
-            return new ListCommandParser().parse(arguments);
+            return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
