@@ -37,6 +37,7 @@ public class IntuitivePromptManager {
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
+    private static final String INTUITIVE_MODE_MESSAGE = "(You are currently in the intuitive %1$s command.)";
     private static final String UNEXPECTED_SCENARIO_MESSAGE = "IntuitivePromptManager: "
             + "Unexpected scenario has occurred in switch-case block";
 
@@ -147,7 +148,8 @@ public class IntuitivePromptManager {
      * @return the string instruction for the current field of the executing intuitive command
      */
     public String getInstruction() {
-        return argumentManager.retrieveInstruction(arguments, currentArgIndex);
+        return String.format(INTUITIVE_MODE_MESSAGE, getCurrentCommandType()) + "\n"
+                + argumentManager.retrieveInstruction(arguments, currentArgIndex);
     }
 
     /**
@@ -249,7 +251,7 @@ public class IntuitivePromptManager {
      *
      * @return the String representing the current intuitive command
      */
-    public String getCurrentCommandType() {
+    private String getCurrentCommandType() {
         return argumentManager.getArgumentManagerType();
     }
 }
