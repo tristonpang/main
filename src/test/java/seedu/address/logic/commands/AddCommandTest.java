@@ -121,6 +121,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void changeDatabase(Predicate<Person> filter) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void clearActiveDatabase() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             throw new AssertionError("This method should not be called.");
         }

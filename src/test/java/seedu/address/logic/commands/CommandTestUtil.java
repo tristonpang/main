@@ -44,13 +44,13 @@ public class CommandTestUtil {
     public static final String VALID_MEDICAL_RECORD_AMY = "12.12.2018, Diagnosis: cough, "
             + "Treatment: dextromethorphan, Comments: -";
     public static final String VALID_MEDICAL_RECORD_BOB = "12.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -";
-    public static final String VALID_SCHEDULE_AMY = "22.11.2018,1300,1400,Alice,S1234567B,Amy,S1234567A";
-    public static final String VALID_SCHEDULE_BOB = "22.11.2018,1300,1400,Jack,S1234567J,Bob,S1234567B";
+    public static final String VALID_SCHEDULE_AMY = "22.11.2018,1300,1400,Alice,S4612750A,Amy,S8998334G";
+    public static final String VALID_SCHEDULE_BOB = "22.11.2018,1300,1400,Jack,S1249482C,Bob,S0529160G";
     public static final String VALID_ROLE_DOCTOR = "doctor";
     public static final String VALID_ROLE_PATIENT = "patient";
     public static final String VALID_MEDICAL_DEPARTMENT = "Dermatology";
-    public static final String VALID_NRIC_AMY = "S1234567A";
-    public static final String VALID_NRIC_BOB = "S9876543B";
+    public static final String VALID_NRIC_AMY = "S8998334G";
+    public static final String VALID_NRIC_BOB = "S0529160G";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

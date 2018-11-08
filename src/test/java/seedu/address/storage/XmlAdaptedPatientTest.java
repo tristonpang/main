@@ -23,7 +23,9 @@ public class XmlAdaptedPatientTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_NRIC = "SJ123324B";
+    private static final String INVALID_FORMAT_NRIC = "SJ123324B";
+    private static final String INVALID_LENGTH_NRIC = "S1222233322324B";
+    private static final String INVALID_CODE_NRIC = "S1234567V";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_TAG = "#friend";
 
@@ -32,7 +34,7 @@ public class XmlAdaptedPatientTest {
     private static final String VALID_PHONE = BENSON.getPhone().toString();
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
-    private static final String VALID_APPOINTMENT = "21.11.18,1300,1400,Jack,Heart,Pauline,S1234567A";
+    private static final String VALID_APPOINTMENT = "21.11.18,1300,1400,Jack,S2932195G,Pauline,S1740595J";
     private static final String VALID_MEDICAL_RECORD = BENSON.getMedicalRecord().toString();
     private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(XmlAdaptedTag::new)
@@ -61,11 +63,27 @@ public class XmlAdaptedPatientTest {
     }
 
     @Test
-    public void toModelType_invalidNric_throwsIllegalValueException() {
-        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, INVALID_NRIC, VALID_PHONE, VALID_EMAIL,
+    public void toModelType_invalidNricFormat_throwsIllegalValueException() {
+        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, INVALID_FORMAT_NRIC, VALID_PHONE, VALID_EMAIL,
                 VALID_ADDRESS, VALID_MEDICAL_RECORD, VALID_TAGS, VALID_APPOINTMENT);
         String expectedMessage = Nric.MESSAGE_NRIC_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+        Assert.assertThrows(IllegalArgumentException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidNriclENGTH_throwsIllegalValueException() {
+        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, INVALID_LENGTH_NRIC, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_MEDICAL_RECORD, VALID_TAGS, VALID_APPOINTMENT);
+        String expectedMessage = Nric.MESSAGE_NRIC_INVALID_LENGTH;
+        Assert.assertThrows(IllegalArgumentException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidNricCode_throwsIllegalValueException() {
+        XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, INVALID_CODE_NRIC, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_MEDICAL_RECORD, VALID_TAGS, VALID_APPOINTMENT);
+        String expectedMessage = Nric.MESSAGE_NRIC_INVALID;
+        Assert.assertThrows(IllegalArgumentException.class, expectedMessage, person::toModelType);
     }
 
     @Test
