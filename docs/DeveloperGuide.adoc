@@ -559,7 +559,7 @@ The following `XYZArgumentManagers` inherit from `ArgumentManager`. They handle 
 * `FindArgumentManager`: Represents the intuitive `find` command
 * `EditArgumentManager`: Represents the intuitive `edit` command
 * `ScheduleArgumentManager`: Represents the intuitive `schedule` command
-* `update`
+* `UpdateArgumentManager`: Represents the intuitive `update` command
 
 
 // end::intuitivecommandprompt[]
