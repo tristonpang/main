@@ -114,7 +114,7 @@ public class ScheduleArgumentManager extends ArgumentManager {
                 index++;
                 continue;
             }
-            preparedString.append(prefixScheduleArgument(index, argument)); //TODO: optimise with StringBuilder
+            preparedString.append(prefixScheduleArgument(index, argument));
             preparedString.append(" ");
             index++;
         }

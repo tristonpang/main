@@ -122,8 +122,8 @@ public class AddArgumentManager extends ArgumentManager {
 
     @Override
     public String prepareArguments(List<String> arguments) {
-        String preparedString = "";
-        preparedString += AddCommand.COMMAND_WORD + " ";
+        StringBuilder preparedString = new StringBuilder();
+        preparedString.append(AddCommand.COMMAND_WORD + " ");
 
         int index = MIN_ARGUMENT_INDEX;
         for (String argument : arguments) {
@@ -131,12 +131,12 @@ public class AddArgumentManager extends ArgumentManager {
                 index++;
                 continue;
             }
-            preparedString += prefixAddArgument(index, argument); //TODO: optimise with StringBuilder
-            preparedString += " ";
+            preparedString.append(prefixAddArgument(index, argument));
+            preparedString.append(" ");
             index++;
         }
 
-        return preparedString.trim();
+        return preparedString.toString().trim();
     }
 
     /**

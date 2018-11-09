@@ -157,8 +157,8 @@ public class EditArgumentManager extends ArgumentManager {
 
     @Override
     public String prepareArguments(List<String> arguments) {
-        String preparedString = "";
-        preparedString += EditCommand.COMMAND_WORD + " ";
+        StringBuilder preparedString = new StringBuilder();
+        preparedString.append(EditCommand.COMMAND_WORD + " ");
 
         for (int index = MIN_ARGUMENT_INDEX; index < EDIT_MAX_ARGUMENTS; index++) {
             if (index == EDIT_FIELDS_INDEX) {
@@ -170,11 +170,11 @@ public class EditArgumentManager extends ArgumentManager {
                 continue;
             }
 
-            preparedString += prefixEditArgument(index, argument); //TODO: optimise with StringBuilder
-            preparedString += " ";
+            preparedString.append(prefixEditArgument(index, argument));
+            preparedString.append(" ");
         }
 
-        return preparedString.trim();
+        return preparedString.toString().trim();
     }
 
     /**
