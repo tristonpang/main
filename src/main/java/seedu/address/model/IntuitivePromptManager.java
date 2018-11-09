@@ -30,6 +30,8 @@ public class IntuitivePromptManager {
     public static final String SKIP_COMMAND = "//";
     public static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
 
+    public static final String INTUITIVE_MODE_MESSAGE = "(You are currently in the intuitive %1$s command.)";
+    
     private static int currentArgIndex;
     private static List<String> arguments;
     private static ArgumentManager argumentManager;
@@ -37,7 +39,6 @@ public class IntuitivePromptManager {
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
-    public static final String INTUITIVE_MODE_MESSAGE = "(You are currently in the intuitive %1$s command.)";
     private static final String UNEXPECTED_SCENARIO_MESSAGE = "IntuitivePromptManager: "
             + "Unexpected scenario has occurred in switch-case block";
 
