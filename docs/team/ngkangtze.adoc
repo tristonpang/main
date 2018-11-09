@@ -13,9 +13,9 @@
 This Project Portfolio is intended to document my contributions towards One Life. These contributions include functional
 and non-functional code, documentation, user interface and numerous other aspects of the project.
 
-One Life is a desktop medical database and medical information management application used for storing and displaying
+One Life is a desktop-based medical database and medical information management application used for storing and displaying
 data related to patients and doctors.
-One Life aims to improve the efficiency for administrative processes in medical institutes.
+One Life aims to improve the efficiency of administrative processes in medical institutions.
 It was developed as part of the module requirements for CS2103T (Software Engineering).
 
 The user interacts with it using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX.
@@ -30,7 +30,7 @@ It is written in Java, and has about 10 kLoC.
 
 * *Minor enhancement*: Modified the `find` command to reject invalid input and prompt the user for proper input using a format guide.
 
-* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=ngkangtze[Functional code]]
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=ngkangtze[Functional code]] [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=ngkangtze&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[RepoSense]]
 
 * *Other contributions*:
 
