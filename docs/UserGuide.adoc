@@ -218,7 +218,7 @@ image::FindCommandUserGuideSpecific1.png[width="600"]
 .Specific Find Command with Additional Prefixes
 image::FindCommandUserGuideSpecific2.png[width="600"]
 
-.Invalid Input for Specific Find Command
+.Examples of Invalid Input for Specific Find Command
 image::FindCommandUserGuideError.png[width="600"]
 
 ****
