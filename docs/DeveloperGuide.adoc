@@ -471,7 +471,7 @@ proceeds to return this String instruction to the executing `IntuitiveEntryComma
 Step 6. `IntuitiveEntryCommand` uses the String instruction to create a new `CommandResult`, which is then returned
 to the `LogicManager` to be displayed to the user.
 
-The following two sequence diagrams (Figures 10 & 11) describes the above process:
+The following two sequence diagrams (Figures 11 & 12) describes the above process:
 
 .High level sequence diagram detailing interactions between `Logic` and `Model`
 image::IntuitiveCommandWordSequenceDiagram.png[width="800"]
@@ -543,7 +543,7 @@ as accordingly.
 Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
 `IntuitivePromptManager`. Execution continues normally as described in the above sections.
 
-The following two sequence diagrams (Figures 14 & 15) describe the above process:
+The following two sequence diagrams (Figures 15 & 16) describe the above process:
 
 .High level sequence diagram showing going back ability
 image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
@@ -551,14 +551,15 @@ image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
 .Internal sequence digram showing going back ability
 image::ArgumentManagerBackSequenceDiagram.png[width="800"]
 
-==== Supported Commands
-The following commands are supported by the Intuitive Command Prompt feature, and thus have an intuitive version:
+==== Commands & Argument Managers
+The following `XYZArgumentManagers` inherit from `ArgumentManager`. They handle arguments for and represent the different commands as stated below:
 
-* `add`
-* `delete`
-* `find`
-* `edit`
-* `schedule`
+* `AddArgumentManager`: Represents the intuitive `add` command
+* `DeleteArgumentManager`: Represents the intuitive `delete` command
+* `FindArgumentManager`: Represents the intuitive `find` command
+* `EditArgumentManager`: Represents the intuitive `edit` command
+* `ScheduleArgumentManager`: Represents the intuitive `schedule` command
+* `update`
 
 
 // end::intuitivecommandprompt[]
