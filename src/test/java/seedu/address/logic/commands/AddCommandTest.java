@@ -228,10 +228,6 @@ public class AddCommandTest {
         public void cancelIntuitiveCommand() {
             throw new AssertionError("This method should not be called.");
         }
-
-        @Override
-        public String getCurrentIntuitiveCommandType() {
-            throw new AssertionError("This method should not be called.");
         }
     }
 
