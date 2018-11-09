@@ -201,7 +201,8 @@ Below is a list of all searchable attributes and their corresponding `Prefix`:
 
 [WARNING]
 Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in the input. A command like
-`find n/[BLANK]` is not a valid input.
+`find n/[BLANK]` is not a valid input. +
+The `Prefix` entered must also be valid.
 
 Examples:
 
