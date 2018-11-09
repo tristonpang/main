@@ -88,8 +88,8 @@ public class UpdateArgumentManager extends ArgumentManager {
 
     @Override
     public String prepareArguments(List<String> arguments) {
-        String preparedString = "";
-        preparedString += UpdateCommand.COMMAND_WORD + " ";
+        StringBuilder preparedString = new StringBuilder();
+        preparedString.append(UpdateCommand.COMMAND_WORD + " ");
 
         int index = MIN_ARGUMENT_INDEX;
         for (String argument : arguments) {
@@ -97,12 +97,12 @@ public class UpdateArgumentManager extends ArgumentManager {
                 index++;
                 continue;
             }
-            preparedString += prefixUpdateArgument(index, argument); //TODO: optimise with StringBuilder
-            preparedString += " ";
+            preparedString.append(prefixUpdateArgument(index, argument));
+            preparedString.append(" ");
             index++;
         }
 
-        return preparedString.trim();
+        return preparedString.toString().trim();
     }
 
     /**

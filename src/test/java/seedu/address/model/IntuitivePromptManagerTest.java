@@ -47,7 +47,8 @@ public class IntuitivePromptManagerTest {
     @Test
     public void getInstruction_getNextRequiredAddInstruction_getCorrectInstruction() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
-        assertEquals(AddArgumentManager.ROLE_INSTRUCTION, intuitivePromptManager.getInstruction());
+        assertEquals(String.format(IntuitivePromptManager.INTUITIVE_MODE_MESSAGE, AddCommand.COMMAND_WORD)
+                + "\n" + AddArgumentManager.ROLE_INSTRUCTION, intuitivePromptManager.getInstruction());
     }
 
     @Test
@@ -62,7 +63,8 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(Role.MESSAGE_ROLE_CONSTRAINTS
+        thrown.expectMessage(Role.MESSAGE_ROLE_CONSTRAINTS + "\n"
+                + String.format(IntuitivePromptManager.INTUITIVE_MODE_MESSAGE, AddCommand.COMMAND_WORD)
                 + "\n" + AddArgumentManager.ROLE_INSTRUCTION);
         intuitivePromptManager.addArgument("!@#$%");
     }
@@ -72,7 +74,8 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.addArgument(FindCommand.COMMAND_WORD);
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(String.format(FindArgumentManager.FIND_INVALID_FIELDS_MESSAGE, 1, 10)
+        thrown.expectMessage(String.format(FindArgumentManager.FIND_INVALID_FIELDS_MESSAGE, 1, 10) + "\n"
+                + String.format(IntuitivePromptManager.INTUITIVE_MODE_MESSAGE, FindCommand.COMMAND_WORD)
                 + "\n" + FindArgumentManager.FIND_SEARCH_FIELDS_INSTRUCTION);
         intuitivePromptManager.addArgument("3 3");
 
@@ -85,6 +88,7 @@ public class IntuitivePromptManagerTest {
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(String.format(EditArgumentManager.EDIT_INVALID_FIELDS_MESSAGE, 1, 5)
+                + "\n" + String.format(IntuitivePromptManager.INTUITIVE_MODE_MESSAGE, EditCommand.COMMAND_WORD)
                 + "\n" + EditArgumentManager.EDIT_FIELDS_INSTRUCTION);
         intuitivePromptManager.addArgument("5 5");
     }
@@ -259,10 +263,14 @@ public class IntuitivePromptManagerTest {
     public void getInstruction_goBackForAddCommand_correctInstruction() throws Exception {
         intuitivePromptManager.addArgument(AddCommand.COMMAND_WORD);
         intuitivePromptManager.addArgument(AddArgumentManager.DOCTOR_ARG_IDENTIFIER);
-        assertEquals(intuitivePromptManager.getInstruction(), AddArgumentManager.NAME_INSTRUCTION);
+        assertEquals(intuitivePromptManager.getInstruction(),
+                String.format(IntuitivePromptManager.INTUITIVE_MODE_MESSAGE, AddCommand.COMMAND_WORD)
+                        + "\n" + AddArgumentManager.NAME_INSTRUCTION);
 
         intuitivePromptManager.removeArgument();
-        assertEquals(intuitivePromptManager.getInstruction(), AddArgumentManager.ROLE_INSTRUCTION);
+        assertEquals(intuitivePromptManager.getInstruction(),
+                String.format(IntuitivePromptManager.INTUITIVE_MODE_MESSAGE, AddCommand.COMMAND_WORD)
+                        + "\n" + AddArgumentManager.ROLE_INSTRUCTION);
     }
 
     @Test
@@ -271,13 +279,19 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.addArgument("2");
         intuitivePromptManager.addArgument("1 3"); //edit name and email
         intuitivePromptManager.addArgument("Jane Watson");
-        assertEquals(intuitivePromptManager.getInstruction(), EditArgumentManager.EDIT_EMAIL_INSTRUCTION);
+        assertEquals(intuitivePromptManager.getInstruction(),
+                String.format(IntuitivePromptManager.INTUITIVE_MODE_MESSAGE, EditCommand.COMMAND_WORD)
+                        + "\n" + EditArgumentManager.EDIT_EMAIL_INSTRUCTION);
 
         intuitivePromptManager.removeArgument();
-        assertEquals(intuitivePromptManager.getInstruction(), EditArgumentManager.EDIT_FIELDS_INSTRUCTION);
+        assertEquals(intuitivePromptManager.getInstruction(),
+                String.format(IntuitivePromptManager.INTUITIVE_MODE_MESSAGE, EditCommand.COMMAND_WORD)
+                        + "\n" + EditArgumentManager.EDIT_FIELDS_INSTRUCTION);
 
         intuitivePromptManager.removeArgument();
-        assertEquals(intuitivePromptManager.getInstruction(), EditArgumentManager.EDIT_TARGET_INSTRUCTION);
+        assertEquals(intuitivePromptManager.getInstruction(),
+                String.format(IntuitivePromptManager.INTUITIVE_MODE_MESSAGE, EditCommand.COMMAND_WORD)
+                        + "\n" + EditArgumentManager.EDIT_TARGET_INSTRUCTION);
     }
 
 

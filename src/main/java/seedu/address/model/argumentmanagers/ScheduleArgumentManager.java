@@ -105,8 +105,8 @@ public class ScheduleArgumentManager extends ArgumentManager {
 
     @Override
     public String prepareArguments(List<String> arguments) {
-        String preparedString = "";
-        preparedString += ScheduleCommand.COMMAND_WORD + " ";
+        StringBuilder preparedString = new StringBuilder();
+        preparedString.append(ScheduleCommand.COMMAND_WORD + " ");
 
         int index = MIN_ARGUMENT_INDEX;
         for (String argument : arguments) {
@@ -114,11 +114,11 @@ public class ScheduleArgumentManager extends ArgumentManager {
                 index++;
                 continue;
             }
-            preparedString += prefixScheduleArgument(index, argument); //TODO: optimise with StringBuilder
-            preparedString += " ";
+            preparedString.append(prefixScheduleArgument(index, argument)); //TODO: optimise with StringBuilder
+            preparedString.append(" ");
             index++;
         }
-        return preparedString.trim();
+        return preparedString.toString().trim();
     }
 
     /**
