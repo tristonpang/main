@@ -35,7 +35,7 @@ Further checks are available to inform the user if they keyed in incorrect appoi
 ** Highlights: This enhancement drastically improved the ability of the application to assist medical processes, specifically in the area of scheduling appointment.
 The implementation too was challenging as it required a brand new command to be created.
 
-* *Code contributed*: [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=nelvintan&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[Functional code]] [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=nelvintan&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[Test code]]
+* *Code contributed*: [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=nelvintan&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[Functional code]] [https://github.com[Test code]]
 
 * *Other contributions*:
 
