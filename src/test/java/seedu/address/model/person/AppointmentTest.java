@@ -52,7 +52,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void isClash_AppointmentThatClashesWithCurrentAppointments_failure() {
+    public void isClash_appointmentThatClashesWithCurrentAppointments_failure() {
         ArrayList<Appointment> appointmentList = new ArrayList<>();
 
         // appointment 4 and 5 have different Doctors
@@ -83,7 +83,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void isClash_AppointmentThatClashesWithCurrentAppointmentsBasedOnTimings_success() {
+    public void isClash_appointmentThatClashesWithCurrentAppointmentsBasedOnTimings_success() {
         ArrayList<Appointment> appointmentList = new ArrayList<>();
 
         Appointment appt8 = new Appointment("22.11.2018", "1300", "1400",
@@ -119,7 +119,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void isClash_AppointmentThatClashesWithCurrentAppointmentsBasedOnMoreTimings_success() {
+    public void isClash_appointmentThatClashesWithCurrentAppointmentsBasedOnMoreTimings_success() {
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
                 "Alice", "S1234567H", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
