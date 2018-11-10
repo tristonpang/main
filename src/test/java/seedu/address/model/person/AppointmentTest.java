@@ -32,7 +32,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void addAndDeleteTest() {
+    public void addAndDelete_newAppointment_success() {
         ArrayList<Appointment> appointmentList = new ArrayList<>();
 
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
@@ -52,7 +52,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void noClashTest() {
+    public void isClash_AppointmentThatClashesWithCurrentAppointments_failure() {
         ArrayList<Appointment> appointmentList = new ArrayList<>();
 
         // appointment 4 and 5 have different Doctors
@@ -83,7 +83,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void clashTest() {
+    public void isClash_AppointmentThatClashesWithCurrentAppointmentsBasedOnTimings_success() {
         ArrayList<Appointment> appointmentList = new ArrayList<>();
 
         Appointment appt8 = new Appointment("22.11.2018", "1300", "1400",
@@ -119,7 +119,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void clashTestForAppointmentList() {
+    public void isClash_AppointmentThatClashesWithCurrentAppointmentsBasedOnMoreTimings_success() {
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
                 "Alice", "S1234567H", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
@@ -138,7 +138,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void testForAnyOngoingAppointmentAtCurrentTime() {
+    public void isAnyAppointmentOngoing_appointmentList_failure() {
         Appointment appt1 = new Appointment("13.10.2018", "1300", "1400",
                 "Alice", "S1234567H", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("13.10.2018", "0600", "0700",
@@ -151,7 +151,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void removingAppointmentByDoctorNricTest() {
+    public void removeAppointmentsOfDoctor_nricGiven_success() {
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
                 "Alice", "S1234567H", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
@@ -171,7 +171,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void removingAppointmentByPatientNricTest() {
+    public void removeAppointmentsOfPatient_nricGiven_success() {
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
                 "Alice", "S1234567H", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
@@ -191,7 +191,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void changePatientNameAndNricOfAppointmentListTest() {
+    public void changePatientNameAndNric_oldNameAndoldNricAndNewNameAndNewNric_success() {
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
                 "Alice", "S1234567H", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
@@ -225,7 +225,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void changeDoctorNameAndNricOfAppointmentListTest() {
+    public void changeDoctorNameAndNric_oldNameAndoldNricAndNewNameAndNewNric_success() {
         Appointment appt1 = new Appointment("22.11.2018", "1300", "1400",
                 "Alice", "S1234567H", "Bob", "S1234567A");
         Appointment appt2 = new Appointment("22.11.2018", "1401", "1405",
