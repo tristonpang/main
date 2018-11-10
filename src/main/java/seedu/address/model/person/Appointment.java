@@ -227,15 +227,11 @@ public class Appointment extends DisplayableAttribute {
     }
 
     /**
-     * Test only used in junit testing.
+     * Check only used in junit testing.
      *
      * @return whether an appointment is valid or not.
      */
     public boolean isValidAppointment() {
-        if ("".equals(value)) {
-            // For junit testing.
-            return true;
-        }
         return isOfCorrectNumberOfParts() && hasValidStartandEndTime();
     }
 

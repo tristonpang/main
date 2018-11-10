@@ -38,10 +38,6 @@ public class AppointmentManager {
         return false;
     }
 
-    public static void displaySchedule(ArrayList<Appointment> appointmentList) {
-        return; // connect to UI somehow?!?
-    }
-
     /**
      * Adds an appointment to a list of appointments.
      *
