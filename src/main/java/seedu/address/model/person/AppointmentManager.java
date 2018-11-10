@@ -98,6 +98,7 @@ public class AppointmentManager {
      */
     public static ArrayList<Appointment> removeAppointmentsOfPatient(Nric patientNric,
                                                                      ArrayList<Appointment> appointmentList) {
+        assert Nric.isValidNric(patientNric.toString()) == true: "patient's nric should be valid";
         ArrayList<Appointment> resultList = new ArrayList<>();
         for (Appointment appt : appointmentList) {
             if (!appt.getPatientNric().equals(patientNric)) {
@@ -116,6 +117,7 @@ public class AppointmentManager {
      */
     public static ArrayList<Appointment> removeAppointmentsOfDoctor(Nric doctorNric,
                                                                     ArrayList<Appointment> appointmentList) {
+        assert Nric.isValidNric(doctorNric.toString()) == true: "doctor's nric should be valid";
         ArrayList<Appointment> resultList = new ArrayList<>();
         for (Appointment appt : appointmentList) {
             if (!appt.getDoctorNric().equals(doctorNric)) {
@@ -138,6 +140,11 @@ public class AppointmentManager {
     public static ArrayList<Appointment> changePatientNameAndNric(Name oldPatientName, Nric oldPatientNric,
                                                                   Name newPatientName, Nric newPatientNric,
                                                                   ArrayList<Appointment> appointmentList) {
+        assert Name.isValidName(oldPatientName.toString()) == true: "old patient's name should be valid";
+        assert Name.isValidName(newPatientName.toString()) == true: "new patient's name should be valid";
+        assert Nric.isValidNric(oldPatientNric.toString()) == true: "old patient's nric should be valid";
+        assert Nric.isValidNric(newPatientNric.toString()) == true: "new patient's nric should be valid";
+
         ArrayList<Appointment> newAppointmentList = new ArrayList<>();
         for (Appointment appt : appointmentList) {
             if (appt.getPatientName().equals(oldPatientName) && appt.getPatientNric().equals(oldPatientNric)) {
@@ -164,6 +171,11 @@ public class AppointmentManager {
     public static ArrayList<Appointment> changeDoctorNameAndNric(Name oldDoctorName, Nric oldDoctorNric,
                                                                   Name newDoctorName, Nric newDoctorNric,
                                                                   ArrayList<Appointment> appointmentList) {
+        assert Name.isValidName(oldDoctorName.toString()) == true: "old doctor's name should be valid";
+        assert Name.isValidName(newDoctorName.toString()) == true: "new doctor's name should be valid";
+        assert Nric.isValidNric(oldDoctorNric.toString()) == true: "old doctor's nric should be valid";
+        assert Nric.isValidNric(newDoctorNric.toString()) == true: "new doctor's nric should be valid";
+
         ArrayList<Appointment> newAppointmentList = new ArrayList<>();
         for (Appointment appt : appointmentList) {
             if (appt.getDoctorName().equals(oldDoctorName) && appt.getDoctorNric().equals(oldDoctorNric)) {
