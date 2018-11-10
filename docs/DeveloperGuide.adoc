@@ -712,7 +712,7 @@ after the user input `find n/Alex n/Bernice t/friends`.
 .PersonContainsKeywordPredicate Test Result
 image::FindCommandDeveloperGuidePredicate.png[width="600"]
 
-* As can be seen in the image above, `Person` at index 0 and index 2 are have at least 1 entry in `Name` and `Tag` that
+* As can be seen in the image above, `Person` at index 0 and index 2 have at least 1 entry in `Name` and `Tag` that
 match the required search parameters. Therefore, they will be shown in the result list. Even though `Person` at index 1
 has a match in the `Name` attribute, he does not have a `friends` `Tag` and is therefore not shown.
 
