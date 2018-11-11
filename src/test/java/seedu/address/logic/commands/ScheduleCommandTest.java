@@ -29,7 +29,7 @@ import seedu.address.testutil.PatientBuilder;
  */
 public class ScheduleCommandTest {
 
-    private static final String SCHEDULE_STUB = "23.11.2018,1300,1400,Elle Meyer,S2234599A,Alice Pauline,S7412345C";
+    private static final String SCHEDULE_STUB = "23.11.2018,1300,1400,Elle Meyer,S6977714G,Alice Pauline,S3305985Z";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
@@ -56,7 +56,7 @@ public class ScheduleCommandTest {
         Patient firstPerson = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         firstPerson.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient editedPerson = new PatientBuilder(firstPerson)
-                .withAppointment("22.11.2018,1300,1400,Elle Meyer,S2234599A,"
+                .withAppointment("22.11.2018,1300,1400,Elle Meyer,S6977714G,"
                         + firstPerson.getName().toString()
                         + "," + firstPerson.getNric().toString()).build();
 
@@ -148,7 +148,7 @@ public class ScheduleCommandTest {
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         ScheduleCommand scheduleCommand = new ScheduleCommand(outOfBoundIndex,
-                new Appointment("22.11.2018,1300,1400,Alice,S1234567B,Benson Meier,S8234567A"));
+                new Appointment("22.11.2018,1300,1400,Alice,S3305985Z,Benson Meier,S8234567A"));
 
         // execution failed -> address book state not added into model
         assertCommandFailure(scheduleCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -168,16 +168,16 @@ public class ScheduleCommandTest {
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
-                new Appointment("22.11.2018,1300,1400,Elle Meyer,S2234599A,"
+                new Appointment("22.11.2018,1300,1400,Elle Meyer,S6977714G,"
                         + "Benson Meier"
-                        + "," + "S8234567A"));
+                        + "," + "S1215130F"));
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Patient personToModify = (Patient) model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         personToModify.clearAppointmentList(); // This prevents appointments collected from different tests to clash.
         Patient modifiedPerson = new PatientBuilder(personToModify)
-                .withAppointment("22.11.2018,1300,1400,Elle Meyer,S2234599A,"
+                .withAppointment("22.11.2018,1300,1400,Elle Meyer,S6977714G,"
                         + personToModify.getName().toString() + ","
                         + personToModify.getNric().toString())
                 .build();

@@ -24,9 +24,9 @@ public class ScheduleCommandParserTest {
             + PREFIX_START_TIME + "1300 "
             + PREFIX_END_TIME + "1400 "
             + PREFIX_DOCTOR_NAME + "Alice "
-            + PREFIX_DOCTOR_NRIC + "S1234567B "
+            + PREFIX_DOCTOR_NRIC + "S9380791Z "
             + PREFIX_PATIENT_NAME + "Betty "
-            + PREFIX_PATIENT_NRIC + "S1234567A ";
+            + PREFIX_PATIENT_NRIC + "S6219609B ";
 
     @Test
     public void parse_indexSpecified_success() {
@@ -35,14 +35,14 @@ public class ScheduleCommandParserTest {
         String userInput = targetIndex.getOneBased() + " " + nonEmptyAppointment;
         ScheduleCommand expectedCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
                 new Appointment("22.11.2018", "1300", "1400",
-                        "Alice", "S1234567B", "Betty", "S1234567A"));
+                        "Alice", "S9380791Z", "Betty", "S6219609B"));
         assertParseSuccess(parser, userInput, expectedCommand);
         // no remark
 
         userInput = targetIndex.getOneBased() + " " + nonEmptyAppointment;
         expectedCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
                 new Appointment("22.11.2018", "1300", "1400",
-                "Alice", "S1234567B", "Betty", "S1234567A"));
+                "Alice", "S9380791Z", "Betty", "S6219609B"));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 

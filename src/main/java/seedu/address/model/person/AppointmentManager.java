@@ -7,6 +7,11 @@ import java.util.ArrayList;
  */
 public class AppointmentManager {
 
+    private static final String PSEUDO_DOCTOR_NAME = "JOHN DOE";
+    private static final String PSEUDO_DOCTOR_NRIC = "S2401932B";
+    private static final String PSEUDO_PATIENT_NAME = "BOB";
+    private static final String PSEUDO_PATIENT_NRIC = "S8758412G";
+
     /**
      * Checks if there are any clashes between another appointment
      * compared to all the appoinments in the appointment list.
@@ -66,7 +71,7 @@ public class AppointmentManager {
     /**
      *
      * @param appointmentList a list of Appointments.
-     * @return a boolean stating if there exists any appointment ongoing at the current time.
+     * @return a boolean stating if there exists any appointment ongoing at the current datetime.
      */
     public static boolean isAnyAppointmentOngoing(ArrayList<Appointment> appointmentList) {
         if (appointmentList == null) {
@@ -83,6 +88,31 @@ public class AppointmentManager {
             if (appt.value.equals("")) {
                 continue;
             } else if (appt.isOngoing(currentDate, currentTime)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param appointmentList a list of Appointments.
+     * @return a boolean stating if there exists any appointment ongoing base on given date time.
+     */
+    public static boolean isAnyAppointmentOngoing(ArrayList<Appointment> appointmentList, Date date, Time startTime,
+                                                  Time endTime) {
+        if (appointmentList == null) {
+            return false;
+        }
+
+        // System.out.println(currentDate + " " + currentTime);
+
+        // We check if the current time lies in the time interval of any Appointment.
+        for (Appointment appt : appointmentList) {
+            if (appt.value.equals("")) {
+                continue;
+            } else if (appt.isClash(new Appointment(date.toString(), startTime.toString(), endTime.toString(),
+                    PSEUDO_DOCTOR_NAME, PSEUDO_DOCTOR_NRIC, PSEUDO_PATIENT_NAME, PSEUDO_PATIENT_NRIC))) {
                 return true;
             }
         }
