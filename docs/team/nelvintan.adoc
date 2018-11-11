@@ -27,35 +27,39 @@ The main features of the project are:
 
 === Summary of Contributions
 
-* *Major enhancement*: added *the ability to schedule and display medical appointments*
-** What it does: Allows the user to schedule appointments at a specified time.
+* *Major enhancement*: added the ability to schedule and display medical appointments.
+** What it does: This enhancement allows the user to schedule appointments at a specified time.
 ** Justification: This feature improves the product significantly because a user is able to display current appointments and schedule appointments.
 This is a key part of medical operations in a hospital.
 Further checks are available to inform the user if they keyed in incorrect appointment details.
 ** Highlights: This enhancement drastically improved the ability of the application to assist medical processes, specifically in the area of scheduling appointment.
 The implementation too was challenging as it required a brand new command to be created.
 
-* *Code contributed*: [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=nelvintan&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[Functional code]] [https://github.com[Test code]]
+* *Minor enhancement*: added the ability to check for valid date and time which is useful for scheduling and updating commands.
+
+* *Code contributed*: [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=nelvintan&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[Functional code]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub
-*** Set up travis for running tests for the code base
-*** Set up auto publishing of docs for travis
+*** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub.
+*** Set up travis for continuous integration of the code base.
+*** Set up auto publishing of documentation for travis.
 ** Enhancements to existing features:
-*** Created the date and time class.
-(Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/commit/c304c5c0530ebf76e8cfc8c6dff4facc56bbfd58[#32],)
-*** Wrote additional tests for existing features to increase coverage %
-(Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/11/commits/7203d4a630e46fdf724c76170e3589de7704687d[#36],
-https://github.com/CS2103-AY1819S1-W16-3/main/pull/68/commits/ad0a044af6a04de2a7c5d456c4bc5753c60aacd4[#38])
+*** Wrote additional tests for existing features to increase coverage %.
+(Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/11/commits/7203d4a630e46fdf724c76170e3589de7704687d[#11],
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/68/commits/ad0a044af6a04de2a7c5d456c4bc5753c60aacd4[#68])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide:
-https://github.com/CS2103-AY1819S1-W16-3/main/pull/123/commits/a8d665e38c5f07a50f6e38635bcc54b858193ac4[#14]
+*** Did cosmetic tweaks to existing contents of the User Guide.
+(Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/123/commits/a8d665e38c5f07a50f6e38635bcc54b858193ac4[#123],
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/192[#192],
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/203[#203])
 ** Community:
-*** PRs reviewed (with non-trivial review comments):
-https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[#12]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[1], https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[2])
+*** Reviewed other team members' pull requests.
+(Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[#124])
+*** Reported bugs and suggestions for other teams in the class.
+(Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[#124],
+https://github.com/CS2103-AY1819S1-W16-3/main/pull/204[#204])
 
 == Contributions to the User Guide
 

@@ -419,7 +419,7 @@ image::ListCommand.png[width="600"]
 image::DisplayAppointment.png[width="600"]
 * `find Betsy` +
 `select 1` +
-Selects the 1st patient in the results of the `find` command and display the appointments.
+Selects the 1st patient in the results of the `find` command and display the appointments. Similar to the example above.
 // end::displayappt[]
 
 // tag::schedule[]
