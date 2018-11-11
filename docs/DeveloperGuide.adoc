@@ -678,7 +678,14 @@ This section describes the pros and cons of the current and other alternate impl
 ===== Aspect: How to store a patient's medical record library
 
 * **Alternative 1 (current choice):** Use an ArrayList of `MedicalRecord` as the patient's medical record library.
-** Pros: Accessing the most recent record by retrieving the first `MedicalRecord` in the ArrayList is easy.
+** Pros: Accessing the most recent record by retrieving the first `MedicalRecord` in the ArrayList is easy. Given below is a code snippet that demonstrates how this is done.
+[source,java]
+if (medicalRecordLibrary.size() != 0) {
+    return medicalRecordLibrary.get(medicalRecordLibrary.size() - 1);
+} else {
+    return null;
+}
+
 ** Cons: Retrieving the latest `MedicalRecord` before a specified date takes longer as each `MedicalRecord` has to be checked sequentially until the last `MedicalRecord` before the specified date is found.
 * **Alternative 2:** Use a different data structure like a TreeMap of `MedicalRecord` as the value and date for the key as the patient's medical record library.
 ** Pros: Retrieving the latest `MedicalRecord` before a specified date is made convenient by  just using the floor function already defined in the TreeMap API.

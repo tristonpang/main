@@ -30,7 +30,7 @@ One life is used for storing, updating, and displaying data related to patients 
 *** Requires a brand new command to be created and existing code to be edited.
 * *Minor enhancement*: added a check to verify if a given date is valid and in the correct format.
 
-* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=GaryGohYP[Functional code]] [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=GaryGohYP[Test code]]
+* *Code contributed*: [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=garygohyp&sort=displayName&since=2018-09-12&until=2018-11-10&timeframe=day&reverse=false&repoSort=true[Functional code]]
 
 * *Other contributions*:
 
@@ -42,8 +42,8 @@ One life is used for storing, updating, and displaying data related to patients 
 *** Added documentation and formatting changes for all new features to the User Guide. (Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/4[#4], https://github.com/CS2103-AY1819S1-W16-3/main/pull/5[#5], https://github.com/CS2103-AY1819S1-W16-3/main/pull/6[#6], https://github.com/CS2103-AY1819S1-W16-3/main/pull/39/commits/9e6897ca4b66ea457bd0b000adf74a7c2b0ffcc7[#39])
 *** Added documentation for updating medical records to the Developer Guide. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/80/commits/86501c5bba40bb36af4b584929e214c0d915fab2[#80])
 ** Community:
-*** Reviewed other team members' pull requests (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/129[#129])
-*** Reported bugs and suggestions for other teams in the class (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/66[#66])
+*** Reviewed other team members' pull requests. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/129[#129])
+*** Reported bugs and suggestions for other teams in the class. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/66[#66])
 
 == Contributions to the User Guide
 
