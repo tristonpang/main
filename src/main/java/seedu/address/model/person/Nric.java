@@ -78,10 +78,10 @@ public class Nric {
                 + sixthDigit * 3 + seventhDigit * 2;
 
         switch (firstLetter) {
-            case 'T': case 'G':
-                sum += 4;
-                break;
-            default:
+        case 'T': case 'G':
+            sum += 4;
+            break;
+        default:
         }
 
         int remainder = sum % 11;
