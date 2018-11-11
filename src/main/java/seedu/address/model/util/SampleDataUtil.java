@@ -45,7 +45,7 @@ public class SampleDataUtil {
         return new Person[] {
             new Patient(new Name("Alex Yeoh"), new Nric("S3038746E"), new Phone("87438807"),
                     new Email("alexyeoh@example.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
-                    getTagSet("friends"), SAMPLE_APPOINTMENT_LIST_A,
+                    getTagSet("hokkien only"), SAMPLE_APPOINTMENT_LIST_A,
                     new MedicalRecord("12.12.2018", "flu", "tamiflu", "")),
             new Doctor(new Name("Bernice Yu"), new Nric("S2810085Z"), new Phone("99272758"),
                     new Email("berniceyu" + "@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
