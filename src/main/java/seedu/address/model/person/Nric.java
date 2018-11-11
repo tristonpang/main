@@ -99,58 +99,58 @@ public class Nric {
         if (firstChar == 'S' || firstChar == 'T') {
             // 0=J, 1=Z, 2=I, 3=H, 4=G, 5=F, 6=E, 7=D, 8=C, 9=B, 10=A
             switch (remainder) {
-                case 0:
-                    return toCompare == 'J';
-                case 1:
-                    return toCompare == 'Z';
-                case 2:
-                    return toCompare == 'I';
-                case 3:
-                    return toCompare == 'H';
-                case 4:
-                    return toCompare == 'G';
-                case 5:
-                    return toCompare == 'F';
-                case 6:
-                    return toCompare == 'E';
-                case 7:
-                    return toCompare == 'D';
-                case 8:
-                    return toCompare == 'C';
-                case 9:
-                    return toCompare == 'B';
-                case 10:
-                    return toCompare == 'A';
-                default:
+            case 0:
+                return toCompare == 'J';
+            case 1:
+                return toCompare == 'Z';
+            case 2:
+                return toCompare == 'I';
+            case 3:
+                return toCompare == 'H';
+            case 4:
+                return toCompare == 'G';
+            case 5:
+                return toCompare == 'F';
+            case 6:
+                return toCompare == 'E';
+            case 7:
+                return toCompare == 'D';
+            case 8:
+                return toCompare == 'C';
+            case 9:
+                return toCompare == 'B';
+            case 10:
+                return toCompare == 'A';
+            default:
             }
 
         } else {
             assert firstChar == 'F' || firstChar == 'G';
             // 0=X, 1=W, 2=U, 3=T, 4=R, 5=Q, 6=P, 7=N, 8=M, 9=L, 10=K
             switch (remainder) {
-                case 0:
-                    return toCompare == 'X';
-                case 1:
-                    return toCompare == 'W';
-                case 2:
-                    return toCompare == 'U';
-                case 3:
-                    return toCompare == 'T';
-                case 4:
-                    return toCompare == 'R';
-                case 5:
-                    return toCompare == 'Q';
-                case 6:
-                    return toCompare == 'P';
-                case 7:
-                    return toCompare == 'N';
-                case 8:
-                    return toCompare == 'M';
-                case 9:
-                    return toCompare == 'L';
-                case 10:
-                    return toCompare == 'K';
-                default:
+            case 0:
+                return toCompare == 'X';
+            case 1:
+                return toCompare == 'W';
+            case 2:
+                return toCompare == 'U';
+            case 3:
+                return toCompare == 'T';
+            case 4:
+                return toCompare == 'R';
+            case 5:
+                return toCompare == 'Q';
+            case 6:
+                return toCompare == 'P';
+            case 7:
+                return toCompare == 'N';
+            case 8:
+                return toCompare == 'M';
+            case 9:
+                return toCompare == 'L';
+            case 10:
+                return toCompare == 'K';
+            default:
             }
         }
         return false;
@@ -181,40 +181,40 @@ public class Nric {
 
         // 0=J, 1=Z, 2=I, 3=H, 4=G, 5=F, 6=E, 7=D, 8=C, 9=B, 10=A
         switch (remainder) {
-            case 0:
-                lastChar = 'J';
-                break;
-            case 1:
-                lastChar = 'Z';
-                break;
-            case 2:
-                lastChar = 'I';
-                break;
-            case 3:
-                lastChar = 'H';
-                break;
-            case 4:
-                lastChar = 'G';
-                break;
-            case 5:
-                lastChar = 'F';
-                break;
-            case 6:
-                lastChar = 'E';
-                break;
-            case 7:
-                lastChar = 'D';
-                break;
-            case 8:
-                lastChar = 'C';
-                break;
-            case 9:
-                lastChar = 'B';
-                break;
-            case 10:
-                lastChar = 'A';
-                break;
-            default:
+        case 0:
+            lastChar = 'J';
+            break;
+        case 1:
+            lastChar = 'Z';
+            break;
+        case 2:
+            lastChar = 'I';
+            break;
+        case 3:
+            lastChar = 'H';
+            break;
+        case 4:
+            lastChar = 'G';
+            break;
+        case 5:
+            lastChar = 'F';
+            break;
+        case 6:
+            lastChar = 'E';
+            break;
+        case 7:
+            lastChar = 'D';
+            break;
+        case 8:
+            lastChar = 'C';
+            break;
+        case 9:
+            lastChar = 'B';
+            break;
+        case 10:
+            lastChar = 'A';
+            break;
+        default:
         }
         return codeNumber + "" + lastChar;
     }
