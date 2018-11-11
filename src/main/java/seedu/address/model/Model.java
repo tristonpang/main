@@ -17,9 +17,13 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Switches the database base on the predicate */
-    void changeDatabase(Predicate<Person> filer);
+    void changeDatabase(Predicate<Person> filer, String role);
 
+    /** Deletes all person in the current active database only **/
     void clearActiveDatabase();
+
+    /** Returns a message that indicates the type of the current active database **/
+    String getCurrentDatabase();
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);

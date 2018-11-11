@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
@@ -16,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.DatabaseChangedEvent;
 import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Name;
@@ -30,12 +30,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
-    private final Predicate<Person> PREDICATE_MATCH_PATIENTS =
-            p -> p.getClass().getSimpleName().equalsIgnoreCase(
-                    "Patient");
     private Predicate<Person> PREDICATE_SHOW_RELEVANT_PERSONS;
-
     private final IntuitivePromptManager intuitivePromptManager;
+    private final String KEYWORD_ALL = "ALL";
+
+    private String activeRole;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -48,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         // starts the application with the all patient and doctor's database by default.
         PREDICATE_SHOW_RELEVANT_PERSONS = PREDICATE_SHOW_ALL_PERSONS;
+        activeRole = KEYWORD_ALL;
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons =
@@ -61,9 +61,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void changeDatabase(Predicate<Person> filer) {
+    public void changeDatabase(Predicate<Person> filer, String role) {
         this.PREDICATE_SHOW_RELEVANT_PERSONS = filer;
-        this.indicateAddressBookChanged();
+        this.activeRole = role;
+        this.indicateDatabaseChanged();
+        this.indicatePersonChanged();
     }
 
     @Override
@@ -71,6 +73,12 @@ public class ModelManager extends ComponentManager implements Model {
         List<Person> toDelete = versionedAddressBook.getPersonList().stream()
                 .filter(this.PREDICATE_SHOW_RELEVANT_PERSONS).collect(Collectors.toList());
         toDelete.stream().forEach(person -> deletePerson(person));
+        this.indicatePersonChanged();
+    }
+
+    @Override
+    public String getCurrentDatabase() {
+        return activeRole;
     }
 
     @Override
@@ -88,6 +96,11 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(versionedAddressBook));
+    }
+
+    /** Raise an event to indicate that the active database has been changed **/
+    private void indicateDatabaseChanged() {
+        raise(new DatabaseChangedEvent(activeRole));
     }
 
     /** Raises an event to indicate the person data has changed */
