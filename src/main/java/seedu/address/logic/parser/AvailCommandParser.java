@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
@@ -28,6 +29,11 @@ public class AvailCommandParser implements Parser<AvailCommand> {
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_START_TIME, PREFIX_END_TIME, PREFIX_DATE);
+
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AvailCommand.MESSAGE_USAGE));
+        }
+
 
         if (!isValidTimeInput(argMultimap, PREFIX_START_TIME, PREFIX_END_TIME)) {
             throw new ParseException(String.format(AvailCommand.MESSAGE_INVALID_TIME_INPUT,

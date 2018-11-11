@@ -3,13 +3,16 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -85,6 +88,23 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final String VALID_DATE = "23.11.2019";
+    public static final String VALID_DATE_SECOND = "11.11.3011";
+    public static final String DATE_DESC = " " + PREFIX_DATE + VALID_DATE;
+    public static final String SECOND_DATE_DESC = " " + PREFIX_DATE + VALID_DATE_SECOND;
+
+    public static final String VALID_START_TIME = "1500";
+    public static final String VALID_END_TIME = "1600";
+    public static final String VALID_TIME = "0800";
+    public static final String START_TIME_DESC = " " + PREFIX_START_TIME + VALID_START_TIME;
+    public static final String END_TIME_DESC = " " + PREFIX_END_TIME + VALID_END_TIME;
+    public static final String SECOND_START_TIME_DESC = " " + PREFIX_START_TIME + VALID_TIME;
+    public static final String SECOND_END_TIME_DESC = " " + PREFIX_END_TIME + VALID_TIME;
+
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "23.13";
+    public static final String INVALID_START_TIME_DESC = " " + PREFIX_START_TIME + "111111";
+    public static final String INVALID_END_TIME_DESC = " " + PREFIX_END_TIME + "111111";
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)

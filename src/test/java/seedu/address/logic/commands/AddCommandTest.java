@@ -121,13 +121,18 @@ public class AddCommandTest {
         }
 
         @Override
-        public void changeDatabase(Predicate<Person> filter) {
+        public void changeDatabase(Predicate<Person> filer, String role) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void clearActiveDatabase() {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public String getCurrentDatabase() {
+            return null;
         }
 
         @Override

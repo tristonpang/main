@@ -140,6 +140,9 @@ public class PersonProfilePage extends UiPart<Region> {
         hideLabels();
     }
 
+    /**
+     * Helper method to display the labels for each {@person}'s field.
+     */
     private void showLabels() {
         label_address.setVisible(true);
         label_dept.setVisible(true);
@@ -148,6 +151,9 @@ public class PersonProfilePage extends UiPart<Region> {
         label_nric.setVisible(true);
     }
 
+    /**
+     * Helper method to hide all labels.
+     */
     private void hideLabels() {
         label_address.setVisible(false);
         label_dept.setVisible(false);
