@@ -360,8 +360,11 @@ Step 4. A successful check gives 2 objects, `personToEdit` and `Appointment` obj
 Program creates another `Person` object called `editedPerson` that is equal to `personToEdit`.
 `ScheduleCommand` then adds `Appointment` to the `appointmentList` of `editedPerson`.
 Lastly, `ScheduleCommand` replaces `personToEdit` with `editedPerson` in our model.
+This is shown in the diagram below.
 
 image::ScheduleCommandStep4.png[width="800"]
+
+The above procedure in step 4 is then repeated for the other person (e.g. other person is a doctor if specified person is a patient) affected in the scheduling process.
 
 Step 5. `XmlAdaptedPerson` updates storage of `appointmentList`.
 
@@ -405,7 +408,7 @@ public static boolean isClash(Appointment appointment, Appointment otherAppointm
 Maintain a sorted list of appointments based on the date and time of appointments.
 ** Pros: It might be more efficient when checking for appointment clashes.
 We do not need to check our new appointment against all the appointments in the ArrayList.
-For example we can check from the last (latest) appointment down the list until a point where the next appointment comes before this appointment.
+For example we can check from the last (latest) appointment down the list until a point where the next appointment ends before this appointment.
 At that point we can stop checking as we know that there will be no more clashes.
 ** Cons: The efficiency gain when checking for clashes might be lost due to efficiency lost due to sorting being required.
 // end::schedulecommand[]
@@ -713,7 +716,7 @@ after the user input `find n/Alex n/Bernice t/friends`.
 .PersonContainsKeywordPredicate Test Result
 image::FindCommandDeveloperGuidePredicate.png[width="600"]
 
-* As can be seen in the image above, `Person` at index 0 and index 2 are have at least 1 entry in `Name` and `Tag` that
+* As can be seen in the image above, `Person` at index 0 and index 2 have at least 1 entry in `Name` and `Tag` that
 match the required search parameters. Therefore, they will be shown in the result list. Even though `Person` at index 1
 has a match in the `Name` attribute, he does not have a `friends` `Tag` and is therefore not shown.
 

@@ -18,6 +18,6 @@ public enum Role {
      * @return True if given string is a valid role (case-insensitive).
      */
     public static boolean isValidRole(String role) {
-        return Arrays.stream(Role.values()).anyMatch(modelRole -> modelRole.toString().equals(role.toUpperCase()));
+        return Arrays.stream(Role.values()).anyMatch(modelRole -> modelRole.toString().equalsIgnoreCase(role));
     }
 }

@@ -21,6 +21,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.storage.XmlSerializableAddressBook;
 
@@ -104,7 +105,7 @@ public class PersonListPanelTest extends GuiUnitTest {
             builder.append("<phone>000</phone>\n");
             builder.append("<email>a@aa</email>\n");
             builder.append("<address>a</address>\n");
-            builder.append("<nric>S").append(icNum++).append("A</nric>\n");
+            builder.append("<nric>S").append(Nric.generateCode(icNum++)).append("</nric>\n");
             builder.append("<medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>");
             builder.append("<appointment>a</appointment>\n");
             builder.append("</persons>\n");

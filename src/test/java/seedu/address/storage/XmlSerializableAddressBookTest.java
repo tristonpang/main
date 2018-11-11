@@ -37,7 +37,7 @@ public class XmlSerializableAddressBookTest {
     public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
         XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(INVALID_PERSON_FILE,
                 XmlSerializableAddressBook.class);
-        thrown.expect(IllegalValueException.class);
+        thrown.expect(IllegalArgumentException.class);
         dataFromFile.toModelType();
     }
 

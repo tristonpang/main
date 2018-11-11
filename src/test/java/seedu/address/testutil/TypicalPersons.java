@@ -31,34 +31,34 @@ public class TypicalPersons {
     public static final Patient ALICE = new PatientBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253").withMedicalRecord(", Diagnosis: , Treatment: , Comments: -")
-            .withNric("S7412345C").withTags("friends").build();
+            .withNric("S3305985Z").withTags("friends").build();
     public static final Patient BENSON = new PatientBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25").withNric("S8234567A")
+            .withAddress("311, Clementi Ave 2, #02-25").withNric("S1215130F")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withMedicalRecord(", Diagnosis: , Treatment: , Comments: -")
             .withTags("owesMoney", "friends").build();
     public static final Patient CARL = new PatientBuilder().withName("Carl Kurz").withPhone("95352563")
             .withMedicalRecord(", Diagnosis: , Treatment: , Comments: -")
             .withEmail("heinz@example.com")
-            .withAddress("wall street").withNric("S9898989B").build();
+            .withAddress("wall street").withNric("S7426958C").build();
     public static final Patient DANIEL = new PatientBuilder().withName("Daniel Meier").withPhone("87652599")
             .withMedicalRecord(", Diagnosis: , Treatment: , Comments: -")
             .withEmail("cornelia@example.com")
-            .withAddress("10th street").withNric("S8234599A").withTags("friends").build();
-    public static final Doctor ELLE = new DoctorBuilder().withName("Elle Meyer").withNric("S2234599A")
+            .withAddress("10th street").withNric("S8066331E").withTags("friends").build();
+    public static final Doctor ELLE = new DoctorBuilder().withName("Elle Meyer").withNric("S6977714G")
             .withPhone("9482224").withMedicalDepartment("Oncology").withEmail("werner@example.com")
             .withAddress("michegan ave").build();
-    public static final Doctor FIONA = new DoctorBuilder().withName("Fiona Kunz").withNric("s3234599a")
+    public static final Doctor FIONA = new DoctorBuilder().withName("Fiona Kunz").withNric("S5319783C")
             .withPhone("9482427").withMedicalDepartment("Cardiology").withEmail("lydia@example.com")
             .withAddress("little tokyo").build();
-    public static final Doctor GEORGE = new DoctorBuilder().withName("George Best").withNric("s5234599a")
+    public static final Doctor GEORGE = new DoctorBuilder().withName("George Best").withNric("S5882198E")
             .withPhone("9482442").withMedicalDepartment("Neurology").withEmail("anna@example.com")
             .withAddress("4th street").build();
 
     // Manually added
     public static final Patient HOON = new PatientBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withNric("S9873342F").withEmail("stefan@example.com").withAddress("little india").build();
-    public static final Doctor IDA = new DoctorBuilder().withName("Ida Mueller").withNric("s9090909e")
+            .withNric("S9028878D").withEmail("stefan@example.com").withAddress("little india").build();
+    public static final Doctor IDA = new DoctorBuilder().withName("Ida Mueller").withNric("S5026428I")
             .withPhone("8482131").withMedicalDepartment("Physiology").withEmail("hans@example.com")
             .withAddress("chicago ave").build();
 
