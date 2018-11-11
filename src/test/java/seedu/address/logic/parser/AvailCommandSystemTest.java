@@ -26,7 +26,7 @@ import seedu.address.model.person.Date;
 import seedu.address.model.person.Time;
 
 public class AvailCommandSystemTest {
-    AvailCommandParser parser = new AvailCommandParser();
+    private AvailCommandParser parser = new AvailCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {

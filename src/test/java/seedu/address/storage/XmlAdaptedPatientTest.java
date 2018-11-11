@@ -71,7 +71,7 @@ public class XmlAdaptedPatientTest {
     }
 
     @Test
-    public void toModelType_invalidNriclENGTH_throwsIllegalValueException() {
+    public void toModelType_invalidNricLength_throwsIllegalValueException() {
         XmlAdaptedPatient person = new XmlAdaptedPatient(VALID_NAME, INVALID_LENGTH_NRIC, VALID_PHONE, VALID_EMAIL,
                 VALID_ADDRESS, VALID_MEDICAL_RECORD, VALID_TAGS, VALID_APPOINTMENT);
         String expectedMessage = Nric.MESSAGE_NRIC_INVALID_LENGTH;
