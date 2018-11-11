@@ -42,21 +42,21 @@ The implementation too was challenging as it required a brand new command to be 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub
-*** Set up travis for running tests for the code base
-*** Set up auto publishing of documentation for travis
+*** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub.
+*** Set up travis for continuous integration of the code base.
+*** Set up auto publishing of documentation for travis.
 ** Enhancements to existing features:
-(Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/commit/c304c5c0530ebf76e8cfc8c6dff4facc56bbfd58[#32],)
-*** Wrote additional tests for existing features to increase coverage %
+*** Wrote additional tests for existing features to increase coverage %.
 (Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/11/commits/7203d4a630e46fdf724c76170e3589de7704687d[#36],
 https://github.com/CS2103-AY1819S1-W16-3/main/pull/68/commits/ad0a044af6a04de2a7c5d456c4bc5753c60aacd4[#38])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide:
-https://github.com/CS2103-AY1819S1-W16-3/main/pull/123/commits/a8d665e38c5f07a50f6e38635bcc54b858193ac4[#14]
+*** Did cosmetic tweaks to existing contents of the User Guide.
+(Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/123/commits/a8d665e38c5f07a50f6e38635bcc54b858193ac4[#14])
 ** Community:
-*** PRs reviewed (with non-trivial review comments):
-https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[#12]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[1], https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[2])
+*** Reviewed other team members' pull requests.
+(Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[#12])
+*** Reported bugs and suggestions for other teams in the class.
+(Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[#1], https://github.com/CS2103-AY1819S1-W16-3/main/pull/124#pullrequestreview-169082170[#2])
 
 == Contributions to the User Guide
 
