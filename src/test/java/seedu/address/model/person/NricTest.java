@@ -26,32 +26,19 @@ public class NricTest {
         Assert.assertThrows(NullPointerException.class, () -> Nric.isValidNric(null));
 
         // invalid nric
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric(""))); // empty string
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric(" "))); // spaces only
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("^"))); // only non-alphanumericcharacters
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("F2435126*"))); // contains non-alphanumeric characters
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("F243*126L"))); // contains non-alphanumeric characters
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("F2435126"))); // does not end with a character
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("P2435126L"))); // does not start with a valid character
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("2435126L"))); // does not start with a character
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("s12345673333333J"))); // more than 7 digits
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("s12J"))); // less than 7 digits
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("FFFFF2435126L"))); // more than 2 starting characters
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("F2435126LLLLLL"))); // more than 2 ending characters
-        Assert.assertThrows(IllegalArgumentException.class,
-            () -> assertFalse(Nric.isValidNric("F243    5126L"))); // whitespaces in between nric code
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric(""))); // empty string
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric(" "))); // spaces only
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("^"))); // only non-alphanumericcharacters
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("F2435126*"))); // contains non-alphanumeric characters
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("F243*126L"))); // contains non-alphanumeric characters
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("F2435126"))); // does not end with a character
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("P2435126L"))); // does not start with a valid character
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("2435126L"))); // does not start with a character
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("s123456733333J"))); // more than 7 digits
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("s12J"))); // less than 7 digits
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("FFFFF2435126L"))); // more than 2 starting characters
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("F2435126LLLLLL"))); // more than 2 ending characters
+        Assert.assertThrows(IllegalArgumentException.class, () -> assertFalse(Nric.isValidNric("F243    5126L"))); // whitespaces in between nric code
 
         // valid nric
         assertTrue(Nric.isValidNric("S2200025Z")); // all caps
