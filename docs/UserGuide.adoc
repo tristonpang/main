@@ -536,6 +536,7 @@ Commands that support intuitive prompting:
 * `edit`
 * `find`
 * `schedule`
+* `update`
 ****
 
 Format: `COMMAND`
