@@ -77,9 +77,11 @@ public class DisplayPanel extends UiPart<Region> {
      * Default setting for display panel upon start up of application.
      */
     public void showDefaultDisplayPanel() {
-        personOnDisplay = null;
-        displayableAppointmentsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
-        displayableMedicalRecordsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
+        Platform.runLater(() ->{
+            personOnDisplay = null;
+            displayableAppointmentsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
+            displayableMedicalRecordsListView.setItems(new FilteredList<>(FXCollections.observableArrayList()));
+        });
     }
 
     /**
