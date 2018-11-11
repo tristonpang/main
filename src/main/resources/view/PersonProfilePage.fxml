@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
@@ -9,51 +8,46 @@
 <Pane maxHeight="700.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0"
       prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text fx:id="name" fill="black" layoutX="56.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="name" fill="black" layoutX="40.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            wrappingWidth="450.0">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+      <Text fx:id="nric" fill="black" layoutX="151.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="nric" fill="black" layoutX="56.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="phone" fill="black" layoutX="150.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="phone" fill="black" layoutX="56.0" layoutY="349.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="email" fill="black" layoutX="149.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <ImageView fx:id="profileImageDisplay" fitHeight="150.0" fitWidth="165.0" layoutX="122.0" layoutY="1.0"
-                 pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@../images/blank_profile.png" />
-         </image>
-      </ImageView>
-      <Text fx:id="email" fill="black" layoutX="56.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="address" fill="black" layoutX="150.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            wrappingWidth="229.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="address" fill="black" layoutX="56.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0"
-            wrappingWidth="294.0">
+      <Text fx:id="dept" fill="black" layoutX="151.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="uniqueField" fill="black" layoutX="56.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <FlowPane fx:id="tags" layoutX="45.0" layoutY="160.0" prefHeight="21.0" prefWidth="283.0" />
+      <Text fx:id="availabilityLabel" fill="#616161" layoutX="39.0" layoutY="399.0" strokeType="OUTSIDE"
+            strokeWidth="0.0" text="STATUS:" visible="false">
          <font>
-            <Font size="18.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <FlowPane fx:id="tags" layoutX="56.0" layoutY="261.0" prefHeight="21.0" prefWidth="283.0" />
-      <Text fx:id="availabilityLabel" fill="black" layoutX="56.0" layoutY="510.0" strokeType="OUTSIDE"
-            strokeWidth="0.0" text="Status:" visible="false">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Label fx:id="availability" layoutX="124.0" layoutY="493.0" text="Label" textFill="black" visible="false">
+      <Label fx:id="availability" layoutX="149.0" layoutY="382.0" text="dfsdf" textFill="black" visible="false">
          <font>
             <Font size="20.0" />
          </font>
@@ -61,10 +55,40 @@
             <Insets left="5.0" right="5.0" />
          </padding>
       </Label>
-      <Text fx:id="availCheckTime" fill="black" layoutX="220.0" layoutY="510.0" strokeType="OUTSIDE"
-            strokeWidth="0.0" text="Text" visible="false">
+      <Text fx:id="availCheckTime" fill="black" layoutX="150.0" layoutY="420.0" strokeType="OUTSIDE"
+            strokeWidth="0.0" visible="false">
          <font>
             <Font name="System Italic" size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="label_nric" fill="#616161" layoutX="39.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            text="NRIC:" visible="false">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="label_phone" fill="#616161" layoutX="40.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            text="H/P:" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="label_email" fill="#616161" layoutX="39.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            text="EMAIL:" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="label_address" fill="#616161" layoutX="39.0" layoutY="310.0" strokeType="OUTSIDE"
+            strokeWidth="0.0" text="ADDRESS:" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="label_dept" fill="#616161" layoutX="38.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            text="DEPARTMENT:" visible="false">
+         <font>
+            <Font size="15.0" />
          </font>
       </Text>
    </children>
