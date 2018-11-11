@@ -27,12 +27,12 @@ import seedu.address.model.person.Person;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static final String KEYWORD_ALL = "ALL";
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
-    private Predicate<Person> PREDICATE_SHOW_RELEVANT_PERSONS;
+    private Predicate<Person> predicate_show_relevant_people;
     private final IntuitivePromptManager intuitivePromptManager;
-    private final String KEYWORD_ALL = "ALL";
 
     private String activeRole;
 
@@ -46,12 +46,12 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         // starts the application with the all patient and doctor's database by default.
-        PREDICATE_SHOW_RELEVANT_PERSONS = PREDICATE_SHOW_ALL_PERSONS;
+        predicate_show_relevant_people = PREDICATE_SHOW_ALL_PERSONS;
         activeRole = KEYWORD_ALL;
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons =
-                new FilteredList<>(versionedAddressBook.getPersonList()).filtered(this.PREDICATE_SHOW_RELEVANT_PERSONS);
+                new FilteredList<>(versionedAddressBook.getPersonList()).filtered(predicate_show_relevant_people);
 
         intuitivePromptManager = new IntuitivePromptManager();
     }
@@ -62,7 +62,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void changeDatabase(Predicate<Person> filer, String role) {
-        this.PREDICATE_SHOW_RELEVANT_PERSONS = filer;
+        this.predicate_show_relevant_people = filer;
         this.activeRole = role;
         this.indicateDatabaseChanged();
         this.indicatePersonChanged();
@@ -71,7 +71,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void clearActiveDatabase() {
         List<Person> toDelete = versionedAddressBook.getPersonList().stream()
-                .filter(this.PREDICATE_SHOW_RELEVANT_PERSONS).collect(Collectors.toList());
+                .filter(predicate_show_relevant_people).collect(Collectors.toList());
         toDelete.stream().forEach(person -> deletePerson(person));
         this.indicatePersonChanged();
     }
@@ -180,7 +180,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(this.PREDICATE_SHOW_RELEVANT_PERSONS.and(predicate));
+        filteredPersons.setPredicate(this.predicate_show_relevant_people.and(predicate));
     }
 
     //=========== Undo/Redo =================================================================================

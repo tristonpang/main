@@ -37,6 +37,6 @@ public class SwitchCommand extends Command {
         requireNonNull(model);
         model.changeDatabase(filter, role);
         new ListCommand().execute(model, history);
-        return new CommandResult(MESSAGE_SUCCESS_FILTERED_LIST + this.role +"\n");
+        return new CommandResult(MESSAGE_SUCCESS_FILTERED_LIST + this.role + "\n");
     }
 }

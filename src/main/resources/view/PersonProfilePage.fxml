@@ -61,31 +61,31 @@
             <Font name="System Italic" size="15.0" />
          </font>
       </Text>
-      <Text fx:id="label_nric" fill="#616161" layoutX="39.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0"
+      <Text fx:id="labelNric" fill="#616161" layoutX="39.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0"
             text="NRIC:" visible="false">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fx:id="label_phone" fill="#616161" layoutX="40.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0"
+      <Text fx:id="labelPhone" fill="#616161" layoutX="40.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0"
             text="H/P:" visible="false">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <Text fx:id="label_email" fill="#616161" layoutX="39.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0"
+      <Text fx:id="labelEmail" fill="#616161" layoutX="39.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0"
             text="EMAIL:" visible="false">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <Text fx:id="label_address" fill="#616161" layoutX="39.0" layoutY="310.0" strokeType="OUTSIDE"
+      <Text fx:id="labelAddress" fill="#616161" layoutX="39.0" layoutY="310.0" strokeType="OUTSIDE"
             strokeWidth="0.0" text="ADDRESS:" visible="false">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <Text fx:id="label_dept" fill="#616161" layoutX="38.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0"
+      <Text fx:id="labelDept" fill="#616161" layoutX="38.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0"
             text="DEPARTMENT:" visible="false">
          <font>
             <Font size="15.0" />

@@ -2,17 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.function.Predicate;
 
@@ -35,17 +27,20 @@ public class AvailCommand extends Command {
     public static final String MESSAGE_INVALID_TIME_INPUT = "Invalid time period. You need to specify both start and"
             + " end time";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all doctors available at indicated time / " +
-            "current datetime (as per default). "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all doctors available at indicated time / "
+            + "current datetime (as per default). "
             + "Parameters: "
             + "[" + PREFIX_DATE + "DATE]"
             + "[" + PREFIX_START_TIME + "START TIME]"
             + "[" + PREFIX_END_TIME + "END TIME]\n"
             + "Example: "
             + COMMAND_WORD + "\n"
-            + COMMAND_WORD + "24.11.2019\n"
-            + COMMAND_WORD + PREFIX_DATE + "24.11.2019\n"
-            + COMMAND_WORD + PREFIX_DATE + "24.11.2019 " + PREFIX_START_TIME + "1200 " + PREFIX_END_TIME + "1300\n";
+            + COMMAND_WORD + " "
+            + PREFIX_DATE + "24.11.2019\n"
+            + COMMAND_WORD + " "
+            + PREFIX_DATE + "24.11.2019 "
+            + PREFIX_START_TIME + "1200 "
+            + PREFIX_END_TIME + "1300";
 
     private static final String MESSAGE_INVALID_DATABASE = "You are currently in the patients' database. Switch over "
             + "to view the doctor's database before using this command";
@@ -53,7 +48,8 @@ public class AvailCommand extends Command {
     private static final String PATIENT_KEYWORD = "Patient";
 
     private Date date;
-    private Time startTime, endTime;
+    private Time startTime;
+    private Time endTime;
 
     /**
      * Creates an AvailCommand base on given datetime parameters.
@@ -79,13 +75,12 @@ public class AvailCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_DATABASE);
         }
 
-        Predicate<Person> filterDoctorsOnly =
-                person -> person instanceof Doctor;
+        Predicate<Person> filterDoctorsOnly = person -> person instanceof Doctor;
         Predicate<Person> filterAvailDoctor;
 
         if (endTime != null) {
-            filterAvailDoctor = doctor -> !AppointmentManager.isAnyAppointmentOngoing(doctor.getAppointmentList(), date,
-                    startTime, endTime);
+            filterAvailDoctor = doctor -> !AppointmentManager.isAnyAppointmentOngoing(doctor.getAppointmentList(),
+                    date, startTime, endTime);
         } else {
             filterAvailDoctor = doctor -> !AppointmentManager.isAnyAppointmentOngoing(doctor.getAppointmentList(),
                     date, startTime, endTime);

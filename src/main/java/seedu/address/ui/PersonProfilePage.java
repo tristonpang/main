@@ -38,19 +38,19 @@ public class PersonProfilePage extends UiPart<Region> {
     @FXML
     private Text nric;
     @FXML
-    private Text label_nric;
+    private Text labelNric;
     @FXML
     private Text phone;
     @FXML
-    private Text label_phone;
+    private Text labelPhone;
     @FXML
     private Text address;
     @FXML
-    private Text label_address;
+    private Text labelAddress;
     @FXML
     private Text email;
     @FXML
-    private Text label_email;
+    private Text labelEmail;
     @FXML
     private Text availCheckTime;
     @FXML
@@ -60,7 +60,7 @@ public class PersonProfilePage extends UiPart<Region> {
     @FXML
     private Text dept;
     @FXML
-    private Text label_dept;
+    private Text labelDept;
     @FXML
     private FlowPane tags;
 
@@ -144,22 +144,22 @@ public class PersonProfilePage extends UiPart<Region> {
      * Helper method to display the labels for each {@person}'s field.
      */
     private void showLabels() {
-        label_address.setVisible(true);
-        label_dept.setVisible(true);
-        label_email.setVisible(true);
-        label_phone.setVisible(true);
-        label_nric.setVisible(true);
+        labelAddress.setVisible(true);
+        labelDept.setVisible(true);
+        labelEmail.setVisible(true);
+        labelPhone.setVisible(true);
+        labelNric.setVisible(true);
     }
 
     /**
      * Helper method to hide all labels.
      */
     private void hideLabels() {
-        label_address.setVisible(false);
-        label_dept.setVisible(false);
-        label_email.setVisible(false);
-        label_phone.setVisible(false);
-        label_nric.setVisible(false);
+        labelAddress.setVisible(false);
+        labelDept.setVisible(false);
+        labelEmail.setVisible(false);
+        labelPhone.setVisible(false);
+        labelNric.setVisible(false);
     }
 
     /**
@@ -167,7 +167,7 @@ public class PersonProfilePage extends UiPart<Region> {
      */
     private void setAvailabilityOfDoctor() {
         Doctor doctor = (Doctor) personOnDisplay;
-        label_dept.setVisible(true);
+        labelDept.setVisible(true);
         dept.setText(doctor.getMedicalDepartment().deptName);
         availability.setVisible(true);
         availabilityLabel.setVisible(true);
@@ -187,7 +187,7 @@ public class PersonProfilePage extends UiPart<Region> {
     private void hideDoctorFields() {
         animationTimer.stop();
         dept.setText(EMPTY_VALUE);
-        label_dept.setVisible(false);
+        labelDept.setVisible(false);
         availability.setVisible(false);
         availCheckTime.setVisible(false);
         availabilityLabel.setVisible(false);

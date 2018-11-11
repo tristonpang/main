@@ -2,6 +2,9 @@ package seedu.address.commons.events.model;
 
 import seedu.address.commons.events.BaseEvent;
 
+/**
+ * Indicates that the active database has changed.
+ */
 public class DatabaseChangedEvent extends BaseEvent {
     private String activeRole;
 

@@ -13,7 +13,7 @@ import seedu.address.model.person.Role;
  * Parses input arguments and creates a new SwitchCommand object.
  */
 public class SwitchCommandParser implements Parser<SwitchCommand> {
-    private final static String LIST_EVERYTHING = "ALL";
+    private static final String LIST_EVERYTHING = "ALL";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ListCommand

@@ -25,7 +25,8 @@ public class AvailCommandParser implements Parser<AvailCommand> {
      */
     public AvailCommand parse(String args) throws ParseException {
         Date date;
-        Time startTime, endTime;
+        Time startTime;
+        Time endTime;
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_START_TIME, PREFIX_END_TIME, PREFIX_DATE);
