@@ -1,11 +1,14 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 
 import seedu.address.logic.commands.SwitchCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 import seedu.address.model.person.Role;
