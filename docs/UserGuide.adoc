@@ -608,8 +608,8 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Display Medical Appointments* : `display INDEX`
-* *Schedule Medical Appointments* : `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME pi/DOCTOR_NRIC pn/PATIENT_NAME pi/PATIENT_NRIC` +
-e.g. `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack md/Heart pn/John Doe ic/S1234567A`
+* *Schedule Medical Appointments* : `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME di/DOCTOR_NRIC pn/PATIENT_NAME pi/PATIENT_NRIC` +
+e.g. `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/John Doe pi/S1234567A`
 * *View Medical Records* : `records n/NAME [d/DATE]`
 * *Update Medical Records* : `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT c/COMMENTS +
 e.g. `update 2 d/22.11.2018 dg/flu tr/tamiflu`
