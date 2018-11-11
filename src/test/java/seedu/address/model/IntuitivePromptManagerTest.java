@@ -102,7 +102,7 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.addArgument("doe@gmail.com");
         intuitivePromptManager.addArgument("Blk 123 Smith Street");
         intuitivePromptManager.addArgument("//");
-        intuitivePromptManager.addArgument("S2345123A");
+        intuitivePromptManager.addArgument("S0798129E");
 
         assertFalse(intuitivePromptManager.isIntuitiveMode());
         String retrievedArguments = intuitivePromptManager.retrieveArguments();
@@ -112,7 +112,7 @@ public class IntuitivePromptManagerTest {
                 + PREFIX_PHONE + "95592345 "
                 + PREFIX_EMAIL + "doe@gmail.com "
                 + PREFIX_ADDRESS + "Blk 123 Smith Street "
-                + PREFIX_NRIC + "S2345123A");
+                + PREFIX_NRIC + "S0798129E");
         assertFalse(intuitivePromptManager.areArgsAvailable());
     }
 
@@ -125,7 +125,7 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.addArgument("doe@gmail.com");
         intuitivePromptManager.addArgument("Blk 123 Smith Street");
         intuitivePromptManager.addArgument("vegetarian,prefersTablets");
-        intuitivePromptManager.addArgument("S2345123A");
+        intuitivePromptManager.addArgument("S0305372E");
 
         assertFalse(intuitivePromptManager.isIntuitiveMode());
         String retrievedArguments = intuitivePromptManager.retrieveArguments();
@@ -137,7 +137,7 @@ public class IntuitivePromptManagerTest {
                 + PREFIX_ADDRESS + "Blk 123 Smith Street "
                 + PREFIX_TAG + "vegetarian "
                 + PREFIX_TAG + "prefersTablets "
-                + PREFIX_NRIC + "S2345123A");
+                + PREFIX_NRIC + "S0305372E");
         assertFalse(intuitivePromptManager.areArgsAvailable());
     }
 
@@ -206,15 +206,15 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.addArgument("1600");
         //doctor details
         intuitivePromptManager.addArgument("Jane Smith");
-        intuitivePromptManager.addArgument("S1231234A");
+        intuitivePromptManager.addArgument("S6219609B");
         //patient details
         intuitivePromptManager.addArgument("Bob Carpenter");
-        intuitivePromptManager.addArgument("S1111333X");
+        intuitivePromptManager.addArgument("S5665160H");
 
         assertFalse(intuitivePromptManager.isIntuitiveMode());
         String retrievedArguments = intuitivePromptManager.retrieveArguments();
-        assertEquals(retrievedArguments, "schedule 1 d/12.12.2018 st/1500 et/1600 dn/Jane Smith di/S1231234A "
-                + "pn/Bob Carpenter pi/S1111333X");
+        assertEquals(retrievedArguments, "schedule 1 d/12.12.2018 st/1500 et/1600 dn/Jane Smith di/S6219609B "
+                + "pn/Bob Carpenter pi/S5665160H");
         assertFalse(intuitivePromptManager.areArgsAvailable());
     }
 

@@ -29,7 +29,7 @@ public class XmlAdaptedAppointment {
     }
 
     /**
-     * Converts a given Appointmetn into this class for JAXB use.
+     * Converts a given Appointment into this class for JAXB use.
      *
      * @param appointment future changes to this will not affect the created
      */
