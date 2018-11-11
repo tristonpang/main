@@ -18,10 +18,12 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.argumentmanagers.AddArgumentManager;
 import seedu.address.model.argumentmanagers.EditArgumentManager;
+import seedu.address.model.argumentmanagers.FindArgumentManager;
 import seedu.address.model.person.Role;
 
 public class IntuitivePromptManagerTest {
@@ -63,6 +65,28 @@ public class IntuitivePromptManagerTest {
         thrown.expectMessage(Role.MESSAGE_ROLE_CONSTRAINTS
                 + "\n" + AddArgumentManager.ROLE_INSTRUCTION);
         intuitivePromptManager.addArgument("!@#$%");
+    }
+
+    @Test
+    public void addArgument_findCommandWithDuplicateIndex_throwsCommandException() throws Exception {
+        intuitivePromptManager.addArgument(FindCommand.COMMAND_WORD);
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(String.format(FindArgumentManager.FIND_INVALID_FIELDS_MESSAGE, 1, 10)
+                + "\n" + FindArgumentManager.FIND_SEARCH_FIELDS_INSTRUCTION);
+        intuitivePromptManager.addArgument("3 3");
+
+    }
+
+    @Test
+    public void addArgument_editCommandWithDuplicateIndex_throwsCommandException() throws Exception {
+        intuitivePromptManager.addArgument(EditCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("3");
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(String.format(EditArgumentManager.EDIT_INVALID_FIELDS_MESSAGE, 1, 5)
+                + "\n" + EditArgumentManager.EDIT_FIELDS_INSTRUCTION);
+        intuitivePromptManager.addArgument("5 5");
     }
 
     /*
@@ -132,6 +156,23 @@ public class IntuitivePromptManagerTest {
     }
 
     @Test
+    public void retrieveArguments_editWithNonAscendingIndexFields_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(EditCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("5");
+        intuitivePromptManager.addArgument("5 4 1 3"); //edit name and email
+        intuitivePromptManager.addArgument("Jane Watson");
+        intuitivePromptManager.addArgument("watson@gmail.com");
+        intuitivePromptManager.addArgument("Street 123");
+        intuitivePromptManager.addArgument("family,friends");
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, "edit 5 n/Jane Watson e/watson@gmail.com "
+                + "a/Street 123 t/family t/friends");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+    }
+
+    @Test
     public void retrieveArguments_editClearPersonTags_successfulRetrieval() throws Exception {
         intuitivePromptManager.addArgument(EditCommand.COMMAND_WORD);
         intuitivePromptManager.addArgument("2");
@@ -177,6 +218,38 @@ public class IntuitivePromptManagerTest {
         assertFalse(intuitivePromptManager.areArgsAvailable());
     }
 
+    @Test
+    public void retrieveArguments_findPerson_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(FindCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("1 2 3 7 10");
+        intuitivePromptManager.addArgument("ang");
+        intuitivePromptManager.addArgument("Bob,Charlotte");
+        intuitivePromptManager.addArgument("S1111222A,S3332222X");
+        intuitivePromptManager.addArgument("patient");
+        intuitivePromptManager.addArgument("coughing");
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, "find ang n/Bob n/Charlotte ic/S1111222A ic/S3332222X "
+                + "r/patient mr/coughing");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+    }
+
+    @Test
+    public void retrieveArguments_findWithNonAscendingIndexFields_successfulRetrieval() throws Exception {
+        intuitivePromptManager.addArgument(FindCommand.COMMAND_WORD);
+        intuitivePromptManager.addArgument("8 9 2");
+        intuitivePromptManager.addArgument("Bob,Charlotte");
+        intuitivePromptManager.addArgument("friend,family");
+        intuitivePromptManager.addArgument("surgery");
+
+
+        assertFalse(intuitivePromptManager.isIntuitiveMode());
+        String retrievedArguments = intuitivePromptManager.retrieveArguments();
+        assertEquals(retrievedArguments, "find n/Bob n/Charlotte t/friend t/family md/surgery");
+        assertFalse(intuitivePromptManager.areArgsAvailable());
+    }
+
 
     /*
     Instruction Retrieval Tests
@@ -206,6 +279,8 @@ public class IntuitivePromptManagerTest {
         intuitivePromptManager.removeArgument();
         assertEquals(intuitivePromptManager.getInstruction(), EditArgumentManager.EDIT_TARGET_INSTRUCTION);
     }
+
+
 
 
 }

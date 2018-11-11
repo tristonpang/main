@@ -141,4 +141,11 @@ public interface Model {
      * Cancels the currently executing intuitive command, if any.
      */
     void cancelIntuitiveCommand();
+
+    /**
+     * Get a String representing the currently executing intuitive command's type.
+     *
+     * @return a String representing the currently executing intuitive command's type
+     */
+    String getCurrentIntuitiveCommandType();
 }

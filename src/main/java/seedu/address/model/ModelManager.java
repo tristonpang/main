@@ -264,4 +264,9 @@ public class ModelManager extends ComponentManager implements Model {
         intuitivePromptManager.cancelIntuitiveCommand();
     }
 
+    @Override
+    public String getCurrentIntuitiveCommandType() {
+        return intuitivePromptManager.getCurrentCommandType();
+    }
+
 }

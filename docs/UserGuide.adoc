@@ -191,6 +191,7 @@ Below is a list of all searchable attributes and their corresponding `Prefix`:
 | Name               | `n/`
 | NRIC               | `ic/`
 | Phone              | `p/`
+| Email              | `e/`
 | Address            | `a/`
 | Role               | `r/`
 | Tag                | `t/`
@@ -200,7 +201,8 @@ Below is a list of all searchable attributes and their corresponding `Prefix`:
 
 [WARNING]
 Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in the input. A command like
-`find n/[BLANK]` is not a valid input.
+`find n/[BLANK]` is not a valid input. +
+The `Prefix` entered must also be valid.
 
 Examples:
 
@@ -216,7 +218,7 @@ image::FindCommandUserGuideSpecific1.png[width="600"]
 .Specific Find Command with Additional Prefixes
 image::FindCommandUserGuideSpecific2.png[width="600"]
 
-.Invalid Input for Specific Find Command
+.Examples of Invalid Input for Specific Find Command
 image::FindCommandUserGuideError.png[width="600"]
 
 ****
@@ -252,11 +254,12 @@ Below is a list of all searchable attributes and their corresponding indexes.
 | Name                                | `2`
 | NRIC                                | `3`
 | Phone                               | `4`
-| Address                             | `5`
-| Role                                | `6`
-| Tag                                 | `7`
-| Medical Department (coming in v1.4) | `8`
-| Medical Record (coming in v1.4)     | `9`
+| Email                               | `5`
+| Address                             | `6`
+| Role                                | `7`
+| Tag                                 | `8`
+| Medical Department                  | `9`
+| Medical Record                      | `10`
 |===
 
 Lastly, the user will enter the corresponding keywords to be searched under each attribute, in increasing order of

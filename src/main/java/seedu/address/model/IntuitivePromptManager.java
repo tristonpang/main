@@ -237,4 +237,13 @@ public class IntuitivePromptManager {
         exitIntuitiveMode();
         resetIntuitiveCache();
     }
+
+    /**
+     * Gets a String representing what intuitive command is currently executing.
+     *
+     * @return the String representing the current intuitive command
+     */
+    public String getCurrentCommandType() {
+        return argumentManager.getArgumentManagerType();
+    }
 }
