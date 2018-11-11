@@ -28,14 +28,14 @@ public class SwitchCommand extends Command {
 
     public SwitchCommand(Predicate<Person> predicate, String role) {
         this.filter = predicate;
-        this.role = role;
+        this.role = role.toUpperCase();
     }
 
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.changeDatabase(filter);
+        model.changeDatabase(filter, role);
         new ListCommand().execute(model, history);
         return new CommandResult(MESSAGE_SUCCESS_FILTERED_LIST + this.role +"\n");
     }

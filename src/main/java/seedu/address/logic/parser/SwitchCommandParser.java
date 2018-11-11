@@ -4,11 +4,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.function.Predicate;
 
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Role;
 
 /**
@@ -16,7 +14,6 @@ import seedu.address.model.person.Role;
  */
 public class SwitchCommandParser implements Parser<SwitchCommand> {
     private final static String LIST_EVERYTHING = "ALL";
-    private Predicate<Person> predicate;
 
     /**
      * Parses the given {@code String} of arguments in the context of the ListCommand
