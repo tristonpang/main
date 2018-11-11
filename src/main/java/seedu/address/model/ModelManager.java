@@ -31,7 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
-    private Predicate<Person> predicate_show_relevant_people;
+    private Predicate<Person> predicateShowRelevantPeople;
     private final IntuitivePromptManager intuitivePromptManager;
 
     private String activeRole;
@@ -46,12 +46,12 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         // starts the application with the all patient and doctor's database by default.
-        predicate_show_relevant_people = PREDICATE_SHOW_ALL_PERSONS;
+        predicateShowRelevantPeople = PREDICATE_SHOW_ALL_PERSONS;
         activeRole = KEYWORD_ALL;
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons =
-                new FilteredList<>(versionedAddressBook.getPersonList()).filtered(predicate_show_relevant_people);
+                new FilteredList<>(versionedAddressBook.getPersonList()).filtered(predicateShowRelevantPeople);
 
         intuitivePromptManager = new IntuitivePromptManager();
     }
@@ -62,7 +62,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void changeDatabase(Predicate<Person> filer, String role) {
-        this.predicate_show_relevant_people = filer;
+        this.predicateShowRelevantPeople = filer;
         this.activeRole = role;
         this.indicateDatabaseChanged();
         this.indicatePersonChanged();
@@ -71,7 +71,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void clearActiveDatabase() {
         List<Person> toDelete = versionedAddressBook.getPersonList().stream()
-                .filter(predicate_show_relevant_people).collect(Collectors.toList());
+                .filter(predicateShowRelevantPeople).collect(Collectors.toList());
         toDelete.stream().forEach(person -> deletePerson(person));
         this.indicatePersonChanged();
     }
@@ -180,7 +180,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(this.predicate_show_relevant_people.and(predicate));
+        filteredPersons.setPredicate(this.predicateShowRelevantPeople.and(predicate));
     }
 
     //=========== Undo/Redo =================================================================================
