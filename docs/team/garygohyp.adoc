@@ -30,7 +30,7 @@ One life is used for storing, updating, and displaying data related to patients 
 *** Requires a brand new command to be created and existing code to be edited.
 * *Minor enhancement*: added a check to verify if a given date is valid and in the correct format.
 
-* *Code contributed*: [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=garygohyp&sort=displayName&since=2018-09-12&until=2018-11-10&timeframe=day&reverse=false&repoSort=true[Functional code]]
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=GaryGohYP[Functional Code]][https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=garygohyp&sort=displayName&since=2018-09-12&until=2018-11-10&timeframe=day&reverse=false&repoSort=true[RepoSense]]
 
 * *Other contributions*:
 
