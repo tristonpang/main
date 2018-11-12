@@ -19,7 +19,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.IntuitiveEntryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.ResetCommand;
+import seedu.address.logic.commands.ClearallCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SwitchCommand;
@@ -90,8 +90,8 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        case ResetCommand.COMMAND_WORD:
-            return new ResetCommand();
+        case ClearallCommand.COMMAND_WORD:
+            return new ClearallCommand();
 
         case AvailCommand.COMMAND_WORD:
             return new AvailCommandParser().parse(arguments);
