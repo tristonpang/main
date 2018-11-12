@@ -30,7 +30,7 @@ It is written in Java, and has about 10 kLoC.
 
 * *Minor enhancement*: Modified the `find` command to reject invalid input and prompt the user for proper input using a format guide.
 
-* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=ngkangtze[Functional code]] [https://github.com/CS2103-AY1819S1-W16-3/main/pull/200[Test code]] [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=ngkangtze&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[RepoSense]]
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=ngkangtze[Functional code]] [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=ngkangtze&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[RepoSense]]
 
 * *Other contributions*:
 

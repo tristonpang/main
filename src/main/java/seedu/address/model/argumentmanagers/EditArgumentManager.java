@@ -26,10 +26,10 @@ public class EditArgumentManager extends ArgumentManager {
     public static final String EDIT_TARGET_INSTRUCTION = "Please enter the index of the person to be edited";
     public static final String EDIT_FIELDS_INSTRUCTION = "Please indicate which fields you want to edit, by typing "
             + "down the corresponding numbers, separated by spaces:\n"
-            + "1. Name\n"
-            + "2. Phone\n"
-            + "3. Email\n"
-            + "4. Address\n"
+            + "1. Name, "
+            + "2. Phone, "
+            + "3. Email, "
+            + "4. Address, "
             + "5. Tags";
     public static final String EDIT_NAME_INSTRUCTION = "Please enter person's new name";
     public static final String EDIT_EMAIL_INSTRUCTION = "Please enter person's new email";

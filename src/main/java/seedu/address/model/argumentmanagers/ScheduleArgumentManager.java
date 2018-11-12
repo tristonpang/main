@@ -180,16 +180,10 @@ public class ScheduleArgumentManager extends ArgumentManager {
             Time endTime = new Time(userInput);
             return (new Time(userInput)).isValidTime() && startTime.comesStrictlyBefore(endTime);
 
-        case SCHEDULE_DOCTOR_NAME_INDEX:
-            // Fallthrough
-
-        case SCHEDULE_PATIENT_NAME_INDEX:
+        case SCHEDULE_DOCTOR_NAME_INDEX: case SCHEDULE_PATIENT_NAME_INDEX:
             return Name.isValidName(userInput);
 
-        case SCHEDULE_DOCTOR_NRIC_INDEX:
-            // Fallthrough
-
-        case SCHEDULE_PATIENT_NRIC_INDEX:
+        case SCHEDULE_DOCTOR_NRIC_INDEX: case SCHEDULE_PATIENT_NRIC_INDEX:
             return Nric.isValidNric(userInput);
 
         default:
