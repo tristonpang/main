@@ -25,8 +25,6 @@ public class UpdateArgumentManager extends ArgumentManager {
     public static final String UPDATE_COMMENTS_INSTRUCTION = "Please enter any comments for this medical record entry";
 
     public static final String UPDATE_INVALID_INDEX_MESSAGE = "Index must be a non-zero positive integer";
-    public static final String UPDATE_INVALID_DATE_MESSAGE = "Invalid date. Please enter an existing date "
-            + "(not in the past) in the format DD.MM.YYYY";
     public static final String UPDATE_INVALID_DIAGNOSIS_MESSAGE = "Invalid diagnosis. Diagnosis cannot be blank";
     public static final String UPDATE_INVALID_TREATMENT_MESSAGE = "Invalid treatment. Treatment cannot be blank";
 
@@ -36,6 +34,8 @@ public class UpdateArgumentManager extends ArgumentManager {
     private static final int UPDATE_DIAGNOSIS_INDEX = 2;
     private static final int UPDATE_TREATMENT_INDEX = 3;
     private static final int UPDATE_COMMENTS_INDEX = 4;
+
+    private static String INVALID_DATE_MESSAGE;
 
 
 
@@ -146,7 +146,11 @@ public class UpdateArgumentManager extends ArgumentManager {
             return StringUtil.isNonZeroUnsignedInteger(userInput);
 
         case UPDATE_DATE_INDEX:
-            return Date.isValidDate(userInput);
+            if (!Date.isValidDate(userInput)) {
+                INVALID_DATE_MESSAGE = Date.getFailureReason(userInput);
+                return false;
+            }
+            return true;
 
         case UPDATE_DIAGNOSIS_INDEX:
             return new Diagnosis(userInput).isValid();
@@ -171,7 +175,7 @@ public class UpdateArgumentManager extends ArgumentManager {
             return UPDATE_INVALID_INDEX_MESSAGE;
 
         case UPDATE_DATE_INDEX:
-            return UPDATE_INVALID_DATE_MESSAGE;
+            return INVALID_DATE_MESSAGE;
 
         case UPDATE_DIAGNOSIS_INDEX:
             return UPDATE_INVALID_DIAGNOSIS_MESSAGE;
