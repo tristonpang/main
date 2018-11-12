@@ -719,11 +719,18 @@ executing `find n/Alex n/Bernice t/friends`.
 Step 2. `FindCommandParser` will parse the input and verify that is it valid before creating a
 `PersonContainsKeywordsPredicate`, which is passed into `FindCommand`. Then, `FindCommand` is returned.
 
-* `PersonContainsKeywordPredicate` takes in a `HashMap` of `Prefix` mapped to an `ArrayList` of search parameters.
-The image below illustrates how the mapping is done for the user input `find n/Alex n/Bernice t/friends`.
+* `PersonContainsKeywordPredicate` takes in a `HashMap` of `Prefix` mapped to an `ArrayList` of search parameters. The
+code snippet below illustrates how a `FindCommand` is created:
 
-.PersonContainsKeywordPredicate HashMap
-image::FindCommandDeveloperGuideHashMap.png[width="600"]
+[source, java]
+public FindCommand parse(String args) throws ParseException {
+        ...
+        // Performs checks to see if the arguments entered are valid.
+        ...
+        // Process arguments into a HashMap personSearchKeywords which is used to create a PersonContainsKeywordsPredicate to be passed into FindCommand.
+        ...
+        return new FindCommand(new PersonContainsKeywordsPredicate(personSearchKeywords));
+    }
 
 * `PersonContainsKeywordPredicate` tests if a `Person` should appear when searched by iterating through each of the keys
 in the `HashMap` and returning `true` if all of the `Person` 's attributes match at least 1 of the entries in each key's

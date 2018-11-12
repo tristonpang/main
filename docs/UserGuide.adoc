@@ -179,13 +179,13 @@ Displays all `Person` with `alex` or `doctor` in any of their attributes.
 The images below illustrate the utilisation of Global Find:
 
 .Global Find Command
-image::FindCommandUserGuideGlobal1.png[width="600"]
+image::FindCommandUserGuideGlobal1.png[width="400"]
 
 .Global Find Command with Specific Find Command
-image::FindCommandUserGuideGlobal2.png[width="600"]
+image::FindCommandUserGuideGlobal2.png[width="400"]
 
 .Global Find Command with Multiple Keywords
-image::FindCommandUserGuideGlobal3.png[width="600"]
+image::FindCommandUserGuideGlobal3.png[width="400"]
 
 ==== Specific Find
 Specific Find is a search on attributes specified by the user. (i.e. `Name`, `Phone` etc).
@@ -220,13 +220,13 @@ Displays all `Person` with the `Tag` labelled `friends` and whose `Role` is `Doc
 * The images below illustrate the utilisation of Specific Find.
 
 .Specific Find Command
-image::FindCommandUserGuideSpecific1.png[width="600"]
+image::FindCommandUserGuideSpecific1.png[width="400"]
 
 .Specific Find Command with Additional Prefixes
-image::FindCommandUserGuideSpecific2.png[width="600"]
+image::FindCommandUserGuideSpecific2.png[width="400"]
 
 .Examples of Invalid Input for Specific Find Command
-image::FindCommandUserGuideError.png[width="600"]
+image::FindCommandUserGuideError.png[width="400"]
 
 ****
 * Find is case-insensitive. e.g. `nelvin` will match `Nelvin`.
@@ -241,57 +241,6 @@ using two `Name` `Prefix`. e.g. `find n/Kang Tze n/Triston` displays `Ng Kang Tz
 all `Person` with `friends` in their attributes, has `name` containing either `Kang Tze` or `Triston`, and whom is a
 `Doctor`.
 ****
-
-==== Intuitive Command Prompt (ICP) Support
-
-ICP mode provides a more natural way of entering commands into One Life. More information can be found under 3.18:
-Intuitive command prompting.
-
-The Find Command is supported by ICP in the following way:
-
-* When the command word `find` is given without any other input, ICP mode is triggered.
-
-After entering ICP Mode, the user will be prompted to select the attributes to be searched by entering the indexes
-corresponding to the attributes. +
-Below is a list of all searchable attributes and their corresponding indexes.
-
-|===
-| *Attribute*                         | *Index*
-| Global                              | `1`
-| Name                                | `2`
-| NRIC                                | `3`
-| Phone                               | `4`
-| Email                               | `5`
-| Address                             | `6`
-| Role                                | `7`
-| Tag                                 | `8`
-| Medical Department                  | `9`
-| Medical Record                      | `10`
-|===
-
-Lastly, the user will enter the corresponding keywords to be searched under each attribute, in increasing order of
-their indexes.
-
-The images below illustrate the utilisation of Find Command to execute the command `find doctor n/bernice` under ICP
-mode: (Under Normal Mode, this command means `find` all `Person` with `doctor` in their attributes and whose name
-contains `bernice`.)
-
-.ICP Mode for Find Command Step 1
-image::FindCommandUserGuideIcp1.png[width="600"]
-
-.ICP Mode for Find Command Step 2
-image::FindCommandUserGuideIcp2.png[width="600"]
-
-.ICP Mode for Find Command Step 3
-image::FindCommandUserGuideIcp3.png[width="600"]
-
-.ICP Mode for Find Command Step 4
-image::FindCommandUserGuideIcp4.png[width="600"]
-
-[NOTE]
-Under ICP Mode, for Specific Find, keywords separated by a comma are considered to be under multiple identical `Prefix`.
-For example, entering `find n/alex n/bernice` under Normal Mode is identical to entering `alex, bernice` when prompted
-for `Name` keywords under ICP Mode.
 
 // end::find[]
 
