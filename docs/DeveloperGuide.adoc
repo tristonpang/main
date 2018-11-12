@@ -741,7 +741,7 @@ in the `HashMap` and returning `true` if all of the `Person` 's attributes match
 `PersonContainsKeywordPredicate#test`
 after the user input `find n/Alex n/Bernice t/friends`.
 
-.PersonContainsKeywordPredicate Test Result
+.PersonContainsKeywordPredicate test result
 image::FindCommandDeveloperGuidePredicate.png[width="600"]
 
 * As can be seen in the image above, `Person` at index 0 and index 2 have at least 1 entry in `Name` and `Tag` that
@@ -759,7 +759,7 @@ Step 4. `Model#updateFilteredPersonList()` will be called, which uses `PersonCon
 
 The following activity diagram summarises what happens when a user launches the application:
 
-.Find Command Sequence Diagram
+.Find command sequence diagram
 image::FindCommandDeveloperGuideSequenceDiagram.png[width="800"]
 
 ==== Design considerations

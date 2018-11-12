@@ -77,19 +77,19 @@ Examples:
 t/Hokkien` +
 (Adds a new patient, refer to Figure 1 and 2 below for illustrations)
 
-.Before adding a new patient using Add Command
+.Before adding a new patient using add command
 image::AddCommandPatientBefore.png[width="600"]
 
-.After adding a new patient using Add Command
+.After adding a new patient using add command
 image::AddCommandPatientAfter.png[width="600"]
 
 * `add r/doctor n/Betsy Crowe ic/S8234567A e/betsycrowe@example.com a/Newgate Estates p/1234567 md/dentistry` +
 (Adds a new `Doctor`, refer to Figure 3 and 4 below for illustrations)
 
-.Before adding a new doctor using Add Command
+.Before adding a new doctor using add command
 image::AddCommandDoctorBefore.png[width="600"]
 
-.After adding a new doctor using Add Command
+.After adding a new doctor using add command
 image::AddCommandDoctorAfter.png[width="600"]
 
 
@@ -178,13 +178,13 @@ Displays all `Person` with `alex` or `doctor` in any of their attributes.
 
 The images below illustrate the utilisation of Global Find:
 
-.Global Find Command
+.Global find command
 image::FindCommandUserGuideGlobal1.png[width="400"]
 
-.Global Find Command with Specific Find Command
+.Global find command with specific find command
 image::FindCommandUserGuideGlobal2.png[width="400"]
 
-.Global Find Command with Multiple Keywords
+.Global Find command with multiple keywords
 image::FindCommandUserGuideGlobal3.png[width="400"]
 
 ==== Specific Find
@@ -193,6 +193,7 @@ Specific Find is a search on attributes specified by the user. (i.e. `Name`, `Ph
 It is performed when a `Prefix` is specified in the input field. +
 Below is a list of all searchable attributes and their corresponding `Prefix`:
 
+.Table of searchable prefixes
 |===
 | *Attribute*        | *Prefix*
 | Name               | `n/`
@@ -219,13 +220,13 @@ Displays all `Person` with the `Tag` labelled `friends`.
 Displays all `Person` with the `Tag` labelled `friends` and whose `Role` is `Doctor`.
 * The images below illustrate the utilisation of Specific Find.
 
-.Specific Find Command
+.Specific find command
 image::FindCommandUserGuideSpecific1.png[width="400"]
 
-.Specific Find Command with Additional Prefixes
+.Specific find command with additional prefixes
 image::FindCommandUserGuideSpecific2.png[width="400"]
 
-.Examples of Invalid Input for Specific Find Command
+.Examples of invalid input for specific find command
 image::FindCommandUserGuideError.png[width="400"]
 
 ****
