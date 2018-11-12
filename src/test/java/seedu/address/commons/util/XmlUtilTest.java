@@ -36,9 +36,9 @@ public class XmlUtilTest {
 
     private static final String INVALID_PHONE = "9482asf424";
 
-    private static final String VALID_APPOINTMENT = "23.11.2018,1130,1300,AMY,JAKE";
+    private static final String VALID_APPOINTMENT = "";
     private static final String VALID_NAME = "Hans Muster";
-    private static final String VALID_NRIC = "S1111117A";
+    private static final String VALID_NRIC = "S9299074E";
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";

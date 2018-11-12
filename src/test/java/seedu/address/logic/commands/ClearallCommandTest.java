@@ -6,12 +6,13 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-public class ClearCommandTest {
+public class ClearallCommandTest {
 
     private CommandHistory commandHistory = new CommandHistory();
 
@@ -21,7 +22,8 @@ public class ClearCommandTest {
         Model expectedModel = new ModelManager();
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ClearallCommand(), model, commandHistory, ClearallCommand.MESSAGE_SUCCESS,
+                expectedModel);
     }
 
     @Test
@@ -31,7 +33,8 @@ public class ClearCommandTest {
         expectedModel.resetData(new AddressBook());
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ClearallCommand(), model, commandHistory, ClearallCommand.MESSAGE_SUCCESS,
+                expectedModel);
     }
 
 }

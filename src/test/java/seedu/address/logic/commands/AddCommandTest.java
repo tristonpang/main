@@ -121,6 +121,21 @@ public class AddCommandTest {
         }
 
         @Override
+        public void changeDatabase(Predicate<Person> filer, String role) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void clearActiveDatabase() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public String getCurrentDatabase() {
+            return null;
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             throw new AssertionError("This method should not be called.");
         }
@@ -226,11 +241,6 @@ public class AddCommandTest {
 
         @Override
         public void cancelIntuitiveCommand() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public String getCurrentIntuitiveCommandType() {
             throw new AssertionError("This method should not be called.");
         }
     }

@@ -7,7 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AvailCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearallCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -20,6 +22,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateCommand;
 
@@ -87,6 +90,12 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
+        case ClearallCommand.COMMAND_WORD:
+            return new ClearallCommand();
+
+        case AvailCommand.COMMAND_WORD:
+            return new AvailCommandParser().parse(arguments);
+
         case FindCommand.COMMAND_WORD:
             if (arguments.isEmpty()) {
                 return triggerIntuitiveMode(userInput);
@@ -99,8 +108,11 @@ public class AddressBookParser {
             }
             return new ScheduleCommandParser().parse(arguments);
 
+        case SwitchCommand.COMMAND_WORD:
+            return new SwitchCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
-            return new ListCommandParser().parse(arguments);
+            return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -118,6 +130,9 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case UpdateCommand.COMMAND_WORD:
+            if (arguments.isEmpty()) {
+                return triggerIntuitiveMode(userInput);
+            }
             return new UpdateCommandParser().parse(arguments);
 
         default:

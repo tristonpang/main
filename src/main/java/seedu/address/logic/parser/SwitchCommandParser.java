@@ -1,16 +1,22 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 
-import seedu.address.logic.commands.ListCommand;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import seedu.address.logic.commands.SwitchCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
+
 import seedu.address.model.person.Role;
 
 /**
- * Parses input arguments and creates a new ListCommand object.
+ * Parses input arguments and creates a new SwitchCommand object.
  */
-public class ListCommandParser implements Parser<ListCommand> {
+public class SwitchCommandParser implements Parser<SwitchCommand> {
+    private static final String LIST_EVERYTHING = "ALL";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ListCommand
@@ -20,21 +26,27 @@ public class ListCommandParser implements Parser<ListCommand> {
      * Doctors or Patients, as per specified.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public ListCommand parse(String args) throws ParseException {
-        if (args.length() == 0) {
-            return new ListCommand();
-        }
-
+    public SwitchCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_ROLE);
 
         if (!isPrefixPresent(argMultimap, PREFIX_ROLE) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ListCommand.MESSAGE_USAGE));
+                    SwitchCommand.MESSAGE_USAGE));
         }
 
-        Role role = ParserUtil.parseRole(argMultimap.getValue(PREFIX_ROLE).get());
-        return new ListCommand(role);
+        if (listAllPersons(argMultimap.getValue(PREFIX_ROLE).get())) {
+            return new SwitchCommand(PREDICATE_SHOW_ALL_PERSONS, LIST_EVERYTHING);
+        }
+
+        try {
+            Role role = ParserUtil.parseRole(argMultimap.getValue(PREFIX_ROLE).get());
+            return new SwitchCommand((person -> person.getClass().getSimpleName().equalsIgnoreCase(role.toString())),
+                    role.toString());
+        } catch (ParseException pe) {
+            throw new ParseException(pe.getMessage() + " or 'All' (case-insensitive)");
+        }
+
     }
 
     /**
@@ -43,5 +55,13 @@ public class ListCommandParser implements Parser<ListCommand> {
      */
     public static boolean isPrefixPresent(ArgumentMultimap argMultimap, Prefix prefix) {
         return argMultimap.getValue(prefix).isPresent();
+    }
+
+    /**
+     * Helper method to check if user wants to list all persons, regardless of role, base on user's command input.
+     */
+    private static boolean listAllPersons(String args) {
+        String trimmedArgs = args.trim();
+        return trimmedArgs.equalsIgnoreCase(LIST_EVERYTHING);
     }
 }

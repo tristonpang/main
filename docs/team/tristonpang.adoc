@@ -22,7 +22,7 @@ It is written in Java, and has about 10 kLoC.
 
 === Summary of contributions
 
-* *Major enhancement*: added *the intuitive command prompt functionality*
+* *Major enhancement*: added *the intuitive command prompt feature*
 ** What it does: intuitively guides and instructs the user to enter the correct inputs into the
 required fields of a command
 ** Justification: This feature improves the product significantly because new or less tech-saavy users are able to
@@ -34,7 +34,7 @@ behaviours depending of the type of command to be executed.
 
 * *Minor enhancement*: added command box clear ability and cancellation of intuitive command ability on `ESC` key press.
 
-* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=tristonpang[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=tristonpang[Functional code]] [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=tristonpang&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[RepoSense]]
 
 * *Other contributions*:
 
@@ -64,8 +64,3 @@ include::../UserGuide.adoc[tag=intuitivecommandprompt]
 include::../DeveloperGuide.adoc[tag=intuitivecommandprompt]
 
 
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

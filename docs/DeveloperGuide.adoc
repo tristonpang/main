@@ -360,8 +360,11 @@ Step 4. A successful check gives 2 objects, `personToEdit` and `Appointment` obj
 Program creates another `Person` object called `editedPerson` that is equal to `personToEdit`.
 `ScheduleCommand` then adds `Appointment` to the `appointmentList` of `editedPerson`.
 Lastly, `ScheduleCommand` replaces `personToEdit` with `editedPerson` in our model.
+This is shown in the diagram below.
 
 image::ScheduleCommandStep4.png[width="800"]
+
+The above procedure in step 4 is then repeated for the other person (e.g. other person is a doctor if specified person is a patient) affected in the scheduling process.
 
 Step 5. `XmlAdaptedPerson` updates storage of `appointmentList`.
 
@@ -405,7 +408,7 @@ public static boolean isClash(Appointment appointment, Appointment otherAppointm
 Maintain a sorted list of appointments based on the date and time of appointments.
 ** Pros: It might be more efficient when checking for appointment clashes.
 We do not need to check our new appointment against all the appointments in the ArrayList.
-For example we can check from the last (latest) appointment down the list until a point where the next appointment comes before this appointment.
+For example we can check from the last (latest) appointment down the list until a point where the next appointment ends before this appointment.
 At that point we can stop checking as we know that there will be no more clashes.
 ** Cons: The efficiency gain when checking for clashes might be lost due to efficiency lost due to sorting being required.
 // end::schedulecommand[]
@@ -471,7 +474,7 @@ proceeds to return this String instruction to the executing `IntuitiveEntryComma
 Step 6. `IntuitiveEntryCommand` uses the String instruction to create a new `CommandResult`, which is then returned
 to the `LogicManager` to be displayed to the user.
 
-The following two sequence diagrams (Figures 10 & 11) describes the above process:
+The following two sequence diagrams (Figures 11 & 12) describes the above process:
 
 .High level sequence diagram detailing interactions between `Logic` and `Model`
 image::IntuitiveCommandWordSequenceDiagram.png[width="800"]
@@ -543,7 +546,7 @@ as accordingly.
 Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
 `IntuitivePromptManager`. Execution continues normally as described in the above sections.
 
-The following two sequence diagrams (Figures 14 & 15) describe the above process:
+The following two sequence diagrams (Figures 15 & 16) describe the above process:
 
 .High level sequence diagram showing going back ability
 image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
@@ -551,14 +554,15 @@ image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
 .Internal sequence digram showing going back ability
 image::ArgumentManagerBackSequenceDiagram.png[width="800"]
 
-==== Supported Commands
-The following commands are supported by the Intuitive Command Prompt feature, and thus have an intuitive version:
+==== Commands & Argument Managers
+The following `XYZArgumentManagers` inherit from `ArgumentManager`. They handle arguments for and represent the different commands as stated below:
 
-* `add`
-* `delete`
-* `find`
-* `edit`
-* `schedule`
+* `AddArgumentManager`: Represents the intuitive `add` command
+* `DeleteArgumentManager`: Represents the intuitive `delete` command
+* `FindArgumentManager`: Represents the intuitive `find` command
+* `EditArgumentManager`: Represents the intuitive `edit` command
+* `ScheduleArgumentManager`: Represents the intuitive `schedule` command
+* `UpdateArgumentManager`: Represents the intuitive `update` command
 
 
 // end::intuitivecommandprompt[]
@@ -674,7 +678,14 @@ This section describes the pros and cons of the current and other alternate impl
 ===== Aspect: How to store a patient's medical record library
 
 * **Alternative 1 (current choice):** Use an ArrayList of `MedicalRecord` as the patient's medical record library.
-** Pros: Accessing the most recent record by retrieving the first `MedicalRecord` in the ArrayList is easy.
+** Pros: Accessing the most recent record by retrieving the first `MedicalRecord` in the ArrayList is easy. Given below is a code snippet that demonstrates how this is done.
+[source,java]
+if (medicalRecordLibrary.size() != 0) {
+    return medicalRecordLibrary.get(medicalRecordLibrary.size() - 1);
+} else {
+    return null;
+}
+
 ** Cons: Retrieving the latest `MedicalRecord` before a specified date takes longer as each `MedicalRecord` has to be checked sequentially until the last `MedicalRecord` before the specified date is found.
 * **Alternative 2:** Use a different data structure like a TreeMap of `MedicalRecord` as the value and date for the key as the patient's medical record library.
 ** Pros: Retrieving the latest `MedicalRecord` before a specified date is made convenient by  just using the floor function already defined in the TreeMap API.
