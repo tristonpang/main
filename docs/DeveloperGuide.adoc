@@ -665,6 +665,9 @@ Checks:
 
 ** Whether the index of input person is valid.
 ** Whether the person specified by the index is a patient.
+** Whether the specified date is a valid date.
+** Whether the specified date is before the current date.
+** Whether the input contain invalid prefixes.
 
 If it was invalid, an exception message will be thrown and the `MedicalRecord` will not be added into the patient's medical record library.
 
