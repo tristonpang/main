@@ -167,6 +167,8 @@ public class ScheduleCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
 
+        new SelectCommand(index).execute(model, history);
+
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 

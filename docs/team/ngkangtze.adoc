@@ -4,11 +4,11 @@
 :stylesDir: ../stylesheets
 :sectnums:
 
-= PROJECT: One Life
+== PROJECT: One Life
 
 ---
 
-== Overview
+=== Overview
 
 This Project Portfolio is intended to document my contributions towards One Life. These contributions include functional
 and non-functional code, documentation, user interface and numerous other aspects of the project.
@@ -21,7 +21,7 @@ It was developed as part of the module requirements for CS2103T (Software Engine
 The user interacts with it using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX.
 It is written in Java, and has about 10 kLoC.
 
-== Summary of contributions
+=== Summary of contributions
 
 * *Major enhancement*: Enhanced *the ability to find `Person` with selected attributes* instead of only with their `Name`.
 ** What it does: This feature allows the user to find all `Person` containing specified keywords. Users may combine multiple keywords from different fields to increase the search accuracy.

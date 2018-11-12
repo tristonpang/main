@@ -1282,7 +1282,7 @@ Value proposition: manage contacts faster than a typical mouse/GUI driven applic
 
 [appendix]
 == User Stories
-Shown below are the user stories collected and used to conceptualize the features of OneLife.
+Shown below are the user stories collected and used to conceptualize the features of One Life.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 

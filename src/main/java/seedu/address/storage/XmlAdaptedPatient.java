@@ -64,7 +64,7 @@ public class XmlAdaptedPatient extends XmlAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     MedicalRecord.class.getSimpleName()));
         }
-        if (!(new MedicalRecord(medicalRecords)).isValidMedicalRecord()) {
+        if (!(new MedicalRecord(medicalRecords)).isValidPreviousMedicalRecord()) {
             throw new IllegalValueException(MedicalRecord.MESSAGE_MEDICAL_RECORD_CONSTRAINTS);
         }
 

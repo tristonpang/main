@@ -29,7 +29,7 @@ public class Treatment {
         return this.treatment.matches(TREATMENT_VALIDATION_REGEX) && !MedicalRecord.hasInvalidPrefix(this.treatment);
     }
 
-    public String getFailureReason() {
+    public String getInvalidReason() {
         if (!this.treatment.matches(TREATMENT_VALIDATION_REGEX)) {
             return MESSAGE_TREATMENT_CONSTRAINTS;
         } else if (MedicalRecord.hasInvalidPrefix(this.treatment)) {
