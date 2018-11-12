@@ -18,15 +18,15 @@ By: `Team W16-3`      Since: `Sep 2018`      Licence: `MIT`
 
 == Introduction
 
-OneLife (OL) is designed for service providers in the healthcare industry who *prefer to use a desktop application for
-managing patient and doctor information*. More importantly, OneLife is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you prefer typing, OneLife can get your medical information management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+One Life (OL) is designed for service providers in the healthcare industry who *prefer to use a desktop application for
+managing patient and doctor information*. More importantly, One Life is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you prefer typing, One Life can get your medical information management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 Listed below are instructions to help you get started:
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file into the folder you want to use as the home folder for OneLife.
+.  Copy the file into the folder you want to use as the home folder for One Life.
 .  Double-click the file to start the app. The GUI (as shown in Figure 1 below) should appear in a few seconds.
 +
 image::UserGuide_Ui.png[width="790"]
@@ -237,7 +237,7 @@ all `Person` with `friends` in their attributes, has `name` containing either `K
 
 ==== Intuitive Command Prompt (ICP) Support
 
-ICP mode provides a more natural way of entering commands into OneLife. More information can be found under 3.18:
+ICP mode provides a more natural way of entering commands into One Life. More information can be found under 3.18:
 Intuitive command prompting.
 
 The Find Command is supported by ICP in the following way:
@@ -519,14 +519,14 @@ Format: `exit`
 
 === Saving the data
 
-OneLife data are saved in the hard disk automatically after any command that changes the data. +
+One Life data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 
 // tag::intuitivecommandprompt[]
 === Intuitive command prompting
 
-Provides a more natural way of entering commands into OneLife. OneLife will prompt the user for the next required
+Provides a more natural way of entering commands into One Life. One Life will prompt the user for the next required
 input - no prefixes are required.
 
 Commands that support intuitive prompting:
@@ -584,7 +584,7 @@ _{explain how the user can enable/disable data encryption}_
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous OneLife folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous One Life folder.
 
 == Command Summary
 
