@@ -194,6 +194,7 @@ It is performed when a `Prefix` is specified in the input field. +
 Below is a list of all searchable attributes and their corresponding `Prefix`:
 
 .Table of searchable prefixes
+[width="20"]
 |===
 | *Attribute*        | *Prefix*
 | Name               | `n/`
