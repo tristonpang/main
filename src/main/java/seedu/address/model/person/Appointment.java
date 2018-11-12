@@ -197,10 +197,7 @@ public class Appointment extends DisplayableAttribute {
         Doctor doctor = (Doctor) person;
         Name name = doctor.getName();
         Nric doctorNric = doctor.getNric();
-        if (doctorName.equals(name) && this.doctorNric.equals(doctorNric)) {
-            return true;
-        }
-        return false;
+        return doctorName.equals(name) && this.doctorNric.equals(doctorNric);
     }
 
     /**
@@ -212,10 +209,7 @@ public class Appointment extends DisplayableAttribute {
         Patient patient = (Patient) person;
         Name name = patient.getName();
         Nric nric = patient.getNric();
-        if (patientName.equals(name) && patientNric.equals(nric)) {
-            return true;
-        }
-        return false;
+        return patientName.equals(name) && patientNric.equals(nric);
     }
 
     /**
