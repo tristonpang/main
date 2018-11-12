@@ -463,7 +463,7 @@ image::ScheduleFailure.png[width="600"]
 // end::schedule[]
 
 // tag::displaymr[]
-=== Viewing medical records of patients : `select`
+=== Displaying medical records of patients : `select`
 Displays all the medical records of the specified person. +
 Format: `select INDEX`
 
@@ -499,17 +499,17 @@ If no comments are specified, "-" will be displayed on the medical record.
 
 Examples:
 
-* `update 1 d/31.10.2018 dg/flu tr/tamiflu` +
+* `update 1 d/13.11.2018 dg/Flu tr/Tamiflu` +
 Updates the medical records of the patient at index 1 with the given date, diagnosis and treatment without any comments as shown in the figure below.
 
 .Updating records without comments
-image::UpdateCommandWithoutCommentSuccess.png[width="600"]
+image::UpdateCommandWithoutCommentsSuccess.png[width="600"]
 
-* `update 1 d/31.10.2018 dg/flu tr/tamiflu c/To be taken thrice a day after meals.` +
+* `update 1 d/13.11.2018 dg/Flu tr/Tamiflu c/To be taken thrice a day after meals.` +
 Updates the medical records of the patient at index 1 with the given date, diagnosis, treatment and comments as shown in the figure below.
 
 .Updating records with comments
-image::UpdateCommandWithCommentSuccess.png[width="600"]
+image::UpdateCommandWithCommentsSuccess.png[width="600"]
 // end::update[]
 
 === Exiting the program : `exit`
@@ -536,6 +536,7 @@ Commands that support intuitive prompting:
 * `edit`
 * `find`
 * `schedule`
+* `update`
 ****
 
 Format: `COMMAND`

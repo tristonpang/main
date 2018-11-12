@@ -10,6 +10,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ScheduleCommand;
+import seedu.address.logic.commands.UpdateCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.argumentmanagers.AddArgumentManager;
 import seedu.address.model.argumentmanagers.ArgumentManager;
@@ -17,6 +18,7 @@ import seedu.address.model.argumentmanagers.DeleteArgumentManager;
 import seedu.address.model.argumentmanagers.EditArgumentManager;
 import seedu.address.model.argumentmanagers.FindArgumentManager;
 import seedu.address.model.argumentmanagers.ScheduleArgumentManager;
+import seedu.address.model.argumentmanagers.UpdateArgumentManager;
 import seedu.address.ui.UiManager;
 
 
@@ -27,6 +29,7 @@ import seedu.address.ui.UiManager;
 public class IntuitivePromptManager {
     public static final String SKIP_COMMAND = "//";
     public static final String SKIP_INSTRUCTION = "\n(Type %1$s to skip this field)";
+    public static final String INTUITIVE_MODE_MESSAGE = "(You are currently in the intuitive %1$s command.)";
 
     private static int currentArgIndex;
     private static List<String> arguments;
@@ -109,6 +112,10 @@ public class IntuitivePromptManager {
             argumentManager = new ScheduleArgumentManager();
             break;
 
+        case UpdateCommand.COMMAND_WORD:
+            argumentManager = new UpdateArgumentManager();
+            break;
+
         default:
             throw new Error(UNEXPECTED_SCENARIO_MESSAGE);
 
@@ -141,7 +148,8 @@ public class IntuitivePromptManager {
      * @return the string instruction for the current field of the executing intuitive command
      */
     public String getInstruction() {
-        return argumentManager.retrieveInstruction(arguments, currentArgIndex);
+        return String.format(INTUITIVE_MODE_MESSAGE, getCurrentCommandType()) + "\n"
+                + argumentManager.retrieveInstruction(arguments, currentArgIndex);
     }
 
     /**
@@ -243,7 +251,7 @@ public class IntuitivePromptManager {
      *
      * @return the String representing the current intuitive command
      */
-    public String getCurrentCommandType() {
+    private String getCurrentCommandType() {
         return argumentManager.getArgumentManagerType();
     }
 }

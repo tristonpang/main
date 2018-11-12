@@ -474,7 +474,7 @@ proceeds to return this String instruction to the executing `IntuitiveEntryComma
 Step 6. `IntuitiveEntryCommand` uses the String instruction to create a new `CommandResult`, which is then returned
 to the `LogicManager` to be displayed to the user.
 
-The following two sequence diagrams (Figures 10 & 11) describes the above process:
+The following two sequence diagrams (Figures 11 & 12) describes the above process:
 
 .High level sequence diagram detailing interactions between `Logic` and `Model`
 image::IntuitiveCommandWordSequenceDiagram.png[width="800"]
@@ -546,7 +546,7 @@ as accordingly.
 Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
 `IntuitivePromptManager`. Execution continues normally as described in the above sections.
 
-The following two sequence diagrams (Figures 14 & 15) describe the above process:
+The following two sequence diagrams (Figures 15 & 16) describe the above process:
 
 .High level sequence diagram showing going back ability
 image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
@@ -554,14 +554,15 @@ image::IntuitiveCommandPromptBackSequenceDiagram.png[width="800"]
 .Internal sequence digram showing going back ability
 image::ArgumentManagerBackSequenceDiagram.png[width="800"]
 
-==== Supported Commands
-The following commands are supported by the Intuitive Command Prompt feature, and thus have an intuitive version:
+==== Commands & Argument Managers
+The following `XYZArgumentManagers` inherit from `ArgumentManager`. They handle arguments for and represent the different commands as stated below:
 
-* `add`
-* `delete`
-* `find`
-* `edit`
-* `schedule`
+* `AddArgumentManager`: Represents the intuitive `add` command
+* `DeleteArgumentManager`: Represents the intuitive `delete` command
+* `FindArgumentManager`: Represents the intuitive `find` command
+* `EditArgumentManager`: Represents the intuitive `edit` command
+* `ScheduleArgumentManager`: Represents the intuitive `schedule` command
+* `UpdateArgumentManager`: Represents the intuitive `update` command
 
 
 // end::intuitivecommandprompt[]
@@ -677,7 +678,14 @@ This section describes the pros and cons of the current and other alternate impl
 ===== Aspect: How to store a patient's medical record library
 
 * **Alternative 1 (current choice):** Use an ArrayList of `MedicalRecord` as the patient's medical record library.
-** Pros: Accessing the most recent record by retrieving the first `MedicalRecord` in the ArrayList is easy.
+** Pros: Accessing the most recent record by retrieving the first `MedicalRecord` in the ArrayList is easy. Given below is a code snippet that demonstrates how this is done.
+[source,java]
+if (medicalRecordLibrary.size() != 0) {
+    return medicalRecordLibrary.get(medicalRecordLibrary.size() - 1);
+} else {
+    return null;
+}
+
 ** Cons: Retrieving the latest `MedicalRecord` before a specified date takes longer as each `MedicalRecord` has to be checked sequentially until the last `MedicalRecord` before the specified date is found.
 * **Alternative 2:** Use a different data structure like a TreeMap of `MedicalRecord` as the value and date for the key as the patient's medical record library.
 ** Pros: Retrieving the latest `MedicalRecord` before a specified date is made convenient by  just using the floor function already defined in the TreeMap API.

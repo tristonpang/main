@@ -62,9 +62,6 @@ public class SwitchCommandParser implements Parser<SwitchCommand> {
      */
     private static boolean listAllPersons(String args) {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.equalsIgnoreCase(LIST_EVERYTHING)) {
-            return true;
-        }
-        return false;
+        return trimmedArgs.equalsIgnoreCase(LIST_EVERYTHING);
     }
 }

@@ -48,7 +48,7 @@ Responsibilities: Code Quality, JavaFX expert
 
 === Gary Goh Yi Peng
 image::garygohyp.png[width="150", align="left"]
-{empty}[https://github.com/garygohyp[github]] [<<garygoh#, portfolio>>]
+{empty}[https://github.com/garygohyp[github]] [<<garygohyp#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Documentation

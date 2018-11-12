@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -18,6 +19,11 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.DatabaseChangedEvent;
 import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.MedicalRecord;
+import seedu.address.model.patient.Patient;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentManager;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
@@ -72,7 +78,42 @@ public class ModelManager extends ComponentManager implements Model {
     public void clearActiveDatabase() {
         List<Person> toDelete = versionedAddressBook.getPersonList().stream()
                 .filter(predicateShowRelevantPeople).collect(Collectors.toList());
-        toDelete.stream().forEach(person -> deletePerson(person));
+        toDelete.stream().forEach(personToDelete -> {
+            if (personToDelete instanceof Patient) {
+                for (Appointment appointment : personToDelete.getAppointmentList()) {
+                    Nric doctorNric = appointment.getDoctorNric();
+                    Person affectedPersonToEdit = getPerson(doctorNric).get();
+                    ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit
+                            .getAppointmentList());
+                    affectedAppointmentList = AppointmentManager
+                            .removeAppointmentsOfPatient(personToDelete.getNric(), affectedAppointmentList);
+                    Person affectedEditedPerson = new Doctor(
+                            affectedPersonToEdit.getName(), affectedPersonToEdit.getNric(),
+                            affectedPersonToEdit.getPhone(), affectedPersonToEdit.getEmail(),
+                            affectedPersonToEdit.getAddress(), affectedPersonToEdit.getTags(),
+                            affectedAppointmentList, ((Doctor) affectedPersonToEdit).getMedicalDepartment());
+                    updatePerson(affectedPersonToEdit, affectedEditedPerson);
+                }
+            } else if (personToDelete instanceof Doctor) {
+                for (Appointment appointment : personToDelete.getAppointmentList()) {
+                    Nric patientNric = appointment.getPatientNric();
+                    Person affectedPersonToEdit = getPerson(patientNric).get();
+                    ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit
+                            .getAppointmentList());
+                    ArrayList<MedicalRecord> newMedicalRecordLibrary =
+                            new ArrayList<>(((Patient) affectedPersonToEdit).getMedicalRecordLibrary());
+                    affectedAppointmentList = AppointmentManager
+                            .removeAppointmentsOfDoctor(personToDelete.getNric(), affectedAppointmentList);
+                    Person affectedEditedPerson = new Patient(
+                            affectedPersonToEdit.getName(), affectedPersonToEdit.getNric(),
+                            affectedPersonToEdit.getPhone(), affectedPersonToEdit.getEmail(),
+                            affectedPersonToEdit.getAddress(), affectedPersonToEdit.getTags(),
+                            affectedAppointmentList, newMedicalRecordLibrary);
+                    updatePerson(affectedPersonToEdit, affectedEditedPerson);
+                }
+            }
+            deletePerson(personToDelete);
+        });
         this.indicatePersonChanged();
     }
 
@@ -262,11 +303,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void cancelIntuitiveCommand() {
         intuitivePromptManager.cancelIntuitiveCommand();
-    }
-
-    @Override
-    public String getCurrentIntuitiveCommandType() {
-        return intuitivePromptManager.getCurrentCommandType();
     }
 
 }

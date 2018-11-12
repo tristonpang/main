@@ -175,8 +175,8 @@ public class FindArgumentManager extends ArgumentManager {
 
     @Override
     public String prepareArguments(List<String> arguments) {
-        String preparedString = "";
-        preparedString += FindCommand.COMMAND_WORD + " ";
+        StringBuilder preparedString = new StringBuilder();
+        preparedString.append(FindCommand.COMMAND_WORD + " ");
 
         for (int index = MIN_ARGUMENT_INDEX; index < FIND_MAX_ARGUMENTS; index++) {
             if (index == FIND_SEARCH_FIELDS_INDEX) {
@@ -188,11 +188,11 @@ public class FindArgumentManager extends ArgumentManager {
                 continue;
             }
 
-            preparedString += prefixFindArgument(index, argument); //TODO: optimise with StringBuilder
-            preparedString += " ";
+            preparedString.append(prefixFindArgument(index, argument));
+            preparedString.append(" ");
         }
 
-        return preparedString.trim();
+        return preparedString.toString().trim();
     }
 
     /**
