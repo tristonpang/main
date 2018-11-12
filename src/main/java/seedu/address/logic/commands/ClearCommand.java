@@ -11,13 +11,12 @@ import seedu.address.model.Model;
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Database has been cleared!";
+    public static final String MESSAGE_SUCCESS = "Active database has been cleared!";
 
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        //model.resetData(new AddressBook());
         model.clearActiveDatabase();
         model.commitAddressBook();
         return new CommandResult(MESSAGE_SUCCESS);
