@@ -44,7 +44,7 @@ public class XmlAdaptedMedicalRecord {
      * @throws IllegalValueException if there were any data constraints violated in the adapted appointment.
      */
     public String toModelType() throws IllegalValueException {
-        if (!new MedicalRecord(medicalRecord).isValidMedicalRecord()) {
+        if (!new MedicalRecord(medicalRecord).isValidPreviousMedicalRecord()) {
             throw new IllegalValueException("Invalid Medical Record");
         }
         return medicalRecord;

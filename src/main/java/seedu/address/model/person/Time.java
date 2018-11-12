@@ -60,35 +60,20 @@ public class Time {
      * @param otherTiming
      * @return boolean stating if current time comes before otherTiming
      */
-    public boolean comesBeforeStrictly(Time otherTiming) {
+    public boolean comesStrictlyBefore(Time otherTiming) {
         int currentTime = Integer.parseInt(time.trim());
         int otherTime = Integer.parseInt(otherTiming.time.trim());
         return (currentTime < otherTime);
     }
 
     /**
-     * Checks loosely if current time is after other time.
-     * Strictly means current time must be strictly greater than other time
-     * for the method to return true.
-     *
-     * @param otherTiming
-     * @return
-     */
-    public boolean comesAfterStrictly(Time otherTiming) {
-        int currentTime = Integer.parseInt(time.trim());
-        int otherTime = Integer.parseInt(otherTiming.time.trim());
-        return (currentTime > otherTime);
-    }
-
-    /**
-     *
      * @return whether this time is a valid time.
      */
-    public static boolean isValidTime(String time) {
-        return isCorrectFormat(time) && doesExist(time);
+    public boolean isValidTime() {
+        return isCorrectFormat() && doesExist();
     }
 
-    private static boolean isCorrectFormat(String time) {
+    private boolean isCorrectFormat() {
         return time.matches(TIME_VALIDATION_REGEX);
     }
 
@@ -96,8 +81,8 @@ public class Time {
      * Checks if a given time in the correct format exists.
      * @return whether the given time exists.
      */
-    private static boolean doesExist(String time) {
-        if (!isCorrectFormat(time)) {
+    private boolean doesExist() {
+        if (!isCorrectFormat()) {
             return false;
         }
         boolean result = true;
@@ -111,12 +96,12 @@ public class Time {
         return result;
     }
 
-    public static String getFailureReason(String time) {
-        if (isValidTime(time)) {
+    public String getFailureReason() {
+        if (isValidTime()) {
             return "Time is valid.";
         }
         String reason;
-        if (!isCorrectFormat(time)) {
+        if (!isCorrectFormat()) {
             reason = MESSAGE_TIME_INVALID_FORMAT_CONSTRAINTS;
         } else {
             reason = MESSAGE_TIME_INVALID_DOES_NOT_EXIST + time;

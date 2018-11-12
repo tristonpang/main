@@ -146,7 +146,7 @@ public class UpdateArgumentManager extends ArgumentManager {
             return StringUtil.isNonZeroUnsignedInteger(userInput);
 
         case UPDATE_DATE_INDEX:
-            return Date.isValidDate(userInput);
+            return (new Date(userInput)).isValid();
 
         case UPDATE_DIAGNOSIS_INDEX:
             return new Diagnosis(userInput).isValid();
