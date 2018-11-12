@@ -29,6 +29,7 @@ Listed below are instructions to help you get started:
 .  Copy the file into the folder you want to use as the home folder for One Life.
 .  Double-click the file to start the app. The GUI (as shown in Figure 1 below) should appear in a few seconds.
 +
+.One Life User Interface
 image::UserGuide_Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -36,7 +37,7 @@ E.g. typing *`help`* and pressing kbd:[Enter] will open the help window. +
 Some example commands you can try:
 
 * *`list`* : lists all contacts.
-* **`add`**`r/patient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ic/S9601234A` : adds a patient named `John Doe` to the database.
+* **`add`**`r/patient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ic/S9601234A` : adds a `Patient` named `John Doe` to the database.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list.
 * *`exit`* : exits the app.
 
@@ -60,34 +61,40 @@ Format: `help`
 
 // tag::add[]
 === Adding a person: `add`
-Adds a patient or doctor to the database. +
+Adds a `Patient` or `Doctor` to the database. +
 
-*Adding a patient* +
+*Adding a `Patient`* +
 Format: `add r/patient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
-*Adding a doctor* +
+*Adding a `Doctor`* +
 Format: `add r/doctor n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS md/MEDICAL_DEPARTMENT [t/TAG]...`
 [TIP]
-A person can have any number of tags (including 0)
+A `Person` can have any number of `Tag` (including 0).
 
 Examples:
 
-* `add r/patient n/John Doe Xiao Huang ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01
+* `add r/patient n/John Doe Xiao Huang ic/S1234567D p/98765432 e/johnd@example.com a/John street, block 123, #01-01
 t/Hokkien` +
 (Adds a new patient, refer to Figure 1 and 2 below for illustrations)
 
-image::addbefore.png[width="600"]
-image::addAfter.png[width="600"]
+.Before adding a new patient using Add Command
+image::AddCommandPatientBefore.png[width="600"]
 
-* `add r/doctor n/Betsy Crowe ic/S8234567F e/betsycrowe@example.com a/Newgate Estates p/1234567 md/dentistry` +
-(Adds a new doctor, refer to Figure 3 and 4 below for illustrations)
+.After adding a new patient using Add Command
+image::AddCommandPatientAfter.png[width="600"]
 
-image::addDocBefore.png[width="600"]
-image::addDocAfter.png[width="600"]
+* `add r/doctor n/Betsy Crowe ic/S8234567A e/betsycrowe@example.com a/Newgate Estates p/1234567 md/dentistry` +
+(Adds a new `Doctor`, refer to Figure 3 and 4 below for illustrations)
+
+.Before adding a new doctor using Add Command
+image::AddCommandDoctorBefore.png[width="600"]
+
+.After adding a new doctor using Add Command
+image::AddCommandDoctorAfter.png[width="600"]
 
 
 [NOTE]
-When adding a new doctor you have to to specify his/her medical department.
+When adding a new `Doctor` you have to to specify his/her `MedicalDepartment`.
 // end::add[]
 
 // tag::list[]
