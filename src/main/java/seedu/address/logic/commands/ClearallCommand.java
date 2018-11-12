@@ -9,10 +9,10 @@ import seedu.address.model.Model;
 /**
  * Clears the address book.
  */
-public class ResetCommand extends Command {
+public class ClearallCommand extends Command {
 
-    public static final String COMMAND_WORD = "reset";
-    public static final String MESSAGE_SUCCESS = "Database has been reset!";
+    public static final String COMMAND_WORD = "clearall";
+    public static final String MESSAGE_SUCCESS = "Entire database has been cleared!";
 
 
     @Override

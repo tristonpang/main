@@ -8,13 +8,13 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.ResetCommand;
+import seedu.address.logic.commands.ClearallCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
-public class ResetCommandSystemTest extends AddressBookSystemTest {
+public class ClearallCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void reset() {
@@ -23,7 +23,7 @@ public class ResetCommandSystemTest extends AddressBookSystemTest {
         /* Case: clear non-empty address book, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
          */
-        assertCommandSuccess("   " + ResetCommand.COMMAND_WORD + " ab12   ");
+        assertCommandSuccess("   " + ClearallCommand.COMMAND_WORD + " ab12   ");
         assertSelectedCardUnchanged();
 
         /* Case: undo clearing address book -> original address book restored */
@@ -41,17 +41,17 @@ public class ResetCommandSystemTest extends AddressBookSystemTest {
         /* Case: selects first card in person list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
         selectPerson(Index.fromOneBased(1));
-        assertCommandSuccess(ResetCommand.COMMAND_WORD);
+        assertCommandSuccess(ClearallCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
 
         /* Case: filters the person list before clearing -> entire address book cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        assertCommandSuccess(ResetCommand.COMMAND_WORD);
+        assertCommandSuccess(ClearallCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 
         /* Case: clear empty address book -> cleared */
-        assertCommandSuccess(ResetCommand.COMMAND_WORD);
+        assertCommandSuccess(ClearallCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
@@ -67,13 +67,13 @@ public class ResetCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command) {
-        assertCommandSuccess(command, ResetCommand.MESSAGE_SUCCESS, new ModelManager());
+        assertCommandSuccess(command, ClearallCommand.MESSAGE_SUCCESS, new ModelManager());
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String)} except that the result box displays
      * {@code expectedResultMessage} and the model related components equal to {@code expectedModel}.
-     * @see ResetCommandSystemTest#assertCommandSuccess(String)
+     * @see ClearallCommandSystemTest#assertCommandSuccess(String)
      */
     private void assertCommandSuccess(String command, String expectedResultMessage, Model expectedModel) {
         executeCommand(command);
