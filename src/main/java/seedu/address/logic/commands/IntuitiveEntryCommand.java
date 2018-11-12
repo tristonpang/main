@@ -22,7 +22,6 @@ public class IntuitiveEntryCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory commandHistory) throws CommandException {
-        boolean isFirstInput = !model.areIntuitiveArgsAvailable();
         String nextInstruction = null;
         if (input.equals(GO_BACK_COMMAND)) {
             nextInstruction = model.removeIntuitiveEntry();
@@ -31,6 +30,8 @@ public class IntuitiveEntryCommand extends Command {
             //get correct command type and argument index from IntuitivePromptManager (in model)
             nextInstruction = model.addIntuitiveEntry(input);
         }
+
+        boolean isFirstInput = !model.areIntuitiveArgsAvailable();
 
         if (input.equals("")) {
             return new CommandResult(nextInstruction);
