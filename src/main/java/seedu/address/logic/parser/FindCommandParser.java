@@ -32,30 +32,23 @@ public class FindCommandParser implements Parser<FindCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
+     * @param args is a non-empty String.
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-
-        ArrayList<Prefix> prefixList = new ArrayList<>(Arrays.asList(PREFIX_NAME, PREFIX_NRIC, PREFIX_PHONE,
+        final ArrayList<Prefix> prefixList = new ArrayList<>(Arrays.asList(PREFIX_NAME, PREFIX_NRIC, PREFIX_PHONE,
                 PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_ROLE, PREFIX_TAG, PREFIX_MEDICAL_DEPARTMENT,
                 PREFIX_MEDICAL_RECORD));
 
+        // Checks if any of the prefixes entered are invalid.
         List<String> allPrefixes = new ArrayList<>();
-        Matcher m = Pattern.compile("\\s\\w+\\/").matcher(args);
+        Matcher m = Pattern.compile("\\s\\w+/").matcher(args);
         while (m.find()) {
             allPrefixes.add(m.group().trim());
         }
-
-        // Throws an error if any of the prefixes entered are invalid.
-        for (String p : allPrefixes) {
-            if (prefixList.stream().noneMatch(x -> p.equals(x.toString()))) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        for (String s : allPrefixes) {
+            if (prefixList.stream().noneMatch(x -> s.equals(x.toString()))) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
             }
         }
 
@@ -66,7 +59,6 @@ public class FindCommandParser implements Parser<FindCommand> {
             List<String> keywordList = new ArrayList<>(Arrays.asList(argMultimap.getPreamble().split("\\s+")));
             personSearchKeywords.put(PREFIX_GLOBAL, keywordList);
         }
-
         for (Prefix prefix : prefixList) {
             initialiseKeywordMap(argMultimap, personSearchKeywords, prefix);
         }
