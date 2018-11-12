@@ -37,10 +37,7 @@ public class AppointmentManager {
      * @return Boolean if there is any clash between other appointment and current appointment
      */
     public static boolean isClash(Appointment appointment, Appointment otherAppointment) {
-        if (appointment.isClash(otherAppointment)) {
-            return true;
-        }
-        return false;
+        return appointment.isClash(otherAppointment);
     }
 
     /**
