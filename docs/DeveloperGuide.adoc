@@ -495,7 +495,7 @@ Step 2-3. These steps are similar to Steps 2-3 of the above section (Start of In
 Step 4. `Model` calls the `IntuitivePromptManager` to store the user's input as an argument. Since the intuitive
 command is already executing, the user's input is stored as an argument in the `arguments` list.
 The `currentArgIndex`, which allows the `IntuitivePromptManager` to determine the what field it should prompt for next
-is incremented accordingly:
+is incremented accordingly by the `ArgumentManager`:
 
 .How the `arguments` list in `IntuitivePromptManager` records arguments with `currentArgIndex`
 image::IntuitiveInternalDiagram.png[width="800"]
@@ -540,8 +540,19 @@ Step 3. When `IntuitiveEntryCommand#execute()` is called, it detects that the in
 `/bk`. It calls `Model#removeIntuitiveEntry()` to remove the input filled into the latest field.
 
 Step 4. `Model#removeIntuitiveEntry()` calls `IntuitivePromptManager#removeArgument()`, and the
-`IntuitivePromptManager` removes the input filled into the latest field, and decrements the `currentArgIndex`
-as accordingly.
+`IntuitivePromptManager` removes the input filled into the latest field. `currentArgIndex` is decremented
+as accordingly by the `ArgumentManager` as shown in the code snippet below:
+
+```
+public void removeArgument() {
+    if (currentArgIndex <= ArgumentManager.MIN_ARGUMENT_INDEX) {
+        return;
+    }
+
+    currentArgIndex = argumentManager.removeArgumentForCommand(arguments, currentArgIndex);
+}
+```
+
 
 Step 5. `Model` retrieves the instruction of the field indicated by the `currentArgIndex` of the
 `IntuitivePromptManager`. Execution continues normally as described in the above sections.

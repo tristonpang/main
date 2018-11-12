@@ -51,6 +51,8 @@ public class AddArgumentManager extends ArgumentManager {
     private static final int ADD_NRIC_INDEX = 6;
     private static final int ADD_DEPT_INDEX = 7;
 
+    private static String INVALID_NRIC_MESSAGE;
+
     @Override
     public int addArgumentForCommand(List<String> arguments, int argumentIndex, String userInput) {
         arguments.add(userInput);
@@ -211,7 +213,13 @@ public class AddArgumentManager extends ArgumentManager {
             return true;
 
         case ADD_NRIC_INDEX:
-            return Nric.isValidNric(userInput);
+            try {
+                Nric.isValidNric(userInput);
+            } catch (IllegalArgumentException e) {
+                INVALID_NRIC_MESSAGE = e.getMessage();
+                return false;
+            }
+            return true;
 
         case ADD_DEPT_INDEX:
             return MedicalDepartment.isValidMedDept(userInput);
@@ -245,7 +253,7 @@ public class AddArgumentManager extends ArgumentManager {
             return Tag.MESSAGE_TAG_CONSTRAINTS;
 
         case ADD_NRIC_INDEX:
-            return Nric.MESSAGE_NRIC_CONSTRAINTS;
+            return INVALID_NRIC_MESSAGE;
 
         case ADD_DEPT_INDEX:
             return MedicalDepartment.MESSAGE_DEPTNAME_CONSTRAINTS;
