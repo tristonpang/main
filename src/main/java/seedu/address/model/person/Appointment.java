@@ -223,7 +223,7 @@ public class Appointment extends DisplayableAttribute {
      * @return boolean on whether the start time comes strictly before end time.
      */
     public boolean hasValidStartandEndTime() {
-        return (startTime.comesBeforeStrictly(endTime));
+        return (startTime.comesStrictlyBefore(endTime));
     }
 
     /**

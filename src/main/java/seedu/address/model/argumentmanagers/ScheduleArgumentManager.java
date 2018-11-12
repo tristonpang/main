@@ -170,15 +170,15 @@ public class ScheduleArgumentManager extends ArgumentManager {
             return StringUtil.isNonZeroUnsignedInteger(userInput);
 
         case SCHEDULE_DATE_INDEX:
-            return Date.isValidDate(userInput);
+            return (new Date(userInput)).isValid();
 
         case SCHEDULE_START_TIME_INDEX:
-            return Time.isValidTime(userInput);
+            return new Time(userInput).isValidTime();
 
         case SCHEDULE_END_TIME_INDEX:
             Time startTime = new Time(arguments.get(SCHEDULE_START_TIME_INDEX));
             Time endTime = new Time(userInput);
-            return Time.isValidTime(userInput) && startTime.comesBeforeStrictly(endTime);
+            return (new Time(userInput)).isValidTime() && startTime.comesStrictlyBefore(endTime);
 
         case SCHEDULE_DOCTOR_NAME_INDEX:
             // Fallthrough

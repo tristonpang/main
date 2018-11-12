@@ -75,18 +75,18 @@ public class AvailCommandSystemTest {
     public void parse_invalidValue_failure() {
         // invalid start time
         assertParseFailure(parser, DATE_DESC + INVALID_START_TIME_DESC + END_TIME_DESC,
-                Time.getFailureReason("111111"));
+                (new Time("111111")).getFailureReason());
 
         // invalid end time
         assertParseFailure(parser, DATE_DESC + START_TIME_DESC + INVALID_END_TIME_DESC,
-                Time.getFailureReason("111111"));
+                (new Time("111111")).getFailureReason());
 
         // invalid date
-        assertParseFailure(parser, INVALID_DATE_DESC, Date.getFailureReason("23.13"));
+        assertParseFailure(parser, INVALID_DATE_DESC, (new Date("23.13")).getInvalidReason());
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, DATE_DESC + INVALID_START_TIME_DESC + INVALID_END_TIME_DESC,
-                Time.getFailureReason("111111"));
+                (new Time("111111")).getFailureReason());
 
         // non-empty preamble
         assertParseFailure(parser,

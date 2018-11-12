@@ -30,8 +30,8 @@ public class MedicalRecord extends DisplayableAttribute {
     public final String comments;
 
     /**
-     * Validates given medical record. Used during junit testing.
-     *
+     * Creates a medical record with the given string. Used when converting an XmlAdaptedMedicalRecord into a
+     * MedicalRecord or in JUnit testing.
      */
     public MedicalRecord(String medicalRecord) {
         requireNonNull(medicalRecord);
@@ -44,7 +44,7 @@ public class MedicalRecord extends DisplayableAttribute {
     }
 
     /**
-     * Validates given descriptions. Used when taking in inputs from parser.
+     * Creates a medical record with the specified inputs. Used when taking in inputs from parser.
      */
     public MedicalRecord(String date, String diagnosis, String treatment, String comments) {
         requireAllNonNull(date, diagnosis, treatment);
@@ -56,17 +56,15 @@ public class MedicalRecord extends DisplayableAttribute {
         this.diagnosis = new Diagnosis(diagnosis);
         this.treatment = new Treatment(treatment);
         this.comments = actualComments;
-        this.value = date + "," + " Diagnosis: " + diagnosis + ", Treatment: " + treatment + ", Comments: "
-                + actualComments;
-    }
-
-    public boolean isValidMedicalRecord() {
-        return this.value != null;
+        this.value = date + ","
+                + " Diagnosis: " + diagnosis + ","
+                + " Treatment: " + treatment + ","
+                + " Comments: " + actualComments;
     }
 
     /**
      * Checks if the user has input invalid prefix as a value for a field.
-     * @param value the value of a field.
+     * @param value the value of the field to be checked.
      * @return true if an invalid prefix is used in a value for a field. Otherwise return false.
      */
     public static boolean hasInvalidPrefix(String value) {
@@ -75,42 +73,41 @@ public class MedicalRecord extends DisplayableAttribute {
                 || value.contains("Comments:");
     }
 
-    public String getFailureReason() {
-        if (!hasValidDate()) {
-            return Date.getFailureReason(date.toString());
-        } else if (!hasValidDiagnosis()) {
-            return diagnosis.getFailureReason();
-        } else if (!hasValidTreatment()) {
-            return treatment.getFailureReason();
-        } else if (!hasValidComments()) {
-            return MESSAGE_INVALID_PREFIX_USED;
-        } else {
-            return "Medical record is valid.";
-        }
+    private boolean hasValidDate() {
+        return this.date.isValid();
     }
 
-    public boolean isValid() {
+    private boolean hasValidDiagnosis() {
+        return this.diagnosis.isValid();
+    }
+
+    private boolean hasValidTreatment() {
+        return this.treatment.isValid();
+    }
+
+    private boolean hasValidComments() {
+        return !hasInvalidPrefix(comments);
+    }
+
+    public boolean isValidNewMedicalRecord() {
         return hasValidDate()
                 && hasValidDiagnosis()
                 && hasValidTreatment()
                 && hasValidComments();
     }
 
-
-    public boolean hasValidDate() {
-        return Date.isValidDate(this.date.toString());
-    }
-
-    public boolean hasValidDiagnosis() {
-        return this.diagnosis.isValid();
-    }
-
-    public boolean hasValidTreatment() {
-        return this.treatment.isValid();
-    }
-
-    public boolean hasValidComments() {
-        return !hasInvalidPrefix(comments);
+    public String getInvalidReason() {
+        if (!hasValidDate()) {
+            return this.date.getInvalidReason();
+        } else if (!hasValidDiagnosis()) {
+            return diagnosis.getInvalidReason();
+        } else if (!hasValidTreatment()) {
+            return treatment.getInvalidReason();
+        } else if (!hasValidComments()) {
+            return MESSAGE_INVALID_PREFIX_USED;
+        } else {
+            return "Medical record is valid.";
+        }
     }
 
     public String getDate() {
@@ -127,6 +124,10 @@ public class MedicalRecord extends DisplayableAttribute {
 
     public String getComments() {
         return this.comments;
+    }
+
+    public boolean isValidPreviousMedicalRecord() {
+        return this.value != null;
     }
 
     @Override

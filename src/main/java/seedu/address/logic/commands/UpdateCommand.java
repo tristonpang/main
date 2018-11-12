@@ -73,8 +73,8 @@ public class UpdateCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_CHOSEN);
         }
 
-        if (!medicalRecord.isValid()) {
-            throw new CommandException(MESSAGE_UPDATE_MEDICAL_RECORD_FAILURE + medicalRecord.getFailureReason());
+        if (!medicalRecord.isValidNewMedicalRecord()) {
+            throw new CommandException(MESSAGE_UPDATE_MEDICAL_RECORD_FAILURE + medicalRecord.getInvalidReason());
         }
         Patient personToEdit = (Patient) lastShownList.get(index.getZeroBased());
         ArrayList<MedicalRecord> editedMedicalRecordLibrary = new ArrayList<>(personToEdit.getMedicalRecordLibrary());

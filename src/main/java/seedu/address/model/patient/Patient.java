@@ -83,8 +83,7 @@ public class Patient extends Person {
         if (!medicalRecordLibrary.isEmpty()) {
             latestMedicalRecord = medicalRecordLibrary.get(0);
         } else {
-            // TODO: this is a quick fix for null MR error
-            latestMedicalRecord = new MedicalRecord("");
+            latestMedicalRecord = MedicalRecord.DEFAULT_MEDICAL_RECORD;
         }
     }
 
