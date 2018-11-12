@@ -16,12 +16,12 @@ public class Date {
     /*
      * Dates should be in DD.MM.YYYY format. Date and month can be 1 or 2 digits long
      */
-    public static final String DATE_VALIDATION_REGEX = "^\\d{1,2}\\.\\d{1,2}\\.\\d{4}";
+    private static final String DATE_VALIDATION_REGEX = "^\\d{1,2}\\.\\d{1,2}\\.\\d{4}";
 
-    public static final String MESSAGE_DATE_INVALID_FORMAT_CONSTRAINTS = "Dates should be entered in DD.MM.YYYY format."
-            + " Date and month can have 1 or 2 digits, but the year must be 4 digits.";
-    public static final String MESSAGE_DATE_INVALID_IN_THE_PAST = "This date is in the past and not in the future: ";
-    public static final String MESSAGE_DATE_INVALID_DOES_NOT_EXIST = "This date does not exist: ";
+    private static final String MESSAGE_DATE_INVALID_FORMAT_CONSTRAINTS = "Dates should be entered in "
+            + "DD.MM.YYYY format. Date and month can have 1 or 2 digits, but the year must be 4 digits.";
+    private static final String MESSAGE_DATE_INVALID_IN_THE_PAST = "This date is in the past and not in the future: ";
+    private static final String MESSAGE_DATE_INVALID_DOES_NOT_EXIST = "This date does not exist: ";
 
     private static final ArrayList<Integer> monthsWithThirtyOneDays = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 8, 10,
             12));
@@ -40,11 +40,13 @@ public class Date {
      * Checks if the date is a valid date.
      * @return whether this date is a valid date.
      */
-    public static boolean isValidDate(String date) {
-        return isCorrectFormat(date) && doesExist(date) && !isInThePast(date);
+    public boolean isValid() {
+        return isCorrectFormat()
+                && doesExist()
+                && !isInThePast();
     }
 
-    private static boolean isCorrectFormat(String date) {
+    private boolean isCorrectFormat() {
         return date.matches(DATE_VALIDATION_REGEX);
     }
 
@@ -52,12 +54,12 @@ public class Date {
      * Checks if a given date in the correct format exists.
      * @return whether given date exists.
      */
-    private static boolean doesExist(String dateToCheck) {
-        if (!isCorrectFormat(dateToCheck)) {
+    private boolean doesExist() {
+        if (!isCorrectFormat()) {
             return false;
         }
         boolean result = true;
-        List<String> valueList = Arrays.asList(dateToCheck.split("\\."));
+        List<String> valueList = Arrays.asList(date.split("\\."));
         int date = Integer.parseInt(valueList.get(0));
         int month = Integer.parseInt(valueList.get(1));
         int year = Integer.parseInt(valueList.get(2));
@@ -82,7 +84,7 @@ public class Date {
      * Checks if the given date is in the past based on current date in Singapore's time zone.
      * @return whether the given date is in the past.
      */
-    private static boolean isInThePast(String givenDate) {
+    private boolean isInThePast() {
         ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
         String stringZonedDateTime = zonedDateTime.toString();
 
@@ -96,13 +98,13 @@ public class Date {
         String month = dateParts[1];
         String day = dateParts[2];
         currentDate = day + "." + month + "." + year;
-        return (isBefore(currentDate, givenDate));
+        return (isBefore(currentDate, date));
     }
 
     /**
      *
      * Checks if the given date is strictly before the current date.
-     * @param currentDate
+     * @param currentDate the current date.
      * @return whether the given date comes before the current date.
      */
     private static boolean isBefore(String currentDate, String givenDate) {
@@ -135,14 +137,14 @@ public class Date {
         return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
     }
 
-    public static String getFailureReason(String date) {
-        if (isValidDate(date)) {
+    public String getInvalidReason() {
+        if (isValid()) {
             return "Date is valid.";
         }
         String reason;
-        if (!isCorrectFormat(date)) {
+        if (!isCorrectFormat()) {
             reason = MESSAGE_DATE_INVALID_FORMAT_CONSTRAINTS;
-        } else if (isInThePast(date)) {
+        } else if (isInThePast()) {
             reason = MESSAGE_DATE_INVALID_IN_THE_PAST + date;
         } else {
             reason = MESSAGE_DATE_INVALID_DOES_NOT_EXIST + date;

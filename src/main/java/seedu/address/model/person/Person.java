@@ -186,7 +186,7 @@ public class Person {
                 .append(getAddress())
                 .append(" Latest Appointment: ")
                 .append(getAppointment())
-                .append(" AppointmentList: ")
+                .append(" Appointment List: ")
                 .append(getAppointmentList())
                 .append(" Tags: ");
         getTags().forEach(builder::append);

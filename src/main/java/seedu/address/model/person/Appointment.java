@@ -197,10 +197,7 @@ public class Appointment extends DisplayableAttribute {
         Doctor doctor = (Doctor) person;
         Name name = doctor.getName();
         Nric doctorNric = doctor.getNric();
-        if (doctorName.equals(name) && this.doctorNric.equals(doctorNric)) {
-            return true;
-        }
-        return false;
+        return doctorName.equals(name) && this.doctorNric.equals(doctorNric);
     }
 
     /**
@@ -212,10 +209,7 @@ public class Appointment extends DisplayableAttribute {
         Patient patient = (Patient) person;
         Name name = patient.getName();
         Nric nric = patient.getNric();
-        if (patientName.equals(name) && patientNric.equals(nric)) {
-            return true;
-        }
-        return false;
+        return patientName.equals(name) && patientNric.equals(nric);
     }
 
     /**
@@ -223,7 +217,7 @@ public class Appointment extends DisplayableAttribute {
      * @return boolean on whether the start time comes strictly before end time.
      */
     public boolean hasValidStartandEndTime() {
-        return (startTime.comesBeforeStrictly(endTime));
+        return (startTime.comesStrictlyBefore(endTime));
     }
 
     /**

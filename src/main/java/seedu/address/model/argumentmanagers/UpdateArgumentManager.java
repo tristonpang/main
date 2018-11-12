@@ -35,7 +35,7 @@ public class UpdateArgumentManager extends ArgumentManager {
     private static final int UPDATE_TREATMENT_INDEX = 3;
     private static final int UPDATE_COMMENTS_INDEX = 4;
 
-    private static String INVALID_DATE_MESSAGE;
+    private static String UPDATE_INVALID_DATE_MESSAGE;
 
 
 
@@ -146,8 +146,9 @@ public class UpdateArgumentManager extends ArgumentManager {
             return StringUtil.isNonZeroUnsignedInteger(userInput);
 
         case UPDATE_DATE_INDEX:
-            if (!Date.isValidDate(userInput)) {
-                INVALID_DATE_MESSAGE = Date.getFailureReason(userInput);
+            Date date = new Date(userInput);
+            if (!date.isValid()) {
+                UPDATE_INVALID_DATE_MESSAGE = date.getInvalidReason();
                 return false;
             }
             return true;
@@ -175,7 +176,7 @@ public class UpdateArgumentManager extends ArgumentManager {
             return UPDATE_INVALID_INDEX_MESSAGE;
 
         case UPDATE_DATE_INDEX:
-            return INVALID_DATE_MESSAGE;
+            return UPDATE_INVALID_DATE_MESSAGE;
 
         case UPDATE_DIAGNOSIS_INDEX:
             return UPDATE_INVALID_DIAGNOSIS_MESSAGE;
