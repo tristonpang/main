@@ -18,8 +18,8 @@ public class Date {
      */
     private static final String DATE_VALIDATION_REGEX = "^\\d{1,2}\\.\\d{1,2}\\.\\d{4}";
 
-    private static final String MESSAGE_DATE_INVALID_FORMAT_CONSTRAINTS = "Dates should be entered in DD.MM.YYYY format."
-            + " Date and month can have 1 or 2 digits, but the year must be 4 digits.";
+    private static final String MESSAGE_DATE_INVALID_FORMAT_CONSTRAINTS = "Dates should be entered in "
+            + "DD.MM.YYYY format. Date and month can have 1 or 2 digits, but the year must be 4 digits.";
     private static final String MESSAGE_DATE_INVALID_IN_THE_PAST = "This date is in the past and not in the future: ";
     private static final String MESSAGE_DATE_INVALID_DOES_NOT_EXIST = "This date does not exist: ";
 
