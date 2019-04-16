@@ -1,57 +1,93 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <persons>
+        <role>Patient</role>
         <name>Hans Muster</name>
+        <nric>S9299074E</nric>
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <medicalRecord isPrivate="false">12.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -</medicalRecord>
+        <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
+        <role>Patient</role>
         <name>Ruth Mueller</name>
+        <nric>S5727680J</nric>
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
+        <medicalRecord isPrivate="false">12.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -</medicalRecord>
+        <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
+        <role>Patient</role>
         <name>Heinz Kurz</name>
+        <nric>S1030476H</nric>
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
+        <medicalRecord isPrivate="false">12.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -</medicalRecord>
+        <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
+        <role>Patient</role>
         <name>Cornelia Meier</name>
+        <nric>S0875111J</nric>
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
+        <medicalRecord isPrivate="false">12.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -</medicalRecord>
+        <appointment isPrivate="false">Likes to eat</appointment>
     </persons>
     <persons>
+        <role>Patient</role>
         <name>Werner Meyer</name>
+        <nric>S9961059Z</nric>
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
+        <medicalRecord isPrivate="false">12.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -</medicalRecord>
+        <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
+        <role>Doctor</role>
         <name>Lydia Kunz</name>
+        <nric>S6251115Z</nric>
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
+        <medicalDepartment>Neurology</medicalDepartment>
+        <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
+        <role>Doctor</role>
         <name>Anna Best</name>
+        <nric>S1016311J</nric>
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
+        <medicalDepartment>Obstetrics</medicalDepartment>
+        <appointment isPrivate="false"></appointment>
     </persons>
     <persons>
+        <role>Doctor</role>
         <name>Stefan Meier</name>
+        <nric>S0743717Z</nric>
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
+        <medicalDepartment>Physiology</medicalDepartment>
+        <appointment isPrivate="false">Smart friend</appointment>
     </persons>
     <persons>
+        <role>Doctor</role>
         <name>Martin Mueller</name>
+        <nric>S3608025F</nric>
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
+        <medicalDepartment>Cardiology</medicalDepartment>
+        <appointment isPrivate="false"></appointment>
     </persons>
 </addressbook>

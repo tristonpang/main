@@ -3,9 +3,12 @@ package seedu.address.model.person;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_NRIC_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
 import java.util.Arrays;
@@ -16,9 +19,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.patient.Patient;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PatientBuilder;
 
 public class UniquePersonListTest {
     @Rule
@@ -46,10 +50,66 @@ public class UniquePersonListTest {
     @Test
     public void contains_personWithSameIdentityFieldsInList_returnsTrue() {
         uniquePersonList.add(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Person editedAlice = new PatientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         assertTrue(uniquePersonList.contains(editedAlice));
     }
+
+    @Test
+    public void hasSuchPerson_nullName_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        uniquePersonList.hasSuchPerson(null, ALICE.getNric());
+    }
+
+    @Test
+    public void hasSuchPerson_nullNric_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        uniquePersonList.hasSuchPerson(ALICE.getName(), null);
+    }
+
+    @Test
+    public void hasSuchPerson_nullNameAndNric_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        uniquePersonList.hasSuchPerson(null, null);
+    }
+
+
+    @Test
+    public void hasSuchPerson_invalidName_throwsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        uniquePersonList.hasSuchPerson(new Name(INVALID_NAME_DESC), AMY.getNric());
+    }
+
+    @Test
+    public void hasSuchPerson_invalidNric_throwsIllegalArgumentException() {
+        thrown.expect(IllegalArgumentException.class);
+        uniquePersonList.hasSuchPerson(AMY.getName(), new Nric(INVALID_NRIC_DESC));
+    }
+
+    @Test
+    public void hasSuchPerson_personExists_returnsTrue() {
+        uniquePersonList.add(ALICE);
+        assertTrue(uniquePersonList.hasSuchPerson(ALICE.getName(), ALICE.getNric()));
+    }
+
+    @Test
+    public void hasSuchPerson_wrongName_returnsFalse() {
+        uniquePersonList.add(ALICE);
+        assertFalse(uniquePersonList.hasSuchPerson(BOB.getName(), ALICE.getNric()));
+    }
+
+    @Test
+    public void hasSuchPerson_wrongNric_returnsFalse() {
+        uniquePersonList.add(ALICE);
+        assertFalse(uniquePersonList.hasSuchPerson(ALICE.getName(), BOB.getNric()));
+    }
+
+    @Test
+    public void hasSuchPerson_wrongNameAndNric_returnsFalse() {
+        uniquePersonList.add(ALICE);
+        assertFalse(uniquePersonList.hasSuchPerson(BOB.getName(), BOB.getNric()));
+    }
+
 
     @Test
     public void add_nullPerson_throwsNullPointerException() {
@@ -94,7 +154,7 @@ public class UniquePersonListTest {
     @Test
     public void setPerson_editedPersonHasSameIdentity_success() {
         uniquePersonList.add(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Patient editedAlice = new PatientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         uniquePersonList.setPerson(ALICE, editedAlice);
         UniquePersonList expectedUniquePersonList = new UniquePersonList();

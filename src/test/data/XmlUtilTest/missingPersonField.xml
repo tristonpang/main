@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Person with missing name field -->
 <person>
+    <role>Patient</role>
+    <nric>S9299074E</nric>
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <medicalRecord> </medicalRecord>
     <tagged>friends</tagged>
 </person>

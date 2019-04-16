@@ -2,49 +2,77 @@
 <!-- AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook() -->
 <addressbook>
     <persons>
+        <role>Patient</role>
         <name>Alice Pauline</name>
+        <nric>S3305985Z</nric>
         <phone>94351253</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
+        <medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>
+        <appointment></appointment>
         <tagged>friends</tagged>
     </persons>
     <persons>
+        <role>Patient</role>
         <name>Benson Meier</name>
+        <nric>S1215130F</nric>
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
+        <medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>
+        <appointment></appointment>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
     <persons>
+        <role>Patient</role>
         <name>Carl Kurz</name>
+        <nric>S7426958C</nric>
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <address>wall street</address>
+        <medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>
+        <appointment></appointment>
     </persons>
     <persons>
+        <role>Patient</role>
         <name>Daniel Meier</name>
-        <phone>87652533</phone>
+        <nric>S8066331E</nric>
+        <phone>87652599</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
         <tagged>friends</tagged>
+        <medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>
+        <appointment></appointment>
     </persons>
     <persons>
+        <role>Doctor</role>
         <name>Elle Meyer</name>
+        <nric>S6977714G</nric>
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <address>michegan ave</address>
+        <medicalDepartment>Oncology</medicalDepartment>
+        <appointment></appointment>
     </persons>
     <persons>
+        <role>Doctor</role>
+        <nric>S5319783C</nric>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
+        <medicalDepartment>Cardiology</medicalDepartment>
+        <appointment></appointment>
     </persons>
     <persons>
+        <role>Doctor</role>
         <name>George Best</name>
+        <nric>S5882198E</nric>
         <phone>9482442</phone>
         <email>anna@example.com</email>
         <address>4th street</address>
+        <medicalDepartment>Neurology</medicalDepartment>
+        <appointment></appointment>
     </persons>
 </addressbook>

@@ -1,0 +1,66 @@
+= Triston Pang Erh Syen - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:sectnums:
+
+== PROJECT: One Life
+
+---
+
+=== Overview
+This portfolio documents the features and enhancements that I have made to the project and the contributions I have made to
+the User and Developer guide.
+
+One Life is a desktop medical database application used for storing and displaying data related to patients and doctors.
+The project was developed as part of the requirements for the CS2103T (Software Engineering) module.
+One Life aims to be a simplified, non-complex system that is responsive and easy to use, so as to increase efficiency in the processes of medical staff and to
+reduce the amount of human errors made in the medical field.
+
+The user interacts with One Life using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX.
+It is written in Java, and has about 10 kLoC.
+
+=== Summary of contributions
+
+* *Major enhancement*: added *the intuitive command prompt feature*
+** What it does: intuitively guides and instructs the user to enter the correct inputs into the
+required fields of a command
+** Justification: This feature improves the product significantly because new or less tech-saavy users are able to
+easily use the product. The step-by-step walkthrough of commands by the intuitive command prompt also simplifies the
+typing of commands and can potentially reduce human error.
+** Highlights: This enhancement involves all commands that take in one or more arguments.
+The implementation of the enhancement required classes that could keep track of arguments and have different prompting
+behaviours depending of the type of command to be executed.
+
+* *Minor enhancement*: added command box clear ability and cancellation of intuitive command ability on `ESC` key press.
+
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=tristonpang[Functional code]] [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=tristonpang&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[RepoSense]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub
+*** Tagged releases, compiled binary (JAR) files and published releases on GitHub
+** Documentation:
+*** Updated class diagram for Model component: https://github.com/CS2103-AY1819S1-W16-3/main/pull/144/commits/2b05e6cb5a4e3b9cf8164184bb474b79fc6d3531[#144]
+
+** Community:
+*** Reviewed PRs of other team members: https://github.com/CS2103-AY1819S1-W16-3/main/pull/54#issuecomment-428477267[#54]
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=intuitivecommandprompt]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=intuitivecommandprompt]
+
+

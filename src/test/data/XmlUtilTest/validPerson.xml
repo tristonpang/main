@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <person>
+    <role>Patient</role>
     <name>Hans Muster</name>
+    <nric>S9299074E</nric>
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <medicalRecord></medicalRecord>
     <tagged>friends</tagged>
+    <appointment>23.11.2018,1130,1300,AMY,JAKE</appointment>
 </person>

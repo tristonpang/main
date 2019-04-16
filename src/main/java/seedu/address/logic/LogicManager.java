@@ -17,6 +17,10 @@ import seedu.address.model.person.Person;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
+    public static final String MESSAGE_NON_INTUITIVE_CANCELLATION = "There is currently "
+            + "no intuitive command that is executing. Command box cleared.";
+    public static final String MESSAGE_INTUITIVE_CANCELLATION = "Intuitive command cancelled.";
+
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
@@ -34,7 +38,20 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
-            return command.execute(model, history);
+            CommandResult result = command.execute(model, history);
+
+            //if after intuitive input, all inputs have been received, parse with full arguments
+            if (!model.isIntuitiveMode() && model.areIntuitiveArgsAvailable()) {
+                //tell AddressBookParser that the intuitive command has completed
+                addressBookParser.exitIntuitiveMode();
+
+                String intuitiveArguments = model.retrieveIntuitiveArguments();
+                logger.fine("Retrieved Argument String: " + intuitiveArguments);
+                Command intuitiveCompletedCommand = addressBookParser.parseCommand(intuitiveArguments);
+                return intuitiveCompletedCommand.execute(model, history);
+            }
+
+            return result;
         } finally {
             history.add(commandText);
         }
@@ -48,5 +65,15 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public String cancelCommand() {
+        if (!model.isIntuitiveMode()) {
+            return MESSAGE_NON_INTUITIVE_CANCELLATION;
+        }
+        addressBookParser.exitIntuitiveMode();
+        model.cancelIntuitiveCommand();
+        return MESSAGE_INTUITIVE_CANCELLATION;
     }
 }

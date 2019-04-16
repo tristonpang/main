@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -9,6 +10,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.MedicalRecord;
+import seedu.address.model.patient.Patient;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentManager;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
 /**
@@ -41,6 +48,41 @@ public class DeleteCommand extends Command {
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        if (personToDelete instanceof Patient) {
+            for (Appointment appointment : personToDelete.getAppointmentList()) {
+                Nric doctorNric = appointment.getDoctorNric();
+                Person affectedPersonToEdit = model.getPerson(doctorNric).get();
+                ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit
+                        .getAppointmentList());
+                affectedAppointmentList = AppointmentManager
+                        .removeAppointmentsOfPatient(personToDelete.getNric(), affectedAppointmentList);
+                Person affectedEditedPerson = new Doctor(
+                        affectedPersonToEdit.getName(), affectedPersonToEdit.getNric(),
+                        affectedPersonToEdit.getPhone(), affectedPersonToEdit.getEmail(),
+                        affectedPersonToEdit.getAddress(), affectedPersonToEdit.getTags(),
+                        affectedAppointmentList, ((Doctor) affectedPersonToEdit).getMedicalDepartment());
+                model.updatePerson(affectedPersonToEdit, affectedEditedPerson);
+            }
+        } else if (personToDelete instanceof Doctor) {
+            for (Appointment appointment : personToDelete.getAppointmentList()) {
+                Nric patientNric = appointment.getPatientNric();
+                Person affectedPersonToEdit = model.getPerson(patientNric).get();
+                ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit
+                        .getAppointmentList());
+                ArrayList<MedicalRecord> newMedicalRecordLibrary =
+                        new ArrayList<>(((Patient) affectedPersonToEdit).getMedicalRecordLibrary());
+                affectedAppointmentList = AppointmentManager
+                        .removeAppointmentsOfDoctor(personToDelete.getNric(), affectedAppointmentList);
+                Person affectedEditedPerson = new Patient(
+                        affectedPersonToEdit.getName(), affectedPersonToEdit.getNric(),
+                        affectedPersonToEdit.getPhone(), affectedPersonToEdit.getEmail(),
+                        affectedPersonToEdit.getAddress(), affectedPersonToEdit.getTags(),
+                        affectedAppointmentList, newMedicalRecordLibrary);
+                model.updatePerson(affectedPersonToEdit, affectedEditedPerson);
+            }
+        }
+
         model.deletePerson(personToDelete);
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));

@@ -3,22 +3,30 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_DEPARTMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -36,6 +44,16 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_MEDICAL_RECORD_AMY = "12.12.2018, Diagnosis: cough, "
+            + "Treatment: dextromethorphan, Comments: -";
+    public static final String VALID_MEDICAL_RECORD_BOB = "12.12.2018, Diagnosis: flu, Treatment: tamiflu, Comments: -";
+    public static final String VALID_SCHEDULE_AMY = "22.11.2018,1300,1400,Alice,S4612750A,Amy,S8998334G";
+    public static final String VALID_SCHEDULE_BOB = "22.11.2018,1300,1400,Jack,S1249482C,Bob,S0529160G";
+    public static final String VALID_ROLE_DOCTOR = "doctor";
+    public static final String VALID_ROLE_PATIENT = "patient";
+    public static final String VALID_MEDICAL_DEPARTMENT = "Dermatology";
+    public static final String VALID_NRIC_AMY = "S8998334G";
+    public static final String VALID_NRIC_BOB = "S0529160G";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -47,18 +65,46 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String NRIC_DESC_AMY = " " + PREFIX_NRIC + VALID_NRIC_AMY;
+    public static final String NRIC_DESC_BOB = " " + PREFIX_NRIC + VALID_NRIC_BOB;
+    public static final String MEDICAL_RECORD_DESC_AMY = " " + PREFIX_MEDICAL_RECORD + VALID_MEDICAL_RECORD_AMY;
+    public static final String MEDICAL_RECORD_DESC_BOB = " " + PREFIX_MEDICAL_RECORD + VALID_MEDICAL_RECORD_BOB;
+    public static final String MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + VALID_MEDICAL_DEPARTMENT;
+    public static final String ROLE_DOCTOR_DESC = " " + PREFIX_ROLE + VALID_ROLE_DOCTOR;
+    public static final String ROLE_PATIENT_DESC = " " + PREFIX_ROLE + VALID_ROLE_PATIENT;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "JB123456A"; // cant start with 2 letters
+    public static final String INVALID_ROLE_DESC = " " + PREFIX_ROLE + "teacher"; // not a valid role
+    public static final String INVALID_MEDICAL_DEPARTMENT_DESC = " " + PREFIX_MEDICAL_DEPARTMENT + "HE12RT";
+    // numbers not allowed
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final String VALID_DATE = "23.11.2019";
+    public static final String VALID_DATE_SECOND = "11.11.3011";
+    public static final String DATE_DESC = " " + PREFIX_DATE + VALID_DATE;
+    public static final String SECOND_DATE_DESC = " " + PREFIX_DATE + VALID_DATE_SECOND;
+
+    public static final String VALID_START_TIME = "1500";
+    public static final String VALID_END_TIME = "1600";
+    public static final String VALID_TIME = "0800";
+    public static final String START_TIME_DESC = " " + PREFIX_START_TIME + VALID_START_TIME;
+    public static final String END_TIME_DESC = " " + PREFIX_END_TIME + VALID_END_TIME;
+    public static final String SECOND_START_TIME_DESC = " " + PREFIX_START_TIME + VALID_TIME;
+    public static final String SECOND_END_TIME_DESC = " " + PREFIX_END_TIME + VALID_TIME;
+
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "23.13";
+    public static final String INVALID_START_TIME_DESC = " " + PREFIX_START_TIME + "111111";
+    public static final String INVALID_END_TIME_DESC = " " + PREFIX_END_TIME + "111111";
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -76,7 +122,7 @@ public class CommandTestUtil {
      * - the {@code actualCommandHistory} remains unchanged.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, CommandHistory actualCommandHistory,
-            String expectedMessage, Model expectedModel) {
+                                            String expectedMessage, Model expectedModel) {
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
         try {
             CommandResult result = command.execute(actualModel, actualCommandHistory);
@@ -96,7 +142,7 @@ public class CommandTestUtil {
      * - {@code actualCommandHistory} remains unchanged.
      */
     public static void assertCommandFailure(Command command, Model actualModel, CommandHistory actualCommandHistory,
-            String expectedMessage) {
+                                            String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
@@ -124,7 +170,8 @@ public class CommandTestUtil {
 
         Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
         final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredPersonList(new PersonContainsKeywordsPredicate(Map.of(PREFIX_NAME,
+                new ArrayList<>(Arrays.asList(splitName[0])))));
 
         assertEquals(1, model.getFilteredPersonList().size());
     }
@@ -137,5 +184,4 @@ public class CommandTestUtil {
         model.deletePerson(firstPerson);
         model.commitAddressBook();
     }
-
 }

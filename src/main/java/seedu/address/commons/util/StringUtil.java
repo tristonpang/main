@@ -39,6 +39,29 @@ public class StringUtil {
     }
 
     /**
+     * Returns true if the {@code sentence} contains the {@code query}.
+     *   Ignores case, will match as long as the argument is contained within the {@code Person} parameters.
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("ABc def", "abc") == true
+     *       containsWordIgnoreCase("ABc def", "DEF") == true
+     *       containsWordIgnoreCase("ABc def", "AB") == true // ABc def contains AB
+     *       containsWordIgnoreCase("aaa BBB", "a B") == true
+     *       </pre>
+     * @param sentence cannot be null
+     * @param query cannot be null, cannot be empty
+     */
+    public static boolean containsQueryIgnoreCase(String sentence, String query) {
+        requireNonNull(sentence);
+        requireNonNull(query);
+
+        String preppedQuery = query.trim();
+        checkArgument(!preppedQuery.isEmpty(), "Query parameter cannot be empty");
+        checkArgument(preppedQuery.split("\\s+").length != 0, "Query parameter should not be null");
+
+        return sentence.toLowerCase().contains(preppedQuery.toLowerCase());
+    }
+
+    /**
      * Returns a detailed message of the t, including the stack trace.
      */
     public static String getDetails(Throwable t) {

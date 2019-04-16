@@ -1,0 +1,65 @@
+= Ng Kang Tze - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:sectnums:
+
+== PROJECT: One Life
+
+---
+
+=== Overview
+
+This Project Portfolio is intended to document my contributions towards One Life. These contributions include functional
+and non-functional code, documentation, user interface and numerous other aspects of the project.
+
+One Life is a desktop-based medical database and medical information management application used for storing and displaying
+data related to patients and doctors.
+One Life aims to improve the efficiency of administrative processes in medical institutions.
+It was developed as part of the module requirements for CS2103T (Software Engineering).
+
+The user interacts with it using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX.
+It is written in Java, and has about 10 kLoC.
+
+=== Summary of contributions
+
+* *Major enhancement*: Enhanced *the ability to find `Person` with selected attributes* instead of only with their `Name`.
+** What it does: This feature allows the user to find all `Person` containing specified keywords. Users may combine multiple keywords from different fields to increase the search accuracy.
+** Justification: This feature improves the product significantly because it reduces the amount of time needed to find all relevant `Person` and perform other operations on their information fields.
+** Highlights: This enhancement was deceptively challenging. Even though it builds upon existing procedures, a large amount of modification was necessary to ensure that users are able to enter the arguments in any preferred order.
+
+* *Minor enhancement*: Modified the `find` command to reject invalid input and prompt the user for proper input using a format guide.
+
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=ngkangtze[Functional code]] [https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=ngkangtze&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[RepoSense]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub
+*** Set up Travis and AppVeyor badge for tracking of project build. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/commit/e5ee2bc09478cd85f5d867e9c4b1f6fc1a5a710d[#49])
+** Enhancements to existing features:
+*** Fixed bugs arising from modification of the GUI. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/183[#183])
+** Documentation:
+*** Modified README, AboutUs and ContactUs to match project specifications and team information. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/36[#36])
+*** Modified build.gradle to reflect our project and removed elements of AddressBook-Level4 from the documentation website. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/150[#150], https://github.com/CS2103-AY1819S1-W16-3/main/pull/153/commits[#153])
+** Community:
+*** Reviewed pull requests (with non-trivial review comments).
+(Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/128[#128])
+*** Reviewed and addressed raised issues. (Issue https://github.com/CS2103-AY1819S1-W16-3/main/issues/170[#170], https://github.com/CS2103-AY1819S1-W16-3/main/issues/174[#174])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=find]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=findcommand]

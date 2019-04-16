@@ -55,6 +55,11 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+
+        case ESCAPE:
+            handleCommandCancelled();
+            break;
+
         default:
             // let JavaFx handle the keypress
         }
@@ -146,6 +151,16 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Handles the escape button pressed event
+     */
+    private void handleCommandCancelled() {
+        commandTextField.setText("");
+        String feedbackToUser = logic.cancelCommand();
+        logger.info("Escape key pressed, command cancelled");
+        raise(new NewResultAvailableEvent(feedbackToUser));
     }
 
 }

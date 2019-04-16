@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <GridPane HBox.hgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="100" prefWidth="550" maxWidth="-Infinity"/>
+            </columnConstraints>
+            <children>
+                <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+                    <padding>
+                        <Insets bottom="5" left="15" right="5" top="5" />
+                    </padding>
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <children>
+                                <Label fx:id="id" styleClass="cell_big_label">
+                                    <minWidth>
+                                        <!-- Ensures that the label text is never truncated -->
+                                        <Region fx:constant="USE_PREF_SIZE" />
+                                    </minWidth>
+                                </Label>
+                                <Label fx:id="date" styleClass="cell_small_label" text="\$date" />
+                                <Pane HBox.hgrow="ALWAYS" />
+                            </children>
+                        </HBox>
+                        <Label fx:id="displayableField1" styleClass="cell_small_label" text="\$displayableField1" />
+                        <Label fx:id="displayableField2" styleClass="cell_small_label" text="\$displayableField2" />
+                        <Label fx:id="displayableField3" styleClass="cell_small_label" text="\$displayableField3" />
+                    </children>
+                </VBox>
+            </children>
+            <rowConstraints>
+                <RowConstraints />
+            </rowConstraints>
+        </GridPane>
+    </children>
+</HBox>

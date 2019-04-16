@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= One Life - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -14,29 +14,32 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W16-3`      Since: `Sep 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+One Life (OL) is designed for service providers in the healthcare industry who *prefer to use a desktop application for
+managing patient and doctor information*. More importantly, One Life is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you prefer typing, One Life can get your medical information management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
+Listed below are instructions to help you get started:
 
 .  Ensure you have Java version `9` or later installed in your Computer.
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Copy the file into the folder you want to use as the home folder for One Life.
+.  Double-click the file to start the app. The GUI (as shown in Figure 1 below) should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+.One Life User Interface
+image::UserGuide_Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+E.g. typing *`help`* and pressing kbd:[Enter] will open the help window. +
+Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`* : lists all contacts.
+* **`add`**`r/patient n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ic/S9601234A` : adds a `Patient` named `John Doe` to the database.
+* **`delete`**`3` : deletes the 3rd contact shown in the current list.
+* *`exit`* : exits the app.
 
 .  Refer to <<Features>> for details of each command.
 
@@ -53,76 +56,204 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 === Viewing help : `help`
-
+Opens user guide. +
 Format: `help`
 
-=== Adding a patient: `add`
+// tag::add[]
+=== Adding a person: `add`
+Adds a `Patient` or `Doctor` to the database. +
 
-Adds a patient to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+*Adding a `Patient`* +
+Format: `add r/patient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
+*Adding a `Doctor`* +
+Format: `add r/doctor n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS md/MEDICAL_DEPARTMENT [t/TAG]...`
 [TIP]
-A patient can have any number of tags (including 0)
+A `Person` can have any number of `Tag` (including 0).
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add r/patient n/John Doe Xiao Huang ic/S1234567D p/98765432 e/johnd@example.com a/John street, block 123, #01-01
+t/Hokkien` +
+(Adds a new patient, refer to Figure 1 and 2 below for illustrations)
 
-=== Listing all patients : `list`
+.Before adding a new patient using add command
+image::AddCommandPatientBefore.png[width="600"]
 
-Shows a list of all patients in the address book. +
-Format: `list`
+.After adding a new patient using add command
+image::AddCommandPatientAfter.png[width="600"]
 
-=== Editing a patient : `edit`
+* `add r/doctor n/Betsy Crowe ic/S8234567A e/betsycrowe@example.com a/Newgate Estates p/1234567 md/dentistry` +
+(Adds a new `Doctor`, refer to Figure 3 and 4 below for illustrations)
 
-Edits an existing patient in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+.Before adding a new doctor using add command
+image::AddCommandDoctorBefore.png[width="600"]
+
+.After adding a new doctor using add command
+image::AddCommandDoctorAfter.png[width="600"]
+
+
+[NOTE]
+When adding a new `Doctor` you have to to specify his/her `MedicalDepartment`.
+// end::add[]
+
+// tag::list[]
+=== Listing all relevant personnel : `list`
+
+Shows a list of all of the people in the database. +
+Format: `list [r/ROLE]`
+
+Examples:
+
+* `list` +
+Lists all doctors and patients in the database. (Refer to Figure 5 for illustration)
+
+image::listAll.png[width="600"]
+
+* `list r/doctor` +
+Lists all the doctors in the database. (Refer to Figure 6 for illustration)
+
+image::listDoc.png[width="600"]
+
+* `list r/patient` +
+Lists all patients in the database. (Refer to Figure 7 for illustration)
+
+image::listPatient.png[width="600"]
+// end::list[]
+
+=== Editing a person : `edit`
+
+Edits an existing person in the database. +
+Format: `edit INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed patient list.
+The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
-* You can remove all the patient's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating patient by any attribute: `find`
+// tag::find[]
+=== Locating person by any attribute: `find`
 
-Finds patients with the keyword specified by the user. Specified keyword can belong to any part of any attribute of the patient (i.e. name, phone number, address, tags etc).
- +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+There are two types of Find Commands: Global Find and Specific Find, which can be used in conjunction with one
+another. +
+Format: `find [PREFIX] KEYWORDS [NEXT_PREFIX] [MORE_KEYWORDS]`
 
-****
-* The search is case-insensitive. e.g. `nelvin` will match `Nelvin`.
-* The search is a global search. e.g. `Kang` will return patients whose name includes `Kang` and patients with street address `Choa Chu Kang`.
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched. e.g. `Tris` will not return `Tristan`.
-* Patients with at least one keyword will be returned. e.g. `Goh` will return `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
-****
+[NOTE]
+In order for a `Person` to show up on `find`, the `Person` must match all attributes in the input. +
+(i.e. `find n/alex r/doctor` will show all `Doctor` named `Alex`. If another `Alex` is not a `Doctor`, he will not be
+shown.)
+
+==== Global Find
+Global Find is a search on all attributes of all `Person` in the database. +
+
+It is performed when:
+
+* no `Prefix` is included in the input, or when
+* keywords are included before the first valid `Prefix`.
+
+[NOTE]
+When performing Global Find with more than one separate keyword, users can simply separate them using a `[SPACE]`.
+The Find Command will interpret the input as separate words to be searched globally.
 
 Examples:
 
-* `find Goh` +
-Returns `Gary Goh Yipeng` and `Kenneth Goh Jun Teck`.
-* `find Ng Tan` +
-Returns any patient having names `Ng Kang Tze` and `Tan Thong Cai, Nelvin`.
+* `find kang` +
+Displays all `Person` with `kang` in any of their attributes.
+* `find kang r/doctor` +
+Displays all `Person` with `kang` in any of their attributes and whom is a `Doctor`. This is an example of Global Find
+used in conjunction with Specific Find.
+* `find alex doctor` +
+Displays all `Person` with `alex` or `doctor` in any of their attributes.
 
-=== Deleting a patient : `delete`
+The images below illustrate the utilisation of Global Find:
 
-Deletes the specified patient from the address book. +
+.Global find command
+image::FindCommandUserGuideGlobal1.png[width="400"]
+
+.Global find command with specific find command
+image::FindCommandUserGuideGlobal2.png[width="400"]
+
+.Global Find command with multiple keywords
+image::FindCommandUserGuideGlobal3.png[width="400"]
+
+==== Specific Find
+Specific Find is a search on attributes specified by the user. (i.e. `Name`, `Phone` etc).
+
+It is performed when a `Prefix` is specified in the input field. +
+Below is a list of all searchable attributes and their corresponding `Prefix`:
+
+.Table of searchable prefixes
+[width="20"]
+|===
+| *Attribute*        | *Prefix*
+| Name               | `n/`
+| NRIC               | `ic/`
+| Phone              | `p/`
+| Email              | `e/`
+| Address            | `a/`
+| Role               | `r/`
+| Tag                | `t/`
+| Medical Department | `md/`
+| Medical Record     | `mr/`
+|===
+
+[WARNING]
+Search keywords must be entered behind a `Prefix` whenever a `Prefix` is used in the input. A command like
+`find n/[BLANK]` is not a valid input. +
+The `Prefix` entered must also be valid.
+
+Examples:
+
+* `find t/friends` +
+Displays all `Person` with the `Tag` labelled `friends`.
+* `find t/friends r/doctor` +
+Displays all `Person` with the `Tag` labelled `friends` and whose `Role` is `Doctor`.
+* The images below illustrate the utilisation of Specific Find.
+
+.Specific find command
+image::FindCommandUserGuideSpecific1.png[width="400"]
+
+.Specific find command with additional prefixes
+image::FindCommandUserGuideSpecific2.png[width="400"]
+
+.Examples of invalid input for specific find command
+image::FindCommandUserGuideError.png[width="400"]
+
+****
+* Find is case-insensitive. e.g. `nelvin` will match `Nelvin`.
+* In Global Find, `Person` containing any of the given keywords in any of his/her attributes will be displayed.
+e.g. `find doctor nelvin` will cause all `Doctor` and `Nelvin Tan` to be displayed.
+* In Specific Find, the specified attribute of the `Person` must contain the searched keyword to be displayed.
+e.g. `find n/Gary Goh` will display `Gary Goh` but not `Kenneth Goh`
+* In the event that the user wants to specify more than one keyword to be seperately searched in a specified attribute,
+for example if the user wants to find all `Person` with `Name` `Kang Tze` or `Triston`, he must separate the names
+using two `Name` `Prefix`. e.g. `find n/Kang Tze n/Triston` displays `Ng Kang Tze` and `Triston Pang`.
+* An illustration of a more complicated `find` command is `find friends n/Kang Tze n/Triston r/doctor`, which displays
+all `Person` with `friends` in their attributes, has `name` containing either `Kang Tze` or `Triston`, and whom is a
+`Doctor`.
+****
+
+// end::find[]
+
+=== Deleting a person : `delete`
+
+Deletes the specified person from the database. +
 Format: `delete INDEX`
 
 ****
-* Deletes the patient at the specified `INDEX`.
-* The index refers to the index number shown in the displayed patient list.
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -130,19 +261,19 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd patient in the address book.
+Deletes the 2nd person in the database.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st patient in the results of the `find` command.
+Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a patient : `select`
+=== Selecting a person : `select`
 
-Selects the patient identified by the index number used in the displayed patient list. +
+Selects the person identified by the index number used in the displayed person list. +
 Format: `select INDEX`
 
 ****
-* Selects the patient and loads the Google search page the patient at the specified `INDEX`.
-* The index refers to the index number shown in the displayed patient list.
+* Selects the person and loads the details of the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -150,7 +281,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd patient in the address book.
+Selects the 2nd person in the database.
 * `find Betsy` +
 `select 1` +
 Selects the 1st patient in the results of the `find` command.
@@ -168,12 +299,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the database to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the database's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -217,70 +348,127 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the database. +
 Format: `clear`
 
-=== Adding a doctor : `adddoc`
+// tag::displayappt[]
+=== Displaying medical appointments : `select`
 
-Create and add a new doctor into the database. +
-Format: `adddoc n/NAME p/PHONE_NUMBER e/EMAIL md/MEDICAL_DEPARTMENT [t/TAG]`
+Displays a list of medical appointments that are currently scheduled for the specified person. +
+Format: `select INDEX`
+
+****
+* Selects the person and loads the appointment list of the person at the specified `INDEX`.
+* The index is the position of the person selected from the person card list.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* The appointment list will be displayed on the top right of the screen as shown in figure below.
+****
 
 Examples:
 
-* `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD` +
-Creates a new doctor in the database.
+* `list` displays the list of persons as shown in the figure below.
++
+.Display list diagram
+image::ListCommand.png[width="600"]
++
+`select 2` selects the 2nd person in the database and display the appointments of that person as shown in the figure below.
++
+.Display appointment diagram
+image::DisplayAppointment.png[width="600"]
+* `find Betsy` +
+`select 1` +
+Selects the 1st patient in the results of the `find` command and display the appointments. Similar to the example above.
+// end::displayappt[]
 
-=== Listing doctors : `listdoc`
-
-Lists all doctors in the database and their current availability based on their schedule. +
-Format: `listdoc`
-
-=== Displaying medical appointments : `appts`
-
-Displays a list of medical appointments that are currently scheduled. All appointments will be listed if data is not entered. +
-Format: `appts[d/DATE]`
-
+// tag::schedule[]
 === Scheduling medical appointments : `schedule`
 
-Schedules a patient for a medical appointment at a specific date and time.
-Format: `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER`
+Schedules a patient/doctor for a medical appointment at a specific date and time. +
+Format: `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME di/DOCTOR_NRIC pn/PATIENT_NAME pi/PATIENT_NRIC`
 
 ****
-* Date is DD/MM/YYYY and dot separated e.g.  `7.11.1996` is the 7th of November 1996
-* Time is 24 hour clock e.g. `1300` is 1pm
-* Room is the location of appointments e.g. `T45`
+* Date is formatted as DD.MM.YYYY and is dot separated. e.g.  `7.11.1996` is the 7th of November 1996
+* Time uses the 24-hour clock time. e.g. `1300` is 1pm
+* Doctor name is the doctor's full name. e.g. `John Doe`
+* Doctor nric is the doctor's nric. e.g. `S1234567B`
+* Patient name is the patient's full name. e.g. `Kim Tan`
+* Patient nric is the patient's nric. e.g. `S1234567A`
+****
+[NOTE]
+Overlapping of timing with existing appointments is considered a clash.
+E.g. 1300-1301 and 1301-1302 is a clash due to 1301.
+
+Examples:
+
+* `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/John Doe pi/S1234567A` +
+Schedules `John Doe` for an appointment with doctor `Jack` on the 23nd of November 2018 from
+ 1pm to 2pm.
++
+An example of a successful schedule is shown in the figure below.
++
+.Successful schedule diagram
+image::ScheduleSuccess.png[width="600"]
++
+After an appointment is successfully scheduled, the appointment list as shown below will be updated.
++
+.Change in appointment list
+image::AppointmentListChange.png[width="600"]
++
+An example of an unsuccessful schedule is shown in the figure below.
++
+.Unsuccessful schedule diagram
+image::ScheduleFailure.png[width="600"]
+// end::schedule[]
+
+// tag::displaymr[]
+=== Displaying medical records of patients : `select`
+Displays all the medical records of the specified person. +
+Format: `select INDEX`
+
+****
+* The index is the position of the person selected from the person card list.
+* The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
 Examples:
 
-* `schedule n/Jack d/22.11.2018 t/1300 t/1400 rn/T24` +
-Schedules `Jack` for an appointment in room `T24` on the 22nd of November 2018 from 1pm to 2pm.
+* `select 1` +
+Displays the medical records of the first person on the displayed list as shown in the figure below.
 
-=== Viewing medical records of patients : `records`
+.Displaying medical records
+image::DisplayMedicalRecords.png[width="600"]
 
-Displays the most updated medical records of a given patient if no date is specified. Else, displays the most recent medical record before the specified date. +
-Format: `records n/name [d/DATE]`
+// end::displaymr[]
 
-****
-* Date is DD/MM/YYYY and is dot separated. e.g.  `7.11.1996` is the 7th of November 1996
-****
-
-Examples:
-
-* `records n/Jack d/22.11.2018` +
-Displays the most recent medical record of `Jack` before 22nd November 2018.
-* `records n/Jack` +
-Displays the most recent medical records of `Jack`.
-
+// tag::update[]
 === Updating medical records of patients : `update`
 
-Adds a new medical record for the patient as the most updated record using the current date as date of record. +
-Format: `update n/NAME mr/NEW_MEDICAL_RECORDS`
+Adds a new medical record for the patient as the most updated record using the specified date as date of record. +
+Format: `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT [c/COMMENTS]`
+
+****
+* The date is formatted as DD.MM.YYYY and is dot separated e.g.  `11.1.2019` is the 11th of January 2019.
+* The date cannot be in the past.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* Comments are optional.
+****
+[NOTE]
+If no comments are specified, "-" will be displayed on the medical record.
 
 Examples:
 
-* `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.` +
-Updates `Jack` medical records with the given sentences.
+* `update 1 d/13.11.2018 dg/Flu tr/Tamiflu` +
+Updates the medical records of the patient at index 1 with the given date, diagnosis and treatment without any comments as shown in the figure below.
+
+.Updating records without comments
+image::UpdateCommandWithoutCommentsSuccess.png[width="600"]
+
+* `update 1 d/13.11.2018 dg/Flu tr/Tamiflu c/To be taken thrice a day after meals.` +
+Updates the medical records of the patient at index 1 with the given date, diagnosis, treatment and comments as shown in the figure below.
+
+.Updating records with comments
+image::UpdateCommandWithCommentsSuccess.png[width="600"]
+// end::update[]
 
 === Exiting the program : `exit`
 
@@ -289,28 +477,64 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+One Life data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
 
-=== Intuitive Command Prompting
+// tag::intuitivecommandprompt[]
+=== Intuitive command prompting
 
-Intuitive prompting for the user when a command that takes in parameters is entered without any parameters specified. This feature aids new users and makes it easier and more natural for them to use the system. The nature of this feature allows users to enter data without adding prefix tags, and also supports cases where certain data fields are intentionally left blank. The original command input format is still supported to allow quick command entry for seasoned users.
+Provides a more natural way of entering commands into One Life. One Life will prompt the user for the next required
+input - no prefixes are required.
+
+Commands that support intuitive prompting:
+****
+* `add`
+* `delete`
+* `edit`
+* `find`
+* `schedule`
+* `update`
+****
+
+Format: `COMMAND`
+
+[TIP]
+Type `/bk` to re-enter previous field. +
+Type `//` if the field is to be left blank (only available for optional fields). +
+Press `ESC` to cancel the currently executing command.
 
 Examples:
-```
-add
-Adding new patient..
-Please enter patient's NAME: John Doe
 
-NAME entered: John Doe
-(Use /bk to re-enter previous field)
-Enter patients email (use // if this field is to be blank): doe@gmail.com
+* `add` +
+Starts an intuitive `add` command.
+This triggers the intuitive command prompt, and One Life will begin to guide you through the command with instructions, as shown in the figure below:
 
-...
-```
+.Starting the intuitive `add` command
+image::StartIntuitiveCommand.png[width="600"]
 
+* `patient` +
+Specifies that a patient is to be added to the intuitive command prompt. The intuitive command prompt then asks for the next input,
+in this case the patient's name, as shown in the figure below:
+
+.Entering an input
+image::NextIntuitiveInput.png[width="600"]
+
+* `/bk` +
+Goes back to the previous field. A new input can be reentered for this field, as shown in the figure below:
+
+.Going back to the previous field
+image::BackIntuitive.png[width="600"]
+
+* `ESC` +
+Cancels the intuitive command. This clears the command box and exits the intuitive command, allowing for normal operation again, as shown in the figure below:
+
+.Cancelling an intuitive command
+image::ExitIntuitive.png[width="600"]
+
+//end::intuitivecommandprompt[]
+
+// tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
@@ -319,12 +543,15 @@ _{explain how the user can enable/disable data encryption}_
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous One Life folder.
 
 == Command Summary
 
-* *Add Patient* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Patient* : `add r/patient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add r/patient n/James Ho ic/S1234567A p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend
+t/colleague`
+* *Add Doctor* : `add r/doctor n/Bobby Tan ic/S1234567B p/91234567 e/BBTan@example.com a/123, Clementi Rd, 123456
+md/Dentistry`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -332,19 +559,16 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List Patients* : `list`
+* *List People* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Add Doctor* : `adddoc n/NAME p/PHONE_NUMBER e/EMAIL md/MEDICAL_DEPARTMENT [t/TAG]` +
-e.g. `adddoc n/Chew Tiong Seng p/91234567 e/chew@gmail.com md/oncology t/HOD`
-* *List Doctors* : `listdoc`
-* *Display Medical Appointments* : `appts`
-* *Schedule Medical Appointments* : `schedule n/NAME d/DATE t/START_TIME t/END_TIME rn/ROOM_NUMBER` +
-e.g. `schedule n/Jack d/22.11.2018 t/1300 t/1400 rn/T24`
-* *View Medical Records* : `records n/NAME [d/DATE]`
-* *Update Medical Records* : `update n/NAME mr/NEW_MEDICAL_RECORDS` +
-e.g. `update n/Jack mr/Patient diagnosed with flu. Tamiflu prescribed.`
+* *Display Medical Appointments* : `select INDEX`
+* *Schedule Medical Appointments* : `schedule INDEX d/DATE st/START_TIME et/END_TIME dn/DOCTOR_NAME di/DOCTOR_NRIC pn/PATIENT_NAME pi/PATIENT_NRIC` +
+e.g. `schedule 1 d/23.11.2018 st/1300 et/1400 dn/Jack di/S1234567B pn/John Doe pi/S1234567A`
+* *Display Medical Records* : `select INDEX`
+* *Update Medical Records* : `update INDEX d/DATE dg/DIAGNOSIS tr/TREATMENT c/COMMENTS +
+e.g. `update 2 d/22.11.2018 dg/flu tr/tamiflu`

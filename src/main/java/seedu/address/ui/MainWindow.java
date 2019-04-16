@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -8,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -34,14 +37,14 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private DisplayPanel displayPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane displayPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -51,6 +54,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane personProfilePagePlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -119,11 +125,14 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        displayPanel = new DisplayPanel();
+        displayPlaceholder.getChildren().add(displayPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        PersonProfilePage personProfilePage = new PersonProfilePage();
+        personProfilePagePlaceholder.getChildren().add(personProfilePage.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -133,6 +142,14 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        commandBoxPlaceholder.requestFocus();
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyCode.TAB.getCode());
+            robot.keyRelease(KeyCode.TAB.getCode());
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
     }
 
     void hide() {
@@ -191,8 +208,8 @@ public class MainWindow extends UiPart<Stage> {
         return personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+    public void releaseResources() {
+        displayPanel.showDefaultDisplayPanel();
     }
 
     @Subscribe

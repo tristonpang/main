@@ -3,8 +3,12 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +16,16 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.DatabaseChangedEvent;
+import seedu.address.commons.events.model.PersonChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.doctor.Doctor;
+import seedu.address.model.patient.MedicalRecord;
+import seedu.address.model.patient.Patient;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.AppointmentManager;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
 /**
@@ -19,9 +33,14 @@ import seedu.address.model.person.Person;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static final String KEYWORD_ALL = "ALL";
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
+    private Predicate<Person> predicateShowRelevantPeople;
+    private final IntuitivePromptManager intuitivePromptManager;
+
+    private String activeRole;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -32,8 +51,15 @@ public class ModelManager extends ComponentManager implements Model {
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
+        // starts the application with the all patient and doctor's database by default.
+        predicateShowRelevantPeople = PREDICATE_SHOW_ALL_PERSONS;
+        activeRole = KEYWORD_ALL;
+
         versionedAddressBook = new VersionedAddressBook(addressBook);
-        filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        filteredPersons =
+                new FilteredList<>(versionedAddressBook.getPersonList()).filtered(predicateShowRelevantPeople);
+
+        intuitivePromptManager = new IntuitivePromptManager();
     }
 
     public ModelManager() {
@@ -41,9 +67,66 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void changeDatabase(Predicate<Person> filer, String role) {
+        this.predicateShowRelevantPeople = filer;
+        this.activeRole = role;
+        this.indicateDatabaseChanged();
+        this.indicatePersonChanged();
+    }
+
+    @Override
+    public void clearActiveDatabase() {
+        List<Person> toDelete = versionedAddressBook.getPersonList().stream()
+                .filter(predicateShowRelevantPeople).collect(Collectors.toList());
+        toDelete.stream().forEach(personToDelete -> {
+            if (personToDelete instanceof Patient) {
+                for (Appointment appointment : personToDelete.getAppointmentList()) {
+                    Nric doctorNric = appointment.getDoctorNric();
+                    Person affectedPersonToEdit = getPerson(doctorNric).get();
+                    ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit
+                            .getAppointmentList());
+                    affectedAppointmentList = AppointmentManager
+                            .removeAppointmentsOfPatient(personToDelete.getNric(), affectedAppointmentList);
+                    Person affectedEditedPerson = new Doctor(
+                            affectedPersonToEdit.getName(), affectedPersonToEdit.getNric(),
+                            affectedPersonToEdit.getPhone(), affectedPersonToEdit.getEmail(),
+                            affectedPersonToEdit.getAddress(), affectedPersonToEdit.getTags(),
+                            affectedAppointmentList, ((Doctor) affectedPersonToEdit).getMedicalDepartment());
+                    updatePerson(affectedPersonToEdit, affectedEditedPerson);
+                }
+            } else if (personToDelete instanceof Doctor) {
+                for (Appointment appointment : personToDelete.getAppointmentList()) {
+                    Nric patientNric = appointment.getPatientNric();
+                    Person affectedPersonToEdit = getPerson(patientNric).get();
+                    ArrayList<Appointment> affectedAppointmentList = new ArrayList<>(affectedPersonToEdit
+                            .getAppointmentList());
+                    ArrayList<MedicalRecord> newMedicalRecordLibrary =
+                            new ArrayList<>(((Patient) affectedPersonToEdit).getMedicalRecordLibrary());
+                    affectedAppointmentList = AppointmentManager
+                            .removeAppointmentsOfDoctor(personToDelete.getNric(), affectedAppointmentList);
+                    Person affectedEditedPerson = new Patient(
+                            affectedPersonToEdit.getName(), affectedPersonToEdit.getNric(),
+                            affectedPersonToEdit.getPhone(), affectedPersonToEdit.getEmail(),
+                            affectedPersonToEdit.getAddress(), affectedPersonToEdit.getTags(),
+                            affectedAppointmentList, newMedicalRecordLibrary);
+                    updatePerson(affectedPersonToEdit, affectedEditedPerson);
+                }
+            }
+            deletePerson(personToDelete);
+        });
+        this.indicatePersonChanged();
+    }
+
+    @Override
+    public String getCurrentDatabase() {
+        return activeRole;
+    }
+
+    @Override
     public void resetData(ReadOnlyAddressBook newData) {
         versionedAddressBook.resetData(newData);
         indicateAddressBookChanged();
+        indicatePersonChanged();
     }
 
     @Override
@@ -56,6 +139,21 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(versionedAddressBook));
     }
 
+    /** Raise an event to indicate that the active database has been changed **/
+    private void indicateDatabaseChanged() {
+        raise(new DatabaseChangedEvent(activeRole));
+    }
+
+    /** Raises an event to indicate the person data has changed */
+    private void indicatePersonChanged(Person original, Person editedPerson) {
+        raise(new PersonChangedEvent(original, editedPerson));
+    }
+
+    /** Raise an event to indicate the person has been removed or reset to previous version*/
+    private void indicatePersonChanged() {
+        raise(new PersonChangedEvent(null, null));
+    }
+
     @Override
     public boolean hasPerson(Person person) {
         requireNonNull(person);
@@ -63,9 +161,34 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean hasSuchPerson(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return versionedAddressBook.hasSuchPerson(name, nric);
+    }
+
+    @Override
+    public boolean hasSuchPatient(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return versionedAddressBook.hasSuchPatient(name, nric);
+    }
+
+    @Override
+    public boolean hasSuchDoctor(Name name, Nric nric) {
+        requireAllNonNull(name, nric);
+        return versionedAddressBook.hasSuchDoctor(name, nric);
+    }
+
+    @Override
+    public Optional<Person> getPerson(Nric nric) {
+        requireNonNull(nric);
+        return versionedAddressBook.getPerson(nric);
+    }
+
+    @Override
     public void deletePerson(Person target) {
         versionedAddressBook.removePerson(target);
         indicateAddressBookChanged();
+        indicatePersonChanged();
     }
 
     @Override
@@ -81,6 +204,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+        indicatePersonChanged(target, editedPerson);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -97,7 +221,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredPersons.setPredicate(this.predicateShowRelevantPeople.and(predicate));
     }
 
     //=========== Undo/Redo =================================================================================
@@ -116,12 +240,14 @@ public class ModelManager extends ComponentManager implements Model {
     public void undoAddressBook() {
         versionedAddressBook.undo();
         indicateAddressBookChanged();
+        indicatePersonChanged();
     }
 
     @Override
     public void redoAddressBook() {
         versionedAddressBook.redo();
         indicateAddressBookChanged();
+        indicatePersonChanged();
     }
 
     @Override
@@ -145,6 +271,38 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    @Override
+    public String addIntuitiveEntry(String entry) throws CommandException {
+        intuitivePromptManager.addArgument(entry);
+        return intuitivePromptManager.getInstruction();
+    }
+
+    @Override
+    public String removeIntuitiveEntry() {
+        intuitivePromptManager.removeArgument();
+        return intuitivePromptManager.getInstruction();
+    }
+
+    @Override
+    public boolean isIntuitiveMode() {
+        return intuitivePromptManager.isIntuitiveMode();
+    }
+
+    @Override
+    public String retrieveIntuitiveArguments() {
+        return intuitivePromptManager.retrieveArguments();
+    }
+
+    @Override
+    public boolean areIntuitiveArgsAvailable() {
+        return intuitivePromptManager.areArgsAvailable();
+    }
+
+    @Override
+    public void cancelIntuitiveCommand() {
+        intuitivePromptManager.cancelIntuitiveCommand();
     }
 
 }

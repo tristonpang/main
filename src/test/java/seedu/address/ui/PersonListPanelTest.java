@@ -21,6 +21,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.storage.XmlSerializableAddressBook;
 
@@ -33,6 +34,8 @@ public class PersonListPanelTest extends GuiUnitTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "sandbox");
 
     private static final long CARD_CREATION_AND_DELETION_TIMEOUT = 2500;
+
+    private static final int TEST_IC_NUMBER = 1000000;
 
     private PersonListPanelHandle personListPanelHandle;
 
@@ -90,20 +93,26 @@ public class PersonListPanelTest extends GuiUnitTest {
      * Returns a .xml file containing {@code personCount} persons. This file will be deleted when the JVM terminates.
      */
     private Path createXmlFileWithPersons(int personCount) throws Exception {
+        int icNum = TEST_IC_NUMBER;
+
         StringBuilder builder = new StringBuilder();
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         builder.append("<addressbook>\n");
         for (int i = 0; i < personCount; i++) {
             builder.append("<persons>\n");
+            builder.append("<role>Patient</role>\n");
             builder.append("<name>").append(i).append("a</name>\n");
             builder.append("<phone>000</phone>\n");
             builder.append("<email>a@aa</email>\n");
             builder.append("<address>a</address>\n");
+            builder.append("<nric>S").append(Nric.generateCode(icNum++)).append("</nric>\n");
+            builder.append("<medicalRecord> , Diagnosis: , Treatment: , Comments: -</medicalRecord>");
+            builder.append("<appointment>a</appointment>\n");
             builder.append("</persons>\n");
         }
         builder.append("</addressbook>\n");
 
-        Path manyPersonsFile = Paths.get(TEST_DATA_FOLDER + "manyPersons.xml");
+        Path manyPersonsFile = TEST_DATA_FOLDER.resolve("manyPersons.xml");
         FileUtil.createFile(manyPersonsFile);
         FileUtil.writeToFile(manyPersonsFile, builder.toString());
         manyPersonsFile.toFile().deleteOnExit();

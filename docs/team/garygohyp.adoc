@@ -1,0 +1,64 @@
+= Gary Goh Yipeng - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:sectnums:
+
+== PROJECT: One Life
+
+---
+
+=== Introduction
+
+This project portfolio details my key contributions to the project One Life and serves to document the key features I implemented.
+
+One Life is a desktop application designed by me and other students from the National University of Singapore (NUS) as part of a requirement for our software engineering module under the given constraints that the user must interact with it using a Command Line Interface(CLI).
+
+One life is used for storing, updating, and displaying data related to patients and doctors. The user interacts with it using a CLI, and it has a Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+=== Summary of Contributions
+
+* *Major enhancement*: added *the ability to update and display medical records.*
+** _What it does:_
+*** Enables the user to update the current medical record history of a specified patient on a specified date.
+*** Checks if the given information such as the date, diagnosis or treatment are valid.
+** _Justification:_
+*** Streamlines a key part of medical operations in a hospital. (Updating and referring to the current medical history of any given patient.)
+** _Highlights:_
+*** Improves how data is stored, retrieved, and sorted.
+*** Requires in-depth analysis of design alternatives when choosing the most efficient method of storing medical record data.
+*** Requires a brand new command to be created and existing code to be edited.
+* *Minor enhancement*: added a check to verify if a given date is valid and in the correct format.
+
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W16-3/main/commits?author=GaryGohYP[Functional Code]][https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=garygohyp&sort=displayName&since=2018-09-12&until=2018-11-10&timeframe=day&reverse=false&repoSort=true[RepoSense]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.1` - `v1.4` (4 releases) on GitHub.
+** Enhancements to existing features:
+*** Changed the browser panel to display medical records instead. (Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/105[#105], https://github.com/CS2103-AY1819S1-W16-3/main/pull/109[#109])
+** Documentation:
+*** Added documentation and formatting changes for all new features to the User Guide. (Pull requests https://github.com/CS2103-AY1819S1-W16-3/main/pull/4[#4], https://github.com/CS2103-AY1819S1-W16-3/main/pull/5[#5], https://github.com/CS2103-AY1819S1-W16-3/main/pull/6[#6], https://github.com/CS2103-AY1819S1-W16-3/main/pull/39/commits/9e6897ca4b66ea457bd0b000adf74a7c2b0ffcc7[#39])
+*** Added documentation for updating medical records to the Developer Guide. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/80/commits/86501c5bba40bb36af4b584929e214c0d915fab2[#80])
+** Community:
+*** Reviewed other team members' pull requests. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/129[#129])
+*** Reported bugs and suggestions for other teams in the class. (Pull request https://github.com/CS2103-AY1819S1-W16-3/main/pull/66[#66])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=displaymr]
+
+include::../UserGuide.adoc[tag=update]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=updatecommand]
